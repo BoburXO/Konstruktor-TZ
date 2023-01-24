@@ -1,0 +1,75 @@
+footer{
+       background: url('../../assets/imgs/footer.png') no-repeat center center/cover;
+       width: 100%;
+       height: 418px;
+       padding: 60px 0;
+       color: #fff;
+}
+
+.container {
+       width: 90%;
+       margin: 0 auto;
+       font-family: Rubik;
+}
+
+.footer_parent{
+       display: grid;
+       grid-template-columns: repeat(4,1fr);
+       padding-bottom: 50px;
+}
+
+.footer_parent .twink {
+       height: 32px;
+
+       display: flex;
+       align-items: center;
+       justify-content: flex-start;
+       gap: 20px;
+}
+
+.footer_parent h6{
+       font-weight: 400;
+       font-size: 20px;
+       padding-bottom: 16px;
+}
+
+.twink p {
+       font-size: 14px;
+       font-weight: 400;
+       color: rgba(255, 255, 255, 0.671);
+}
+
+.twink2{
+       padding-top: 10px;
+       display: flex;
+       align-items: flex-start;
+       justify-content: start;
+       gap: 20px;
+}
+
+.twink2 p {
+       font-size: 13px;
+       font-weight: 300;
+       color: rgba(255, 255, 255, 0.671);
+}
+
+.twink img {
+       width: 30px;
+       height: 30px;
+}
+
+.footer_center_content{
+       height: 140px;
+
+       display: flex;
+       justify-content: center;
+       align-items: center;
+}
+
+.footer_center_content p {
+       text-align: center;
+       font-size: 14px;
+       font-weight: 400;
+       line-height: 21px;
+       color: rgba(255, 255, 255, 0.671);
+}

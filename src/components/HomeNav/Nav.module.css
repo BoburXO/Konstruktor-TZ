@@ -1,0 +1,73 @@
+.home_navbar{
+       width: 100%;
+       height: 72px;
+       font-family: Rubik;
+}
+
+.container{
+       width: 90%;       
+       margin: 0 auto;
+}
+
+.nav_ul {
+       height: 72px;
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+}
+
+.nav_logo1 {
+       width: 249px;
+}
+
+.contact_link{
+       font-weight: 400;
+       font-size: 16px;
+       color: #000;
+       padding-top: 10px;
+}
+
+.nav_links{
+       display: flex;
+       gap: 50px;
+}
+
+.til{
+       width: 100px;
+       border: none;
+       font-size: 16px;
+       font-weight: 400;
+       outline: none;
+       cursor: pointer;
+       font-family: Rubik;
+}
+
+.til:focus{
+       border: none;
+}
+
+.til__opt:hover{
+       border: none;
+       background: transparent;
+}
+
+.nav_btn{
+       width: 151px;
+       height: 40px;
+
+       cursor: pointer;
+       background: #fff;
+       color: #631AC0;
+       border: 2px solid #631AC0;
+       border-radius: 8px;
+       font-size: 14px;
+       font-weight: 500;
+       transition: 0.5s ease;
+}
+
+
+.nav_btn:hover{
+       background: #631AC0;
+       color: #fff;
+       transition: 0.5s ease;
+}
