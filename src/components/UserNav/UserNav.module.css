@@ -1,0 +1,76 @@
+.userNav {
+  width: 100%;
+  height: 72px;
+
+  background: url("../../assets/imgs/footer.png") no-repeat center center/cover;
+}
+
+.userNav_container {
+  width: 90%;
+
+  margin: 0 auto;
+  font-family: Rubik;
+}
+
+.userNav_lists {
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.til {
+  width: 100px;
+  border: none;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  cursor: pointer;
+  font-family: Rubik;
+  background: transparent;
+  color: #fff;
+}
+
+.til:focus {
+  border: none;
+}
+.til__opt:hover {
+  border: none;
+  background: transparent;
+}
+
+select option {
+  margin: 40px;
+  background: #fff;
+  color: #000;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+
+.userNav_right_lists{
+       display: flex;
+       gap: 30px;
+}
+
+.nav_avtor_content{
+       display: block;
+       color: #fff;
+}
+
+.nav_avtor_content p {
+       font-weight: 300;
+       font-size: 14px;
+       padding-top: 3px;
+       cursor: pointer;
+}
+
+.nav_avtor_content b {
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.avatar_link{
+  width: 100%;
+}

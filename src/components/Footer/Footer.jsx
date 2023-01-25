@@ -17,11 +17,18 @@ const Footer = () => {
         <div className={s.container}>
           <ul className={s.footer_parent}>
             <li>
-              <Link>
+              <Link className={s.logofff_link}>
                 <img src={logofff} alt="" />
               </Link>
             </li>
-            <li>
+            <li className={s.twink3}>
+              <img src={logodots} alt="" />
+              <p>
+                Сайт разработан Центром управления <br /> проектами Электронного
+                Правительства
+              </p>
+            </li>
+            <li className={s.phone_style}>
               <h6>Контакты</h6>
               <span className={s.twink} style={{ paddingLeft: "5px" }}>
                 <img style={{ width: "20px" }} src={mail} alt="" />
@@ -38,7 +45,7 @@ const Footer = () => {
                 </p>
               </span>
             </li>
-            <li>
+            <li  className={s.phone_style}>
               <h6>Мы в соцсетях</h6>
               <a href="https://www.facebook.com/">
                 <span className={s.twink}>

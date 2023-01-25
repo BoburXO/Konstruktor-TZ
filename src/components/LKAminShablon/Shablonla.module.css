@@ -1,0 +1,141 @@
+.templates_sect {
+  width: 100%;
+  height: max-content;
+
+  background: #dff2fe;
+  padding: 60px 0;
+}
+
+.templates_sect_container {
+  width: 90%;
+  margin: 0 auto;
+  font-family: Rubik;
+}
+
+.templates_sect_create_btn {
+  width: 173px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #0ba9cc;
+  border: 2px solid #0ba9cc;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.templates_sect_create_btn:hover {
+  background: #fff;
+  color: #0ba9cc;
+  transition: 0.5s ease;
+}
+
+.templates_sect_label {
+  height: 100px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.templates_sect_label h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.input_field .S_icon {
+  position: absolute;
+}
+
+.input_field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.S_icon {
+  padding: 10px;
+  min-width: 40px;
+}
+
+.input_field input {
+  width: 300px;
+  height: 40px;
+
+  padding-left: 40px;
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  outline: none;
+  font-family: Rubik;
+  font-size: 16px;
+}
+
+.input_field input:focus {
+  border-bottom: 2px solid #631ac0;
+}
+
+.templates_sect_parent {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  padding-top: 40px;
+}
+
+.templates_sect_parent_card {
+  width: 100%;
+  height: max-content;
+
+  border-radius: 8px;
+  background: #fff;
+  padding: 16px;
+  transition: 0.5s ease;
+}
+
+.templates_sect_parent_card h1 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+.templates_sect_parent_card p {
+  color: rgba(34, 34, 34, 0.6);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+@media  all and (max-width: 1216px) {
+       .templates_sect_parent {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 30px;
+              padding-top: 40px;
+            } 
+}
+
+
+@media  all and (max-width: 952px) {
+       .templates_sect_parent {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 20px;
+              padding-top: 30px;
+            } 
+}
+
+@media  all and (max-width: 600px) {
+       .templates_sect_parent {
+              display: grid;
+              grid-template-columns: repeat(1, 1fr);
+              gap: 10px;
+              padding-top: 20px;
+            } 
+}
