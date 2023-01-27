@@ -14,7 +14,7 @@ const Spravochnik = () => {
             <h1>Справочники</h1>
             <button className={s.Spravochnik_label_btn}>
               <span style={{ fontSize: "25px" }}>+</span>
-              <span>Создать шаблон</span>
+              <span>Создать справочник</span>
             </button>
           </div>
           <div className={s.input_field}>
