@@ -1,5 +1,5 @@
 import React from "react";
-import s from "../AminSpravochnik/Spravochnik.module.css";
+import s from "./Spravochnik.module.css";
 import search from "../../assets/icons/search.svg";
 import { spravochnik } from "../../spravochnik";
 import createIcon from "../../assets/icons/createIcon.svg";

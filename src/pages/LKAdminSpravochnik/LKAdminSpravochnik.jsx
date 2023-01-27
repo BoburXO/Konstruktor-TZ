@@ -1,5 +1,5 @@
 import React from 'react'
-import Spravochnik from '../../components/AminSpravochnik/Spravochnik'
+import Spravochnik from '../../components/AdminSpravochnik/Spravochnik'
 import Footer from '../../components/Footer/Footer'
 import UserNav from '../../components/UserNav/UserNav'
 
