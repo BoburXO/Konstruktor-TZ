@@ -1,0 +1,150 @@
+.Spravochnik {
+  width: 100%;
+  height: max-content;
+
+  background: #dff2fe;
+  padding: 60px 0;
+}
+
+.Spravochnik_container {
+  width: 90%;
+  margin: 0 auto;
+  font-family: Rubik;
+}
+
+.Spravochnik_label {
+  height: 100px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.Spravochnik_label h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.Spravochnik_label_btn {
+  width: 173px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #0ba9cc;
+  border: 2px solid #0ba9cc;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.Spravochnik_label_btn:hover {
+  background: #fff;
+  color: #0ba9cc;
+  transition: 0.5s ease;
+}
+
+.input_field .S_icon {
+  position: absolute;
+}
+
+.input_field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.S_icon {
+  padding: 10px;
+  min-width: 40px;
+}
+
+.input_field input {
+  width: 300px;
+  height: 40px;
+
+  padding-left: 40px;
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  outline: none;
+  font-family: Rubik;
+  font-size: 16px;
+}
+
+.input_field input:focus {
+  border-bottom: 2px solid #631ac0;
+}
+
+.Spravochnik_cards_labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 30px;
+  color: rgba(34, 34, 34, 0.6);
+  font-size: 14px;
+  font-weight: 400;
+}
+.lkmain_sect_crud {
+  width: 7%;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.lkmain_sect_crud_delete {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+  background: #fff;
+  transition: 0.5s ease;
+  border: 2px solid #eb5757;
+}
+.lkmain_sect_crud_create {
+  width: 40px;
+  height: 40px;
+
+  border: 2px solid #2f80ed;
+  border-radius: 8px;
+  background: #fff;
+  transition: 0.5s ease;
+}
+.lkmain_sect_crud button:hover {
+  transform: translateY(3px);
+  transition: 0.5s ease;
+}
+
+.Spravochnik_sect_creators_parent {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+}
+
+.Spravochnik_sect_creators_parent_cards {
+  width: 100%;
+  height: 70px;
+
+  border-radius: 10px;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+
+.Spravochnik_twink{
+  width: 43%;
+  height: 70px;
+
+  display: flex;
+  gap: 80px;
+  align-items: center;
+}

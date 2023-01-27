@@ -1,7 +1,7 @@
 import React from "react";
 import s from "../UserNav/UserNav.module.css";
 import logofff from "../../assets/imgs/logofff.svg";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ava from "../../assets/icons/ava.png";
 
 const UserNav = () => {
@@ -25,12 +25,27 @@ const UserNav = () => {
                 </option>
               </select>
               <span className={s.nav_avtor_content}>
-              <b>Фамилия Имя</b>
-              <p>Автор</p>
+                <b>Фамилия Имя</b>
+                <p>Автор</p>
               </span>
               <Link className={s.avatar_link}>
                 <img src={ava} alt="Avatar" />
               </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className={s.userNav_container}>
+          <ul className={s.admin_routes}>
+            <li><NavLink>
+            Структура ТЗ
+              </NavLink></li>
+            <li><NavLink>Справочники</NavLink></li>
+            <li>
+              <NavLink>Шаблоны</NavLink>
+            </li>
+            <li>
+              <NavLink>Контент сайта</NavLink>
             </li>
           </ul>
         </div>

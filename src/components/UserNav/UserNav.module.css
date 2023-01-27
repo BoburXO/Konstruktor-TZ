@@ -1,6 +1,6 @@
 .userNav {
   width: 100%;
-  height: 72px;
+  height: max-content;
 
   background: url("../../assets/imgs/footer.png") no-repeat center center/cover;
 }
@@ -18,6 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 .til {
@@ -47,22 +48,21 @@ select option {
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-
-.userNav_right_lists{
-       display: flex;
-       gap: 30px;
+.userNav_right_lists {
+  display: flex;
+  gap: 30px;
 }
 
-.nav_avtor_content{
-       display: block;
-       color: #fff;
+.nav_avtor_content {
+  display: block;
+  color: #fff;
 }
 
 .nav_avtor_content p {
-       font-weight: 300;
-       font-size: 14px;
-       padding-top: 3px;
-       cursor: pointer;
+  font-weight: 300;
+  font-size: 14px;
+  padding-top: 3px;
+  cursor: pointer;
 }
 
 .nav_avtor_content b {
@@ -71,6 +71,25 @@ select option {
   cursor: pointer;
 }
 
-.avatar_link{
+.avatar_link {
   width: 100%;
+}
+
+.admin_routes {
+  width: 50%;
+  height: 72px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin_routes a {
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.admin_routes a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
 }
