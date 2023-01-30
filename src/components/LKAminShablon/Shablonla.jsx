@@ -23,7 +23,7 @@ const Shablonla = () => {
           <div className={s.templates_sect_parent}>
             {templates?.map((el) => {
               return (
-                <Link>
+                <Link  key={el.id}>
                   <div className={s.templates_sect_parent_card}>
                     <h1>{el.punkt}</h1>
                     <br />

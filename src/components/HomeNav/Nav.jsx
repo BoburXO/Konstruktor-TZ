@@ -26,7 +26,10 @@ const Nav = () => {
                   O'zbek
                 </option>
               </select>
-              <button className={s.nav_btn}>Личный кабинет</button>
+              <NavLink to="/lkavtor">
+                {" "}
+                <button className={s.nav_btn}>Личный кабинет</button>
+              </NavLink>
             </li>
           </ul>
         </div>

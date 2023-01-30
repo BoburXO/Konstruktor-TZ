@@ -89,7 +89,3 @@ select option {
   padding: 10px 20px;
 }
 
-.admin_routes a:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-}

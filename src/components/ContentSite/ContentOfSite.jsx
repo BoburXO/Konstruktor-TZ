@@ -23,17 +23,19 @@ const ContentOfSite = () => {
             <input type="text" placeholder="Поиск" />
           </div>
           <div className={s.content_db_labels}>
-            <p>ЗАГОЛОВОК</p>
-            <p>СФЕРА</p>
-            <p>ОПИСАНИЕ</p>
+            <p style={{textAlign:"start"}}>ЗАГОЛОВОК</p>
+            <p style={{textAlign:"start"}}>СФЕРА</p>
+            <p style={{textAlign:"start"}}>ОПИСАНИЕ</p>
             <p>ДАТА</p>
-            <p>ДЕЙСТВИЯ</p>
+            <>ДЕЙСТВИЯ</>
           </div>
           <div className={s.content_parent}>
             {contentDB?.map((el) => {
               return (
                 <div className={s.content_parent_card} key={el.id}>
-                  <b>{el.label}</b>
+                  <p>
+                    <b>{el.label}</b>
+                  </p>
                   <p>{el.sfera}</p>
                   <p>{el.desc}</p>
                   <span className={s.content_dates}>
