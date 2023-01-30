@@ -1,0 +1,194 @@
+.structure_parent {
+  width: 100%;
+  height: max-content;
+
+  display: flex;
+  font-family: Rubik;
+}
+
+.structure_left_siderbar {
+  width: 362px;
+  height: max-content;
+
+  padding: 30px;
+  color: #222222;
+}
+
+.structure_dropdown button {
+  width: 270px;
+
+  background: transparent;
+  border: none;
+  margin: 10px;
+  text-align: start;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: Rubik;
+}
+
+.structure_dropdown p {
+  padding: 16px;
+  padding-left: 25px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #222222;
+}
+
+.structure_dropdown p:hover {
+  color: #631ac0;
+}
+
+.structure_left_siderbar h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.structure_right_contents {
+  width: 100%;
+  height: max-content;
+
+  background: #dff2fe;
+  padding: 40px 0;
+}
+
+.structure_right_contents_label {
+  padding: 0 30px;
+  font-weight: 600;
+  font-size: 32px;
+}
+
+.structure_right_contents_update {
+  height: 40px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding-top: 40px;
+}
+
+.structure_right_contents_update h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.structure_right_contents_form_parent {
+  padding-left: 17%;
+  padding-top: 60px;
+}
+
+.structure_right_contents_card_punkt {
+  width: 780px;
+  height: max-content;
+
+  background: #ffffff;
+
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 24px;
+  color: #222222;
+  margin: 20px 0;
+}
+
+.structure_right_contents_card_punkt span {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+.structure_right_contents_card_punkt span p {
+  color: #631ac0;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.structure_right_contents_input_punkt {
+  width: 100%;
+  height: 48px;
+
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  padding-left: 12px;
+  outline: none;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.structure_right_contents_input_label {
+  color: rgba(34, 34, 34, 0.8);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.structure_right_contents_card_insidePunkt {
+  width: 700px;
+  height: max-content;
+
+  background: #ffffff;
+
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 24px;
+  color: #222222;
+  margin: 20px 0;
+}
+
+.structure_right_contents_card_insidePunkt span {
+  width: 100%;
+  height: 35px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+.structure_right_contents_card_insidePunkt span div {
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.structure_right_contents_card_insidePunkt span p {
+  color: #631ac0;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.structure_right_contents_input_polya_vvoda {
+  padding-left: 30px;
+}
+
+.structure_right_contents_input_polya_vvoda p {
+  padding-top: 12px;
+}
+
+.structure_add_plus {
+  width: 100%;
+  text-align: center;
+  padding-right: 70px;
+}
+
+.structure_add_plus button {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+  border: none;
+  background: #631ac0;
+  color: #fff;
+  font-size: 30px;
+  transition: 0.5s ease;
+}
+
+.structure_add_plus button:hover {
+  transform: translateY(-4px);
+  transition: 0.5s ease;
+}

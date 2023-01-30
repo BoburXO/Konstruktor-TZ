@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import LKAdminSpravochnik from "./pages/LKAdminSpravochnik/LKAdminSpravochnik";
 import LKAdminstrator from "./pages/LKAdminstratorShablon/LKAdminstrator";
 import LKavtor from "./pages/LKavtor/LKavtor";
+import Structure from "./pages/StructureTZ/Structure";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/lkadminshablon" element={<LKAdminstrator />} />
         <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
         <Route path="/contentofsite" element={<Content />} />
+        <Route path="/structure" element={<Structure />} />
       </Routes>
     </>
   );
