@@ -4,6 +4,7 @@ import search from "../../assets/icons/search.svg";
 import { spravochnik } from "../../spravochnik";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
+import Fade from "react-reveal/Fade";
 
 const Spravochnik = () => {
   return (
@@ -30,21 +31,26 @@ const Spravochnik = () => {
           <div className={s.Spravochnik_sect_creators_parent}>
             {spravochnik?.map((el) => {
               return (
-                <div className={s.Spravochnik_sect_creators_parent_cards} key={el.id}>
-                  <span className={s.Spravochnik_twink}>
-                    <p>{el.id}</p>
-                    <p>{el.title}</p>
-                  </span>
-                  <p style={{width:"10%"}}>{el.elements}</p>
-                  <div className={s.lkmain_sect_crud}>
-                    <button className={s.lkmain_sect_crud_create}>
-                      <img src={createIcon} alt="Copy" />
-                    </button>
+                <div
+                  className={s.Spravochnik_sect_creators_parent_cards}
+                  key={el.id}
+                >
+                  <Fade top cascade>
+                    <span className={s.Spravochnik_twink}>
+                      <p>{el.id}</p>
+                      <p>{el.title}</p>
+                    </span>
+                    <p style={{ width: "10%" }}>{el.elements}</p>
+                    <div className={s.lkmain_sect_crud}>
+                      <button className={s.lkmain_sect_crud_create}>
+                        <img src={createIcon} alt="Copy" />
+                      </button>
 
-                    <button className={s.lkmain_sect_crud_delete}>
-                      <img src={deleteIcon} alt="Delete" />
-                    </button>
-                  </div>
+                      <button className={s.lkmain_sect_crud_delete}>
+                        <img src={deleteIcon} alt="Delete" />
+                      </button>
+                    </div>
+                  </Fade>
                 </div>
               );
             })}

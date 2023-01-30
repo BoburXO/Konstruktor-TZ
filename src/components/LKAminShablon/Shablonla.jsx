@@ -3,6 +3,7 @@ import s from "../LKAminShablon/Shablonla.module.css";
 import search from "../../assets/icons/search.svg";
 import { templates } from "../../templates";
 import { Link } from "react-router-dom";
+import Fade from "react-reveal/Fade";
 
 const Shablonla = () => {
   return (
@@ -23,15 +24,17 @@ const Shablonla = () => {
           <div className={s.templates_sect_parent}>
             {templates?.map((el) => {
               return (
-                <Link  key={el.id}>
-                  <div className={s.templates_sect_parent_card}>
-                    <h1>{el.punkt}</h1>
-                    <br />
-                    <p>
-                      {el.desc.slice(0, 250)}
-                      {"..."}
-                    </p>
-                  </div>
+                <Link key={el.id}>
+                  <Fade top cascade>
+                    <div className={s.templates_sect_parent_card}>
+                      <h1>{el.punkt}</h1>
+                      <br />
+                      <p>
+                        {el.desc.slice(0, 250)}
+                        {"..."}
+                      </p>
+                    </div>
+                  </Fade>
                 </Link>
               );
             })}

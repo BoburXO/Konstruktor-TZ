@@ -8,6 +8,7 @@ const Structure = () => {
     <>
       <UserNav />
       <StructureComponent />
+
       <Footer />
     </>
   );
