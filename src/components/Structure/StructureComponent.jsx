@@ -10,7 +10,7 @@ const StructureComponent = () => {
   return (
     <>
       <div className={s.structure_parent}>
-        <Fade top cascade>
+        <Fade bottom cascade>
           <div className={s.structure_left_siderbar}>
             <h2>Структура</h2>
             <br />
