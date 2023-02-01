@@ -1,16 +1,16 @@
 import React from "react";
-import s from "../CreateTZ2-component/CreateTZ2.module.css";
-import create2 from "../../assets/imgs/create2.png";
+import s from "../CreateTZ1-component/CreateTZ1.module.css";
 import { Dropdown } from "rsuite";
-import { NavLink, useNavigate } from "react-router-dom";
-import arrowLeft from "../../assets/icons/arrowLeft.svg";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { templates } from "../../templates";
+import arrowBottom from "../../assets/icons/arrowBottom.svg";
 import Fade from "react-reveal/Fade";
 
-const Createtz2 = () => {
+const CreateTZ = () => {
   const navigate = useNavigate();
   return (
     <>
-      <section className={s.create2_parent}>
+      <section className={s.create1_parent}>
         <Fade top cascade>
           <div className={s.create2_left}>
             <h2>Структура справочника</h2>
@@ -187,43 +187,34 @@ const Createtz2 = () => {
               </NavLink>
             </Dropdown>
           </div>
-          <div className={s.create2_center}>
-            <button
-              onClick={() => navigate("/lkavtor")}
-              className={s.create2_center_back_btn}
-            >
-              <img src={arrowLeft} alt="" />
-              Назад к списку справочников
-            </button>
-            <h1 className={s.create2_center_title}>9. Источники разработки</h1>
-            <div className={s.create2_source}>
-              <p>Источники разработки</p>
-              <textarea rows="15">
-                — O’z DSt 1985:2018 «Информационная технология. Виды,
-                комплектность и обозначение документов при создании
-                информационных систем»; — O’z DSt 1986:2018 «Информационная
-                технология. Информационные системы. Стадии создания»; — O’z DSt
-                1987:2018 «Информационная технология. Техническое задание
-                на создание информационной системы»; — O'z DSt 1270:2009
-                «Электронный документооборот. Взаимодействие систем электронного
-                документооборота»; — O'z DSt 2298:2009 «Электронный
-                документооборот. Типовые требования»; — O’z DSt 2590:2012
-                «Требования к интеграции и взаимодействию информационных систем
-                государственных органов, используемых в рамках формирования
-                Национальной информационной системы».
-              </textarea>
-            </div>
-            <div className={s.prev_save_btns}>
-              <button onClick={() => navigate(-1)} className={s.create2_prev}>
-                Назад
-              </button>
-              <button className={s.create2_save}>Сохранить</button>
-            </div>
-          </div>
-          <div className={s.create2_right}>
+          <div className={s.craete1_center}></div>
+          <div className={s.craete1_right}>
             <h2>Компоненты технического задания</h2>
-            <h4>В данном блоке нет доступных компонентов</h4>
-            <img src={create2} alt="Create-Templates" />
+            <p>
+              Перетащите компонент на соответствующее ему поле
+              для автоматического заполнения
+            </p>
+            <div className={s.create1_punktlar}>
+              {templates?.slice(0, 3).map((el) => {
+                return (
+                  <div className={s.create1_punktlar_card} key={el.id}>
+                    <h3>{el.punkt}</h3>
+                    <p>
+                      {el.desc.slice(0, 189)}
+                      {"..."}
+                    </p>
+                    <div className={s.center}>
+                      <Link to={`/templatePunkt/${el.id}`}>
+                        <button className={s.craete1_right_btn}>
+                          Показать полностью
+                          <img src={arrowBottom} alt="Arrow-Bottom" />
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Fade>
       </section>
@@ -231,4 +222,4 @@ const Createtz2 = () => {
   );
 };
 
-export default Createtz2;
+export default CreateTZ;

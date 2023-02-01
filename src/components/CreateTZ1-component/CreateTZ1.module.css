@@ -1,0 +1,120 @@
+.create1_parent {
+  width: 100%;
+  font-family: Rubik;
+  display: flex;
+  color: #222222;
+}
+
+.create2_left {
+  width: 100%;
+  max-width: 362px;
+  height: auto;
+
+  padding: 30px;
+  color: #222222;
+}
+
+.create2_dropdown button {
+  width: 270px;
+
+  background: transparent;
+  border: none;
+  margin: 10px;
+  text-align: start;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: Rubik;
+}
+
+.create2_dropdown p {
+  padding: 16px;
+  padding-left: 25px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #222222;
+}
+
+.create2_dropdown p:hover {
+  color: #631ac0;
+}
+
+.create2_left h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.craete1_center {
+  width: 100%;
+  background: rgba(47, 128, 237, 0.1);
+}
+
+.craete1_right {
+  width: 100%;
+  max-width: 414px;
+
+  padding: 30px;
+  font-family: Rubik;
+}
+
+.craete1_right h2 {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.craete1_right p {
+  padding-top: 16px;
+  color: rgba(34, 34, 34, 0.8);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.09px;
+}
+
+.create1_punktlar {
+  width: 100%;
+  height: auto;
+
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(1, 1fr);
+  padding-top: 20px;
+}
+
+.create1_punktlar_card {
+  background: rgba(47, 128, 237, 0.1);
+  border-radius: 8px;
+  border: 2px dashed #2f80ed;
+  color: rgba(34, 34, 34, 0.6);
+  padding: 16px;
+}
+
+.center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.craete1_right_btn {
+  width: 196px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  color: #2f80ed;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.create1_punktlar_card p {
+  line-height: 21px;
+}
+
+.create1_punktlar_card h3 {
+  color: #222222;
+  font-weight: 500;
+  font-size: 14px;
+}

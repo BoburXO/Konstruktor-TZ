@@ -24,10 +24,20 @@ const Shablonla = () => {
           <div className={s.templates_sect_parent}>
             {templates?.map((el) => {
               return (
-                <Link key={el.id}>
+                <Link to={`/templatePunkt/${el.id}`} key={el.id}>
                   <Fade top cascade>
                     <div className={s.templates_sect_parent_card}>
-                      <h1>{el.punkt}</h1>
+                      <span
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          color: "#222",
+                        }}
+                      >
+                        <h1>{el.punkt}</h1>
+                        <b>...</b>
+                      </span>
                       <br />
                       <p>
                         {el.desc.slice(0, 250)}

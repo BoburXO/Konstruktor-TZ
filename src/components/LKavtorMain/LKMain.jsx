@@ -7,8 +7,10 @@ import createIcon from "../../assets/icons/createIcon.svg";
 import skacatIcon from "../../assets/icons/skacatIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import Fade from "react-reveal/Fade";
+import { useNavigate } from "react-router-dom";
 
 const LKMain = () => {
+  const navigate = useNavigate()
   return (
     <>
       <section className={s.lkmain_sect}>
@@ -16,7 +18,7 @@ const LKMain = () => {
           <Fade bottom cascade>
             <div className={s.lkmain_sect_labels}>
               <h1>Технические задания</h1>
-              <button className={s.lkmain_sect_create_btn}>
+              <button onClick={() => navigate("/createtz")} className={s.lkmain_sect_create_btn}>
                 <span style={{ fontSize: "25px" }}>+</span>
                 <span>Создать техническое задание</span>
               </button>
