@@ -10,7 +10,7 @@ import Fade from "react-reveal/Fade";
 import { useNavigate } from "react-router-dom";
 
 const LKMain = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <>
       <section className={s.lkmain_sect}>
@@ -18,7 +18,10 @@ const LKMain = () => {
           <Fade bottom cascade>
             <div className={s.lkmain_sect_labels}>
               <h1>Технические задания</h1>
-              <button onClick={() => navigate("/createtz")} className={s.lkmain_sect_create_btn}>
+              <button
+                onClick={() => navigate("/createtz")}
+                className={s.lkmain_sect_create_btn}
+              >
                 <span style={{ fontSize: "25px" }}>+</span>
                 <span>Создать техническое задание</span>
               </button>
@@ -32,7 +35,10 @@ const LKMain = () => {
             <div className={s.lkmain_sect_creators_parent}>
               {tzCreateDB?.map((el) => {
                 return (
-                  <div className={s.lkmain_sect_creators_parent_card}>
+                  <div
+                    className={s.lkmain_sect_creators_parent_card}
+                    key={el.id}
+                  >
                     <p style={{ width: "3%" }}>#{el.id}</p>
                     <p style={{ width: "55%" }}>{el.name}</p>
                     <span

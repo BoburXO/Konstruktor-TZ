@@ -111,6 +111,90 @@
   font-weight: 400;
 }
 
+.modal_parent {
+  padding: 20px;
+  font-family: Rubik;
+  color: #222;
+}
+
+.modal_parent h1 {
+  font-weight: 500;
+  font-size: 32px;
+  padding-bottom: 20px;
+}
+
+.modal_parent p {
+  padding: 15px 0;
+  font-size: 16px;
+}
+
+.modal_parent textarea {
+  width: 100%;
+  height: 240px;
+
+  font-weight: 400;
+  font-size: 16px;
+  font-family: Rubik;
+  padding: 12px;
+  color: #22222299;
+  resize: vertical;
+  outline: none;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.shablon_empty {
+  width: 100%;
+
+  height: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.shablon_btns {
+  width: 100%;
+
+  padding: 25px 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.shablon_cancel_btn {
+  width: 90px;
+  height: 48px;
+  color: rgba(34, 34, 34, 0.6);
+  border: 2px solid rgba(34, 34, 34, 0.6);
+  border-radius: 8px;
+  background: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+
+.shablon_cancel_btn:hover {
+  background: rgba(34, 34, 34, 0.6);
+  color: #fff;
+  border: none;
+  transition: 0.5s ease;
+}
+
+.shablon_save_btn{
+  width: 130px;
+  height: 48px;
+
+  border-radius: 8px;
+  border: 2px solid #0BA9CC;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: #0BA9CC;
+}
+
+.shablon_save_btn:hover{
+  background: #fff;
+  color: #0BA9CC;
+}
 
 @media all and (max-width: 1216px) {
   .templates_sect_parent {
