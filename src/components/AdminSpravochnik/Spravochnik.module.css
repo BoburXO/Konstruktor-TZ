@@ -140,11 +140,123 @@
   padding: 0 30px;
 }
 
-.Spravochnik_twink{
+.Spravochnik_twink {
   width: 43%;
   height: 70px;
 
   display: flex;
   gap: 80px;
   align-items: center;
+}
+
+.spravochnik_modal_parent {
+  padding: 0 20px;
+  font-family: Rubik;
+  color: #222;
+}
+
+.spravochnik_modal_parent h1 {
+  font-weight: 500;
+  font-size: 32px;
+  padding-bottom: 20px;
+}
+
+.spravochnik_modal_parent p {
+  padding: 15px 0;
+  font-size: 16px;
+  color: rgba(34, 34, 34, 0.8);
+}
+
+.spravochnik_empty {
+  width: 100%;
+
+  height: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.spravochnik_btns {
+  width: 100%;
+
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.spravochnik_cancel_btn {
+  width: 90px;
+  height: 48px;
+  color: rgba(34, 34, 34, 0.6);
+  border: 2px solid rgba(34, 34, 34, 0.6);
+  border-radius: 8px;
+  background: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+
+.spravochnik_cancel_btn:hover {
+  background: rgba(34, 34, 34, 0.6);
+  color: #fff;
+  border: none;
+  transition: 0.5s ease;
+}
+
+.spravochnik_save_btn {
+  width: 130px;
+  height: 48px;
+
+  border-radius: 8px;
+  border: 2px solid #0ba9cc;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: #0ba9cc;
+}
+
+.spravochnik_save_btn:hover {
+  background: #fff;
+  color: #0ba9cc;
+}
+
+.spravochnik_modal_parent input {
+  width: 100%;
+  height: 48px;
+
+  outline: none;
+  padding-left: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #222;
+}
+
+.spravochnik_modal_parent ol{
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.spravochnik_modal_parent ol li {
+  width: max-content;
+  height: 38px;
+
+  background: #2F80ED1A;
+  border: none;
+  font-family: Rubik;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.spravochnik_modal_parent ol li img{
+  cursor: pointer;
 }

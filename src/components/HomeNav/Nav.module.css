@@ -9,6 +9,10 @@
        margin: 0 auto;
 }
 
+nav ul li {
+       list-style: none;
+}
+
 .nav_ul {
        height: 72px;
        display: flex;
