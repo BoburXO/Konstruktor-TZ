@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from "./Spravochnik.module.css";
 import search from "../../assets/icons/search.svg";
 import { spravochnik } from "../../spravochnik";
@@ -8,6 +8,8 @@ import Fade from "react-reveal/Fade";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import backX from "../../assets/icons/backX.svg";
+import { addTodo,deleteTodo } from "../../redux/todoSlice";
+import { useDispatch } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -26,13 +28,27 @@ const Spravochnik = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [value, setValue] = React.useState("");
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    dispatch(
+      addTodo({
+        title: value,
+      })
+    );
+    setValue("");
+  };
+
+  
+  const dispatch = useDispatch();
   return (
     <>
       <section className={s.Spravochnik}>
         <div className={s.Spravochnik_container}>
           <div className={s.Spravochnik_label}>
             <h1>Справочники</h1>
-            <button   onClick={handleOpen} className={s.Spravochnik_label_btn}>
+            <button onClick={handleOpen} className={s.Spravochnik_label_btn}>
               <span style={{ fontSize: "25px" }}>+</span>
               <span>Создать справочник</span>
             </button>
@@ -49,39 +65,37 @@ const Spravochnik = () => {
                 <div className={s.spravochnik_modal_parent}>
                   <h1>Создание справочника</h1>
                   <p>Наименование справочника</p>
-                  <input type="text" />
+                  <input
+                    type="text"
+                  />
                   <p>Добавьте элементы справочника</p>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                  />
+                  <button disabled={!value} onClick={onSubmit}>😊</button>
                   <ol>
-                    <li>
-                      <p>1. Государственный налоговый комитет</p>
-                      <img src={backX} alt="" />
-                    </li>
-                    <li>
-                      <p>2. Государственный таможенный комитет</p>
-                      <img src={backX} alt="" />
-                    </li>
-                    <li>
-                      <p>3. Министерство финансов</p>
-                      <img src={backX} alt="" />
-                    </li>
-                    <li>
-                      <p>4. Министерство юстиций</p>
-                      <img src={backX} alt="" />
-                    </li>
-                    <li>
-                      <p>5. Министерство здравоохранения</p>
-                      <img src={backX} alt="" />
-                    </li>
-                    <li>
-                      <p>6. Узинфоком</p>
-                      <img src={backX} alt="" />
-                    </li>
+                    {JSON.parse(localStorage.getItem("todos"))?.map((el,index) => {
+                      return (
+                        <li key={index}>
+                          <p>{el.title}</p>
+                          <img onClick={() => dispatch(deleteTodo(el.title))} src={backX} alt="X" />
+                        </li>
+                      );
+                    })}
                   </ol>
                   <div className={s.spravochnik_empty}></div>
                   <div className={s.spravochnik_btns}>
-                    <button className={s.spravochnik_cancel_btn}>Отмена</button>
-                    <button className={s.spravochnik_save_btn}>Сохранить</button>
+                    <button
+                      onClick={handleClose}
+                      className={s.spravochnik_cancel_btn}
+                    >
+                      Отмена
+                    </button>
+                    <button className={s.spravochnik_save_btn}>
+                      Сохранить
+                    </button>
                   </div>
                 </div>
               </Box>

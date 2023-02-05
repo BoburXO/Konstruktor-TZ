@@ -255,6 +255,7 @@
   padding: 16px;
   gap: 10px;
   border-radius: 8px;
+  font-weight: 500;
 }
 
 .spravochnik_modal_parent ol li img{
