@@ -5,9 +5,16 @@ import { Link, NavLink } from "react-router-dom";
 import ava from "../../assets/icons/ava.png";
 
 const UserNav = () => {
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const activeStyle = {
-    background:" rgba(255, 255, 255, 0.2)",
-    borderRadius:"8px"
+    background: " rgba(255, 255, 255, 0.2)",
+    borderRadius: "8px",
   };
   return (
     <>

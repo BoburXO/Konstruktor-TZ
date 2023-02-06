@@ -17,6 +17,10 @@ footer{
        padding: 40px 0;
 }
 
+.footer_parent li{
+       list-style: none;
+}
+
 .footer_parent .twink {
        height: 32px;
 

@@ -5,13 +5,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { templates } from "../../templates";
 import arrowBottom from "../../assets/icons/arrowBottom.svg";
 import Fade from "react-reveal/Fade";
+import arrowleft from "../../assets/icons/arrowLeft.svg";
 
 const CreateTZ = () => {
   const navigate = useNavigate();
   return (
     <>
       <section className={s.create1_parent}>
-        <Fade top cascade>
+        <Fade bottom cascade>
           <div className={s.create2_left}>
             <h2>Структура справочника</h2>
             <br />
@@ -187,7 +188,145 @@ const CreateTZ = () => {
               </NavLink>
             </Dropdown>
           </div>
-          <div className={s.craete1_center}></div>
+          <div className={s.craete1_center}>
+            <span
+              onClick={() => navigate(-1)}
+              className={s.craete1_center_navigate}
+            >
+              <img src={arrowleft} alt="←" />
+              <p>Назад к списку справочников</p>
+            </span>
+            <h1>1. Общие сведения</h1>
+            <br />
+            <h3>1.1 Полное наименование ИС и её условное обозначение</h3>
+            <form className={s.craete1_center_form_parent}>
+              <div className={s.create1_form_card}>
+                <p>Полное наименование ИС</p>
+                <textarea
+                  required
+                  placeholder="Введите полное наименование ИС"
+                ></textarea>
+              </div>
+              <div className={s.create1_form_card}>
+                <p>Условное обозначение</p>
+                <input
+                  required
+                  type="text"
+                  maxLength={15}
+                  placeholder="Введите условное обозначение (максимум 15 символов)"
+                />
+              </div>
+              <br />
+              <h3>
+                1.2. Наименование организаций разработчика и заказчика Системы
+                и их реквизиты
+              </h3>
+              <div className={s.create1_form_card}>
+                <p>Заказчик</p>
+                <input
+                  required
+                  type="text"
+                  placeholder="Введите наименование разработчика"
+                />
+                <p>Адрес</p>
+                <input
+                  required
+                  type="text"
+                  placeholder="Введите адрес разработчика"
+                />
+                <div className={s.create1_form_card_twink}>
+                  <div>
+                    <p>Номер телефона</p>
+                    <input
+                      required
+                      type="number"
+                      placeholder="Номер телефона"
+                    />
+                  </div>
+                  <div>
+                    <p>Электронная почта</p>
+                    <input
+                      required
+                      type="email"
+                      placeholder="Электронная почта"
+                    />
+                  </div>
+                </div>
+                <p>Исполнитель</p>
+                <input
+                  required
+                  type="text"
+                  placeholder="Введите адрес разработчика"
+                />
+              </div>
+              <br />
+              <h3>1.3. Основание для разработки Системы</h3>
+              <div className={s.create1_form_card_from_templates}>
+                <p>Основание для разработки системы</p>
+                <textarea
+                  required
+                  placeholder="Введите основание для разработки системы"
+                ></textarea>
+              </div>
+              <br />
+              <h3>
+                1.4. Плановые сроки начала и окончания работы по разработке
+                Системы
+              </h3>
+              <div className={s.create1_form_card}>
+                <div className={s.create1_form_card_twink}>
+                  <div>
+                    <p>Срок начала</p>
+                    <input type="text" placeholder="Введите срок начала" />
+                  </div>
+                  <div>
+                    <p>Срок окончания</p>
+                    <input type="text" placeholder="Введите срок окончания" />
+                  </div>
+                </div>
+              </div>
+              <br />
+              <h3>1.5. Сведения об источниках финансирования</h3>
+              <div className={s.create1_form_card}>
+                <p>Сведения об источниках финансирования</p>
+                <textarea
+                  required
+                  placeholder="Введите  сведения об источниках финансирования"
+                ></textarea>
+              </div>
+              <br />
+              <h3>
+                1.6. Порядок оформления и предъявления заказчику результатов
+                работ
+              </h3>
+              <div className={s.create1_form_card_from_templates}>
+                <p>
+                  Порядок оформления и предъявления заказчику результатов работ
+                </p>
+                <textarea
+                  required
+                  placeholder="Введите порядок оформления и предъявления заказчику результатов работ"
+                ></textarea>
+              </div>
+              <br />
+              <h3>1.7. Порядок внесения изменений и их характер</h3>
+              <div className={s.create1_form_card_from_templates}>
+                <p>Порядок внесения изменений и их характер</p>
+                <textarea
+                  required
+                  placeholder="Введите орядок внесения изменений и их характер"
+                ></textarea>
+              </div>
+              <div className={s.create1_form_route_btn}>
+                <button onClick={() => navigate(-1)}>Назад</button>
+                <input
+                  value="Далее"
+                  type="submit"
+                  onClick={() => navigate("/createtz2")}
+                />
+              </div>
+            </form>
+          </div>
           <div className={s.craete1_right}>
             <h2>Компоненты технического задания</h2>
             <p>

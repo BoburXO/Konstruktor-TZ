@@ -4,6 +4,12 @@ import s from "./Nav.module.css";
 import logo1 from "../../assets/imgs/logo1.svg";
 
 const Nav = () => {
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <>
       <nav className={s.home_navbar}>

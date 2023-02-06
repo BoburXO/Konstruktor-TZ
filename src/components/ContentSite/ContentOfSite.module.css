@@ -128,8 +128,9 @@ span {
   width: 200px;
 }
 
-.content_parent_card .content_crud {
-  width: 100px;
+.content_crud{
+  display: flex;
+  justify-content: flex-end;
 }
 
 .content_dates {
@@ -154,7 +155,7 @@ span {
   transition: 0.5s ease;
   border: 2px solid #eb5757;
 }
-.lkmain_sect_crud button:hover {
+.content_crud button img:hover {
   transform: translateY(3px);
   transition: 0.5s ease;
 }

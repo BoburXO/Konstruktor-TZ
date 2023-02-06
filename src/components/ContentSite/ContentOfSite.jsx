@@ -27,8 +27,8 @@ const ContentOfSite = () => {
             <p style={{ textAlign: "start" }}>ЗАГОЛОВОК</p>
             <p style={{ textAlign: "start" }}>СФЕРА</p>
             <p style={{ textAlign: "start" }}>ОПИСАНИЕ</p>
-            <p>ДАТА</p>
-            <>ДЕЙСТВИЯ</>
+            <p style={{ textAlign: "end" }}>ДАТА</p>
+            <p style={{ textAlign: "end" }}>ДЕЙСТВИЯ</p>
           </div>
           <div className={s.content_parent}>
             {contentDB?.map((el) => {

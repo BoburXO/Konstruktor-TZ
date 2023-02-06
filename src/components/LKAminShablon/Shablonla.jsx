@@ -81,7 +81,7 @@ const Shablonla = () => {
                   <textarea placeholder="Введите текст шаблона"></textarea>
                   <div className={s.shablon_empty}></div>
                   <div className={s.shablon_btns}>
-                    <button className={s.shablon_cancel_btn}>Отмена</button>
+                    <button onClick={handleClose} className={s.shablon_cancel_btn}>Отмена</button>
                     <button className={s.shablon_save_btn}>Сохранить</button>
                   </div>
                 </div>

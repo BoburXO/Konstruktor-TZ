@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import s from "./Spravochnik.module.css";
 import search from "../../assets/icons/search.svg";
 import { spravochnik } from "../../spravochnik";
@@ -8,8 +8,9 @@ import Fade from "react-reveal/Fade";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import backX from "../../assets/icons/backX.svg";
-import { addTodo,deleteTodo } from "../../redux/todoSlice";
+import { addTodo, deleteTodo } from "../../redux/todoSlice";
 import { useDispatch } from "react-redux";
+import accept from "../../assets/imgs/accept.png";
 
 const style = {
   position: "absolute",
@@ -31,7 +32,7 @@ const Spravochnik = () => {
   const [value, setValue] = React.useState("");
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(
       addTodo({
         title: value,
@@ -40,7 +41,11 @@ const Spravochnik = () => {
     setValue("");
   };
 
-  
+  const setRemove = (e, title) => {
+    e.preventDefault();
+    dispatch(deleteTodo(title));
+  };
+
   const dispatch = useDispatch();
   return (
     <>
@@ -65,25 +70,38 @@ const Spravochnik = () => {
                 <div className={s.spravochnik_modal_parent}>
                   <h1>Создание справочника</h1>
                   <p>Наименование справочника</p>
-                  <input
-                    type="text"
-                  />
+                  <input type="text" />
                   <p>Добавьте элементы справочника</p>
-                  <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                  />
-                  <button disabled={!value} onClick={onSubmit}>😊</button>
+                  <div className={s.two_in_one}>
+                    <button
+                      className={s.accept}
+                      disabled={!value}
+                      onClick={onSubmit}
+                    >
+                      <img src={accept} alt="Accept" />
+                    </button>
+                    <input
+                      type="text"
+                      value={value}
+                      onChange={(e) => setValue(e.target.value)}
+                    />
+                  </div>
+
                   <ol>
-                    {JSON.parse(localStorage.getItem("todos"))?.map((el,index) => {
-                      return (
-                        <li key={index}>
-                          <p>{el.title}</p>
-                          <img onClick={() => dispatch(deleteTodo(el.title))} src={backX} alt="X" />
-                        </li>
-                      );
-                    })}
+                    {JSON.parse(localStorage.getItem("todos"))?.map(
+                      (el, index) => {
+                        return (
+                          <li key={index}>
+                            <p>{el.title}</p>
+                            <img
+                              onClick={(e) => setRemove(e, el.title)}
+                              src={backX}
+                              alt="X"
+                            />
+                          </li>
+                        );
+                      }
+                    )}
                   </ol>
                   <div className={s.spravochnik_empty}></div>
                   <div className={s.spravochnik_btns}>

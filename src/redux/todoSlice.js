@@ -16,11 +16,12 @@ const todoSlice = createSlice({
       localStorage.setItem("todos", JSON.stringify(state));
     },
     deleteTodo: (state, action) => {
-      const filteredArr = state.filter((el) => {
+      const filteredArr = state?.filter((el) => {
         return el.title !== action.payload;
       });
-      state = filteredArr;
-      localStorage.setItem("todos", JSON.stringify(filteredArr));
+      localStorage.setItem("todos", JSON.stringify(filteredArr))
+      window.location.reload()
+      return filteredArr;
     },
   },
 });
