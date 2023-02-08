@@ -3,6 +3,7 @@ import s from "../UserNav/UserNav.module.css";
 import logofff from "../../assets/imgs/logofff.svg";
 import { Link, NavLink } from "react-router-dom";
 import ava from "../../assets/icons/ava.png";
+import { useTranslation } from "react-i18next";
 
 const UserNav = () => {
   React.useEffect(() => {
@@ -11,6 +12,11 @@ const UserNav = () => {
       behavior: "smooth",
     });
   }, []);
+
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
 
   const activeStyle = {
     background: " rgba(255, 255, 255, 0.2)",
@@ -27,7 +33,11 @@ const UserNav = () => {
               </Link>
             </li>
             <li className={s.userNav_right_lists}>
-              <select className={s.til} name="language">
+              <select
+                onChange={(e) => changeLanguage(e.target.value)}
+                className={s.til}
+                name="language"
+              >
                 <option className={s.til__opt} value="ru">
                   Русский
                 </option>
@@ -53,7 +63,7 @@ const UserNav = () => {
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
                 to="/structure"
               >
-                Структура ТЗ
+                {t("usernav")}
               </NavLink>
             </li>
             <li>
@@ -61,7 +71,7 @@ const UserNav = () => {
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
                 to="/lkadminspravochnik"
               >
-                Справочники
+                {t("usernav1")}
               </NavLink>
             </li>
             <li>
@@ -69,7 +79,7 @@ const UserNav = () => {
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
                 to="/lkadminshablon"
               >
-                Шаблоны
+                {t("usernav2")}
               </NavLink>
             </li>
             <li>
@@ -77,7 +87,7 @@ const UserNav = () => {
                 style={({ isActive }) => (isActive ? activeStyle : undefined)}
                 to="/contentofsite"
               >
-                Контент сайта
+                {t("usernav3")}
               </NavLink>
             </li>
           </ul>

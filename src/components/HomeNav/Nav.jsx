@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 import logo1 from "../../assets/imgs/logo1.svg";
+import { useTranslation } from "react-i18next";
 
 const Nav = () => {
   React.useEffect(() => {
@@ -10,6 +11,11 @@ const Nav = () => {
       behavior: "smooth",
     });
   }, []);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
+
   return (
     <>
       <nav className={s.home_navbar}>
@@ -22,9 +28,9 @@ const Nav = () => {
             </li>
             <li className={s.nav_links}>
               <NavLink to="/" className={s.contact_link}>
-                Контакты
+                {t("nav1")}
               </NavLink>
-              <select className={s.til} name="language">
+              <select onChange={(e) => changeLanguage(e.target.value)} className={s.til} name="language">
                 <option className={s.til__opt} value="ru">
                   Русский
                 </option>
@@ -34,7 +40,7 @@ const Nav = () => {
               </select>
               <NavLink to="/lkavtor">
                 {" "}
-                <button className={s.nav_btn}>Личный кабинет</button>
+                <button className={s.nav_btn}>{t("nav2")}</button>
               </NavLink>
             </li>
           </ul>

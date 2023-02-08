@@ -6,15 +6,20 @@ import { templates } from "../../templates";
 import arrowBottom from "../../assets/icons/arrowBottom.svg";
 import Fade from "react-reveal/Fade";
 import arrowleft from "../../assets/icons/arrowLeft.svg";
+import { useTranslation } from "react-i18next";
 
 const CreateTZ = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   return (
     <>
       <section className={s.create1_parent}>
         <Fade bottom cascade>
           <div className={s.create2_left}>
-            <h2>Структура справочника</h2>
+            <h2>{t("createtz")}</h2>
             <br />
             <br />
             <Dropdown className={s.create2_dropdown} title="1- Общие сведения">
@@ -194,17 +199,17 @@ const CreateTZ = () => {
               className={s.craete1_center_navigate}
             >
               <img src={arrowleft} alt="←" />
-              <p>Назад к списку справочников</p>
+              <p>{t("createtz1")}</p>
             </span>
             <h1>1. Общие сведения</h1>
             <br />
             <h3>1.1 Полное наименование ИС и её условное обозначение</h3>
             <form className={s.craete1_center_form_parent}>
               <div className={s.create1_form_card}>
-                <p>Полное наименование ИС</p>
+                <p>{t("createtz2")}</p>
                 <textarea
                   required
-                  placeholder="Введите полное наименование ИС"
+                  placeholder={t("createtz3")}
                 ></textarea>
               </div>
               <div className={s.create1_form_card}>

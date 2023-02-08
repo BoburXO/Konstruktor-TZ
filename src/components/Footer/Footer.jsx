@@ -9,8 +9,13 @@ import location from "../../assets/icons/location.svg";
 import mail from "../../assets/icons/Mail.svg";
 import phone from "../../assets/icons/phone.svg";
 import telegram from "../../assets/icons/telegram.svg";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   return (
     <>
       <footer>
@@ -24,12 +29,11 @@ const Footer = () => {
             <li className={s.twink3}>
               <img src={logodots} alt="" />
               <p>
-                Сайт разработан Центром управления <br /> проектами Электронного
-                Правительства
+              {t("footer1")}
               </p>
             </li>
             <li className={s.phone_style}>
-              <h6>Контакты</h6>
+              <h6>{t("footer2")}</h6>
               <span className={s.twink} style={{ paddingLeft: "5px" }}>
                 <img style={{ width: "20px" }} src={mail} alt="" />
                 <p>info@egov.uz</p>
@@ -46,7 +50,7 @@ const Footer = () => {
               </span>
             </li>
             <li  className={s.phone_style}>
-              <h6>Мы в соцсетях</h6>
+              <h6>{t("footer3")}</h6>
               <a href="https://www.facebook.com/">
                 <span className={s.twink}>
                   <img src={facebook} alt="" />
@@ -69,15 +73,14 @@ const Footer = () => {
             <li className={s.twink2}>
               <img src={logodots} alt="" />
               <p>
-                Сайт разработан Центром управления <br /> проектами Электронного
-                Правительства
+              {t("footer1")}
               </p>
             </li>
           </ul>
           <hr />
           <div className={s.footer_center_content}>
             <p>
-              2022 © tz.egov.uz <br /> Все права защищены
+              2022 © tz.egov.uz <br /> {t("footer4")}
             </p>
           </div>
         </div>

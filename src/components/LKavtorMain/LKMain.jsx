@@ -8,8 +8,13 @@ import skacatIcon from "../../assets/icons/skacatIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import Fade from "react-reveal/Fade";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const LKMain = () => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   const navigate = useNavigate();
   return (
     <>
@@ -17,20 +22,20 @@ const LKMain = () => {
         <div className={s.lkmain_sect_container}>
           <Fade bottom cascade>
             <div className={s.lkmain_sect_labels}>
-              <h1>Технические задания</h1>
+              <h1>{t("lkavtor")}</h1>
               <button
                 onClick={() => navigate("/createtz")}
                 className={s.lkmain_sect_create_btn}
               >
                 <span style={{ fontSize: "25px" }}>+</span>
-                <span>Создать техническое задание</span>
+                <span>{t("lkavtor1")}</span>
               </button>
             </div>
             <div className={s.lkmain_sect_creators_labels}>
               <p style={{ width: "3%" }}>ID</p>
-              <p style={{ width: "55%" }}>НАИМЕНОВАНИЕ ТЕХНИЧЕСКОГО ЗАДАНИЯ</p>
-              <p style={{ width: "27%" }}>ДАТА СОЗДАНИЯ</p>
-              <p style={{ width: "7%" }}>ДЕЙСТВИЯ</p>
+              <p style={{ width: "55%" }}>{t("lkavtor2")}</p>
+              <p style={{ width: "27%" }}>{t("lkavtor3")}</p>
+              <p style={{ width: "7%" }}>{t("lkavtor4")}</p>
             </div>
             <div className={s.lkmain_sect_creators_parent}>
               {tzCreateDB?.map((el) => {

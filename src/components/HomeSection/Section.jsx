@@ -4,14 +4,19 @@ import download from "../../assets/icons/download.svg";
 import { tzDB } from "../../tzDB";
 import { Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
+import { useTranslation } from "react-i18next";
 
 const Section = () => {
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (language) => {
+    i18n.changeLanguage(language);
+  };
   return (
     <>
       <section className={s.home_section}>
         <div className={s.container}>
           <Fade bottom cascade>
-            <h1 className={s.home_section_label}>Национальные стандарты</h1>
+            <h1 className={s.home_section_label}>{t("hsection")}</h1>
             <div className={s.home_section_parent}>
               {tzDB?.map((el) => {
                 return (
@@ -21,10 +26,10 @@ const Section = () => {
                         <h2>{el.date}</h2>
                         <p>Информационная технология</p>
                       </div>
-                      <Link>
+                      <a href="#" download>
                         {" "}
                         <img src={download} alt="" />
-                      </Link>
+                      </a>
                     </div>
                     <div className={s.home_section_card_body}>
                       <h3>{el.title}</h3>
