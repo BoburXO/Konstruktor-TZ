@@ -6,15 +6,17 @@ import date from "../../assets/icons/dateIcon.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import Fade from "react-reveal/Fade";
+import { useNavigate } from "react-router-dom";
 
 const ContentOfSite = () => {
+  const navigate = useNavigate()
   return (
     <>
       <section className={s.content_of_site}>
         <div className={s.content_of_site_container}>
           <div className={s.content_of_site_label}>
             <h1>Контент сайта</h1>
-            <button className={s.content_of_site_label_btn}>
+            <button onClick={() => navigate("/addcontent")} className={s.content_of_site_label_btn}>
               <span style={{ fontSize: "25px" }}>+</span>
               <span>Добавить контент </span>
             </button>

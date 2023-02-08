@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import AddContent from "./pages/AddContent/AddContent";
 import Content from "./pages/ContentOfSite/Content";
 import CreateTZ from "./pages/CreateTZ/CreateTZ";
 import CreateTZ2 from "./pages/CreateTZ2/CreateTZ2";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/createtz" element={<CreateTZ />} />
         <Route path="/createtz2" element={<CreateTZ2 />} />
         <Route path="/templatePunkt/:id" element={<Templates/>}/>
+        <Route path="/addcontent" element={<AddContent/>}/>
       </Routes>
     </>
   );
