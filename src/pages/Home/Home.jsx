@@ -8,7 +8,6 @@ import "../Home/Home.module.css";
 const Home = () => {
   return (
     <>
-    <Nav/>
     <Header/>
     <Section/>
     <Footer/>

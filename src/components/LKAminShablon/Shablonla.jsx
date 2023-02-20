@@ -11,6 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useTranslation } from "react-i18next";
 
 const style = {
   position: "absolute",
@@ -34,18 +35,20 @@ const Shablonla = () => {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
+  const {t} = useTranslation()
   return (
     <>
       <section className={s.templates_sect}>
         <div className={s.templates_sect_container}>
           <div className={s.templates_sect_label}>
-            <h1>Шаблоны</h1>
+            <h1>{t("shablon")}</h1>
             <button
               onClick={handleOpen}
               className={s.templates_sect_create_btn}
             >
               <span style={{ fontSize: "25px" }}>+</span>
-              <span>Создать шаблон</span>
+              <span>{t("shablon1")}</span>
             </button>
             <Modal
               open={open}
@@ -58,12 +61,12 @@ const Shablonla = () => {
                   <img onClick={handleClose} src={backX} alt="" />
                 </div>
                 <div className={s.modal_parent}>
-                  <h1>Создание шаблона</h1>
-                  <p>Пункт технического задания</p>
+                  <h1>{t("shablon2")}</h1>
+                  <p>{t("shablon3")}</p>
 
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
-                      Выберите пункт
+                      {t("shablon4")}
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
@@ -77,12 +80,12 @@ const Shablonla = () => {
                       <MenuItem value={30}>Thirty</MenuItem>
                     </Select>
                   </FormControl>
-                  <p>Текст шаблона</p>
-                  <textarea placeholder="Введите текст шаблона"></textarea>
+                  <p>{t("shablon5")}</p>
+                  <textarea placeholder={t("shablon6")}></textarea>
                   <div className={s.shablon_empty}></div>
                   <div className={s.shablon_btns}>
-                    <button onClick={handleClose} className={s.shablon_cancel_btn}>Отмена</button>
-                    <button className={s.shablon_save_btn}>Сохранить</button>
+                    <button onClick={handleClose} className={s.shablon_cancel_btn}>{t("btn.5")}</button>
+                    <button className={s.shablon_save_btn}>{t("btn.4")}</button>
                   </div>
                 </div>
               </Box>
@@ -90,7 +93,7 @@ const Shablonla = () => {
           </div>
           <div className={s.input_field}>
             <img className={s.S_icon} src={search} alt="Search" />
-            <input type="text" placeholder="Поиск" />
+            <input type="text" placeholder={t("spra5")} />
           </div>
           <div className={s.templates_sect_parent}>
             {templates?.map((el) => {
@@ -106,7 +109,7 @@ const Shablonla = () => {
                           color: "#222",
                         }}
                       >
-                        <h1>{el.punkt}</h1>
+                        <h1>{t("struc5")} {el.punkt}</h1>
                         <b>...</b>
                       </span>
                       <br />

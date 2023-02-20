@@ -71,8 +71,10 @@ select option {
   cursor: pointer;
 }
 
-.avatar_link {
-  width: 100%;
+.avatar_link  img{
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
 }
 
 .admin_routes {

@@ -1,5 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import Nav from "./components/HomeNav/Nav";
+import UserNav from "./components/UserNav/UserNav";
 import AddContent from "./pages/AddContent/AddContent";
 import Content from "./pages/ContentOfSite/Content";
 import CreateTZ from "./pages/CreateTZ/CreateTZ";
@@ -12,8 +14,14 @@ import Structure from "./pages/StructureTZ/Structure";
 import Templates from "./Params/Templates/Templates";
 
 function App() {
+  const [isUser,setIsUser] = React.useState(true);
   return (
     <>
+   {isUser ? (
+     <UserNav/>
+   ):(
+    <Nav/>
+   )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/lkavtor" element={<LKavtor />} />

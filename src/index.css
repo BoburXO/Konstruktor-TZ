@@ -8,3 +8,7 @@
 button{
   cursor: pointer;
 }
+
+textarea, input{
+  outline: none;
+}

@@ -11,6 +11,7 @@ import backX from "../../assets/icons/backX.svg";
 import { addTodo, deleteTodo } from "../../redux/todoSlice";
 import { useDispatch } from "react-redux";
 import accept from "../../assets/imgs/accept.png";
+import { useTranslation } from "react-i18next";
 
 const style = {
   position: "absolute",
@@ -30,6 +31,7 @@ const Spravochnik = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [value, setValue] = React.useState("");
+  const {t} = useTranslation()
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -52,10 +54,10 @@ const Spravochnik = () => {
       <section className={s.Spravochnik}>
         <div className={s.Spravochnik_container}>
           <div className={s.Spravochnik_label}>
-            <h1>Справочники</h1>
+            <h1>{t("spra")}</h1>
             <button onClick={handleOpen} className={s.Spravochnik_label_btn}>
               <span style={{ fontSize: "25px" }}>+</span>
-              <span>Создать справочник</span>
+              <span>{t("spra1")}</span>
             </button>
             <Modal
               open={open}
@@ -68,10 +70,10 @@ const Spravochnik = () => {
                   <img onClick={handleClose} src={backX} alt="" />
                 </div>
                 <div className={s.spravochnik_modal_parent}>
-                  <h1>Создание справочника</h1>
-                  <p>Наименование справочника</p>
+                  <h1>{t("spra2")}</h1>
+                  <p>{t("spra3")}</p>
                   <input type="text" />
-                  <p>Добавьте элементы справочника</p>
+                  <p>{t("spra4")}</p>
                   <div className={s.two_in_one}>
                     <button
                       className={s.accept}
@@ -109,10 +111,10 @@ const Spravochnik = () => {
                       onClick={handleClose}
                       className={s.spravochnik_cancel_btn}
                     >
-                      Отмена
+                      {t("btn.5")}
                     </button>
                     <button className={s.spravochnik_save_btn}>
-                      Сохранить
+                     {t("btn.4")}
                     </button>
                   </div>
                 </div>
@@ -121,13 +123,13 @@ const Spravochnik = () => {
           </div>
           <div className={s.input_field}>
             <img className={s.S_icon} src={search} alt="Search" />
-            <input type="text" placeholder="Поиск" />
+            <input type="text" placeholder={t("spra5")} />
           </div>
           <div className={s.Spravochnik_cards_labels}>
             <p style={{ width: "3%" }}>№</p>
-            <p style={{ width: "55%" }}>НАИМЕНОВАНИЕ СПРАВОЧНИКА</p>
-            <p style={{ width: "27%" }}>КОЛИЧЕСТВО ЭЛЕМЕНТОВ</p>
-            <p style={{ width: "7%" }}>ДЕЙСТВИЯ</p>
+            <p style={{ width: "55%" }}>{t("spra6")}</p>
+            <p style={{ width: "27%" }}>{t("spra7")}</p>
+            <p style={{ width: "7%" }}>{t("spra8")}</p>
           </div>
           <div className={s.Spravochnik_sect_creators_parent}>
             {spravochnik?.map((el) => {
@@ -141,7 +143,7 @@ const Spravochnik = () => {
                       <p>{el.id}</p>
                       <p>{el.title}</p>
                     </span>
-                    <p style={{ width: "10%" }}>{el.elements}</p>
+                    <p style={{ width: "10%" }}>{t("spra9")} {el.elements}</p>
                     <div className={s.lkmain_sect_crud}>
                       <button className={s.lkmain_sect_crud_create}>
                         <img src={createIcon} alt="Copy" />

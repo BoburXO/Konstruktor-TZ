@@ -5,9 +5,11 @@ import { Dropdown } from "rsuite";
 import { NavLink, useNavigate } from "react-router-dom";
 import arrowLeft from "../../assets/icons/arrowLeft.svg";
 import Fade from "react-reveal/Fade";
+import { useTranslation } from "react-i18next";
 
 const Createtz2 = () => {
   const navigate = useNavigate();
+  const {t} = useTranslation()
   return (
     <>
       <section className={s.create2_parent}>
@@ -193,11 +195,11 @@ const Createtz2 = () => {
               className={s.create2_center_back_btn}
             >
               <img src={arrowLeft} alt="" />
-              Назад к списку справочников
+            {t("createtz1")}
             </button>
             <h1 className={s.create2_center_title}>9. Источники разработки</h1>
             <div className={s.create2_source}>
-              <p>Источники разработки</p>
+              <p>{t("createtz28")}</p>
               <textarea rows="15">
                 — O’z DSt 1985:2018 «Информационная технология. Виды,
                 комплектность и обозначение документов при создании
@@ -215,14 +217,14 @@ const Createtz2 = () => {
             </div>
             <div className={s.prev_save_btns}>
               <button onClick={() => navigate(-1)} className={s.create2_prev}>
-                Назад
+                {t("btn.1")}
               </button>
-              <button className={s.create2_save}>Сохранить</button>
+              <button className={s.create2_save}>{t("btn.4")}</button>
             </div>
           </div>
           <div className={s.create2_right}>
-            <h2>Компоненты технического задания</h2>
-            <h4>В данном блоке нет доступных компонентов</h4>
+            <h2>{t("createtz29")}</h2>
+            <h4>{t("createtz30")}</h4>
             <img src={create2} alt="Create-Templates" />
           </div>
         </Fade>

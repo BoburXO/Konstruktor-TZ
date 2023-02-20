@@ -5,14 +5,16 @@ import { Link, NavLink } from "react-router-dom";
 import pen from "../../assets/icons/pen.svg";
 import add from "../../assets/icons/plus-add.svg";
 import Fade from "react-reveal/Fade";
+import { useTranslation } from "react-i18next";
 
 const StructureComponent = () => {
+  const {t} = useTranslation()
   return (
     <>
       <div className={s.structure_parent}>
         <Fade bottom cascade>
           <div className={s.structure_left_siderbar}>
-            <h2>Структура</h2>
+            <h2>{t("struc")}</h2>
             <br />
             <br />
             <Dropdown
@@ -194,22 +196,24 @@ const StructureComponent = () => {
           </div>
           <div className={s.structure_right_contents}>
             <h1 className={s.structure_right_contents_label}>
-              Структура технического задания
+              {t("struc1")}
             </h1>
             <span className={s.structure_right_contents_update}>
-              <h2>Наименование технического задания</h2>
+              <h2>
+                {t("struc2")}
+                </h2>
               <img src={pen} alt="Update" />
             </span>
             <div className={s.structure_right_contents_form_parent}>
               <div className={s.structure_right_contents_card_punkt}>
                 <span>
-                  <p>Пункт 1</p>
+                  <p>{t("struc5")} 1</p>
                   <Link>
                     <img src={pen} alt="Изменить" />
                   </Link>
                 </span>
                 <p className={s.structure_right_contents_input_label}>
-                  Заголовок пункта
+                 {t("struc3")}
                 </p>
                 <input
                   type="text"
@@ -219,7 +223,7 @@ const StructureComponent = () => {
               </div>
               <div className={s.structure_right_contents_card_insidePunkt}>
                 <span>
-                  <p>Пункт 1.1</p>
+                  <p>{t("struc5")} 1.1</p>
                   <div>
                     <Link>
                       <img src={pen} alt="Изменить" />
@@ -230,7 +234,7 @@ const StructureComponent = () => {
                   </div>
                 </span>
                 <p className={s.structure_right_contents_input_label}>
-                  Заголовок пункта
+                {t("struc3")}
                 </p>
                 <input
                   type="text"
@@ -239,7 +243,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -247,7 +251,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -258,7 +262,7 @@ const StructureComponent = () => {
               </div>
               <div className={s.structure_right_contents_card_insidePunkt}>
                 <span>
-                  <p>Пункт 1.2</p>
+                  <p>{t("struc5")} 1.2</p>
                   <div>
                     <Link>
                       <img src={pen} alt="Изменить" />
@@ -275,7 +279,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -283,7 +287,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -291,7 +295,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -299,7 +303,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -310,7 +314,7 @@ const StructureComponent = () => {
               </div>
               <div className={s.structure_right_contents_card_insidePunkt}>
                 <span>
-                  <p>Пункт 1.3</p>
+                  <p>{t("struc5")} 1.3</p>
                   <div>
                     <Link>
                       <img src={pen} alt="Изменить" />
@@ -327,7 +331,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -338,7 +342,7 @@ const StructureComponent = () => {
               </div>
               <div className={s.structure_right_contents_card_insidePunkt}>
                 <span>
-                  <p>Пункт 1.4</p>
+                  <p>{t("struc5")} 1.4</p>
                   <div>
                     <Link>
                       <img src={pen} alt="Изменить" />
@@ -355,7 +359,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -363,7 +367,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -371,7 +375,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -382,7 +386,7 @@ const StructureComponent = () => {
               </div>
               <div className={s.structure_right_contents_card_insidePunkt}>
                 <span>
-                  <p>Пункт 1.5</p>
+                  <p>{t("struc5")} 1.5</p>
                   <div>
                     <Link>
                       <img src={pen} alt="Изменить" />
@@ -399,7 +403,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                    Поле ввода
+                  {t("struc4")}
                   </p>
                   <input
                     type="text"

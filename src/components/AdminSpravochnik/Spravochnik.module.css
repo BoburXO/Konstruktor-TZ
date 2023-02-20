@@ -27,7 +27,7 @@
 }
 
 .Spravochnik_label_btn {
-  width: 173px;
+  width: 180px;
   height: 40px;
 
   display: flex;
@@ -184,7 +184,7 @@
 }
 
 .spravochnik_cancel_btn {
-  width: 90px;
+  width: 120px;
   height: 48px;
   color: rgba(34, 34, 34, 0.6);
   border: 2px solid rgba(34, 34, 34, 0.6);
