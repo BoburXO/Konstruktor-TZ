@@ -72,12 +72,40 @@
   "spra6":"MA'LUMOTNOMA NOMLARI",
   "spra7":"ELEMENTLAR SONI",
   "spra8":"HARAKATLAR",
-  "spra9":"element:",
+  "spra9":"ta element",
   "shablon":"Shablonlar",
   "shablon1":"Shablon yaratish",
   "shablon2":"Shablon yaratilishi",
   "shablon3":"Texnik topshiriqlar punkti",
   "shablon4":"Punkt tanlang",
   "shablon5":"Shablon matni",
-  "shablon6":"Shablon matnini kiriting"
+  "shablon6":"Shablon matnini kiriting",
+  "content-site":{
+    "1":"Sayt tarkibi",
+    "2":"Kontent qo'shish",
+    "3":"Qidirish",
+    "4":"Sarlavha",
+    "5":"SFERA",
+    "6":"TAVSIF",
+    "7":"SANA",
+    "8":"HARAKATLAR"
+  },
+  "add-content":{
+    "1":"Kontent ro'yxatiga qaytish",
+    "2":"Kontent qo'shish",
+    "3":"Sarlavha",
+    "4":"Sfera",
+    "5":"Axborot texnologiyalari",
+    "6":"Ekspertiza",
+    "7":"Loyihalar",
+    "8":"Infratuzilma",
+    "9":"Tavsif",
+    "10":"Hujjat fayli",
+    "11":"Faylni yuklang yoki",
+    "12":"kompyuterdan",
+    "13":"tanlang",
+    "14": "Sana",
+    "15": "Qoralama holatda saqlash",
+    "16": "Nashr qilish"
+  }
 }

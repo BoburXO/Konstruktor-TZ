@@ -7,30 +7,32 @@ import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import Fade from "react-reveal/Fade";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ContentOfSite = () => {
   const navigate = useNavigate()
+  const {t} = useTranslation();
   return (
     <>
       <section className={s.content_of_site}>
         <div className={s.content_of_site_container}>
           <div className={s.content_of_site_label}>
-            <h1>Контент сайта</h1>
+            <h1>{t("content-site.1")}</h1>
             <button onClick={() => navigate("/addcontent")} className={s.content_of_site_label_btn}>
               <span style={{ fontSize: "25px" }}>+</span>
-              <span>Добавить контент </span>
+              <span>{t("content-site.2")}</span>
             </button>
           </div>
           <div className={s.input_field}>
             <img className={s.S_icon} src={search} alt="Search" />
-            <input type="text" placeholder="Поиск" />
+            <input type="text" placeholder={t("content-site.3")} />
           </div>
           <div className={s.content_db_labels}>
-            <p style={{ textAlign: "start" }}>ЗАГОЛОВОК</p>
-            <p style={{ textAlign: "start" }}>СФЕРА</p>
-            <p style={{ textAlign: "start" }}>ОПИСАНИЕ</p>
-            <p style={{ textAlign: "end" }}>ДАТА</p>
-            <p style={{ textAlign: "end" }}>ДЕЙСТВИЯ</p>
+            <p style={{ textAlign: "start" }}>{t("content-site.4")}</p>
+            <p style={{ textAlign: "start" }}>{t("content-site.5")}</p>
+            <p style={{ textAlign: "start" }}>{t("content-site.6")}</p>
+            <p style={{ textAlign: "end" }}>{t("content-site.7")}</p>
+            <p style={{ textAlign: "end" }}>{t("content-site.8")}</p>
           </div>
           <div className={s.content_parent}>
             {contentDB?.map((el) => {

@@ -143,7 +143,7 @@ const Spravochnik = () => {
                       <p>{el.id}</p>
                       <p>{el.title}</p>
                     </span>
-                    <p style={{ width: "10%" }}>{t("spra9")} {el.elements}</p>
+                    <p style={{ width: "10%" }}>{el.elements} {t("spra9")}</p>
                     <div className={s.lkmain_sect_crud}>
                       <button className={s.lkmain_sect_crud_create}>
                         <img src={createIcon} alt="Copy" />

@@ -4,12 +4,12 @@ import arrowLeft from "../../assets/icons/arrowLeft.svg";
 import { useNavigate } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import JoditEditor from "jodit-react";
+import { useTranslation } from "react-i18next";
 
 const AddContentComp = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-
-
+  const {t} = useTranslation();
   const navigate = useNavigate();
   return (
     <>
@@ -19,35 +19,35 @@ const AddContentComp = () => {
             <div className={s.AddContent_labels}>
               <span onClick={() => navigate("/contentofsite")}>
                 <img src={arrowLeft} alt="←" />
-                <p>Назад к списку контента</p>
+                <p>{t("add-content.1")}</p>
               </span>
-              <h1>Добавить контент</h1>
+              <h1>{t("add-content.2")}</h1>
             </div>
             <div className={s.AddContent_parent}>
               <div className={s.AddContent_left}>
-                <p>Заголовок</p>
+                <p>{t("add-content.3")}</p>
                 <input type="text" defaultValue="O‘z DSt 1987:2018" />
                 <div className={s.AddContent_sfera}>
-                  <p>Сфера</p>
+                  <p>{t("add-content.4")}</p>
                   <div className={s.AddContent_sfera_routes}>
-                    <button>Информационные технологии</button>
-                    <button>Экспертиза</button>
-                    <button>Проекты</button>
-                    <button>Инфраструктура</button>
+                    <button>{t("add-content.5")}</button>
+                    <button>{t("add-content.6")}</button>
+                    <button>{t("add-content.7")}</button>
+                    <button>{t("add-content.8")}</button>
                   </div>
                 </div>
                 <div className={s.AddContent_left_desc}>
-                  <p>Описание</p>
+                  <p>{t("add-content.9")}</p>
                   <input
                     type="text"
                     defaultValue="Техническое задание на создание информационной системы"
                   />
                 </div>
-                <p>Файл документа</p>
+                <p>{t("add-content.10")}</p>
                 <div className={s.AddContent_left_file}>
                   <input type="file" id="file" />
                   <label htmlFor="file">
-                    Перетащите файл, или <span>выберите с</span> компьютера
+                    {t("add-content.11")} <span>{t("add-content.12")}</span> {t("add-content.13")}
                   </label>
                 </div>
                 <JoditEditor
@@ -58,10 +58,10 @@ const AddContentComp = () => {
                 />
               </div>
               <div className={s.AddContent_right}>
-                <h4>Дата</h4>
+                <h4>{t("add-content.14")}</h4>
                 <input type="datetime-local" />
-                <button className={s.chernovik}>Сохранить черновик</button>
-                <button className={s.share}>Опубликовать</button>
+                <button className={s.chernovik}>{t("add-content.15")}</button>
+                <button className={s.share}>{t("add-content.15")}</button>
               </div>
             </div>
           </div>

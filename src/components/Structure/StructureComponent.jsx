@@ -215,9 +215,19 @@ const StructureComponent = () => {
                 <p className={s.structure_right_contents_input_label}>
                  {t("struc3")}
                 </p>
+                <br />
+                RU:
                 <input
                   type="text"
                   value="Общие сведения"
+                  className={s.structure_right_contents_input_punkt}
+                />
+                <br />
+                <br />
+                UZ:
+                 <input
+                  type="text"
+                  value="Umumiy nomlar"
                   className={s.structure_right_contents_input_punkt}
                 />
               </div>
