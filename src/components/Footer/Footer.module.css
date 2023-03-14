@@ -21,7 +21,7 @@ footer{
        list-style: none;
 }
 
-.footer_parent .twink {
+.footer_parent .twinkk {
        height: 32px;
 
        display: flex;
@@ -36,13 +36,13 @@ footer{
        padding-bottom: 16px;
 }
 
-.twink p {
+.twinkk p {
        font-size: 14px;
        font-weight: 400;
        color: rgba(255, 255, 255, 0.671);
 }
 
-.twink2,.twink3{
+.twinkk2,.twinkk3{
        padding-top: 10px;
        display: flex;
        align-items: flex-start;
@@ -50,17 +50,17 @@ footer{
        gap: 20px;
 }
 
-.twink3{
+.twinkk3{
        display: none;
 }
 
-.twink2 p, .twink3 p {
+.twinkk2 p, .twinkk3 p {
        font-size: 13px;
        font-weight: 300;
        color: rgba(255, 255, 255, 0.671);
 }
 
-.twink img {
+.twinkk img {
        width: 30px;
        height: 30px;
 }
@@ -102,10 +102,10 @@ footer{
        .footer_parent{
               grid-template-columns: repeat(2,1fr);
        }
-       .twink2{
+       .twinkk2{
               display: none;
        }
-       .twink3{
+       .twinkk3{
               display: flex;
               padding-top: 0;
        }
@@ -119,7 +119,7 @@ footer{
               width: 200px;
               margin-right: 20px;
        }
-       .twink3 p {
+       .twinkk3 p {
               font-size: 10px;
               font-weight: 300;
               color: rgba(255, 255, 255, 0.671);
@@ -129,7 +129,7 @@ footer{
               font-size: 14px;
        }
 
-       .twink p {
+       .twinkk p {
               font-size: 10px;
        }
 }
@@ -139,9 +139,12 @@ footer{
        .footer_parent{
               grid-template-columns: repeat(1,1fr);
        }
-        .twink3 {
-              justify-content: center;
+        .twinkk3 {
+              width: 100%;
+              display: block;
+              text-align: center;
               margin-top: 10px;
+              padding: 0 40px;
        }
        .logofff_link img{
               width: 70%;
@@ -156,7 +159,8 @@ footer{
               text-align: center;
               width: 100%;
        }
-       .footer_parent .twink {
+       .footer_parent .twinkk {
+              width: 100%;
               height: 50px;
               
               display: block;

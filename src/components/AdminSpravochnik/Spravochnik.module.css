@@ -291,3 +291,16 @@
   width: 100%;
   padding: 10px;
 }
+
+
+.checkbox_active{
+  position: relative;
+  left: -18%;
+}
+
+.switch_toggle{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  left: -11%;
+}

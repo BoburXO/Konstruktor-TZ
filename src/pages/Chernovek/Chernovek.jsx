@@ -1,5 +1,5 @@
 import React from "react";
-import s from "../ContentSite/ContentOfSite.module.css";
+import s from "../Chernovek/chernovek.module.css";
 import search from "../../assets/icons/search.svg";
 import { contentDB } from "../../contentDB";
 import date from "../../assets/icons/dateIcon.svg";
@@ -9,7 +9,7 @@ import Fade from "react-reveal/Fade";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const ContentOfSite = () => {
+const Chernovek = () => {
   const navigate = useNavigate()
   const {t} = useTranslation();
   return (
@@ -17,7 +17,7 @@ const ContentOfSite = () => {
       <section className={s.content_of_site}>
         <div className={s.content_of_site_container}>
           <div className={s.content_of_site_label}>
-            <h1>{t("content-site.1")}</h1>
+            <h1>{t("usernav5")}</h1>
             <button onClick={() => navigate("/addcontent")} className={s.content_of_site_label_btn}>
               <span style={{ fontSize: "25px" }}>+</span>
               <span>{t("content-site.2")}</span>
@@ -67,4 +67,4 @@ const ContentOfSite = () => {
   );
 };
 
-export default ContentOfSite;
+export default Chernovek;

@@ -7,6 +7,7 @@
   "usernav2":"Shablonlar",
   "usernav3":"Sayt tarkibi",
   "usernav4":"Avtor",
+  "usernav5":"Qoramala",
   "hheader": "Axborot tizimlari va resurslarini rivojlantirish uchun texnik shartlarni shakllantirish tizimi",
   "hheaderbtn": "Texnik topshiriqni yaratish",
   "hsection": "Milliy standartlar",
@@ -55,7 +56,9 @@
     "2":"Keyingi",
     "3":"Hammasini ko'rsatish",
     "4":"Saqlash",
-    "5":"Bekor qilish"
+    "5":"Bekor qilish",
+    "6":"O'chirish",
+    "7":"Tahrirlash"
   },
   "struc":"Tuzilishi",
   "struc1":"Texnik topshiriqning tuzilishi",
@@ -106,6 +109,18 @@
     "13":"tanlang",
     "14": "Sana",
     "15": "Qoralama holatda saqlash",
-    "16": "Nashr qilish"
-  }
+    "16": "Nashr qilish",
+    "17":"Jadval siz hoxlagan ko'rinishda yasalishi uchun pasddagi maydonlarga son kiriting!",
+    "18":"Gorizontal",
+    "19":"Vertikal",
+    "20":"Bo'sh"
+  },
+  "ru":"Rus",
+  "uz":"Uzb",
+  "toast":"Element almashish uchun nusxalandi",
+  "spra_id":"Bu erda siz kataloglarni tahrirlashingiz yoki o'chirishingiz mumkin",
+  "spra_id1":"Sarlavhani nomini o'zgartirish...",
+  "spra_id2":"Elementni o'zgartirish...",
+  "active":"AKTIV",
+  "updContent":"Kontentni tahrirlash"
 }

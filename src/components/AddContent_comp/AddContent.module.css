@@ -91,7 +91,6 @@
   gap: 10px;
 }
 
-
 .AddContent_left_file {
   width: 100%;
   height: 80px;
@@ -223,4 +222,64 @@ input[type="file"] {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.table_head {
+  padding: 40px 0;
+}
+
+.vertical_inp {
+  margin: 0 20px;
+}
+
+.table_head input {
+  width: 300px;
+  height: 40px;
+
+  padding-left: 10px;
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  outline: none;
+  font-family: Rubik;
+  font-size: 16px;
+}
+
+.table_head input:focus {
+  border-bottom: 2px solid #631ac0;
+}
+
+.table_head button {
+  padding: 12px 18px;
+  background: rgba(34, 34, 34, 0.05);
+  border-radius: 8px;
+  border: none;
+  color: #2f80ed;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: Rubik;
+}
+
+.table_head button:active {
+  background: #2f80ed;
+  color: #fff;
+}
+
+table {
+  background: #fff;
+  border-radius: 6px;
+}
+
+table input {
+  width: 100%;
+  height: 40px;
+  border: none;
+  padding-left: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+table input:focus{
+  border: 2px solid #631ac0;
 }

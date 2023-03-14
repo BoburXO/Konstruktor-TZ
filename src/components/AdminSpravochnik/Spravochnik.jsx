@@ -12,6 +12,8 @@ import { addTodo, deleteTodo } from "../../redux/todoSlice";
 import { useDispatch } from "react-redux";
 import accept from "../../assets/imgs/accept.png";
 import { useTranslation } from "react-i18next";
+import { Switch } from "antd";
+import { Link} from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -31,7 +33,8 @@ const Spravochnik = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [value, setValue] = React.useState("");
-  const {t} = useTranslation()
+  const { t } = useTranslation();
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -114,7 +117,7 @@ const Spravochnik = () => {
                       {t("btn.5")}
                     </button>
                     <button className={s.spravochnik_save_btn}>
-                     {t("btn.4")}
+                      {t("btn.4")}
                     </button>
                   </div>
                 </div>
@@ -127,7 +130,8 @@ const Spravochnik = () => {
           </div>
           <div className={s.Spravochnik_cards_labels}>
             <p style={{ width: "3%" }}>№</p>
-            <p style={{ width: "55%" }}>{t("spra6")}</p>
+            <p style={{ width: "52%" }}>{t("spra6")}</p>
+            <p className={s.checkbox_active}>{t("active")}</p>
             <p style={{ width: "27%" }}>{t("spra7")}</p>
             <p style={{ width: "7%" }}>{t("spra8")}</p>
           </div>
@@ -143,11 +147,18 @@ const Spravochnik = () => {
                       <p>{el.id}</p>
                       <p>{el.title}</p>
                     </span>
-                    <p style={{ width: "10%" }}>{el.elements} {t("spra9")}</p>
+                    <div className={s.switch_toggle}>
+                      <Switch defaultChecked />
+                    </div>
+                    <p style={{ width: "20%" }}>
+                      {el.elements.length} {t("spra9")}
+                    </p>
                     <div className={s.lkmain_sect_crud}>
-                      <button className={s.lkmain_sect_crud_create}>
-                        <img src={createIcon} alt="Copy" />
-                      </button>
+                      <Link to={`/spravochnikId/${el?.id}`}>
+                        <button className={s.lkmain_sect_crud_create}>
+                          <img src={createIcon} alt="Copy" />
+                        </button>
+                      </Link>
 
                       <button className={s.lkmain_sect_crud_delete}>
                         <img src={deleteIcon} alt="Delete" />

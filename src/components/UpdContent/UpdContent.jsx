@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
-import s from "../AddContent_comp/AddContent.module.css";
+import s from "../UpdContent/UpdContent.module.css";
 import arrowLeft from "../../assets/icons/arrowLeft.svg";
 import { useNavigate } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import JoditEditor from "jodit-react";
 import { useTranslation } from "react-i18next";
 
-const AddContentComp = () => {
+const UpdContent = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ const AddContentComp = () => {
                 <img src={arrowLeft} alt="←" />
                 <p>{t("add-content.1")}</p>
               </span>
-              <h1>{t("add-content.2")}</h1>
+              <h1>{t("updContent")}</h1>
             </div>
             <div className={s.AddContent_parent}>
               <div className={s.AddContent_left}>
@@ -138,4 +138,4 @@ const AddContentComp = () => {
   );
 };
 
-export default AddContentComp;
+export default UpdContent;

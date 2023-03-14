@@ -216,7 +216,7 @@ const StructureComponent = () => {
                  {t("struc3")}
                 </p>
                 <br />
-                RU:
+                {t("ru")}:
                 <input
                   type="text"
                   value="Общие сведения"
@@ -224,7 +224,7 @@ const StructureComponent = () => {
                 />
                 <br />
                 <br />
-                UZ:
+                {t("uz")}:
                  <input
                   type="text"
                   value="Umumiy nomlar"
@@ -246,26 +246,56 @@ const StructureComponent = () => {
                 <p className={s.structure_right_contents_input_label}>
                 {t("struc3")}
                 </p>
+                <br />
+                {t("ru")}:
                 <input
                   type="text"
                   value="Полное наименование ИС и её условное обозначение"
+                  className={s.structure_right_contents_input_punkt}
+                />
+                 <br />
+                <br />
+                {t("uz")}:
+                 <input
+                  type="text"
+                  value="IP-ning to'liq nomi va uning belgisi"
                   className={s.structure_right_contents_input_punkt}
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
                   {t("struc4")}
                   </p>
+                  <br />
+                {t("ru")}:
                   <input
                     type="text"
                     value="Полное наименование ИС"
                     className={s.structure_right_contents_input_punkt}
                   />
+                   <br />
+                   <br />
+                {t("uz")}:
+                  <input
+                    type="text"
+                    value="IP-ning to'liq nomi"
+                    className={s.structure_right_contents_input_punkt}
+                  />
                   <p className={s.structure_right_contents_input_label}>
                   {t("struc4")}
                   </p>
+                  <br />
+                {t("ru")}:
                   <input
                     type="text"
                     value="Условное обозначение"
+                    className={s.structure_right_contents_input_punkt}
+                  />
+                  <br />
+                  <br />
+                {t("uz")}:
+                  <input
+                    type="text"
+                    value="Belgi"
                     className={s.structure_right_contents_input_punkt}
                   />
                 </div>

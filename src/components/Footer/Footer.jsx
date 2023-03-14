@@ -26,7 +26,7 @@ const Footer = () => {
                 <img src={logofff} alt="" />
               </Link>
             </li>
-            <li className={s.twink3}>
+            <li className={s.twinkk3}>
               <img src={logodots} alt="" />
               <p>
               {t("footer1")}
@@ -34,15 +34,15 @@ const Footer = () => {
             </li>
             <li className={s.phone_style}>
               <h6>{t("footer2")}</h6>
-              <span className={s.twink} style={{ paddingLeft: "5px" }}>
+              <span className={s.twinkk} style={{ paddingLeft: "5px" }}>
                 <img style={{ width: "20px" }} src={mail} alt="" />
                 <p>info@egov.uz</p>
               </span>
-              <span className={s.twink}>
+              <span className={s.twinkk}>
                 <img src={phone} alt="" />
                 <p>(+998) 55 501–36–36</p>
               </span>
-              <span style={{ padding: "30px 0" }} className={s.twink}>
+              <span style={{ padding: "30px 0" }} className={s.twinkk}>
                 <img style={{ height: "30px" }} src={location} alt="" />
                 <p>
                   100128, Ташкент, <br /> ул Лабзак 70, Б-блок
@@ -52,25 +52,25 @@ const Footer = () => {
             <li  className={s.phone_style}>
               <h6>{t("footer3")}</h6>
               <a href="https://www.facebook.com/">
-                <span className={s.twink}>
+                <span className={s.twinkk}>
                   <img src={facebook} alt="" />
                   <p>Facebook</p>
                 </span>
               </a>
               <a href="https://www.instagram.com/">
-                <span className={s.twink}>
+                <span className={s.twinkk}>
                   <img src={instagram} alt="" />
                   <p>Instagram</p>
                 </span>
               </a>
               <a href="https://web.telegram.org/k/">
-                <span className={s.twink}>
+                <span className={s.twinkk}>
                   <img src={telegram} alt="" />
                   <p>Telegram</p>
                 </span>
               </a>
             </li>
-            <li className={s.twink2}>
+            <li className={s.twinkk2}>
               <img src={logodots} alt="" />
               <p>
               {t("footer1")}

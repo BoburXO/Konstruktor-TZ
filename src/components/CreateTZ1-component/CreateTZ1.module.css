@@ -1,16 +1,17 @@
 .create1_parent {
   width: 100%;
+  padding: 0 30px;
   font-family: Rubik;
   display: flex;
   color: #222222;
 }
 
 .create2_left {
-  width: 100%;
-  max-width: 362px;
-  height: auto;
+  width: 362px;
+  height: 100%;
 
-  padding: 30px;
+  padding: 30px 0;
+  padding-right: 20px;
   color: #222222;
 }
 
@@ -73,13 +74,13 @@
   font-size: 21px;
 }
 
-.create1_form_route_btn{
+.create1_form_route_btn {
   display: flex;
   justify-content: flex-end;
   gap: 16px;
 }
 
-.create1_form_route_btn input{
+.create1_form_route_btn input {
   width: 140px;
   height: 48px;
 
@@ -90,12 +91,12 @@
   font-size: 16px;
   border-radius: 8px;
 }
-.create1_form_route_btn input:focus{
-   background: #fff;
+.create1_form_route_btn input:focus {
+  background: #fff;
   color: #631ac0;
 }
 
-.create1_form_route_btn button{
+.create1_form_route_btn button {
   width: 140px;
   height: 48px;
 
@@ -107,7 +108,7 @@
   border-radius: 8px;
 }
 
-.create1_form_route_btn button:active{
+.create1_form_route_btn button:active {
   background: rgba(34, 34, 34, 0.6);
   color: #fff;
 }
@@ -124,7 +125,8 @@
   color: #222222;
 }
 
-.create1_form_card textarea, .create1_form_card_from_templates textarea {
+.create1_form_card textarea,
+.create1_form_card_from_templates textarea {
   width: 100%;
   height: 161px;
 
@@ -139,14 +141,14 @@
   font-family: Rubik;
 }
 
-.create1_form_card_from_templates{
+.create1_form_card_from_templates {
   width: 100%;
   height: max-content;
 
   margin: 16px 0;
   padding: 12px 20px 20px 20px;
   background: #ffffff;
-  border: 2px dashed #2F80ED;
+  border: 2px dashed #2f80ed;
   border-radius: 12px;
   color: #222222;
 }
@@ -165,7 +167,8 @@
   outline: none;
 }
 
-.create1_form_card p, .create1_form_card_from_templates p {
+.create1_form_card p,
+.create1_form_card_from_templates p {
   padding: 12px 0;
 }
 
@@ -181,9 +184,9 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.create1_form_card_twink{
+.create1_form_card_twink {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -192,10 +195,11 @@ input[type="number"] {
 }
 
 .craete1_right {
-  width: 100%;
-  max-width: 530px;
+  width: 414px;
 
-  padding: 30px;
+  padding: 30px 0;
+  padding-left: 30px;
+  margin: 0 auto;
   font-family: Rubik;
 }
 
@@ -260,4 +264,30 @@ input[type="number"] {
   color: #222222;
   font-weight: 500;
   font-size: 14px;
+}
+
+.twink_copy {
+  height: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.twink_copy span {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.twink_copy span:active {
+  transform: scale(1.1);
+}
+
+.twink_copy span img {
+  width: 80%;
 }

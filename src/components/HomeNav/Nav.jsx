@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 import logo1 from "../../assets/imgs/logo1.svg";
@@ -30,7 +30,11 @@ const Nav = () => {
               <NavLink to="/" className={s.contact_link}>
                 {t("nav1")}
               </NavLink>
-              <select onChange={(e) => changeLanguage(e.target.value)} className={s.til} name="language">
+              <select
+                onChange={(e) => changeLanguage(e.target.value)}
+                className={s.til}
+                name="language"
+              >
                 <option className={s.til__opt} value="ru">
                   Русский
                 </option>

@@ -2,7 +2,6 @@ import React from "react";
 import s from "../HomeSection/Section.module.css";
 import download from "../../assets/icons/download.svg";
 import { tzDB } from "../../tzDB";
-import { Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
 
