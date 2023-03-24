@@ -33,7 +33,7 @@ const CreateTZ1right = ({copy}) => {
                   {"..."}
                 </p>
                 <div className={s.center}>
-                  <Link to={`/templatePunkt/${el.id}`}>
+                  <Link to={`/user-samplePunkt/${el.id}`}>
                     <button className={s.craete1_right_btn}>
                       {t("btn.3")}
                       <img src={arrowBottom} alt="Arrow-Bottom" />

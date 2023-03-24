@@ -91,3 +91,12 @@ select option {
   padding: 10px 20px;
 }
 
+.logoutBtn{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 16px;
+}

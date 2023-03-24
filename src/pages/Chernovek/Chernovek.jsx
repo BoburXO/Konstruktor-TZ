@@ -8,12 +8,19 @@ import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import Fade from "react-reveal/Fade";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import UserNav from "../../components/UserNav/UserNav";
 
 const Chernovek = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!localStorage.getItem("ConstructorRoleAccessToken")) {
+      navigate("/");
+    }
+  }, []);
   const {t} = useTranslation();
   return (
     <>
+    <UserNav/>
       <section className={s.content_of_site}>
         <div className={s.content_of_site_container}>
           <div className={s.content_of_site_label}>

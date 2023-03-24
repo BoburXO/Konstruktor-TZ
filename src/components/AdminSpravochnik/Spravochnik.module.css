@@ -27,7 +27,7 @@
 }
 
 .Spravochnik_label_btn {
-  width: 180px;
+  width: 200px;
   height: 40px;
 
   display: flex;
@@ -99,7 +99,7 @@
   gap: 20px;
 }
 .lkmain_sect_crud_delete {
-  width: 40px;
+  width: 35px;
   height: 40px;
 
   border-radius: 8px;
@@ -108,7 +108,7 @@
   border: 2px solid #eb5757;
 }
 .lkmain_sect_crud_create {
-  width: 40px;
+  width: 35px;
   height: 40px;
 
   border: 2px solid #2f80ed;
@@ -145,7 +145,7 @@
   height: 70px;
 
   display: flex;
-  gap: 80px;
+  gap: 50px;
   align-items: center;
 }
 
@@ -304,3 +304,7 @@
   position: relative;
   left: -11%;
 }
+/* .Spravochnik table{
+  width: 100%;
+  background: transparent;
+} */

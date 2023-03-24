@@ -1,17 +1,31 @@
-import React from 'react';
-import Footer from '../../components/Footer/Footer';
-import Header from '../../components/HomeHeader/Header';
-import Section from '../../components/HomeSection/Section';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
+import Header from "../../components/HomeHeader/Header";
+import Nav from "../../components/HomeNav/Nav";
+import Section from "../../components/HomeSection/Section";
+import UserNav from "../../components/UserNav/UserNav";
 import "../Home/Home.module.css";
 
 const Home = () => {
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!localStorage.getItem("ConstructorRoleAccessToken")) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
-    <Header/>
-    <Section/>
-    <Footer/>
+      {localStorage.getItem("ConstructorRoleAccessToken") ? (
+        <UserNav />
+      ) : (
+        <Nav />
+      )}
+      <Header />
+      <Section />
+      <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

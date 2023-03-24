@@ -1,12 +1,12 @@
 import React from "react";
 import Footer from "../../components/Footer/Footer";
+import UserNav from "../../components/UserNav/UserNav";
 import s from "../Templates/Templates.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { templates } from "../../templates";
 import { useTranslation } from "react-i18next";
-import UserNav from "../../components/UserNav/UserNav";
 
-const Templates = () => {
+const UserTemplate = () => {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
@@ -28,18 +28,14 @@ const Templates = () => {
               {t("struc5")} {paramsFind?.punkt}
             </h1>
             <br />
-            <textarea value={paramsFind?.desc}></textarea>
+            <br />
+            <p>{paramsFind?.desc}</p>
           </div>
-          <button className={s.Temp_back} onClick={() => navigate(-1)}>
-            {t("btn.1")}
-          </button>
-          <button className={s.Temp_update}>{t("btn.7")}</button>
-          <button className={s.Temp_delete}>{t("btn.6")}</button>
+          <button onClick={() => navigate(-1)}>{t("btn.1")}</button>
         </div>
       </section>
       <Footer />
     </>
   );
 };
-
-export default Templates;
+export default UserTemplate;

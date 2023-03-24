@@ -5,12 +5,18 @@ import { useNavigate } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import JoditEditor from "jodit-react";
 import { useTranslation } from "react-i18next";
+import UserNav from "../UserNav/UserNav";
 
 const UpdContent = () => {
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!localStorage.getItem("ConstructorRoleAccessToken")) {
+      navigate("/");
+    }
+  }, []);
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   //table start
   const [col, setCol] = useState(0);
@@ -29,6 +35,7 @@ const UpdContent = () => {
   //table end
   return (
     <>
+    <UserNav/>
       <div className={s.AddContent}>
         <Fade bottom cascade>
           <div className={s.AddContent_container}>

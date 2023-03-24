@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import s from "./Spravochnik.module.css";
 import search from "../../assets/icons/search.svg";
-import { spravochnik } from "../../spravochnik";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import Fade from "react-reveal/Fade";
@@ -13,7 +12,9 @@ import { useDispatch } from "react-redux";
 import accept from "../../assets/imgs/accept.png";
 import { useTranslation } from "react-i18next";
 import { Switch } from "antd";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Context } from "../../Context/Context";
+
 
 const style = {
   position: "absolute",
@@ -34,7 +35,7 @@ const Spravochnik = () => {
   const handleClose = () => setOpen(false);
   const [value, setValue] = React.useState("");
   const { t } = useTranslation();
-
+  const { spravochnik } = useContext(Context);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -128,6 +129,70 @@ const Spravochnik = () => {
             <img className={s.S_icon} src={search} alt="Search" />
             <input type="text" placeholder={t("spra5")} />
           </div>
+          {/* <table>
+            <thead>
+              <tr className={s.Spravochnik_cards_labels}>
+                <th>
+                  {" "}
+                  <p>№</p>
+                </th>
+                <th>
+                  <p>{t("spra6")}</p>
+                </th>
+                <th>
+                  <p>{t("active")}</p>
+                </th>
+                <th>
+                  <p>{t("spra7")}</p>
+                </th>
+                <th>
+                  <p>{t("spra8")}</p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {spravochnik?.map((el) => {
+                return (
+                  <tr key={el.id}>
+                    <td>
+                      {" "}
+                      <p>{el.id}</p>
+                    </td>
+                    <td>
+                      <p>{el.title}</p>
+                    </td>
+                    <td>
+                      {" "}
+                      <div className={s.switch_toggle}>
+                        <Switch defaultChecked />
+                      </div>
+                    </td>
+                    <td>
+                      {" "}
+                      <p>
+                        {" "}
+                        {el.element_count} {t("spra9")}
+                      </p>
+                    </td>
+                    <td>
+                      {" "}
+                      <div className={s.lkmain_sect_crud}>
+                        <Link to={`/spravochnikId/${el?.id}`}>
+                          <button className={s.lkmain_sect_crud_create}>
+                            <img src={createIcon} alt="Copy" />
+                          </button>
+                        </Link>
+
+                        <button className={s.lkmain_sect_crud_delete}>
+                          <img src={deleteIcon} alt="Delete" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table> */}
           <div className={s.Spravochnik_cards_labels}>
             <p style={{ width: "3%" }}>№</p>
             <p style={{ width: "52%" }}>{t("spra6")}</p>
@@ -136,7 +201,7 @@ const Spravochnik = () => {
             <p style={{ width: "7%" }}>{t("spra8")}</p>
           </div>
           <div className={s.Spravochnik_sect_creators_parent}>
-            {spravochnik?.map((el) => {
+            {spravochnik?.map((el,index) => {
               return (
                 <div
                   className={s.Spravochnik_sect_creators_parent_cards}
@@ -144,17 +209,17 @@ const Spravochnik = () => {
                 >
                   <Fade top cascade>
                     <span className={s.Spravochnik_twink}>
-                      <p>{el.id}</p>
+                      <p>{index}</p>
                       <p>{el.title}</p>
                     </span>
                     <div className={s.switch_toggle}>
                       <Switch defaultChecked />
                     </div>
                     <p style={{ width: "20%" }}>
-                      {el.elements.length} {t("spra9")}
+                      {el.element_count}  {t("spra9")}
                     </p>
                     <div className={s.lkmain_sect_crud}>
-                      <Link to={`/spravochnikId/${el?.id}`}>
+                      <Link to={`/spravochnikId/${el?.slug}`}>
                         <button className={s.lkmain_sect_crud_create}>
                           <img src={createIcon} alt="Copy" />
                         </button>

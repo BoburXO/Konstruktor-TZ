@@ -22,7 +22,7 @@ const Nav = () => {
         <div className={s.container}>
           <ul className={s.nav_ul}>
             <li>
-              <NavLink to="/">
+              <NavLink>
                 <img className={s.nav_logo1} src={logo1} alt="" />
               </NavLink>
             </li>

@@ -17,25 +17,36 @@ import SpravochnikId from "./Params/Spravochnik/SpravochnikId";
 import Templates from "./Params/Templates/Templates";
 import UpdContent from "./components/UpdContent/UpdContent";
 import Chernovek from "./pages/Chernovek/Chernovek";
+import UserTemplate from "./Params/Templates/UserTemplate";
+import RegOneId from "./pages/Reg/RegOneId";
+import OneId from "./pages/oneid/RegOneId";
 function App() {
-  const [isUser, setIsUser] = React.useState(true);
   return (
     <>
-      {isUser ? <UserNav /> : <Nav />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<RegOneId />} />
+        <Route path="/main" element={<Home />} />
         <Route path="/lkavtor" element={<LKavtor />} />
-        <Route path="/lkadminshablon" element={<LKAdminstrator />} />
-        <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
-        <Route path="/spravochnikId/:id" element={<SpravochnikId />} />
-        <Route path="/contentofsite" element={<Content />} />
-        <Route path="/structure" element={<Structure />} />
-        <Route path="/createtz" element={<CreateTZ />} />
-        <Route path="/createtz2" element={<CreateTZ2 />} />
-        <Route path="/templatePunkt/:id" element={<Templates />} />
-        <Route path="/addcontent" element={<AddContent />} />
-        <Route path="/updateContent" element={<UpdContent />} />
-        <Route path="/chernovek" element={<Chernovek/>}/>
+        {localStorage.getItem("roleName") !== "Author" ? (
+          <>
+            <Route path="/lkadminshablon" element={<LKAdminstrator />} />
+            <Route
+              path="/lkadminspravochnik"
+              element={<LKAdminSpravochnik />}
+            />
+            <Route path="/spravochnikId/:slug" element={<SpravochnikId />} />
+            <Route path="/contentofsite" element={<Content />} />
+            <Route path="/structure" element={<Structure />} />
+            <Route path="/createtz" element={<CreateTZ />} />
+            <Route path="/createtz2" element={<CreateTZ2 />} />
+            <Route path="/templatePunkt/:id" element={<Templates />} />
+            <Route path="/addcontent" element={<AddContent />} />
+            <Route path="/updateContent" element={<UpdContent />} />
+            <Route path="/chernovek" element={<Chernovek />} />
+            <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
+          </>
+        ) : null}
+        <Route path="/oneid/:one" element={<OneId />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
 
