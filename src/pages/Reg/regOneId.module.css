@@ -7,7 +7,7 @@
 }
 
 .reg_card {
-  width: 100%;
+  width: 300px;
   line-height: 100px;
   text-align: center;
   font-family: Rubik;
@@ -23,6 +23,23 @@
   border: 2px solid #631ac0;
   font-weight: 600;
   font-size: 16px;
+}
+
+.reg_card a button {
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-left: 20px;
+  transition: 0.4s ease-in-out;
+}
+
+.reg_card a button:hover {
+  background: #3d1276;
+  transition: 0.4s ease-in-out;
+  border: 0;
 }
 
 .reg_user_roles {

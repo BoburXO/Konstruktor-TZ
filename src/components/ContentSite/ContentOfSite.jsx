@@ -8,24 +8,38 @@ import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import Fade from "react-reveal/Fade";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Switch } from "antd";
 
 const ContentOfSite = () => {
-  const navigate = useNavigate()
-  const {t} = useTranslation();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
   return (
     <>
       <section className={s.content_of_site}>
         <div className={s.content_of_site_container}>
           <div className={s.content_of_site_label}>
             <h1>{t("content-site.1")}</h1>
-            <button onClick={() => navigate("/addcontent")} className={s.content_of_site_label_btn}>
+            <button
+              onClick={() => navigate("/addcontent")}
+              className={s.content_of_site_label_btn}
+            >
               <span style={{ fontSize: "25px" }}>+</span>
               <span>{t("content-site.2")}</span>
             </button>
           </div>
-          <div className={s.input_field}>
-            <img className={s.S_icon} src={search} alt="Search" />
-            <input type="text" placeholder={t("content-site.3")} />
+          <div
+            style={{
+              display: "flex",
+              gap: "10px"
+            }}
+          >
+            <div className={s.input_field}>
+              <img className={s.S_icon} src={search} alt="Search" />
+              <input type="text" placeholder={t("content-site.3")} />
+            </div>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <Switch defaultChecked />
+            </div>
           </div>
           <div className={s.content_db_labels}>
             <p style={{ textAlign: "start" }}>{t("content-site.4")}</p>
@@ -49,7 +63,10 @@ const ContentOfSite = () => {
                       <p>{el.date}</p>
                     </span>
                     <div className={s.content_crud}>
-                      <button onClick={() => navigate("/updateContent")} className={s.content_crud_create}>
+                      <button
+                        onClick={() => navigate("/updateContent")}
+                        className={s.content_crud_create}
+                      >
                         <img src={createIcon} alt="Copy" />
                       </button>
                       <button className={s.content_crud_delete}>

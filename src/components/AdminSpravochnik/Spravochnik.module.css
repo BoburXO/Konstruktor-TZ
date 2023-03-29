@@ -116,10 +116,6 @@
   background: #fff;
   transition: 0.5s ease;
 }
-.lkmain_sect_crud button img:hover {
-  transform: translateY(3px);
-  transition: 0.5s ease;
-}
 
 .Spravochnik_sect_creators_parent {
   display: grid;
@@ -292,13 +288,12 @@
   padding: 10px;
 }
 
-
-.checkbox_active{
+.checkbox_active {
   position: relative;
   left: -18%;
 }
 
-.switch_toggle{
+.switch_toggle {
   display: flex;
   justify-content: center;
   position: relative;

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import s from "./Spravochnik.module.css";
 import search from "../../assets/icons/search.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
@@ -8,13 +8,12 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import backX from "../../assets/icons/backX.svg";
 import { addTodo, deleteTodo } from "../../redux/todoSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import accept from "../../assets/imgs/accept.png";
 import { useTranslation } from "react-i18next";
 import { Switch } from "antd";
 import { Link } from "react-router-dom";
 import { Context } from "../../Context/Context";
-
 
 const style = {
   position: "absolute",
@@ -34,11 +33,25 @@ const Spravochnik = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [value, setValue] = React.useState("");
+  const dispatch = useDispatch();
+  const todos = useSelector((note) => note.todoList);
   const { t } = useTranslation();
-  const { spravochnik } = useContext(Context);
+  const {
+    spravochnik,
+    removeSlug,
+    getAllSpraSearch,
+    setSpraSearch,
+    spraSearch,
+    isActiveClassificator,
+  } = useContext(Context);
+
+  useEffect(() => {
+    getAllSpraSearch();
+  }, [spraSearch]);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log("user entered:" + value);
     dispatch(
       addTodo({
         title: value,
@@ -52,7 +65,6 @@ const Spravochnik = () => {
     dispatch(deleteTodo(title));
   };
 
-  const dispatch = useDispatch();
   return (
     <>
       <section className={s.Spravochnik}>
@@ -89,25 +101,23 @@ const Spravochnik = () => {
                     <input
                       type="text"
                       value={value}
-                      onChange={(e) => setValue(e.target.value)}
+                      onChange={(e) => setValue(e.target.value.trim())}
                     />
                   </div>
 
                   <ol>
-                    {JSON.parse(localStorage.getItem("todos"))?.map(
-                      (el, index) => {
-                        return (
-                          <li key={index}>
-                            <p>{el.title}</p>
-                            <img
-                              onClick={(e) => setRemove(e, el.title)}
-                              src={backX}
-                              alt="X"
-                            />
-                          </li>
-                        );
-                      }
-                    )}
+                    {todos?.map((el) => {
+                      return (
+                        <li key={el.id}>
+                          <p>{el.title}</p>
+                          <img
+                            onClick={() => dispatch(deleteTodo(el.id))}
+                            src={backX}
+                            alt="X"
+                          />
+                        </li>
+                      );
+                    })}
                   </ol>
                   <div className={s.spravochnik_empty}></div>
                   <div className={s.spravochnik_btns}>
@@ -127,7 +137,12 @@ const Spravochnik = () => {
           </div>
           <div className={s.input_field}>
             <img className={s.S_icon} src={search} alt="Search" />
-            <input type="text" placeholder={t("spra5")} />
+            <input
+              onChange={(e) => setSpraSearch(e.target.value.trim())}
+              value={spraSearch}
+              type="text"
+              placeholder={t("spra5")}
+            />
           </div>
           {/* <table>
             <thead>
@@ -201,7 +216,7 @@ const Spravochnik = () => {
             <p style={{ width: "7%" }}>{t("spra8")}</p>
           </div>
           <div className={s.Spravochnik_sect_creators_parent}>
-            {spravochnik?.map((el,index) => {
+            {spravochnik?.map((el, index) => {
               return (
                 <div
                   className={s.Spravochnik_sect_creators_parent_cards}
@@ -213,10 +228,15 @@ const Spravochnik = () => {
                       <p>{el.title}</p>
                     </span>
                     <div className={s.switch_toggle}>
-                      <Switch defaultChecked />
+                      <Switch
+                        defaultChecked={el?.is_active}
+                        onChange={() =>
+                          isActiveClassificator(el?.slug, el?.is_active)
+                        }
+                      />
                     </div>
                     <p style={{ width: "20%" }}>
-                      {el.element_count}  {t("spra9")}
+                      {el.elements.length} {t("spra9")}
                     </p>
                     <div className={s.lkmain_sect_crud}>
                       <Link to={`/spravochnikId/${el?.slug}`}>
@@ -225,7 +245,10 @@ const Spravochnik = () => {
                         </button>
                       </Link>
 
-                      <button className={s.lkmain_sect_crud_delete}>
+                      <button
+                        onClick={() => removeSlug(el?.slug)}
+                        className={s.lkmain_sect_crud_delete}
+                      >
                         <img src={deleteIcon} alt="Delete" />
                       </button>
                     </div>

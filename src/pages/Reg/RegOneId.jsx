@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import s from "../Reg/regOneId.module.css";
+import oneId from '../../assets/icons/one-login.svg'
 
 const RegOneId = () => {
   const navigate = useNavigate();
@@ -20,7 +21,9 @@ const RegOneId = () => {
             (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=http://localhost:3000/oneid/one&state=test&scope=myportal`)
           }
         >
-          <button>Войти через OneID</button>
+          <button>Войти через 
+            <img src={oneId} alt="ONE ID" />
+          </button>
         </a>
       </div>
     </div>
