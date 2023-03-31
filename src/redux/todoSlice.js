@@ -8,7 +8,7 @@ const todoSlice = createSlice({
     addTodo: (state, action) => {
       const newTodo = {
         id: Date.now(),
-        title: action.payload.title,
+        content_uz: action.payload.content_uz,
       };
       state.push(newTodo);
     },

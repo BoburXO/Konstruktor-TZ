@@ -1,32 +1,59 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import s from "../AddContent_comp/AddContent.module.css";
 import arrowLeft from "../../assets/icons/arrowLeft.svg";
 import { useNavigate } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import JoditEditor from "jodit-react";
 import { useTranslation } from "react-i18next";
+import { Context } from "../../Context/Context";
 
 const AddContentComp = () => {
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [sfera, setSfera] = useState(1);
 
   //table start
-  const [col, setCol] = useState(0);
-  const [row, setRow] = useState(0);
+  
+  // const [col, setCol] = useState(0);
+  // const [row, setRow] = useState(0);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
 
-    setCol(event.target[0].value);
-    setRow(event.target[1].value);
-  };
+  //   setCol(event.target[0].value);
+  //   setRow(event.target[1].value);
+  // };
 
-  const colArr = Array.from({ length: col }, () => 0);
-  const rowArr = Array.from({ length: row }, () => 0);
+  // const colArr = Array.from({ length: col }, () => 0);
+  // const rowArr = Array.from({ length: row }, () => 0);
 
   //table end
+
+  //context
+  const {
+    createContentOfSite,
+    headerUz,
+    setHeaderUz,
+    headerRu,
+    setHeaderRu,
+    sphereUz,
+    setSphereUz,
+    sphereRu,
+    setSphereRu,
+    descriptionUz,
+    setDescriptionUz,
+    descriptionRu,
+    setDescriptionRu,
+    docFileUz,
+    setDocFileUz,
+    docFileRu,
+    setDocFileRu,
+    textUz,
+    setTextUz,
+    textRu,
+    setTextRu,
+  } = useContext(Context);
+  //context
   return (
     <>
       <div className={s.AddContent}>
@@ -44,18 +71,89 @@ const AddContentComp = () => {
                 <p>{t("add-content.3")}</p>
                 <br />
                 <p>{t("ru")}:</p>
-                <input type="text" value="O‘z DSt 1987:2018" />
+                <input
+                  value={headerRu}
+                  onChange={(e) => setHeaderRu(e.target.value)}
+                  type="text"
+                />
                 <br />
                 <br />
                 <p>{t("uz")}:</p>
-                <input type="text" value="O‘z DSt 1987:2018" />
+                <input
+                  value={headerUz}
+                  onChange={(e) => setHeaderUz(e.target.value)}
+                  type="text"
+                />
                 <div className={s.AddContent_sfera}>
                   <p>{t("add-content.4")}</p>
                   <div className={s.AddContent_sfera_routes}>
-                    <button>{t("add-content.5")}</button>
-                    <button>{t("add-content.6")}</button>
-                    <button>{t("add-content.7")}</button>
-                    <button>{t("add-content.8")}</button>
+                    <button
+                      className={sfera === 1 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(1);
+                      }}
+                    >
+                      Информационные технологии
+                    </button>
+                    <button
+                      className={sfera === 2 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(2);
+                      }}
+                    >
+                      Экспертиза
+                    </button>
+                    <button
+                      className={sfera === 3 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(3);
+                      }}
+                    >
+                      Проекты
+                    </button>
+                    <button
+                      className={sfera === 4 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(4);
+                      }}
+                    >
+                      Инфраструктура
+                    </button>
+                  </div>
+                  <br />
+                  <div className={s.AddContent_sfera_routes}>
+                    <button
+                      className={sfera === 1 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(1);
+                      }}
+                    >
+                      Axborot texnologiyalari
+                    </button>
+                    <button
+                      className={sfera === 2 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(2);
+                      }}
+                    >
+                      Ekspertiza
+                    </button>
+                    <button
+                      className={sfera === 3 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(3);
+                      }}
+                    >
+                      Loyihalar
+                    </button>
+                    <button
+                      className={sfera === 4 ? s.active : ""}
+                      onClick={() => {
+                        setSfera(4);
+                      }}
+                    >
+                      Infratuzilma
+                    </button>
                   </div>
                 </div>
                 <div className={s.AddContent_left_desc}>
@@ -63,43 +161,58 @@ const AddContentComp = () => {
                   <br />
                   <p>{t("ru")}:</p>
                   <input
+                    value={descriptionRu}
+                    onChange={(e) => setDescriptionRu(e.target.value)}
                     type="text"
-                    value="Техническое задание на создание информационной системы"
                   />
                   <br />
                   <br />
                   <p>{t("uz")}:</p>
                   <input
+                    value={descriptionUz}
+                    onChange={(e) => setDescriptionUz(e.target.value)}
                     type="text"
-                    value="Axborot tizimini yaratish bo'yicha texnik topshiriq"
                   />
                 </div>
                 <p>{t("add-content.10")}</p>
-                <div className={s.AddContent_left_file}>
-                  <input type="file" id="file" />
-                  <label htmlFor="file">
-                    {t("add-content.11")} <span>{t("add-content.12")}</span>{" "}
-                    {t("add-content.13")}
-                  </label>
-                </div>
+                {localStorage.getItem("i18nextLng") === "uz" ? (
+                  <div className={s.AddContent_left_file}>
+                    <input
+                      onChange={(e) => {
+                        setDocFileUz(e.target.files[0]);
+                      }}
+                      type="file"
+                      id="file"
+                    />
+                    <label htmlFor="file">
+                      {t("add-content.11")} <span>{t("add-content.12")}</span>{" "}
+                      {t("add-content.13")}
+                    </label>
+                  </div>
+                ) : (
+                  <div className={s.AddContent_left_file}>
+                    <input
+                      onChange={(e) => {
+                        setDocFileRu(e.target.files[0]);
+                      }}
+                      type="file"
+                      id="file"
+                    />
+                    <label htmlFor="file">
+                      {t("add-content.11")} <span>{t("add-content.12")}</span>{" "}
+                      {t("add-content.13")}
+                    </label>
+                  </div>
+                )}
+
                 <br />
                 <p>{t("ru")}:</p>
                 <br />
-                <JoditEditor
-                  ref={editor}
-                  value={content}
-                  onChange={(newContent) => setContent(newContent)}
-                  className={s.JoditEditor}
-                />
+                <JoditEditor className={s.JoditEditor} />
                 <br />
                 <p>{t("uz")}:</p>
                 <br />
-                <JoditEditor
-                  ref={editor}
-                  value={content}
-                  onChange={(newContent) => setContent(newContent)}
-                  className={s.JoditEditor}
-                />
+                <JoditEditor className={s.JoditEditor} />
               </div>
               <div className={s.AddContent_right}>
                 <h4>{t("add-content.14")}</h4>
@@ -108,7 +221,9 @@ const AddContentComp = () => {
                 <button className={s.share}>{t("add-content.16")}</button>
               </div>
             </div>
-            <form className={s.table_head} onSubmit={handleSubmit}>
+
+
+            {/* <form className={s.table_head} onSubmit={handleSubmit}>
               <p>{t("add-content.17")}</p>
               <br />
               <input type="number" required placeholder={t("add-content.18")} />
@@ -130,7 +245,7 @@ const AddContentComp = () => {
                   ))}
                 </tr>
               ))}
-            </table>
+            </table> */}
           </div>
         </Fade>
       </div>

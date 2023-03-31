@@ -1,30 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API } from "../api/Api";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const Context = createContext();
 
 const ContextProvider = ({ children }) => {
+  //redux
+  const todos = useSelector((note) => note.todoList);
+  //redux
   const { t } = useTranslation();
   const [spravochnik, setSpravochnik] = useState([]);
   const navigate = useNavigate();
   const [roles, setRoles] = useState({});
   const [profile, setProfile] = useState({});
   const [spraSearch, setSpraSearch] = useState("");
+  const [contentSearch, setContentSearch] = useState("");
+  const [contentSite, setContentSite] = useState({});
   const [tzDB, setTzDB] = useState({});
+  const [contUz, setContUz] = useState("");
+  const [contRu, setContRu] = useState("");
+  const [nameClassUz, setNameClassUz] = useState("");
+  const [nameClassRu, setNameClassRu] = useState("");
+  //notify
   const notify401 = () => toast(t("toast401"));
   const notify404 = () => toast(t("toast404"));
   const notify400 = () => toast(t("toast400"));
   const notify403 = () => toast(t("toast403"));
   const notify500 = () => toast(t("toast500"));
   const notify200 = () => toast(t("toast200"));
+  //notify
 
-  const [contUz, setContUz] = useState("");
-  const [contRu, setContRu] = useState("");
+  //createContent
+  const [headerUz, setHeaderUz] = useState("");
+  const [headerRu, setHeaderRu] = useState("");
+  const [sphereUz, setSphereUz] = useState("");
+  const [sphereRu, setSphereRu] = useState("");
+  const [descriptionUz, setDescriptionUz] = useState("");
+  const [descriptionRu, setDescriptionRu] = useState("");
+  const [docFileUz, setDocFileUz] = useState(null);
+  const [docFileRu, setDocFileRu] = useState(null);
+  const [textUz, setTextUz] = useState("");
+  const [textRu, setTextRu] = useState("");
+  const [createdAt,setCreatedAt] = useState("")
+  //createContent
 
   //oneID roles post
   const ssoOneId = () => {
@@ -180,41 +203,6 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
-  //all Spravochnik searchbar
-
-  //Element Slug
-  // const getElementBySlug = (slug) => {
-  //   axios
-  //     .get(`${API}/classificator/${slug}/detail/`, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem(
-  //           "ConstructorRoleAccessToken"
-  //         )}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       setElements(res.data);
-  //     })
-  //     .catch((err) => {
-  //       // navigate("/lkadminspravochnik");
-  //       if (err.response.status === 401) {
-  //         refreshToken().then(() => getElementBySlug());
-  //       }
-  //       if (err.response.status === 404) {
-  //         notify404();
-  //       }
-  //       if (err.response.status === 400) {
-  //         notify400();
-  //       }
-  //       if (err.response.status === 403) {
-  //         notify403();
-  //       }
-  //       if (err.response.status === 500) {
-  //         notify500();
-  //       }
-  //     });
-  // };
-  //Element Slug
 
   //deleteElement
   const removeElementById = (id) => {
@@ -413,19 +401,133 @@ const ContextProvider = ({ children }) => {
 
   //getTZhome
   const getTzHome = () => {
-    axios.get(`${API}/standard/home`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          "ConstructorRoleAccessToken"
-        )}`,
-      },
-    })
-    .then((res) => {
-      setTzDB(res.data)
-    })
-    .catch((err) => {
+    axios
+      .get(`${API}/standard/home`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setTzDB(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getTzHome());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //getTZhome
+
+  //getContent-search,filter
+  const getContentSearchFilter = (isPublish) => {
+    axios
+      .get(
+        `${API}/standard/site-content-list/?search=${contentSearch}&is_published=${isPublish}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setContentSite(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getContentSearchFilter());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //getContent
+
+  //deleteContent
+  const deleteContent = (slug) => {
+    axios
+      .delete(`${API}/standard/${slug}/delete/`)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          notify401();
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //deleteContent
+
+  //createContentOfSite
+  const createContentOfSite = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    formData.append("header_uz", headerUz);
+    formData.append("header_ru", headerRu);
+    formData.append("sphere_uz", sphereUz);
+    formData.append("sphere_ru", sphereRu);
+    formData.append("description_uz", descriptionUz);
+    formData.append("description_ru", descriptionRu);
+    formData.append("doc_file_uz", docFileUz);
+    formData.append("doc_file_ru", docFileRu);
+    formData.append("text_uz", textUz);
+    formData.append("text_ru", textRu);
+    formData.append("created_at",createdAt)
+    try {
+      const res = axios({
+        url: `${API}/standard/create/`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+        data: formData,
+        is_published: true,
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch (err) {
       if (err.response.status === 401) {
-        refreshToken().then(() => getTzHome());
+        refreshToken().then(() => createContentOfSite());
       }
       if (err.response.status === 404) {
         notify404();
@@ -439,9 +541,48 @@ const ContextProvider = ({ children }) => {
       if (err.response.status === 500) {
         notify500();
       }
-    })
+    }
   };
-  //getTZhome
+  //createContentOfSite
+
+  const createClassificator = () => {
+    axios
+      .post(
+        `${API}/classificator/create/`,
+        {
+          elements: todos,
+          title_ru: nameClassRu,
+          title_uz: nameClassUz,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => createClassificator());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
 
   return (
     <>
@@ -466,7 +607,38 @@ const ContextProvider = ({ children }) => {
           setContRu,
           setContUz,
           getTzHome,
-          tzDB
+          tzDB,
+          getContentSearchFilter,
+          contentSite,
+          contentSearch,
+          setContentSearch,
+          deleteContent,
+          createContentOfSite,
+          headerUz,
+          setHeaderUz,
+          headerRu,
+          setHeaderRu,
+          sphereUz,
+          setSphereUz,
+          sphereRu,
+          setSphereRu,
+          descriptionUz,
+          setDescriptionUz,
+          descriptionRu,
+          setDescriptionRu,
+          docFileUz,
+          setDocFileUz,
+          docFileRu,
+          setDocFileRu,
+          textUz,
+          setTextUz,
+          textRu,
+          setTextRu,
+          createClassificator,
+          setNameClassUz,
+          nameClassUz,
+          nameClassRu,
+          setNameClassRu,
         }}
       >
         {children}

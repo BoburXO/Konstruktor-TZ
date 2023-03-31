@@ -114,8 +114,8 @@
     "19": "Vertikal",
     "20": "Bo'sh"
   },
-  "ru": "Rus",
-  "uz": "Uzb",
+  "ru": "Rus tili",
+  "uz": "O'zbekcha",
   "toast": "Element almashish uchun nusxalandi",
   "toast401": "Ruxsat berilmagan",
   "toast404":"Topilmadi",
@@ -130,5 +130,10 @@
   "updContent": "Kontentni tahrirlash",
   "create":{
     "element":"Element yaratish"
+  },
+  "filter":{
+    "1":"Umumiy",
+    "2":"Nashr etilgan",
+    "3":"Qoralama"
   }
 }

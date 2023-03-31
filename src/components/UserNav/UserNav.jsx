@@ -120,14 +120,6 @@ const UserNav = () => {
                   {t("usernav3")}
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  to="/chernovek"
-                >
-                  {t("usernav5")}
-                </NavLink>
-              </li>
             </ul>
           </div>
         ) : null}

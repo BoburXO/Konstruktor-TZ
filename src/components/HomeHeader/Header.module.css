@@ -40,6 +40,6 @@
 
 .header_btn:hover{
        color: #631AC0;
-       background: #fff;
+       background: transparent;
        transition: 0.5s ease;
 }

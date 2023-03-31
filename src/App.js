@@ -1,8 +1,6 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import { Routes, Route } from "react-router-dom";
-import Nav from "./components/HomeNav/Nav";
-import UserNav from "./components/UserNav/UserNav";
 import PageNotFound from "./pages/404/PageNotFound";
 import AddContent from "./pages/AddContent/AddContent";
 import Content from "./pages/ContentOfSite/Content";
@@ -15,8 +13,7 @@ import LKavtor from "./pages/LKavtor/LKavtor";
 import Structure from "./pages/StructureTZ/Structure";
 import SpravochnikId from "./Params/Spravochnik/SpravochnikId";
 import Templates from "./Params/Templates/Templates";
-import UpdContent from "./components/UpdContent/UpdContent";
-import Chernovek from "./pages/Chernovek/Chernovek";
+import UpdContent from "./Params/UpdContent/UpdContent";
 import UserTemplate from "./Params/Templates/UserTemplate";
 import RegOneId from "./pages/Reg/RegOneId";
 import OneId from "./pages/oneid/RegOneId";
@@ -27,6 +24,8 @@ function App() {
         <Route path="/" element={<RegOneId />} />
         <Route path="/main" element={<Home />} />
         <Route path="/lkavtor" element={<LKavtor />} />
+        <Route path="/createtz" element={<CreateTZ />} />
+        <Route path="/createtz2" element={<CreateTZ2 />} />
         {localStorage.getItem("roleName") !== "Author" ? (
           <>
             <Route path="/lkadminshablon" element={<LKAdminstrator />} />
@@ -42,8 +41,8 @@ function App() {
             <Route path="/templatePunkt/:id" element={<Templates />} />
             <Route path="/addcontent" element={<AddContent />} />
             <Route path="/updateContent" element={<UpdContent />} />
-            <Route path="/chernovek" element={<Chernovek />} />
             <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
+            <Route path="/updateContent/:slug" element={<UpdContent />} />
           </>
         ) : null}
         <Route path="/oneid/:one" element={<OneId />} />

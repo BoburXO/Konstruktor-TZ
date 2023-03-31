@@ -27,6 +27,7 @@
 }
 
 .home_section_card {
+  width: 100%;
   padding: 20px;
   background: #fff;
   border-radius: 8px;
@@ -51,7 +52,7 @@
 }
 
 .home_section_card_body {
-  padding-top: 31px;
+  padding-top: 20px;
 }
 
 .home_section_card_body h3 {
@@ -70,6 +71,36 @@
 .card_head {
   padding-bottom: 10px;
   border-bottom: 2px solid rgba(34, 34, 34, 0.05);
+}
+
+.moreDiv {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+.moreDiv button {
+  width: 248px;
+  height: 48px;
+  border-radius: 8px;
+
+  color: #fff;
+  background: #631ac0;
+  border: 2px solid #631ac0;
+  margin-top: 30px;
+  transition: 0.5s ease;
+  font-family: Rubik;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.18px;
+  cursor: pointer;
+}
+
+.moreDiv button:hover {
+  color: #631ac0;
+  background: transparent;
+  transition: 0.5s ease;
 }
 
 @media all and (max-width: 1216px) {

@@ -67,6 +67,16 @@ const SpravochnikId = () => {
           <br />
           <br />
           <div className={s.spravochnik_id_parent}>
+            <div
+              style={{
+                width: "55%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <h3>{t("uz")}:</h3>
+              <h3>{t("ru")}:</h3>
+            </div>
             <form
               onSubmit={(e) => updateSlug(e, ParamsSlug?.slug)}
               className={s.spra_title_parent}

@@ -1,41 +1,33 @@
 import React, { useState, useRef } from "react";
-import s from "../UpdContent/UpdContent.module.css";
+import s from "./UpdContent.module.css";
 import arrowLeft from "../../assets/icons/arrowLeft.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import JoditEditor from "jodit-react";
 import { useTranslation } from "react-i18next";
-import UserNav from "../UserNav/UserNav";
+import UserNav from "../../components/UserNav/UserNav";
+import { useContext } from "react";
+import { Context } from "../../Context/Context";
+import Footer from "../../components/Footer/Footer";
 
 const UpdContent = () => {
+  const { contentSite, getContentSearchFilter } = useContext(Context);
+  const { slug } = useParams();
+  const ParamsContent = contentSite?.results?.find((el) => {
+    return el?.slug === slug;
+  });
+
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
+    getContentSearchFilter();
   }, []);
-  const editor = useRef(null);
-  const [content, setContent] = useState("");
   const { t } = useTranslation();
-
-  //table start
-  const [col, setCol] = useState(0);
-  const [row, setRow] = useState(0);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    setCol(event.target[0].value);
-    setRow(event.target[1].value);
-  };
-
-  const colArr = Array.from({ length: col }, () => 0);
-  const rowArr = Array.from({ length: row }, () => 0);
-
-  //table end
   return (
     <>
-    <UserNav/>
+      <UserNav />
       <div className={s.AddContent}>
         <Fade bottom cascade>
           <div className={s.AddContent_container}>
@@ -51,35 +43,36 @@ const UpdContent = () => {
                 <p>{t("add-content.3")}</p>
                 <br />
                 <p>{t("ru")}:</p>
-                <input type="text" value="O‘z DSt 1987:2018" />
+                <input type="text" defaultValue={ParamsContent?.header_ru} />
                 <br />
                 <br />
                 <p>{t("uz")}:</p>
-                <input type="text" value="O‘z DSt 1987:2018" />
+                <input type="text" defaultValue={ParamsContent?.header_uz} />
                 <div className={s.AddContent_sfera}>
                   <p>{t("add-content.4")}</p>
                   <div className={s.AddContent_sfera_routes}>
-                    <button>{t("add-content.5")}</button>
-                    <button>{t("add-content.6")}</button>
-                    <button>{t("add-content.7")}</button>
-                    <button>{t("add-content.8")}</button>
+                    <button>Информационные технологии</button>
+                    <button>Экспертиза</button>
+                    <button>Проекты</button>
+                    <button>Инфраструктура</button>
+                  </div>
+                  <br />
+                  <div className={s.AddContent_sfera_routes}>
+                    <button>Axborot texnologiyalari</button>
+                    <button>Ekspertiza</button>
+                    <button>Loyihalar</button>
+                    <button>Infratuzilma</button>
                   </div>
                 </div>
                 <div className={s.AddContent_left_desc}>
                   <p>{t("add-content.9")}</p>
                   <br />
                   <p>{t("ru")}:</p>
-                  <input
-                    type="text"
-                    value="Техническое задание на создание информационной системы"
-                  />
+                  <textarea defaultValue={ParamsContent?.description_ru} />
                   <br />
                   <br />
                   <p>{t("uz")}:</p>
-                  <input
-                    type="text"
-                    value="Axborot tizimini yaratish bo'yicha texnik topshiriq"
-                  />
+                  <textarea defaultValue={ParamsContent?.description_uz} />
                 </div>
                 <p>{t("add-content.10")}</p>
                 <div className={s.AddContent_left_file}>
@@ -92,21 +85,11 @@ const UpdContent = () => {
                 <br />
                 <p>{t("ru")}:</p>
                 <br />
-                <JoditEditor
-                  ref={editor}
-                  value={content}
-                  onChange={(newContent) => setContent(newContent)}
-                  className={s.JoditEditor}
-                />
+                <JoditEditor className={s.JoditEditor} />
                 <br />
                 <p>{t("uz")}:</p>
                 <br />
-                <JoditEditor
-                  ref={editor}
-                  value={content}
-                  onChange={(newContent) => setContent(newContent)}
-                  className={s.JoditEditor}
-                />
+                <JoditEditor className={s.JoditEditor} />
               </div>
               <div className={s.AddContent_right}>
                 <h4>{t("add-content.14")}</h4>
@@ -115,32 +98,10 @@ const UpdContent = () => {
                 <button className={s.share}>{t("add-content.16")}</button>
               </div>
             </div>
-            <form className={s.table_head} onSubmit={handleSubmit}>
-              <p>{t("add-content.17")}</p>
-              <br />
-              <input type="number" required placeholder={t("add-content.18")} />
-              <input
-                className={s.vertical_inp}
-                type="number"
-                required
-                placeholder={t("add-content.19")}
-              />
-              <button type="submit">{t("btn.4")}</button>
-            </form>
-            <table>
-              {rowArr?.map((index) => (
-                <tr key={index}>
-                  {colArr?.map((i) => (
-                    <td key={i}>
-                      <input type="text" placeholder={t("add-content.20")} />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </table>
           </div>
         </Fade>
       </div>
+      <Footer />
     </>
   );
 };

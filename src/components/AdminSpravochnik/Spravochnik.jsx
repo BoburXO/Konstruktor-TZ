@@ -43,6 +43,11 @@ const Spravochnik = () => {
     setSpraSearch,
     spraSearch,
     isActiveClassificator,
+    createClassificator,
+    setNameClassUz,
+    nameClassUz,
+    nameClassRu,
+    setNameClassRu,
   } = useContext(Context);
 
   useEffect(() => {
@@ -51,18 +56,18 @@ const Spravochnik = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("user entered:" + value);
     dispatch(
       addTodo({
-        title: value,
+        content_uz: value,
       })
     );
     setValue("");
   };
 
-  const setRemove = (e, title) => {
+
+  const setRemove = (e, content_uz) => {
     e.preventDefault();
-    dispatch(deleteTodo(title));
+    dispatch(deleteTodo(content_uz));
   };
 
   return (
@@ -88,7 +93,18 @@ const Spravochnik = () => {
                 <div className={s.spravochnik_modal_parent}>
                   <h1>{t("spra2")}</h1>
                   <p>{t("spra3")}</p>
-                  <input type="text" />
+                  <p>{t("ru")}:</p>
+                  <input
+                    value={nameClassRu}
+                    onChange={(e) => setNameClassRu(e.target.value)}
+                    type="text"
+                  />
+                  <p>{t("uz")}:</p>
+                  <input
+                    value={nameClassUz}
+                    onChange={(e) => setNameClassUz(e.target.value)}
+                    type="text"
+                  />
                   <p>{t("spra4")}</p>
                   <div className={s.two_in_one}>
                     <button
@@ -101,7 +117,7 @@ const Spravochnik = () => {
                     <input
                       type="text"
                       value={value}
-                      onChange={(e) => setValue(e.target.value.trim())}
+                      onChange={(e) => setValue(e.target.value)}
                     />
                   </div>
 
@@ -109,7 +125,7 @@ const Spravochnik = () => {
                     {todos?.map((el) => {
                       return (
                         <li key={el.id}>
-                          <p>{el.title}</p>
+                          <p>{el.content_uz}</p>
                           <img
                             onClick={() => dispatch(deleteTodo(el.id))}
                             src={backX}
@@ -127,9 +143,18 @@ const Spravochnik = () => {
                     >
                       {t("btn.5")}
                     </button>
-                    <button className={s.spravochnik_save_btn}>
-                      {t("btn.4")}
-                    </button>
+                    {!todos.length <= 0 ? (
+                      <button
+                        onClick={() => createClassificator()}
+                        className={s.spravochnik_save_btn}
+                      >
+                        {t("btn.4")}
+                      </button>
+                    ) : (
+                      <button className={s.spravochnik_save_btn}>
+                        {t("btn.4")}
+                      </button>
+                    )}
                   </div>
                 </div>
               </Box>
@@ -216,46 +241,50 @@ const Spravochnik = () => {
             <p style={{ width: "7%" }}>{t("spra8")}</p>
           </div>
           <div className={s.Spravochnik_sect_creators_parent}>
-            {spravochnik?.map((el, index) => {
-              return (
-                <div
-                  className={s.Spravochnik_sect_creators_parent_cards}
-                  key={el.id}
-                >
-                  <Fade top cascade>
-                    <span className={s.Spravochnik_twink}>
-                      <p>{index}</p>
-                      <p>{el.title}</p>
-                    </span>
-                    <div className={s.switch_toggle}>
-                      <Switch
-                        defaultChecked={el?.is_active}
-                        onChange={() =>
-                          isActiveClassificator(el?.slug, el?.is_active)
-                        }
-                      />
-                    </div>
-                    <p style={{ width: "20%" }}>
-                      {el.elements.length} {t("spra9")}
-                    </p>
-                    <div className={s.lkmain_sect_crud}>
-                      <Link to={`/spravochnikId/${el?.slug}`}>
-                        <button className={s.lkmain_sect_crud_create}>
-                          <img src={createIcon} alt="Copy" />
-                        </button>
-                      </Link>
+            {spravochnik.length === 0 ? (
+              <h1 className={s.notFound}>Not found...</h1>
+            ) : (
+              spravochnik?.map((el, index) => {
+                return (
+                  <div
+                    className={s.Spravochnik_sect_creators_parent_cards}
+                    key={el.id}
+                  >
+                    <Fade top cascade>
+                      <span className={s.Spravochnik_twink}>
+                        <p>{index}</p>
+                        <p>{el.title}</p>
+                      </span>
+                      <div className={s.switch_toggle}>
+                        <Switch
+                          defaultChecked={el?.is_active}
+                          onChange={() =>
+                            isActiveClassificator(el?.slug, el?.is_active)
+                          }
+                        />
+                      </div>
+                      <p style={{ width: "20%" }}>
+                        {el.elements.length} {t("spra9")}
+                      </p>
+                      <div className={s.lkmain_sect_crud}>
+                        <Link to={`/spravochnikId/${el?.slug}`}>
+                          <button className={s.lkmain_sect_crud_create}>
+                            <img src={createIcon} alt="Copy" />
+                          </button>
+                        </Link>
 
-                      <button
-                        onClick={() => removeSlug(el?.slug)}
-                        className={s.lkmain_sect_crud_delete}
-                      >
-                        <img src={deleteIcon} alt="Delete" />
-                      </button>
-                    </div>
-                  </Fade>
-                </div>
-              );
-            })}
+                        <button
+                          onClick={() => removeSlug(el?.slug)}
+                          className={s.lkmain_sect_crud_delete}
+                        >
+                          <img src={deleteIcon} alt="Delete" />
+                        </button>
+                      </div>
+                    </Fade>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
       </section>
