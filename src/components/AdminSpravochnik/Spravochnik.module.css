@@ -96,10 +96,10 @@
 
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 .lkmain_sect_crud_delete {
-  width: 35px;
+  width: 40px;
   height: 40px;
 
   border-radius: 8px;
@@ -108,7 +108,7 @@
   border: 2px solid #eb5757;
 }
 .lkmain_sect_crud_create {
-  width: 35px;
+  width: 40px;
   height: 40px;
 
   border: 2px solid #2f80ed;
@@ -304,7 +304,17 @@
   background: transparent;
 } */
 
-.notFound{
+.notFound {
   padding-top: 60px;
   text-align: center;
+}
+
+.lkmain_sect_crud_download {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+  background: #fff;
+  transition: 0.5s ease;
+  border: 2px solid #0BA9CC;
 }

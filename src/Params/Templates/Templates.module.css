@@ -16,7 +16,7 @@
   padding: 30px;
   background: #fff;
   border-radius: 16px;
-} 
+}
 
 .templates_card p {
   font-size: 16px;
@@ -60,26 +60,22 @@
 }
 
 .Temp_delete {
-  background: #eb5757 !important;
-  color: #fff !important;
-  border: 0 !important;
+  width: 50px !important;
+  border: 2px solid #eb5757 !important;
 }
 
 .Temp_delete:hover {
-  border: 2px solid #eb5757 !important;
-  color: #eb5757 !important;
+  transform: scale(1.1) !important;
   background: transparent !important;
 }
 
 .Temp_update {
+  width: 50px !important;
   margin: 0 20px;
-  background: #2f80ed !important;
-  color: #fff !important;
-  border: 0 !important;
+  border: 2px solid #2f80ed !important;
 }
 
 .Temp_update:hover {
+  transform: scale(1.1) !important;
   background: transparent !important;
-  color: #2f80ed !important;
-  border: 2px solid #2f80ed !important;
 }

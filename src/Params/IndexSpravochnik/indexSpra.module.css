@@ -1,0 +1,67 @@
+.indexSpra {
+  width: 100%;
+  height: max-content;
+  background: rgba(47, 128, 237, 0.1);
+  padding: 60px 0;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  font-family: Rubik;
+}
+
+.back {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shablon_cancel_btn {
+  width: 120px;
+  height: 48px;
+  color: rgba(34, 34, 34, 0.6);
+  border: 2px solid rgba(34, 34, 34, 0.6);
+  border-radius: 8px;
+  background: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+
+.shablon_cancel_btn:hover {
+  background: rgba(34, 34, 34, 0.6);
+  color: #fff;
+  border: none;
+  transition: 0.5s ease;
+}
+
+.index_el {
+  padding-left: 40px;
+}
+
+.index_el li {
+  width: max-content;
+  height: 50px;
+  padding: 15px 30px;
+  list-style: square;
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  outline: none;
+  font-family: Rubik;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.index_el li:hover {
+  border: 1px solid #631ac0;
+  transition: 0.3s ease;
+}
+
+.index_el li p {
+  font-size: 18px;
+}

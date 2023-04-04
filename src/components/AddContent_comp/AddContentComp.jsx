@@ -243,7 +243,7 @@ const AddContentComp = () => {
                       <input type="text" placeholder={t("add-content.20")} />
                     </td>
                   ))}
-                </tr>
+                </tr> 
               ))}
             </table> */}
           </div>

@@ -5,6 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { templates } from "../../templates";
 import { useTranslation } from "react-i18next";
 import UserNav from "../../components/UserNav/UserNav";
+import createIcon from "../../assets/icons/createIcon.svg";
+import deleteIcon from "../../assets/icons/deleteIcon.svg";
 
 const Templates = () => {
   const navigate = useNavigate();
@@ -33,8 +35,8 @@ const Templates = () => {
           <button className={s.Temp_back} onClick={() => navigate(-1)}>
             {t("btn.1")}
           </button>
-          <button className={s.Temp_update}>{t("btn.7")}</button>
-          <button className={s.Temp_delete}>{t("btn.6")}</button>
+          <button className={s.Temp_update}><img src={createIcon} alt="Update" /></button>
+          <button className={s.Temp_delete}><img src={deleteIcon} alt="Delete" /></button>
         </div>
       </section>
       <Footer />

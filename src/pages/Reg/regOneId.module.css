@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(47, 128, 237, 0.1);
 }
 
 .reg_card {

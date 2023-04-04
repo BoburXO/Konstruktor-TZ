@@ -17,6 +17,9 @@ import UpdContent from "./Params/UpdContent/UpdContent";
 import UserTemplate from "./Params/Templates/UserTemplate";
 import RegOneId from "./pages/Reg/RegOneId";
 import OneId from "./pages/oneid/RegOneId";
+import IndexSpra from "./Params/IndexSpravochnik/IndexSpra";
+import ContentOfSiteUser from "./Params/ContentOfSiteUser/ContentOfSiteUser";
+import Sphere from "./pages/Sphere/Sphere";
 function App() {
   return (
     <>
@@ -26,15 +29,17 @@ function App() {
         <Route path="/lkavtor" element={<LKavtor />} />
         <Route path="/createtz" element={<CreateTZ />} />
         <Route path="/createtz2" element={<CreateTZ2 />} />
+        <Route path="/contentofsite" element={<Content />} />
+        <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
+        <Route path="/index-spravochnik/:slug" element={<IndexSpra />} />
+        <Route
+          path="/content-of-site-index/:slug"
+          element={<ContentOfSiteUser />}
+        />
         {localStorage.getItem("roleName") !== "Author" ? (
           <>
             <Route path="/lkadminshablon" element={<LKAdminstrator />} />
-            <Route
-              path="/lkadminspravochnik"
-              element={<LKAdminSpravochnik />}
-            />
             <Route path="/spravochnikId/:slug" element={<SpravochnikId />} />
-            <Route path="/contentofsite" element={<Content />} />
             <Route path="/structure" element={<Structure />} />
             <Route path="/createtz" element={<CreateTZ />} />
             <Route path="/createtz2" element={<CreateTZ2 />} />
@@ -43,6 +48,7 @@ function App() {
             <Route path="/updateContent" element={<UpdContent />} />
             <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
             <Route path="/updateContent/:slug" element={<UpdContent />} />
+            <Route path="/sphere" element={<Sphere />} />
           </>
         ) : null}
         <Route path="/oneid/:one" element={<OneId />} />

@@ -46,7 +46,7 @@ const ContextProvider = ({ children }) => {
   const [docFileRu, setDocFileRu] = useState(null);
   const [textUz, setTextUz] = useState("");
   const [textRu, setTextRu] = useState("");
-  const [createdAt,setCreatedAt] = useState("")
+  const [createdAt, setCreatedAt] = useState("");
   //createContent
 
   //oneID roles post
@@ -370,7 +370,8 @@ const ContextProvider = ({ children }) => {
   //isActive
 
   //createElement
-  const createElement = (id) => {
+  const createElement = (e, id) => {
+    e.preventDefault();
     axios
       .post(`${API}/classificator/element/${id}/`, {
         content_uz: contUz,
@@ -436,7 +437,7 @@ const ContextProvider = ({ children }) => {
   const getContentSearchFilter = (isPublish) => {
     axios
       .get(
-        `${API}/standard/site-content-list/?search=${contentSearch}&is_published=${isPublish}`,
+        `${API}/standard/site-content-list/?search=${contentSearch}&is_published=${isPublish}&sphere=ekspertiza/`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -510,7 +511,7 @@ const ContextProvider = ({ children }) => {
     formData.append("doc_file_ru", docFileRu);
     formData.append("text_uz", textUz);
     formData.append("text_ru", textRu);
-    formData.append("created_at",createdAt)
+    formData.append("created_at", createdAt);
     try {
       const res = axios({
         url: `${API}/standard/create/`,
@@ -545,7 +546,9 @@ const ContextProvider = ({ children }) => {
   };
   //createContentOfSite
 
-  const createClassificator = () => {
+  //createClassificator
+  const createClassificator = (e) => {
+    e.preventDefault();
     axios
       .post(
         `${API}/classificator/create/`,
@@ -583,6 +586,76 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
+  //createClassificator
+
+  //getSphere
+  const [sphere, setSphere] = useState([]);
+  const getSphere = () => {
+    axios
+      .get(`${API}/standard/sphere/list-create/`)
+      .then((res) => {
+        setSphere(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          notify401();
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //getSphere
+
+  //createSphere
+  const createSphere = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `${API}/standard/sphere/list-create/`,
+        {
+          name_uz: e.target[0].value,
+          name_ru: e.target[1].value,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => createSphere());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //createSphere
 
   return (
     <>
@@ -639,6 +712,9 @@ const ContextProvider = ({ children }) => {
           nameClassUz,
           nameClassRu,
           setNameClassRu,
+          sphere,
+          getSphere,
+          createSphere
         }}
       >
         {children}

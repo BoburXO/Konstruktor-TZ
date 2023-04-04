@@ -4,6 +4,7 @@ import search from "../../assets/icons/search.svg";
 import date from "../../assets/icons/dateIcon.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
+import download from "../../assets/icons/skacatIcon.svg";
 import Fade from "react-reveal/Fade";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -40,13 +41,15 @@ const ContentOfSite = () => {
         <div className={s.content_of_site_container}>
           <div className={s.content_of_site_label}>
             <h1>{t("content-site.1")}</h1>
-            <button
-              onClick={() => navigate("/addcontent")}
-              className={s.content_of_site_label_btn}
-            >
-              <span style={{ fontSize: "25px" }}>+</span>
-              <span>{t("content-site.2")}</span>
-            </button>
+            {localStorage.getItem("roleName") !== "Author" ? (
+              <button
+                onClick={() => navigate("/addcontent")}
+                className={s.content_of_site_label_btn}
+              >
+                <span style={{ fontSize: "25px" }}>+</span>
+                <span>{t("content-site.2")}</span>
+              </button>
+            ) : null}
           </div>
           <div
             style={{
@@ -70,14 +73,14 @@ const ContentOfSite = () => {
               <Box sx={{ minWidth: 120 }}>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <Select
-                  className={s.filter}
+                    className={s.filter}
                     value={age}
                     onChange={handleChange}
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
                   >
                     <MenuItem onClick={() => getContentSearchFilter()} value="">
-                    {t("filter.1")}
+                      {t("filter.1")}
                     </MenuItem>
                     <MenuItem
                       onClick={() => getContentSearchFilter(true)}
@@ -114,7 +117,9 @@ const ContentOfSite = () => {
                       <p>
                         <b>{el.header_ru}</b>
                       </p>
-                      <p className={s.sphere}>{el.sphere_ru.slice(0, 27)}</p>
+                      <p className={s.sphere}>
+                        {el.sphere.name_ru.slice(0, 27)}
+                      </p>
                       <p className={s.Content_description}>
                         {el.description_ru.slice(0, 40)} {"..."}
                       </p>
@@ -122,19 +127,39 @@ const ContentOfSite = () => {
                         <img src={date} alt="" />
                         <p>{el.created_at.slice(0, 10)}</p>
                       </span>
-                      <div className={s.content_crud}>
-                        <Link to={`/updateContent/${el?.slug}`}>
-                          <button className={s.content_crud_create}>
-                            <img src={createIcon} alt="Copy" />
+                      {localStorage.getItem("roleName") !== "Author" ? (
+                        <div className={s.content_crud}>
+                          <Link to={`/updateContent/${el?.slug}`}>
+                            <button className={s.content_crud_create}>
+                              <img src={createIcon} alt="Copy" />
+                            </button>
+                          </Link>
+                          <button className={s.content_crud_download}>
+                            <a href={el?.doc_file_ru} download target="_blank">
+                              <img src={download} alt="Download" />
+                            </a>
                           </button>
-                        </Link>
-                        <button
-                          onClick={() => deleteContent(el?.slug)}
-                          className={s.content_crud_delete}
-                        >
-                          <img src={deleteIcon} alt="Delete" />
-                        </button>
-                      </div>
+                          <button
+                            onClick={() => deleteContent(el?.slug)}
+                            className={s.content_crud_delete}
+                          >
+                            <img src={deleteIcon} alt="Delete" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className={s.content_crud}>
+                          <button className={s.content_crud_download}>
+                            <a rel="noopener" href={el?.doc_file_ru} download target="_blank">
+                              <img src={download} alt="Download" />
+                            </a>
+                          </button>
+                          <Link to={`/content-of-site-index/${el?.slug}`}>
+                            <button className={s.content_crud_create}>
+                              <img src={createIcon} alt="Show" />
+                            </button>
+                          </Link>
+                        </div>
+                      )}
                     </Fade>
                   </div>
                 );

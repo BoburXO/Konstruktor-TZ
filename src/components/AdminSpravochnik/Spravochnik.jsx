@@ -3,6 +3,7 @@ import s from "./Spravochnik.module.css";
 import search from "../../assets/icons/search.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
+import download from "../../assets/icons/skacatIcon.svg";
 import Fade from "react-reveal/Fade";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -64,7 +65,6 @@ const Spravochnik = () => {
     setValue("");
   };
 
-
   const setRemove = (e, content_uz) => {
     e.preventDefault();
     dispatch(deleteTodo(content_uz));
@@ -76,89 +76,96 @@ const Spravochnik = () => {
         <div className={s.Spravochnik_container}>
           <div className={s.Spravochnik_label}>
             <h1>{t("spra")}</h1>
-            <button onClick={handleOpen} className={s.Spravochnik_label_btn}>
-              <span style={{ fontSize: "25px" }}>+</span>
-              <span>{t("spra1")}</span>
-            </button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <div style={{ textAlign: "end", cursor: "pointer" }}>
-                  <img onClick={handleClose} src={backX} alt="" />
-                </div>
-                <div className={s.spravochnik_modal_parent}>
-                  <h1>{t("spra2")}</h1>
-                  <p>{t("spra3")}</p>
-                  <p>{t("ru")}:</p>
-                  <input
-                    value={nameClassRu}
-                    onChange={(e) => setNameClassRu(e.target.value)}
-                    type="text"
-                  />
-                  <p>{t("uz")}:</p>
-                  <input
-                    value={nameClassUz}
-                    onChange={(e) => setNameClassUz(e.target.value)}
-                    type="text"
-                  />
-                  <p>{t("spra4")}</p>
-                  <div className={s.two_in_one}>
-                    <button
-                      className={s.accept}
-                      disabled={!value}
-                      onClick={onSubmit}
-                    >
-                      <img src={accept} alt="Accept" />
-                    </button>
-                    <input
-                      type="text"
-                      value={value}
-                      onChange={(e) => setValue(e.target.value)}
-                    />
-                  </div>
+            {localStorage.getItem("roleName") !== "Author" ? (
+              <span>
+                <button
+                  onClick={handleOpen}
+                  className={s.Spravochnik_label_btn}
+                >
+                  <span style={{ fontSize: "25px" }}>+</span>
+                  <span>{t("spra1")}</span>
+                </button>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <div style={{ textAlign: "end", cursor: "pointer" }}>
+                      <img onClick={handleClose} src={backX} alt="" />
+                    </div>
+                    <div className={s.spravochnik_modal_parent}>
+                      <h1>{t("spra2")}</h1>
+                      <p>{t("spra3")}</p>
+                      <p>{t("ru")}:</p>
+                      <input
+                        value={nameClassRu}
+                        onChange={(e) => setNameClassRu(e.target.value)}
+                        type="text"
+                      />
+                      <p>{t("uz")}:</p>
+                      <input
+                        value={nameClassUz}
+                        onChange={(e) => setNameClassUz(e.target.value)}
+                        type="text"
+                      />
+                      <p>{t("spra4")}</p>
+                      <div className={s.two_in_one}>
+                        <button
+                          className={s.accept}
+                          disabled={!value}
+                          onClick={onSubmit}
+                        >
+                          <img src={accept} alt="Accept" />
+                        </button>
+                        <input
+                          type="text"
+                          value={value}
+                          onChange={(e) => setValue(e.target.value)}
+                        />
+                      </div>
 
-                  <ol>
-                    {todos?.map((el) => {
-                      return (
-                        <li key={el.id}>
-                          <p>{el.content_uz}</p>
-                          <img
-                            onClick={() => dispatch(deleteTodo(el.id))}
-                            src={backX}
-                            alt="X"
-                          />
-                        </li>
-                      );
-                    })}
-                  </ol>
-                  <div className={s.spravochnik_empty}></div>
-                  <div className={s.spravochnik_btns}>
-                    <button
-                      onClick={handleClose}
-                      className={s.spravochnik_cancel_btn}
-                    >
-                      {t("btn.5")}
-                    </button>
-                    {!todos.length <= 0 ? (
-                      <button
-                        onClick={() => createClassificator()}
-                        className={s.spravochnik_save_btn}
-                      >
-                        {t("btn.4")}
-                      </button>
-                    ) : (
-                      <button className={s.spravochnik_save_btn}>
-                        {t("btn.4")}
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </Box>
-            </Modal>
+                      <ol>
+                        {todos?.map((el) => {
+                          return (
+                            <li key={el.id}>
+                              <p>{el.content_uz}</p>
+                              <img
+                                onClick={() => dispatch(deleteTodo(el.id))}
+                                src={backX}
+                                alt="X"
+                              />
+                            </li>
+                          );
+                        })}
+                      </ol>
+                      <div className={s.spravochnik_empty}></div>
+                      <div className={s.spravochnik_btns}>
+                        <button
+                          onClick={handleClose}
+                          className={s.spravochnik_cancel_btn}
+                        >
+                          {t("btn.5")}
+                        </button>
+                        {!todos.length <= 0 ? (
+                          <button
+                            onClick={() => createClassificator()}
+                            className={s.spravochnik_save_btn}
+                          >
+                            {t("btn.4")}
+                          </button>
+                        ) : (
+                          <button className={s.spravochnik_save_btn}>
+                            {t("btn.4")}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </Box>
+                </Modal>
+              </span>
+            ) : null}
           </div>
           <div className={s.input_field}>
             <img className={s.S_icon} src={search} alt="Search" />
@@ -253,7 +260,7 @@ const Spravochnik = () => {
                     <Fade top cascade>
                       <span className={s.Spravochnik_twink}>
                         <p>{index}</p>
-                        <p>{el.title}</p>
+                        <p>{el.title_ru}</p>
                       </span>
                       <div className={s.switch_toggle}>
                         <Switch
@@ -266,20 +273,33 @@ const Spravochnik = () => {
                       <p style={{ width: "20%" }}>
                         {el.elements.length} {t("spra9")}
                       </p>
-                      <div className={s.lkmain_sect_crud}>
-                        <Link to={`/spravochnikId/${el?.slug}`}>
-                          <button className={s.lkmain_sect_crud_create}>
-                            <img src={createIcon} alt="Copy" />
+                      {localStorage.getItem("roleName") !== "Author" ? (
+                        <div className={s.lkmain_sect_crud}>
+                          <Link to={`/spravochnikId/${el?.slug}`}>
+                            <button className={s.lkmain_sect_crud_create}>
+                              <img src={createIcon} alt="Copy" />
+                            </button>
+                          </Link>
+                          <button
+                            onClick={() => removeSlug(el?.slug)}
+                            className={s.lkmain_sect_crud_delete}
+                          >
+                            <img src={deleteIcon} alt="Delete" />
                           </button>
-                        </Link>
+                        </div>
+                      ) : (
+                        <div className={s.lkmain_sect_crud}>
+                          <button className={s.lkmain_sect_crud_download}>
+                            <img src={download} alt="Download" />
+                          </button>
 
-                        <button
-                          onClick={() => removeSlug(el?.slug)}
-                          className={s.lkmain_sect_crud_delete}
-                        >
-                          <img src={deleteIcon} alt="Delete" />
-                        </button>
-                      </div>
+                          <Link to={`/index-spravochnik/${el?.slug}`}>
+                            <button className={s.lkmain_sect_crud_create}>
+                              <img src={createIcon} alt="Copy" />
+                            </button>
+                          </Link>
+                        </div>
+                      )}
                     </Fade>
                   </div>
                 );

@@ -26,28 +26,33 @@ const Section = () => {
                   <div className={s.home_section_card} key={el.id}>
                     <div className={s.card_head}>
                       <div className={s.card_head_left_side}>
-                        <h2>{el.header}</h2>
-                        <p>{el.sphere}</p>
+                        <h2>{el.header_ru}</h2>
+                        <p>{el.sphere.name_ru}</p>
                       </div>
-                      <a href={el.doc_file} target="_blank" download>
+                      <a
+                        rel="noreferrer"
+                        href={el.doc_file_ru}
+                        target="_blank"
+                        download
+                      >
                         {" "}
                         <img src={download} alt="" />
                       </a>
                     </div>
                     <div className={s.home_section_card_body}>
                       {el.description.length < 70 ? (
-                        <h3>{el.description}</h3>
+                        <h3>{el.description_ru}</h3>
                       ) : (
                         <h3>
-                          {el.description.slice(0, 80)}
+                          {el.description_ru.slice(0, 80)}
                           {"..."}
                         </h3>
                       )}
                       {el.text.length < 390 ? (
-                        <p>{el.text}</p>
+                        <p>{el.text_ru}</p>
                       ) : (
                         <p>
-                          {el.text.slice(0, 400)}
+                          {el.text_ru.slice(0, 400)}
                           {"..."}
                         </p>
                       )}
@@ -59,7 +64,9 @@ const Section = () => {
             <div className={s.moreDiv}>
               <button
                 onClick={() => setMore((defaultState) => defaultState + 6)}
-                style={{ display: more >= tzDB?.results?.length ? "none" : null }}
+                style={{
+                  display: more >= tzDB?.results?.length ? "none" : null,
+                }}
               >
                 Загрузить ещё
               </button>

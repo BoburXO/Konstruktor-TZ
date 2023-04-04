@@ -96,7 +96,7 @@
     "1": "Kontent ro'yxatiga qaytish",
     "2": "Kontent qo'shish",
     "3": "Sarlavha",
-    "4": "Sfera",
+    "4": "Soha",
     "5": "Axborot texnologiyalari",
     "6": "Ekspertiza",
     "7": "Loyihalar",
@@ -118,22 +118,26 @@
   "uz": "O'zbekcha",
   "toast": "Element almashish uchun nusxalandi",
   "toast401": "Ruxsat berilmagan",
-  "toast404":"Topilmadi",
-  "toast400":"Noto'g'ri so'rov",
-  "toast403":"Taqiqlangan",
-  "toast500":"Serverda xatolik",
-  "toast200":"Muvaffaqiyatli yakunlandi",
+  "toast404": "Topilmadi",
+  "toast400": "Noto'g'ri so'rov",
+  "toast403": "Taqiqlangan",
+  "toast500": "Serverda xatolik",
+  "toast200": "Muvaffaqiyatli yakunlandi",
   "spra_id": "Bu yerda siz kataloglarni tahrirlashingiz yoki o'chirishingiz mumkin",
   "spra_id1": "Sarlavhani nomini o'zgartirish...",
   "spra_id2": "Elementni o'zgartirish...",
+  "spra_id3": "Elementlar",
   "active": "AKTIV",
   "updContent": "Kontentni tahrirlash",
-  "create":{
-    "element":"Element yaratish"
+  "create": {
+    "element": "Element yaratish"
   },
-  "filter":{
-    "1":"Umumiy",
-    "2":"Nashr etilgan",
-    "3":"Qoralama"
+  "filter": {
+    "1": "Umumiy",
+    "2": "Nashr etilgan",
+    "3": "Qoralama"
+  },
+  "sfera": {
+    "1": "Soha yaratish"
   }
 }

@@ -120,9 +120,38 @@ const UserNav = () => {
                   {t("usernav3")}
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/sphere"
+                >
+                  {t("add-content.4")}
+                </NavLink>
+              </li>
             </ul>
           </div>
-        ) : null}
+        ) : (
+          <div className={s.userNav_container}>
+            <ul className={s.author_routes}>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/lkadminspravochnik"
+                >
+                  {t("usernav1")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/contentofsite"
+                >
+                  {t("usernav3")}
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+        )}
       </nav>
     </>
   );
