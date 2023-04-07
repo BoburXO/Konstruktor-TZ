@@ -38,8 +38,7 @@ const ContextProvider = ({ children }) => {
   //createContent
   const [headerUz, setHeaderUz] = useState("");
   const [headerRu, setHeaderRu] = useState("");
-  const [sphereUz, setSphereUz] = useState("");
-  const [sphereRu, setSphereRu] = useState("");
+  const [sphereContent, setSphereContent] = useState("");
   const [descriptionUz, setDescriptionUz] = useState("");
   const [descriptionRu, setDescriptionRu] = useState("");
   const [docFileUz, setDocFileUz] = useState(null);
@@ -433,25 +432,84 @@ const ContextProvider = ({ children }) => {
   };
   //getTZhome
 
-  //getContent-search,filter
-  const getContentSearchFilter = (isPublish) => {
+  //getContent-search,filter,sphere-filter
+  const getContentSearch = () => {
     axios
-      .get(
-        `${API}/standard/site-content-list/?search=${contentSearch}&is_published=${isPublish}&sphere=ekspertiza/`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
+      .get(`${API}/standard/site-content-list/?search=${contentSearch}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then((res) => {
         setContentSite(res.data);
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          refreshToken().then(() => getContentSearchFilter());
+          refreshToken().then(() => getContentSearch());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getContentIsPublish = (isPublish) => {
+    axios
+      .get(`${API}/standard/site-content-list/?is_published=${isPublish}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setContentSite(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getContentIsPublish());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getContentSphereFilter = (id) => {
+    axios
+      .get(`${API}/standard/site-content-list/?sphere=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setContentSite(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getContentSphereFilter());
         }
         if (err.response.status === 404) {
           notify404();
@@ -503,8 +561,7 @@ const ContextProvider = ({ children }) => {
 
     formData.append("header_uz", headerUz);
     formData.append("header_ru", headerRu);
-    formData.append("sphere_uz", sphereUz);
-    formData.append("sphere_ru", sphereRu);
+    formData.append("sphere.id", sphereContent);
     formData.append("description_uz", descriptionUz);
     formData.append("description_ru", descriptionRu);
     formData.append("doc_file_uz", docFileUz);
@@ -512,6 +569,7 @@ const ContextProvider = ({ children }) => {
     formData.append("text_uz", textUz);
     formData.append("text_ru", textRu);
     formData.append("created_at", createdAt);
+    formData.append("is_published", true);
     try {
       const res = axios({
         url: `${API}/standard/create/`,
@@ -523,12 +581,96 @@ const ContextProvider = ({ children }) => {
         },
         data: formData,
         is_published: true,
-      }).then((res) => {
-        console.log(res);
-      });
+      })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            notify401();
+          }
+          if (err.response.status === 404) {
+            notify404();
+          }
+          if (err.response.status === 400) {
+            notify400();
+          }
+          if (err.response.status === 403) {
+            notify403();
+          }
+          if (err.response.status === 500) {
+            notify500();
+          }
+        });
     } catch (err) {
       if (err.response.status === 401) {
-        refreshToken().then(() => createContentOfSite());
+        notify401();
+      }
+      if (err.response.status === 404) {
+        notify404();
+      }
+      if (err.response.status === 400) {
+        notify400();
+      }
+      if (err.response.status === 403) {
+        notify403();
+      }
+      if (err.response.status === 500) {
+        notify500();
+      }
+    }
+  };
+
+  //ispublish = false
+  const createContentOfSiteFalse = () => {
+    const formData = new FormData();
+
+    formData.append("header_uz", headerUz);
+    formData.append("header_ru", headerRu);
+    formData.append("sphere.id", sphereContent);
+    formData.append("description_uz", descriptionUz);
+    formData.append("description_ru", descriptionRu);
+    formData.append("doc_file_uz", docFileUz);
+    formData.append("doc_file_ru", docFileRu);
+    formData.append("text_uz", textUz);
+    formData.append("text_ru", textRu);
+    formData.append("created_at", createdAt);
+    formData.append("is_published", false);
+    try {
+      const res = axios({
+        url: `${API}/standard/create/`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+        data: formData,
+        is_published: false,
+      })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            notify401();
+          }
+          if (err.response.status === 404) {
+            notify404();
+          }
+          if (err.response.status === 400) {
+            notify400();
+          }
+          if (err.response.status === 403) {
+            notify403();
+          }
+          if (err.response.status === 500) {
+            notify500();
+          }
+        });
+    } catch (err) {
+      if (err.response.status === 401) {
+        notify401();
       }
       if (err.response.status === 404) {
         notify404();
@@ -634,8 +776,8 @@ const ContextProvider = ({ children }) => {
           },
         }
       )
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
+        window.location.reload();
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -656,6 +798,84 @@ const ContextProvider = ({ children }) => {
       });
   };
   //createSphere
+
+  //deleteSphere
+  const deleteSphere = (id) => {
+    axios
+      .delete(`${API}/standard/sphere/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          notify401();
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //deleteSphere
+
+  //editSphere
+  const [modalData, setModalData] = useState("");
+  const [sphereEditUz, setSphereEditUz] = useState("");
+  const [sphereEditRu, setSphereEditRu] = useState("");
+
+  const editSphere = async (id) => {
+    await axios
+      .patch(
+        `${API}/standard/sphere/${id}/`,
+        {
+          name_uz: sphereEditUz,
+          name_ru: sphereEditRu,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => editSphere());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  //editSphere
 
   return (
     <>
@@ -681,7 +901,7 @@ const ContextProvider = ({ children }) => {
           setContUz,
           getTzHome,
           tzDB,
-          getContentSearchFilter,
+          getContentSearch,
           contentSite,
           contentSearch,
           setContentSearch,
@@ -691,10 +911,8 @@ const ContextProvider = ({ children }) => {
           setHeaderUz,
           headerRu,
           setHeaderRu,
-          sphereUz,
-          setSphereUz,
-          sphereRu,
-          setSphereRu,
+          sphereContent,
+          setSphereContent,
           descriptionUz,
           setDescriptionUz,
           descriptionRu,
@@ -707,6 +925,8 @@ const ContextProvider = ({ children }) => {
           setTextUz,
           textRu,
           setTextRu,
+          createdAt,
+          setCreatedAt,
           createClassificator,
           setNameClassUz,
           nameClassUz,
@@ -714,7 +934,18 @@ const ContextProvider = ({ children }) => {
           setNameClassRu,
           sphere,
           getSphere,
-          createSphere
+          createSphere,
+          getContentIsPublish,
+          getContentSphereFilter,
+          deleteSphere,
+          editSphere,
+          modalData,
+          setModalData,
+          sphereEditRu,
+          setSphereEditRu,
+          sphereEditUz,
+          setSphereEditUz,
+          createContentOfSiteFalse,
         }}
       >
         {children}

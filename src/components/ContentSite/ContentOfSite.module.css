@@ -79,10 +79,10 @@
 }
 
 .input_field input:focus {
-  border-bottom: 2px solid #631ac0;
+  border: 2px solid #2684ff !important;
 }
 
-.filter{
+.filter {
   width: 150px;
   height: 42px;
 
@@ -94,7 +94,6 @@
   font-size: 16px;
   margin-bottom: 7px;
 }
-
 
 .content_db_labels {
   width: 100%;
@@ -154,7 +153,7 @@ span {
   max-width: 200px !important;
 } */
 
-.content_crud_download{
+.content_crud_download {
   width: 40px;
   height: 40px;
 
@@ -162,6 +161,16 @@ span {
   border-radius: 8px;
   background: #fff;
   transition: 0.5s ease;
+}
+
+.selecttt {
+  width: 150px;
+  height: 48px;
+}
+
+.selecttt2 {
+  width: 200px;
+  height: 48px;
 }
 
 .content_crud_create {
@@ -208,4 +217,3 @@ span {
   text-align: center;
   padding-top: 50px;
 }
-

@@ -149,6 +149,14 @@ const UserNav = () => {
                   {t("usernav3")}
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/lkavtor"
+                >
+                  {t("lkavtor1")}
+                </NavLink>
+              </li>
             </ul>
           </div>
         )}

@@ -31,7 +31,7 @@ const Section = () => {
                       </div>
                       <a
                         rel="noreferrer"
-                        href={el.doc_file_ru}
+                        href={el.doc_file}
                         target="_blank"
                         download
                       >

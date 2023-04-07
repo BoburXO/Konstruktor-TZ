@@ -11,18 +11,22 @@ import { Context } from "../../Context/Context";
 import Footer from "../../components/Footer/Footer";
 
 const UpdContent = () => {
-  const { contentSite, getContentSearchFilter } = useContext(Context);
+  const { contentSite, getContentSearch, sphere, getSphere } =
+    useContext(Context);
+
   const { slug } = useParams();
   const ParamsContent = contentSite?.results?.find((el) => {
     return el?.slug === slug;
   });
 
+  const [sfera, setSfera] = useState(ParamsContent?.sphere?.id);
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
-    getContentSearchFilter();
+    getSphere();
+    getContentSearch();
   }, []);
   const { t } = useTranslation();
   return (
@@ -51,17 +55,37 @@ const UpdContent = () => {
                 <div className={s.AddContent_sfera}>
                   <p>{t("add-content.4")}</p>
                   <div className={s.AddContent_sfera_routes}>
-                    <button>Информационные технологии</button>
-                    <button>Экспертиза</button>
-                    <button>Проекты</button>
-                    <button>Инфраструктура</button>
+                    <p>{t("ru")}:</p>
+                    {sphere?.map((el) => {
+                      return (
+                        <button
+                          key={el.id}
+                          onClick={() => {
+                            setSfera(el.id);
+                          }}
+                          className={sfera === el.id ? s.active : ""}
+                        >
+                          {el.name_ru}
+                        </button>
+                      );
+                    })}
                   </div>
                   <br />
                   <div className={s.AddContent_sfera_routes}>
-                    <button>Axborot texnologiyalari</button>
-                    <button>Ekspertiza</button>
-                    <button>Loyihalar</button>
-                    <button>Infratuzilma</button>
+                    <p>{t("uz")}:</p>
+                    {sphere?.map((el) => {
+                      return (
+                        <button
+                          key={el.id}
+                          onClick={() => {
+                            setSfera(el.id);
+                          }}
+                          className={sfera === el.id ? s.active : ""}
+                        >
+                          {el.name_uz}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
                 <div className={s.AddContent_left_desc}>
@@ -75,21 +99,47 @@ const UpdContent = () => {
                   <textarea defaultValue={ParamsContent?.description_uz} />
                 </div>
                 <p>{t("add-content.10")}</p>
+                <br />
+                <p>{t("ru")}:</p>
                 <div className={s.AddContent_left_file}>
                   <input type="file" id="file" />
-                  <label htmlFor="file">
+                  <label style={{ textAlign: "center" }} htmlFor="file">
                     {t("add-content.11")} <span>{t("add-content.12")}</span>{" "}
                     {t("add-content.13")}
+                    <br />
+                    <br />
+                    {ParamsContent?.doc_file_ru.toString()}
+                  </label>
+                </div>
+                <br />
+                <p>{t("uz")}:</p>
+                <div
+                  style={{ textAlign: "center" }}
+                  className={s.AddContent_left_file}
+                >
+                  <input type="file" id="file1" />
+                  <label htmlFor="file1">
+                    {t("add-content.11")} <span>{t("add-content.12")}</span>{" "}
+                    {t("add-content.13")}
+                    <br />
+                    <br />
+                    {ParamsContent?.doc_file_uz.toString()}
                   </label>
                 </div>
                 <br />
                 <p>{t("ru")}:</p>
                 <br />
-                <JoditEditor className={s.JoditEditor} />
+                <JoditEditor
+                  value={ParamsContent?.text_ru}
+                  className={s.JoditEditor}
+                />
                 <br />
                 <p>{t("uz")}:</p>
                 <br />
-                <JoditEditor className={s.JoditEditor} />
+                <JoditEditor
+                  value={ParamsContent?.text_uz}
+                  className={s.JoditEditor}
+                />
               </div>
               <div className={s.AddContent_right}>
                 <h4>{t("add-content.14")}</h4>

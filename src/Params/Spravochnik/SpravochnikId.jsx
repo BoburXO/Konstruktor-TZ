@@ -82,13 +82,13 @@ const SpravochnikId = () => {
               className={s.spra_title_parent}
             >
               <div>
-                <h2>{ParamsSlug?.title_uz}</h2>
+                <h3>{ParamsSlug?.title_uz}</h3>
                 <div className={s.spravochnik_params}>
                   <input type="text" placeholder={t("spra_id1")} />
                 </div>
               </div>
               <div>
-                <h2>{ParamsSlug?.title_ru}</h2>
+                <h3>{ParamsSlug?.title_ru}</h3>
                 <div className={s.spravochnik_params}>
                   <input type="text" placeholder={t("spra_id1")} />
                   <button type="submit" className={s.createParams}>
@@ -105,11 +105,15 @@ const SpravochnikId = () => {
                 return (
                   <form onSubmit={(e) => updateElements(e, el.id)} key={el.id}>
                     <div>
-                      <h3>{el.content_uz}</h3>
+                      <p>{el.content_uz}</p>
                       <input type="text" placeholder={t("spra_id2")} />
                     </div>
                     <div>
-                      <h3>{el.content_ru}</h3>
+                      {el.content_ru === null ? (
+                        <p style={{color:"gray"}}>{t("spra10")}...</p>
+                      ) : (
+                        <p>{el.content_ru}</p>
+                      )}
                       <div className={s.inp_btn}>
                         <input type="text" placeholder={t("spra_id2")} />
                         <button type="submit" className={s.createParams}>

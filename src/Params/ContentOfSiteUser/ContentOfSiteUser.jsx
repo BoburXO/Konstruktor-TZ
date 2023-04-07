@@ -9,19 +9,19 @@ import Fade from "react-reveal/Fade";
 import s from "../ContentOfSiteUser/ContentOfSiteUser.module.css";
 import download from "../../assets/icons/skacatIcon.svg";
 import JoditEditor from "jodit-react";
+import date from "../../assets/icons/date.svg";
 
 const ContentOfSiteUser = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { getContentSearchFilter, contentSearch, contentSite } =
-    useContext(Context);
+  const { getContentSearch, contentSearch, contentSite } = useContext(Context);
   const { slug } = useParams();
   const contentParams = contentSite?.results?.find((el) => {
     return el?.slug === slug;
   });
 
   useEffect(() => {
-    getContentSearchFilter();
+    getContentSearch();
   }, [contentSearch]);
   return (
     <>
@@ -72,10 +72,10 @@ const ContentOfSiteUser = () => {
                 <br />
               </div>
               <div className={s.AddContent_right}>
-                <h4>
-                  {t("add-content.14")}:{" "}
-                  {contentParams?.created_at.slice(0, 10)}
-                </h4>
+                <span>
+                  {contentParams?.created_at.slice(0, 16)}
+                  <img src={date} alt="Date" />
+                </span>
               </div>
             </div>
           </div>
@@ -83,10 +83,7 @@ const ContentOfSiteUser = () => {
         <br />
         <br />
         <div className={s.back}>
-          <button
-            onClick={() => navigate(-1)}
-            className={s.shablon_cancel_btn}
-          >
+          <button onClick={() => navigate(-1)} className={s.shablon_cancel_btn}>
             {t("btn.1")}
           </button>
         </div>

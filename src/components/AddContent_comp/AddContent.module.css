@@ -88,6 +88,8 @@
 .AddContent_sfera_routes {
   margin-top: 12px;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
 }
 

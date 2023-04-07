@@ -8,6 +8,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import deleteIcon from "../../assets/icons/deleteIcon.svg";
+import createIcon from "../../assets/icons/createIcon.svg";
 
 const style = {
   position: "absolute",
@@ -17,12 +19,26 @@ const style = {
   bgcolor: "background.paper",
   border: "none",
   borderRadius: 4,
-  boxShadow: 24,
+  boxShadow: 0,
   p: 4,
 };
 
 const Sphere = () => {
-  const { sphere, getSphere, createSphere } = useContext(Context);
+  const {
+    sphere,
+    getSphere,
+    createSphere,
+    deleteSphere,
+    editSphere,
+    modalData,
+    setModalData,
+    sphereEditRu,
+    setSphereEditRu,
+    sphereEditUz,
+    setSphereEditUz,
+    contentSite,
+    getContentSearch,
+  } = useContext(Context);
   const navigate = useNavigate();
   const { t } = useTranslation();
   useEffect(() => {
@@ -30,19 +46,111 @@ const Sphere = () => {
       navigate("/");
     }
     getSphere();
+    getContentSearch();
   }, []);
   //modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [open1, setOpen1] = React.useState(false);
+  const handleOpen1 = (sphere) => {
+    setOpen1(true);
+    setModalData(sphere);
+    setSphereEditUz(sphere.name_uz);
+    setSphereEditRu(sphere.name_ru);
+  };
+  const handleClose1 = () => setOpen1(false);
+
+  const [openWarn, setOpenWarn] = React.useState(false);
+  const handleOpenWarn = () => setOpenWarn(true);
+  const handleCloseWarn = () => setOpenWarn(false);
+
   //modal
+
+  const handleClick = (id) => {
+    if (
+      contentSite?.results?.find((item) => {
+        return item?.sphere?.id === id;
+      })
+    ) {
+      handleOpenWarn();
+    } else {
+      deleteSphere(id);
+    }
+  };
+
   return (
     <>
       <UserNav />
       <div className={s.reg_parent}>
         <div className={s.reg_user_roles}>
           {sphere.map((el) => {
-            return <button key={el?.id}>{el.name_ru}</button>;
+            return (
+              <div key={el.id} className={s.lkmain_sect_crud}>
+                <button key={el?.id}>{el.name_ru}</button>
+                <button
+                  onClick={() => handleClick(el.id)}
+                  className={s.sphere_crud_delete}
+                >
+                  <img src={deleteIcon} alt="Delete" />
+                </button>
+                <button
+                  onClick={() => handleOpen1(el)}
+                  className={s.sphere_crud_create}
+                >
+                  <img src={createIcon} alt="Copy" />
+                </button>
+                <Modal
+                  slotProps={{
+                    backdrop: {
+                      style: { opacity: "0.3", boxShadow: 24 },
+                    },
+                  }}
+                  open={open1}
+                  onClose={handleClose1}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <form className={s.createElementForm}>
+                      <h2>{t("sfera.2")}</h2>
+                      <br />
+                      <input
+                        value={sphereEditUz}
+                        onChange={(e) => setSphereEditUz(e.target.value)}
+                        type="text"
+                      />
+                      <br />
+                      <input
+                        disabled={!sphereEditUz}
+                        value={sphereEditRu}
+                        onChange={(e) => setSphereEditRu(e.target.value)}
+                        type="text"
+                      />
+                      <br />
+                      <div className={s.createElementFormBtns}>
+                        {" "}
+                        <button
+                          onClick={() => handleClose1()}
+                          className={s.shablon_cancel_btn}
+                        >
+                          {t("btn.5")}
+                        </button>
+                        <button
+                          type="button"
+                          disabled={!sphereEditRu}
+                          onClick={() => editSphere(modalData?.id)}
+                          className={s.shablon_save_btn}
+                        >
+                          {t("btn.4")}
+                        </button>
+                      </div>
+                    </form>
+                  </Box>
+                </Modal>
+              </div>
+            );
           })}
         </div>
       </div>
@@ -79,6 +187,30 @@ const Sphere = () => {
         </Modal>
       </div>
       <Footer />
+      <Modal
+        open={openWarn}
+        onClose={handleCloseWarn}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form style={{ textAlign: "center" }} className={s.createElementForm}>
+            <h2>{t("sfera.3")}</h2>
+            <br />
+            <p>{t("sfera.5")}</p>
+            <br />
+            <div className={s.createElementFormBtns}>
+              {" "}
+              <button
+                onClick={() => handleCloseWarn()}
+                className={s.shablon_save_btn}
+              >
+                {t("sfera.4")}
+              </button>
+            </div>
+          </form>
+        </Box>
+      </Modal>
     </>
   );
 };

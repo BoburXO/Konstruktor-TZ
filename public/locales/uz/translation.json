@@ -75,6 +75,7 @@
   "spra7": "ELEMENTLAR SONI",
   "spra8": "HARAKATLAR",
   "spra9": "ta element",
+  "spra10": "Bo'sh",
   "shablon": "Shablonlar",
   "shablon1": "Shablon yaratish",
   "shablon2": "Shablon yaratilishi",
@@ -135,9 +136,14 @@
   "filter": {
     "1": "Umumiy",
     "2": "Nashr etilgan",
-    "3": "Qoralama"
+    "3": "Qoralama",
+    "4": "Filtr"
   },
   "sfera": {
-    "1": "Soha yaratish"
+    "1": "Soha yaratish",
+    "2": "Sohani o'zgartirish",
+    "3": "DIQQAT!",
+    "4": "OK",
+    "5": "Agar siz ushbu sohani oʻchirmoqchi boʻlsangiz, saytning kontent sahifasiga oʻting va ushbu sohadagi kontentni toping va uni oʻsha yerdan oʻchirib tashlang."
   }
 }

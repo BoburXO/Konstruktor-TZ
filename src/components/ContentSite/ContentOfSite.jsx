@@ -8,32 +8,34 @@ import download from "../../assets/icons/skacatIcon.svg";
 import Fade from "react-reveal/Fade";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Select from "react-select";
 import { Context } from "../../Context/Context";
 
 const ContentOfSite = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const {
-    getContentSearchFilter,
+    getContentSearch,
     contentSite,
     contentSearch,
     setContentSearch,
     deleteContent,
+    getSphere,
+    sphere,
+    getContentIsPublish,
+    getContentSphereFilter,
   } = useContext(Context);
 
   useEffect(() => {
-    getContentSearchFilter();
+    getContentSearch();
+    getSphere();
   }, [contentSearch]);
 
-  const [age, setAge] = React.useState("");
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  const options = [
+    { value: "", label: t("filter.1") },
+    { value: false, label: t("filter.2") },
+    { value: true, label: t("filter.3") },
+  ];
 
   return (
     <>
@@ -64,39 +66,28 @@ const ContentOfSite = () => {
               <img className={s.S_icon} src={search} alt="Search" />
               <input
                 onChange={(e) => setContentSearch(e.target.value)}
-                value={contentSearch}
                 type="text"
                 placeholder={t("content-site.3")}
               />
             </div>
             <div>
-              <Box sx={{ minWidth: 120 }}>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                  <Select
-                    className={s.filter}
-                    value={age}
-                    onChange={handleChange}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem onClick={() => getContentSearchFilter()} value="">
-                      {t("filter.1")}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => getContentSearchFilter(true)}
-                      value={15}
-                    >
-                      {t("filter.2")}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => getContentSearchFilter(false)}
-                      value={16}
-                    >
-                      {t("filter.3")}
-                    </MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
+              <Select
+              placeholder={t("filter.4")}
+                onChange={(value) => getContentIsPublish(value.value)}
+                className={s.selecttt}
+                options={options}
+              />
+            </div>
+            <div>
+              <Select
+              placeholder={t("add-content.4")}
+                onChange={(value) => getContentSphereFilter(value.value)}
+                className={s.selecttt2}
+                options={sphere.map((el) => ({
+                  value: el.id,
+                  label: el.name_ru,
+                }))}
+              />
             </div>
           </div>
           <div className={s.content_db_labels}>
@@ -149,7 +140,12 @@ const ContentOfSite = () => {
                       ) : (
                         <div className={s.content_crud}>
                           <button className={s.content_crud_download}>
-                            <a rel="noopener" href={el?.doc_file_ru} download target="_blank">
+                            <a
+                              rel="noopener"
+                              href={el?.doc_file_ru}
+                              download
+                              target="_blank"
+                            >
                               <img src={download} alt="Download" />
                             </a>
                           </button>
