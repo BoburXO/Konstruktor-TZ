@@ -64,7 +64,7 @@ const AddContentComp = () => {
   return (
     <>
       <div className={s.AddContent}>
-        <Fade bottom cascade>
+        {/* <Fade bottom cascade> */}
           <div className={s.AddContent_container}>
             <div className={s.AddContent_labels}>
               <span onClick={() => navigate("/contentofsite")}>
@@ -107,6 +107,7 @@ const AddContentComp = () => {
                     {sphere?.map((el) => {
                       return (
                         <button
+                        type="button"
                           key={el.id}
                           onClick={() => {
                             setSfera(el.id);
@@ -125,6 +126,7 @@ const AddContentComp = () => {
                     {sphere?.map((el) => {
                       return (
                         <button
+                        type="button"
                           key={el.id}
                           onClick={() => {
                             setSfera(el.id);
@@ -203,7 +205,7 @@ const AddContentComp = () => {
                 <br />
                 <JoditEditor
                   // value={textRu}
-                  // onChange={(e) => setTextRu(e.target.value)}
+                  // onChange={(e) =>  console.log(e)}
                   className={s.JoditEditor}
                 />
                 <br />
@@ -211,7 +213,7 @@ const AddContentComp = () => {
                 <br />
                 <JoditEditor
                   // value={textUz}
-                  // onChange={(e) => setTextUz(e.target.value)}
+                  // onChange={(e) => console.log(e)}
                   className={s.JoditEditor}
                 />
               </div>
@@ -259,7 +261,7 @@ const AddContentComp = () => {
               ))}
             </table> */}
           </div>
-        </Fade>
+        {/* </Fade> */}
       </div>
     </>
   );

@@ -110,7 +110,7 @@ const SpravochnikId = () => {
                     </div>
                     <div>
                       {el.content_ru === null ? (
-                        <p style={{color:"gray"}}>{t("spra10")}...</p>
+                        <p style={{ color: "gray" }}>{t("spra10")}...</p>
                       ) : (
                         <p>{el.content_ru}</p>
                       )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +38,7 @@ const ContextProvider = ({ children }) => {
   //createContent
   const [headerUz, setHeaderUz] = useState("");
   const [headerRu, setHeaderRu] = useState("");
-  const [sphereContent, setSphereContent] = useState("");
+  const [sphereContent, setSphereContent] = useState();
   const [descriptionUz, setDescriptionUz] = useState("");
   const [descriptionRu, setDescriptionRu] = useState("");
   const [docFileUz, setDocFileUz] = useState(null);
@@ -369,8 +369,7 @@ const ContextProvider = ({ children }) => {
   //isActive
 
   //createElement
-  const createElement = (e, id) => {
-    e.preventDefault();
+  const createElement = (id) => {
     axios
       .post(`${API}/classificator/element/${id}/`, {
         content_uz: contUz,
@@ -561,7 +560,7 @@ const ContextProvider = ({ children }) => {
 
     formData.append("header_uz", headerUz);
     formData.append("header_ru", headerRu);
-    formData.append("sphere.id", sphereContent);
+    formData.append("sphere", sphereContent);
     formData.append("description_uz", descriptionUz);
     formData.append("description_ru", descriptionRu);
     formData.append("doc_file_uz", docFileUz);
@@ -570,6 +569,7 @@ const ContextProvider = ({ children }) => {
     formData.append("text_ru", textRu);
     formData.append("created_at", createdAt);
     formData.append("is_published", true);
+
     try {
       const res = axios({
         url: `${API}/standard/create/`,
@@ -580,9 +580,9 @@ const ContextProvider = ({ children }) => {
           )}`,
         },
         data: formData,
-        is_published: true,
       })
         .then(() => {
+          navigate("/contentofsite");
           window.location.reload();
         })
         .catch((err) => {
@@ -627,11 +627,17 @@ const ContextProvider = ({ children }) => {
 
     formData.append("header_uz", headerUz);
     formData.append("header_ru", headerRu);
-    formData.append("sphere.id", sphereContent);
+    if (sphereContent) {
+      formData.append("sphere", sphereContent);
+    }
     formData.append("description_uz", descriptionUz);
     formData.append("description_ru", descriptionRu);
-    formData.append("doc_file_uz", docFileUz);
-    formData.append("doc_file_ru", docFileRu);
+    if (docFileUz) {
+      formData.append("doc_file_uz", docFileUz);
+    }
+    if (docFileRu) {
+      formData.append("doc_file_ru", docFileRu);
+    }
     formData.append("text_uz", textUz);
     formData.append("text_ru", textRu);
     formData.append("created_at", createdAt);
@@ -646,9 +652,9 @@ const ContextProvider = ({ children }) => {
           )}`,
         },
         data: formData,
-        is_published: false,
       })
         .then(() => {
+          navigate("/contentofsite");
           window.location.reload();
         })
         .catch((err) => {
@@ -688,9 +694,153 @@ const ContextProvider = ({ children }) => {
   };
   //createContentOfSite
 
+  //updateContent
+
+  const updateContentTrue = (slug) => {
+    const formData = new FormData();
+
+    formData.append("header_uz", headerUz);
+    formData.append("header_ru", headerRu);
+    if (sphereContent) {
+      formData.append("sphere", sphereContent);
+    }
+    formData.append("description_uz", descriptionUz);
+    formData.append("description_ru", descriptionRu);
+    if (docFileUz) {
+      formData.append("doc_file_uz", docFileUz);
+    }
+    if (docFileRu) {
+      formData.append("doc_file_ru", docFileRu);
+    }
+    formData.append("text_uz", textUz);
+    formData.append("text_ru", textRu);
+    formData.append("is_published", true);
+
+    try {
+      const res = axios({
+        url: `${API}/standard/${slug}/update/`,
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+        data: formData,
+      })
+        .then(() => {
+          navigate("/contentofsite");
+          window.location.reload();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            notify401();
+          }
+          if (err.response.status === 404) {
+            notify404();
+          }
+          if (err.response.status === 400) {
+            notify400();
+          }
+          if (err.response.status === 403) {
+            notify403();
+          }
+          if (err.response.status === 500) {
+            notify500();
+          }
+        });
+    } catch (err) {
+      if (err.response.status === 401) {
+        notify401();
+      }
+      if (err.response.status === 404) {
+        notify404();
+      }
+      if (err.response.status === 400) {
+        notify400();
+      }
+      if (err.response.status === 403) {
+        notify403();
+      }
+      if (err.response.status === 500) {
+        notify500();
+      }
+    }
+  };
+
+  const updateContentFalse = (slug) => {
+    const formData = new FormData();
+
+    formData.append("header_uz", headerUz);
+    formData.append("header_ru", headerRu);
+    if (sphereContent) {
+      formData.append("sphere", sphereContent);
+    }
+    formData.append("description_uz", descriptionUz);
+    formData.append("description_ru", descriptionRu);
+    if (docFileUz) {
+      formData.append("doc_file_uz", docFileUz);
+    }
+    if (docFileRu) {
+      formData.append("doc_file_ru", docFileRu);
+    }
+    formData.append("text_uz", textUz);
+    formData.append("text_ru", textRu);
+    formData.append("is_published", false);
+
+    try {
+      const res = axios({
+        url: `${API}/standard/${slug}/update/`,
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+        data: formData,
+      })
+        .then(() => {
+          navigate("/contentofsite");
+          window.location.reload();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            notify401();
+          }
+          if (err.response.status === 404) {
+            notify404();
+          }
+          if (err.response.status === 400) {
+            notify400();
+          }
+          if (err.response.status === 403) {
+            notify403();
+          }
+          if (err.response.status === 500) {
+            notify500();
+          }
+        });
+    } catch (err) {
+      if (err.response.status === 401) {
+        notify401();
+      }
+      if (err.response.status === 404) {
+        notify404();
+      }
+      if (err.response.status === 400) {
+        notify400();
+      }
+      if (err.response.status === 403) {
+        notify403();
+      }
+      if (err.response.status === 500) {
+        notify500();
+      }
+    }
+  };
+  //updateContent
+
   //createClassificator
-  const createClassificator = (e) => {
-    e.preventDefault();
+  const createClassificator = () => {
     axios
       .post(
         `${API}/classificator/create/`,
@@ -946,6 +1096,8 @@ const ContextProvider = ({ children }) => {
           sphereEditUz,
           setSphereEditUz,
           createContentOfSiteFalse,
+          updateContentTrue,
+          updateContentFalse,
         }}
       >
         {children}

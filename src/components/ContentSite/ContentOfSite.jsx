@@ -72,7 +72,7 @@ const ContentOfSite = () => {
             </div>
             <div>
               <Select
-              placeholder={t("filter.4")}
+                placeholder={t("filter.4")}
                 onChange={(value) => getContentIsPublish(value.value)}
                 className={s.selecttt}
                 options={options}
@@ -80,7 +80,7 @@ const ContentOfSite = () => {
             </div>
             <div>
               <Select
-              placeholder={t("add-content.4")}
+                placeholder={t("add-content.4")}
                 onChange={(value) => getContentSphereFilter(value.value)}
                 className={s.selecttt2}
                 options={sphere.map((el) => ({
@@ -109,10 +109,14 @@ const ContentOfSite = () => {
                         <b>{el.header_ru}</b>
                       </p>
                       <p className={s.sphere}>
-                        {el.sphere.name_ru.slice(0, 27)}
+                        {el?.sphere?.name_ru === undefined || null
+                          ? "--"
+                          : el?.sphere?.name_ru}
                       </p>
                       <p className={s.Content_description}>
-                        {el.description_ru.slice(0, 40)} {"..."}
+                        {el?.description_ru === null || undefined
+                          ? "--"
+                          : el?.description_ru?.slice(0, 40)}
                       </p>
                       <span className={s.content_dates}>
                         <img src={date} alt="" />
@@ -126,7 +130,12 @@ const ContentOfSite = () => {
                             </button>
                           </Link>
                           <button className={s.content_crud_download}>
-                            <a href={el?.doc_file_ru} download target="_blank">
+                            <a
+                              rel="noopener"
+                              href={el?.doc_file}
+                              download
+                              target="_blank"
+                            >
                               <img src={download} alt="Download" />
                             </a>
                           </button>
@@ -142,7 +151,7 @@ const ContentOfSite = () => {
                           <button className={s.content_crud_download}>
                             <a
                               rel="noopener"
-                              href={el?.doc_file_ru}
+                              href={el?.doc_file}
                               download
                               target="_blank"
                             >
