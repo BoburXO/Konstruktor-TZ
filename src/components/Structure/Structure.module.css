@@ -191,3 +191,32 @@
   transform: translateY(-4px);
   transition: 0.5s ease;
 }
+
+.structure_modal,
+.structure_modalType {
+  text-align: center;
+  padding: 5px 0;
+}
+
+.structure_modalType button {
+  text-align: start;
+  padding-left: 20px !important;
+}
+
+.structure_modal button,
+.structure_modalType button {
+  width: 100%;
+  height: 50px;
+
+  background: transparent;
+  border: 0;
+  font-size: 18px;
+  padding: 10px 0;
+  transition: 0.5s ease;
+}
+
+.structure_modal button:hover,
+.structure_modalType button:hover {
+  background: rgba(47, 128, 237, 0.1);
+  transition: 0.5s ease;
+}

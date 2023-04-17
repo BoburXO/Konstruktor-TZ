@@ -6,9 +6,31 @@ import pen from "../../assets/icons/pen.svg";
 import add from "../../assets/icons/plus-add.svg";
 import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: 4,
+  boxShadow: 0,
+  width: 360,
+};
 
 const StructureComponent = () => {
-  const {t} = useTranslation()
+  //default modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  //Type modal
+  const [openType, setOpenType] = React.useState(false);
+  const handleOpenType = () => setOpenType(true);
+  const handleCloseType = () => setOpenType(false);
+  const { t } = useTranslation();
   return (
     <>
       <div className={s.structure_parent}>
@@ -195,13 +217,9 @@ const StructureComponent = () => {
             </Dropdown>
           </div>
           <div className={s.structure_right_contents}>
-            <h1 className={s.structure_right_contents_label}>
-              {t("struc1")}
-            </h1>
+            <h1 className={s.structure_right_contents_label}>{t("struc1")}</h1>
             <span className={s.structure_right_contents_update}>
-              <h2>
-                {t("struc2")}
-                </h2>
+              <h2>{t("struc2")}</h2>
               <img src={pen} alt="Update" />
             </span>
             <div className={s.structure_right_contents_form_parent}>
@@ -213,7 +231,7 @@ const StructureComponent = () => {
                   </Link>
                 </span>
                 <p className={s.structure_right_contents_input_label}>
-                 {t("struc3")}
+                  {t("struc3")}
                 </p>
                 <br />
                 {t("ru")}:
@@ -225,7 +243,7 @@ const StructureComponent = () => {
                 <br />
                 <br />
                 {t("uz")}:
-                 <input
+                <input
                   type="text"
                   value="Umumiy nomlar"
                   className={s.structure_right_contents_input_punkt}
@@ -239,12 +257,37 @@ const StructureComponent = () => {
                       <img src={pen} alt="Изменить" />
                     </Link>
                     <Link>
-                      <img src={add} alt="Add" />
+                      <img onClick={handleOpenType} src={add} alt="Add" />
                     </Link>
+                    <Modal
+                      slotProps={{
+                        backdrop: {
+                          style: { opacity: "0.3", boxShadow: 24 },
+                        },
+                      }}
+                      open={openType}
+                      onClose={handleCloseType}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <div className={s.structure_modalType}>
+                          <button>Заголовок пункта</button>
+                          <br />
+                          <button>Поле ввода</button>
+                          <br />
+                          <button>Радиокнопка</button>
+                          <br />
+                          <button>Чекбокс</button>
+                          <br />
+                          <button>Селект</button>
+                        </div>
+                      </Box>
+                    </Modal>
                   </div>
                 </span>
                 <p className={s.structure_right_contents_input_label}>
-                {t("struc3")}
+                  {t("struc3")}
                 </p>
                 <br />
                 {t("ru")}:
@@ -253,38 +296,38 @@ const StructureComponent = () => {
                   value="Полное наименование ИС и её условное обозначение"
                   className={s.structure_right_contents_input_punkt}
                 />
-                 <br />
+                <br />
                 <br />
                 {t("uz")}:
-                 <input
+                <input
                   type="text"
                   value="IP-ning to'liq nomi va uning belgisi"
                   className={s.structure_right_contents_input_punkt}
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <br />
-                {t("ru")}:
+                  {t("ru")}:
                   <input
                     type="text"
                     value="Полное наименование ИС"
                     className={s.structure_right_contents_input_punkt}
                   />
-                   <br />
-                   <br />
-                {t("uz")}:
+                  <br />
+                  <br />
+                  {t("uz")}:
                   <input
                     type="text"
                     value="IP-ning to'liq nomi"
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <br />
-                {t("ru")}:
+                  {t("ru")}:
                   <input
                     type="text"
                     value="Условное обозначение"
@@ -292,7 +335,7 @@ const StructureComponent = () => {
                   />
                   <br />
                   <br />
-                {t("uz")}:
+                  {t("uz")}:
                   <input
                     type="text"
                     value="Belgi"
@@ -319,7 +362,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -327,7 +370,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -335,7 +378,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -343,7 +386,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -371,7 +414,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -399,7 +442,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -407,7 +450,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -415,7 +458,7 @@ const StructureComponent = () => {
                     className={s.structure_right_contents_input_punkt}
                   />
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -443,7 +486,7 @@ const StructureComponent = () => {
                 />
                 <div className={s.structure_right_contents_input_polya_vvoda}>
                   <p className={s.structure_right_contents_input_label}>
-                  {t("struc4")}
+                    {t("struc4")}
                   </p>
                   <input
                     type="text"
@@ -454,7 +497,27 @@ const StructureComponent = () => {
               </div>
             </div>
             <div className={s.structure_add_plus}>
-              <button>+</button>
+              <button onClick={handleOpen}>+</button>
+              <Modal
+                slotProps={{
+                  backdrop: {
+                    style: { opacity: "0.3", boxShadow: 24 },
+                  },
+                }}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <div className={s.structure_modal}>
+                    <button>Добавить новый пункт</button>
+                    <br />
+                    <button>Добавить подпункт</button>
+                    <br />
+                  </div>
+                </Box>
+              </Modal>
             </div>
           </div>
         </Fade>

@@ -33,8 +33,8 @@ const ContentOfSite = () => {
 
   const options = [
     { value: "", label: t("filter.1") },
-    { value: false, label: t("filter.2") },
-    { value: true, label: t("filter.3") },
+    { value: true, label: t("filter.2") },
+    { value: false, label: t("filter.3") },
   ];
 
   return (
