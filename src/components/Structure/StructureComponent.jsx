@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from "../Structure/Structure.module.css";
 import { Dropdown } from "rsuite";
 import { Link, NavLink } from "react-router-dom";
@@ -8,6 +8,9 @@ import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getActiveRoleTzStructure } from "../../redux/tzstructure";
 
 const style = {
   position: "absolute",
@@ -22,6 +25,15 @@ const style = {
 };
 
 const StructureComponent = () => {
+  const { branches, activeBranch, smth, isLoading } = useSelector(
+    (state) => state.tzstructure
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getActiveRoleTzStructure());
+  }, []);
+
   //default modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
