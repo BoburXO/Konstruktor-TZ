@@ -126,7 +126,8 @@
 }
 
 .structure_right_contents_card_insidePunkt {
-  width: 700px;
+  width: 100%;
+  max-width: 700px;
   height: max-content;
 
   background: #ffffff;
@@ -136,6 +137,7 @@
   padding: 24px;
   color: #222222;
   margin: 20px 0;
+  margin-left: 80px;
 }
 
 .structure_right_contents_card_insidePunkt span {
