@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import s from "../LKAminShablon/Shablonla.module.css";
 import search from "../../assets/icons/search.svg";
-import { templates } from "../../templates";
 import { Link } from "react-router-dom";
 import Fade from "react-reveal/Fade";
 import Box from "@mui/material/Box";
@@ -12,13 +11,16 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useTranslation } from "react-i18next";
+import { Context } from "../../Context/Context";
+import { useEffect } from "react";
+import Select1 from "react-select";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 664,
+  width: 1000,
   height: "max-content",
   bgcolor: "background.paper",
   border: "none",
@@ -27,6 +29,22 @@ const style = {
 };
 
 const Shablonla = () => {
+  const {
+    punktSearch,
+    setPunktSearch,
+    sample,
+    allSample,
+    selectPunkt,
+    getSelectPunkt,
+    createSample,
+    setSampleSect,
+    sampleDescRu,
+    setSampleDescRu,
+    sampleDescUz,
+    setSampleDescUz,
+    getSampleBySection,
+  } = useContext(Context);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,7 +54,12 @@ const Shablonla = () => {
     setAge(event.target.value);
   };
 
-  const {t} = useTranslation()
+  useEffect(() => {
+    allSample();
+    getSelectPunkt();
+  }, [punktSearch]);
+
+  const { t } = useTranslation();
   return (
     <>
       <section className={s.templates_sect}>
@@ -60,7 +83,7 @@ const Shablonla = () => {
                 <div style={{ textAlign: "end", cursor: "pointer" }}>
                   <img onClick={handleClose} src={backX} alt="" />
                 </div>
-                <div className={s.modal_parent}>
+                <form onSubmit={createSample} className={s.modal_parent}>
                   <h1>{t("shablon2")}</h1>
                   <p>{t("shablon3")}</p>
 
@@ -69,60 +92,120 @@ const Shablonla = () => {
                       {t("shablon4")}
                     </InputLabel>
                     <Select
+                      required
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={age}
                       label="Выберите пункт"
                       onChange={handleChange}
                     >
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      {selectPunkt?.results?.map((el) => {
+                        return (
+                          <MenuItem
+                            onClick={() => setSampleSect(el?.id)}
+                            key={el?.id}
+                            value={el?.name}
+                          >
+                            {el?.name}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </FormControl>
+                  <br />
+                  <br />
                   <p>{t("shablon5")}</p>
-                  <textarea placeholder={t("shablon6")}></textarea>
+                  <p>{t("ru")}:</p>
+                  <textarea
+                    value={sampleDescRu}
+                    onChange={(e) => setSampleDescRu(e.target.value)}
+                    required
+                    placeholder={t("shablon6")}
+                  ></textarea>
+                  <br />
+                  <p>{t("uz")}:</p>
+                  <textarea
+                    value={sampleDescUz}
+                    onChange={(e) => setSampleDescUz(e.target.value)}
+                    required
+                    placeholder={t("shablon6")}
+                  ></textarea>
                   <div className={s.shablon_empty}></div>
                   <div className={s.shablon_btns}>
-                    <button onClick={handleClose} className={s.shablon_cancel_btn}>{t("btn.5")}</button>
-                    <button className={s.shablon_save_btn}>{t("btn.4")}</button>
+                    <button
+                      type="button"
+                      onClick={handleClose}
+                      className={s.shablon_cancel_btn}
+                    >
+                      {t("btn.5")}
+                    </button>
+                    <button type="submit" className={s.shablon_save_btn}>
+                      {t("btn.4")}
+                    </button>
                   </div>
-                </div>
+                </form>
               </Box>
             </Modal>
           </div>
-          <div className={s.input_field}>
-            <img className={s.S_icon} src={search} alt="Search" />
-            <input type="text" placeholder={t("spra5")} />
+          <div className={s.templates_sect_label1}>
+            <div className={s.input_field}>
+              <img className={s.S_icon} src={search} alt="Search" />
+              <input
+                onChange={(e) => setPunktSearch(e.target.value)}
+                type="text"
+                placeholder={t("spra5")}
+              />
+            </div>
+            <div>
+              <Select1
+                placeholder={t("struc5")}
+                onChange={(value) => getSampleBySection(value.value)}
+                className={s.sample_select}
+                options={selectPunkt?.results?.map((el) => ({
+                  value: el.id,
+                  label: el.name,
+                }))}
+              />
+            </div>
           </div>
-          <div className={s.templates_sect_parent}>
-            {templates?.map((el) => {
-              return (
-                <Link to={`/templatePunkt/${el.id}`} key={el.id}>
-                  <Fade top cascade>
-                    <div className={s.templates_sect_parent_card}>
-                      <span
-                        style={{
-                          width: "100%",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          color: "#222",
-                        }}
-                      >
-                        <h1>{t("struc5")} {el.punkt}</h1>
-                        <b>...</b>
-                      </span>
-                      <br />
-                      <p>
-                        {el.desc.slice(0, 250)}
-                        {"..."}
-                      </p>
-                    </div>
-                  </Fade>
-                </Link>
-              );
-            })}
-          </div>
+          {sample?.count > 0 ? (
+            <div className={s.templates_sect_parent}>
+              {sample?.results?.map((el) => {
+                return (
+                  <Link to={`/templatePunkt/${el.id}`} key={el.id}>
+                    <Fade top cascade>
+                      <div className={s.templates_sect_parent_card}>
+                        <span
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            color: "#222",
+                          }}
+                        >
+                          <h1>
+                            {t("struc5")} {el.section}
+                          </h1>
+                          <b>...</b>
+                        </span>
+                        <br />
+                        <p>
+                          {el?.description?.length > 250
+                            ? el?.description?.slice(0, 250)
+                            : el?.description}
+                        </p>
+                      </div>
+                    </Fade>
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <>
+              <br />
+              <h2 style={{ textAlign: "center" }}>{t("toast404")}</h2>
+            </>
+          )}
         </div>
       </section>
     </>

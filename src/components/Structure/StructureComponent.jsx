@@ -217,7 +217,10 @@ const StructureComponent = () => {
             </Dropdown>
           </div>
           <div className={s.structure_right_contents}>
+            <div className={s.twink_label}>
             <h1 className={s.structure_right_contents_label}>{t("struc1")}</h1>
+            <Link to="/history-structure" className={s.structure_right_contents_label1}>История структур</Link>
+            </div>
             <span className={s.structure_right_contents_update}>
               <h2>{t("struc2")}</h2>
               <img src={pen} alt="Update" />

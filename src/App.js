@@ -12,7 +12,7 @@ import LKAdminstrator from "./pages/LKAdminstratorShablon/LKAdminstrator";
 import LKavtor from "./pages/LKavtor/LKavtor";
 import Structure from "./pages/StructureTZ/Structure";
 import SpravochnikId from "./Params/Spravochnik/SpravochnikId";
-import Templates from "./Params/Templates/Templates";
+import Templates from "./Params/Templates/Template";
 import UpdContent from "./Params/UpdContent/UpdContent";
 import UserTemplate from "./Params/Templates/UserTemplate";
 import RegOneId from "./pages/Reg/RegOneId";
@@ -20,6 +20,7 @@ import OneId from "./pages/oneid/RegOneId";
 import IndexSpra from "./Params/IndexSpravochnik/IndexSpra";
 import ContentOfSiteUser from "./Params/ContentOfSiteUser/ContentOfSiteUser";
 import Sphere from "./pages/Sphere/Sphere";
+import HistoryStructure from "./pages/HistoryStructure/HistoryStructure";
 function App() {
   return (
     <>
@@ -32,6 +33,7 @@ function App() {
         <Route path="/contentofsite" element={<Content />} />
         <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
         <Route path="/index-spravochnik/:slug" element={<IndexSpra />} />
+        <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
         <Route
           path="/content-of-site-index/:slug"
           element={<ContentOfSiteUser />}
@@ -46,9 +48,10 @@ function App() {
             <Route path="/templatePunkt/:id" element={<Templates />} />
             <Route path="/addcontent" element={<AddContent />} />
             <Route path="/updateContent" element={<UpdContent />} />
-            <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
+
             <Route path="/updateContent/:slug" element={<UpdContent />} />
             <Route path="/sphere" element={<Sphere />} />
+            <Route path="/history-structure" element={<HistoryStructure />} />
           </>
         ) : null}
         <Route path="/oneid/:one" element={<OneId />} />

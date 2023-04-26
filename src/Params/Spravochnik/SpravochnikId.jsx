@@ -46,7 +46,7 @@ const SpravochnikId = () => {
 
   const { t } = useTranslation();
   const { slug } = useParams();
-  const ParamsSlug = spravochnik?.find((el) => {
+  const ParamsSlug = spravochnik?.results?.find((el) => {
     return el?.slug === slug;
   });
 

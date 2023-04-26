@@ -249,9 +249,9 @@ const Spravochnik = () => {
           </div>
           <div className={s.Spravochnik_sect_creators_parent}>
             {spravochnik.length === 0 ? (
-              <h1 className={s.notFound}>Not found...</h1>
+              <h1 className={s.notFound}>{t("toast404")}</h1>
             ) : (
-              spravochnik?.map((el, index) => {
+              spravochnik?.results?.map((el, index) => {
                 return (
                   <div
                     className={s.Spravochnik_sect_creators_parent_cards}

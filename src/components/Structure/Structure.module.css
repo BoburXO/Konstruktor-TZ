@@ -222,3 +222,32 @@
   background: rgba(47, 128, 237, 0.1);
   transition: 0.5s ease;
 }
+
+.twink_label{
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.structure_right_contents_label1{
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: #0ba9cc;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s ease;
+  border: 2px solid #0ba9cc;
+}
+
+.structure_right_contents_label1:hover{
+  background: #fff;
+  color: #0ba9cc;
+  transition: 0.5s ease;
+}

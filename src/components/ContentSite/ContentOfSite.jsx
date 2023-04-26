@@ -99,7 +99,7 @@ const ContentOfSite = () => {
           </div>
           <div className={s.content_parent}>
             {contentSite.count === 0 ? (
-              <h1 className={s.notFound}>Not found...</h1>
+              <h1 className={s.notFound}>{t("toast404")}</h1>
             ) : (
               contentSite?.results?.map((el, index) => {
                 return (

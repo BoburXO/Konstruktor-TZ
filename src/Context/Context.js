@@ -884,7 +884,13 @@ const ContextProvider = ({ children }) => {
   const [sphere, setSphere] = useState([]);
   const getSphere = () => {
     axios
-      .get(`${API}/standard/sphere/list-create/`)
+      .get(`${API}/standard/sphere/list-create/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then((res) => {
         setSphere(res.data);
       })
@@ -1027,10 +1033,259 @@ const ContextProvider = ({ children }) => {
 
   //editSphere
 
+  //shablon-sample all
+  const [sample, setSample] = useState({});
+  const [punktSearch,setPunktSearch] = useState("")
+
+  const allSample = () => {
+    axios
+      .get(`${API}/constructor/sample/create/list?description__icontains=${punktSearch}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSample(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => allSample());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //shablon-sample all
+
+  //getSample by section id
+
+  const getSampleBySection = (id) => {
+    axios
+      .get(`${API}/constructor/sample/create/list?section=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSample(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getSampleBySection());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  //getSample by sectiion id
+
+  const [selectPunkt, setSelectPunkt] = useState({});
+  //selectPunkt- create sample
+  const getSelectPunkt = () => {
+    axios
+      .get(`${API}/constructor/sections/moderator`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSelectPunkt(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getSelectPunkt());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //selectPunkt- create sample
+
+  //createSample
+  const [sampleSect, setSampleSect] = useState("");
+  const [sampleDescRu, setSampleDescRu] = useState("");
+  const [sampleDescUz, setSampleDescUz] = useState("");
+
+  const createSample = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `${API}/constructor/sample/create/list`,
+        {
+          section: sampleSect,
+          description_ru: sampleDescRu,
+          description_uz: sampleDescUz,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => createSample());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //createSample
+
+  //sample-delete
+  const sampleDelete = (id) => {
+    axios
+      .delete(`${API}/constructor/sample/detail/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then(() => {
+        navigate("/lkadminshablon");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => sampleDelete());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //sample-delete
+
+  //update-sample
+  const [sampleUpdUz, setSampleUpdUz] = useState("");
+  const [sampleUpdRu, setSampleUpdRu] = useState("");
+
+  const updateSample = (id) => {
+    axios
+      .patch(
+        `${API}/constructor/sample/detail/${id}`,
+        {
+          description_uz: sampleUpdUz,
+          description_ru: sampleUpdRu,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        navigate("/lkadminshablon");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => updateSample());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //update-sample
+
   return (
     <>
       <Context.Provider
         value={{
+          getSampleBySection,
+          updateSample,
+          sampleUpdUz,
+          setSampleUpdUz,
+          sampleUpdRu,
+          setSampleUpdRu,
+          punktSearch,
+          setPunktSearch,
+          sampleDelete,
+          createSample,
+          sampleSect,
+          setSampleSect,
+          sampleDescRu,
+          setSampleDescRu,
+          sampleDescUz,
+          setSampleDescUz,
+          selectPunkt,
+          getSelectPunkt,
+          sample,
+          allSample,
           spravochnik,
           ssoOneId,
           roles,

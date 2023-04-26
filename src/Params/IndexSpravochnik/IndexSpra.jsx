@@ -11,7 +11,7 @@ const IndexSpra = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
   const { spravochnik, getAllSpraSearch, spraSearch } = useContext(Context);
-  const indexParams = spravochnik?.find((el) => {
+  const indexParams = spravochnik?.results?.find((el) => {
     return el?.slug === slug;
   });
 

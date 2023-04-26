@@ -45,6 +45,18 @@
   padding-bottom: 30px;
 }
 
+.templates_sect_label1{
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+}
+
+.sample_select{
+  width: 200px;
+  height: 60px;
+}
+
 .templates_sect_label h1 {
   font-size: 32px;
   font-weight: 600;
@@ -55,8 +67,8 @@
 }
 
 .input_field {
-  width: 100%;
-  margin-bottom: 10px;
+  width: 24%;
+  height: 60px;
 }
 
 .S_icon {
@@ -131,7 +143,7 @@
 
 .modal_parent textarea {
   width: 100%;
-  height: 240px;
+  height: 120px;
 
   font-weight: 400;
   font-size: 16px;
