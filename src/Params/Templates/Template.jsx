@@ -7,6 +7,20 @@ import UserNav from "../../components/UserNav/UserNav";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import { Context } from "../../Context/Context";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: 4,
+  boxShadow: 0,
+  p: 4,
+};
 
 const Template = () => {
   const {
@@ -37,6 +51,10 @@ const Template = () => {
     setSampleUpdRu(paramsFind?.description_ru);
     setSampleUpdUz(paramsFind?.description_uz);
   }, []);
+
+  const [openDel, setOpenDel] = React.useState(false);
+  const handleOpenDel = () => setOpenDel(true);
+  const handleCloseDel = () => setOpenDel(false);
 
   return (
     <>
@@ -77,12 +95,49 @@ const Template = () => {
             >
               <img src={createIcon} alt="Update" />
             </button>
-            <button
-              onClick={() => sampleDelete(paramsFind?.id)}
-              className={s.Temp_delete}
-            >
+            <button onClick={() => handleOpenDel()} className={s.Temp_delete}>
               <img src={deleteIcon} alt="Delete" />
             </button>
+            <Modal
+              slotProps={{
+                backdrop: {
+                  style: { opacity: "0.3", boxShadow: 24 },
+                },
+              }}
+              open={openDel}
+              onClose={handleCloseDel}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <form
+                  style={{ textAlign: "center" }}
+                  className={s.createElementForm}
+                >
+                  <h2>{t("sfera.3")}</h2>
+                  <br />
+                  <p>{t("sfera.6")}</p>
+                  <br />
+                  <div className={s.createElementFormBtns}>
+                    {" "}
+                    <button
+                      type="button"
+                      onClick={() => handleCloseDel()}
+                      className={s.shablon_save_btn}
+                    >
+                      {t("btn.5")}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => sampleDelete(paramsFind?.id)}
+                      className={s.shablon_delete_btn}
+                    >
+                      {t("btn.6")}
+                    </button>
+                  </div>
+                </form>
+              </Box>
+            </Modal>
           </div>
         ) : (
           <h3 style={{ textAlign: "center", padding: "120px" }}>

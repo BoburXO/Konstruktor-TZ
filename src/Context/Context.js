@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -172,9 +172,9 @@ const ContextProvider = ({ children }) => {
   // LogOut
 
   //all Spravochnik searchbar
-  const getAllSpraSearch = () => {
+  const getAllSpraSearch = (page = 1) => {
     axios
-      .get(`${API}/classificator/all/?search=${spraSearch}`, {
+      .get(`${API}/classificator/all/?search=${spraSearch}&page=${page}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "ConstructorRoleAccessToken"
@@ -432,15 +432,18 @@ const ContextProvider = ({ children }) => {
   //getTZhome
 
   //getContent-search,filter,sphere-filter
-  const getContentSearch = () => {
+  const getContentSearch = (page = 1) => {
     axios
-      .get(`${API}/standard/site-content-list/?search=${contentSearch}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
+      .get(
+        `${API}/standard/site-content-list/?search=${contentSearch}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
       .then((res) => {
         setContentSite(res.data);
       })
@@ -954,11 +957,11 @@ const ContextProvider = ({ children }) => {
       });
   };
   //createSphere
-
+  
   //deleteSphere
   const deleteSphere = (id) => {
     axios
-      .delete(`${API}/standard/sphere/${id}/`, {
+      .delete(`${API}/standard/sphere/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "ConstructorRoleAccessToken"
@@ -1035,17 +1038,20 @@ const ContextProvider = ({ children }) => {
 
   //shablon-sample all
   const [sample, setSample] = useState({});
-  const [punktSearch,setPunktSearch] = useState("")
+  const [punktSearch, setPunktSearch] = useState("");
 
   const allSample = () => {
     axios
-      .get(`${API}/constructor/sample/create/list?description__icontains=${punktSearch}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
+      .get(
+        `${API}/constructor/sample/create/list?description__icontains=${punktSearch}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
       .then((res) => {
         setSample(res.data);
       })

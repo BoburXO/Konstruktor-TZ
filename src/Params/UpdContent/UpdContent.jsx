@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import s from "./UpdContent.module.css";
 import arrowLeft from "../../assets/icons/arrowLeft.svg";
 import { useNavigate, useParams } from "react-router-dom";
-import Fade from "react-reveal/Fade";
 import JoditEditor from "jodit-react";
 import { useTranslation } from "react-i18next";
 import UserNav from "../../components/UserNav/UserNav";
@@ -62,7 +61,7 @@ const UpdContent = () => {
     <>
       <UserNav />
       <div className={s.AddContent}>
-        <Fade bottom cascade>
+      
           <div className={s.AddContent_container}>
             <div className={s.AddContent_labels}>
               <span onClick={() => navigate("/contentofsite")}>
@@ -231,7 +230,7 @@ const UpdContent = () => {
               </div>
             </div>
           </div>
-        </Fade>
+       
       </div>
       <Footer />
     </>

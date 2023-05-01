@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { Switch } from "antd";
 import { Link } from "react-router-dom";
 import { Context } from "../../Context/Context";
+import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
 
 const style = {
   position: "absolute",
@@ -26,16 +27,24 @@ const style = {
   bgcolor: "background.paper",
   border: "none",
   borderRadius: "8px",
-  p: 2,
+  p: 4,
 };
 
 const Spravochnik = () => {
+  //modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [openDel, setOpenDel] = React.useState(false);
+  const handleOpenDel = () => setOpenDel(true);
+  const handleCloseDel = () => setOpenDel(false);
+  const [spraSlug, setSpraSlug] = React.useState("");
+  //modal
   const [value, setValue] = React.useState("");
   const dispatch = useDispatch();
   const todos = useSelector((note) => note.todoList);
+  console.log(spraSlug);
   const { t } = useTranslation();
   const {
     spravochnik,
@@ -73,110 +82,111 @@ const Spravochnik = () => {
   return (
     <>
       <section className={s.Spravochnik}>
-        <div className={s.Spravochnik_container}>
-          <div className={s.Spravochnik_label}>
-            <h1>{t("spra")}</h1>
-            {localStorage.getItem("roleName") !== "Author" ? (
-              <span>
-                <button
-                  onClick={handleOpen}
-                  className={s.Spravochnik_label_btn}
-                >
-                  <span style={{ fontSize: "25px" }}>+</span>
-                  <span>{t("spra1")}</span>
-                </button>
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <div style={{ textAlign: "end", cursor: "pointer" }}>
-                      <img onClick={handleClose} src={backX} alt="" />
-                    </div>
-                    <div className={s.spravochnik_modal_parent}>
-                      <h1>{t("spra2")}</h1>
-                      <p>{t("spra3")}</p>
-                      <p>{t("ru")}:</p>
-                      <input
-                        value={nameClassRu}
-                        onChange={(e) => setNameClassRu(e.target.value)}
-                        type="text"
-                      />
-                      <p>{t("uz")}:</p>
-                      <input
-                        value={nameClassUz}
-                        onChange={(e) => setNameClassUz(e.target.value)}
-                        type="text"
-                      />
-                      <p>{t("spra4")}</p>
-                      <div className={s.two_in_one}>
-                        <button
-                          className={s.accept}
-                          disabled={!value}
-                          onClick={onSubmit}
-                        >
-                          <img src={accept} alt="Accept" />
-                        </button>
+        <Fade top cascade>
+          <div className={s.Spravochnik_container}>
+            <div className={s.Spravochnik_label}>
+              <h1>{t("spra")}</h1>
+              {localStorage.getItem("roleName") !== "Author" ? (
+                <span>
+                  <button
+                    onClick={handleOpen}
+                    className={s.Spravochnik_label_btn}
+                  >
+                    <span style={{ fontSize: "25px" }}>+</span>
+                    <span>{t("spra1")}</span>
+                  </button>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <div style={{ textAlign: "end", cursor: "pointer" }}>
+                        <img onClick={handleClose} src={backX} alt="" />
+                      </div>
+                      <div className={s.spravochnik_modal_parent}>
+                        <h1>{t("spra2")}</h1>
+                        <p>{t("spra3")}</p>
+                        <p>{t("ru")}:</p>
                         <input
+                          value={nameClassRu}
+                          onChange={(e) => setNameClassRu(e.target.value)}
                           type="text"
-                          value={value}
-                          onChange={(e) => setValue(e.target.value)}
                         />
-                      </div>
-
-                      <ol>
-                        {todos?.map((el) => {
-                          return (
-                            <li key={el.id}>
-                              <p>{el.content_uz}</p>
-                              <img
-                                onClick={() => dispatch(deleteTodo(el.id))}
-                                src={backX}
-                                alt="X"
-                              />
-                            </li>
-                          );
-                        })}
-                      </ol>
-                      <div className={s.spravochnik_empty}></div>
-                      <div className={s.spravochnik_btns}>
-                        <button
-                          onClick={handleClose}
-                          className={s.spravochnik_cancel_btn}
-                        >
-                          {t("btn.5")}
-                        </button>
-                        {!todos.length <= 0 ? (
+                        <p>{t("uz")}:</p>
+                        <input
+                          value={nameClassUz}
+                          onChange={(e) => setNameClassUz(e.target.value)}
+                          type="text"
+                        />
+                        <p>{t("spra4")}</p>
+                        <div className={s.two_in_one}>
                           <button
-                            onClick={() => createClassificator()}
-                            className={s.spravochnik_save_btn}
+                            className={s.accept}
+                            disabled={!value}
+                            onClick={onSubmit}
                           >
-                            {t("btn.4")}
+                            <img src={accept} alt="Accept" />
                           </button>
-                        ) : (
-                          <button className={s.spravochnik_save_btn}>
-                            {t("btn.4")}
+                          <input
+                            type="text"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                          />
+                        </div>
+
+                        <ol>
+                          {todos?.map((el) => {
+                            return (
+                              <li key={el.id}>
+                                <p>{el.content_uz}</p>
+                                <img
+                                  onClick={() => dispatch(deleteTodo(el.id))}
+                                  src={backX}
+                                  alt="X"
+                                />
+                              </li>
+                            );
+                          })}
+                        </ol>
+                        <div className={s.spravochnik_empty}></div>
+                        <div className={s.spravochnik_btns}>
+                          <button
+                            onClick={handleClose}
+                            className={s.spravochnik_cancel_btn}
+                          >
+                            {t("btn.5")}
                           </button>
-                        )}
+                          {!todos.length <= 0 ? (
+                            <button
+                              onClick={() => createClassificator()}
+                              className={s.spravochnik_save_btn}
+                            >
+                              {t("btn.4")}
+                            </button>
+                          ) : (
+                            <button className={s.spravochnik_save_btn}>
+                              {t("btn.4")}
+                            </button>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </Box>
-                </Modal>
-              </span>
-            ) : null}
-          </div>
-          <div className={s.input_field}>
-            <img className={s.S_icon} src={search} alt="Search" />
-            <input
-              onChange={(e) => setSpraSearch(e.target.value.trim())}
-              value={spraSearch}
-              type="text"
-              placeholder={t("spra5")}
-            />
-          </div>
-          {/* <table>
+                    </Box>
+                  </Modal>
+                </span>
+              ) : null}
+            </div>
+            <div className={s.input_field}>
+              <img className={s.S_icon} src={search} alt="Search" />
+              <input
+                onChange={(e) => setSpraSearch(e.target.value.trim())}
+                value={spraSearch}
+                type="text"
+                placeholder={t("spra5")}
+              />
+            </div>
+            {/* <table>
             <thead>
               <tr className={s.Spravochnik_cards_labels}>
                 <th>
@@ -240,37 +250,41 @@ const Spravochnik = () => {
               })}
             </tbody>
           </table> */}
-          <div className={s.Spravochnik_cards_labels}>
-            <p style={{ width: "3%" }}>№</p>
-            <p style={{ width: "52%" }}>{t("spra6")}</p>
-            <p className={s.checkbox_active}>{t("active")}</p>
-            <p style={{ width: "27%" }}>{t("spra7")}</p>
-            <p style={{ width: "7%" }}>{t("spra8")}</p>
-          </div>
-          <div className={s.Spravochnik_sect_creators_parent}>
-            {spravochnik.length === 0 ? (
-              <h1 className={s.notFound}>{t("toast404")}</h1>
-            ) : (
-              spravochnik?.results?.map((el, index) => {
-                return (
-                  <div
-                    className={s.Spravochnik_sect_creators_parent_cards}
-                    key={el.id}
-                  >
-                    <Fade top cascade>
+            <div className={s.Spravochnik_cards_labels}>
+              <p style={{ width: "3%" }}>№</p>
+              <p style={{ width: "52%" }}>{t("spra6")}</p>
+              {localStorage.getItem("roleName") !== "Author" ? (
+                <p className={s.checkbox_active}>{t("active")}</p>
+              ) : null}
+              <p style={{ width: "27%" }}>{t("spra7")}</p>
+              <p style={{ width: "7%" }}>{t("spra8")}</p>
+            </div>
+            <div className={s.Spravochnik_sect_creators_parent}>
+              {spravochnik.length === 0 ? (
+                <h1 className={s.notFound}>{t("toast404")}</h1>
+              ) : (
+                spravochnik?.results?.map((el) => {
+                  return (
+                    <div
+                      className={s.Spravochnik_sect_creators_parent_cards}
+                      key={el.id}
+                    >
                       <span className={s.Spravochnik_twink}>
-                        <p>{index}</p>
-                        <p>{el.title_ru}</p>
+                        <p>{el?.row_number}</p>
+                        <br />
+                        <p>{el.title}</p>
                       </span>
-                      <div className={s.switch_toggle}>
-                        <Switch
-                          defaultChecked={el?.is_active}
-                          onChange={() =>
-                            isActiveClassificator(el?.slug, el?.is_active)
-                          }
-                        />
-                      </div>
-                      <p style={{ width: "20%" }}>
+                      {localStorage.getItem("roleName") !== "Author" ? (
+                        <div className={s.switch_toggle}>
+                          <Switch
+                            defaultChecked={el?.is_active}
+                            onChange={() =>
+                              isActiveClassificator(el?.slug, el?.is_active)
+                            }
+                          />
+                        </div>
+                      ) : null}
+                      <p style={{ width: "10%" }}>
                         {el.elements.length} {t("spra9")}
                       </p>
                       {localStorage.getItem("roleName") !== "Author" ? (
@@ -281,11 +295,54 @@ const Spravochnik = () => {
                             </button>
                           </Link>
                           <button
-                            onClick={() => removeSlug(el?.slug)}
+                            onClick={() => {
+                              handleOpenDel();
+                              setSpraSlug(el?.slug);
+                            }}
                             className={s.lkmain_sect_crud_delete}
                           >
                             <img src={deleteIcon} alt="Delete" />
                           </button>
+                          <Modal
+                            slotProps={{
+                              backdrop: {
+                                style: { opacity: "0.3", boxShadow: 24 },
+                              },
+                            }}
+                            open={openDel}
+                            onClose={handleCloseDel}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style}>
+                              <form
+                                style={{ textAlign: "center" }}
+                                className={s.createElementForm}
+                              >
+                                <h2>{t("sfera.3")}</h2>
+                                <br />
+                                <p>{t("sfera.6")}</p>
+                                <br />
+                                <div className={s.createElementFormBtns}>
+                                  {" "}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleCloseDel()}
+                                    className={s.shablon_save_btn}
+                                  >
+                                    {t("btn.5")}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeSlug(spraSlug)}
+                                    className={s.shablon_delete_btn}
+                                  >
+                                    {t("btn.6")}
+                                  </button>
+                                </div>
+                              </form>
+                            </Box>
+                          </Modal>
                         </div>
                       ) : (
                         <div className={s.lkmain_sect_crud}>
@@ -300,13 +357,18 @@ const Spravochnik = () => {
                           </Link>
                         </div>
                       )}
-                    </Fade>
-                  </div>
-                );
-              })
-            )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            <br />
+            <br />
+            <div className={s.spra_pagination}>
+              <SpravochnikPagination spravochnik={spravochnik?.total_pages} />
+            </div>
           </div>
-        </div>
+        </Fade>
       </section>
     </>
   );

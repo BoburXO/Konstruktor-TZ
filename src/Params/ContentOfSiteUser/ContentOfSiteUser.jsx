@@ -27,7 +27,6 @@ const ContentOfSiteUser = () => {
     <>
       <UserNav />
       <div className={s.AddContent}>
-        <Fade bottom cascade>
           <div className={s.AddContent_container}>
             <div className={s.AddContent_labels}>
               <h1>{t("add-content.2")}</h1>
@@ -79,7 +78,6 @@ const ContentOfSiteUser = () => {
               </div>
             </div>
           </div>
-        </Fade>
         <br />
         <br />
         <div className={s.back}>
