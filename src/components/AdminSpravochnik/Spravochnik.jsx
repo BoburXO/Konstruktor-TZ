@@ -27,6 +27,19 @@ const style = {
   bgcolor: "background.paper",
   border: "none",
   borderRadius: "8px",
+  p: 2,
+};
+
+const styleDel = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 664,
+  height: "max-content",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: "8px",
   p: 4,
 };
 
@@ -44,7 +57,6 @@ const Spravochnik = () => {
   const [value, setValue] = React.useState("");
   const dispatch = useDispatch();
   const todos = useSelector((note) => note.todoList);
-  console.log(spraSlug);
   const { t } = useTranslation();
   const {
     spravochnik,
@@ -260,7 +272,7 @@ const Spravochnik = () => {
               <p style={{ width: "7%" }}>{t("spra8")}</p>
             </div>
             <div className={s.Spravochnik_sect_creators_parent}>
-              {spravochnik.length === 0 ? (
+              {spravochnik.count < 1 ? (
                 <h1 className={s.notFound}>{t("toast404")}</h1>
               ) : (
                 spravochnik?.results?.map((el) => {
@@ -314,7 +326,7 @@ const Spravochnik = () => {
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                           >
-                            <Box sx={style}>
+                            <Box sx={styleDel}>
                               <form
                                 style={{ textAlign: "center" }}
                                 className={s.createElementForm}

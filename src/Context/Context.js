@@ -957,7 +957,7 @@ const ContextProvider = ({ children }) => {
       });
   };
   //createSphere
-  
+
   //deleteSphere
   const deleteSphere = (id) => {
     axios
@@ -1040,10 +1040,10 @@ const ContextProvider = ({ children }) => {
   const [sample, setSample] = useState({});
   const [punktSearch, setPunktSearch] = useState("");
 
-  const allSample = () => {
+  const allSample = (page = 1) => {
     axios
       .get(
-        `${API}/constructor/sample/create/list?description__icontains=${punktSearch}`,
+        `${API}/constructor/sample/create/list?description__icontains=${punktSearch}&page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1268,10 +1268,50 @@ const ContextProvider = ({ children }) => {
   };
   //update-sample
 
+  //createTz
+  const [createTz, setCreateTz] = useState({});
+  const [tzSearch, setTzSearch] = useState("");
+
+  const getCreateTz = (page = 1) => {
+    axios
+      .get(
+        `${API}/constructor/create/list?tz_name__icontains=${tzSearch}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setCreateTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTz());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //createTz
   return (
     <>
       <Context.Provider
         value={{
+          getCreateTz,
+          createTz,
           getSampleBySection,
           updateSample,
           sampleUpdUz,

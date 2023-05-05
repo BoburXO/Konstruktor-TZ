@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { Context } from "../../Context/Context";
 import { useEffect } from "react";
 import Select1 from "react-select";
+import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
 
 const style = {
   position: "absolute",
@@ -206,7 +207,13 @@ const Shablonla = () => {
               <h2 style={{ textAlign: "center" }}>{t("toast404")}</h2>
             </>
           )}
+           <br />
+            <br />
+            <div className={s.spra_pagination}>
+              <SpravochnikPagination sample={sample?.total_pages} />
+            </div>
         </div>
+
       </section>
     </>
   );

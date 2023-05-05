@@ -57,6 +57,7 @@ const UpdContent = () => {
   const { t } = useTranslation();
   //*****
   //*****
+  console.log(sfera);
   return (
     <>
       <UserNav />

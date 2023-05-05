@@ -209,6 +209,12 @@
   color: #0ba9cc;
 }
 
+.spra_pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 @media all and (max-width: 1216px) {
   .templates_sect_parent {
     display: grid;
