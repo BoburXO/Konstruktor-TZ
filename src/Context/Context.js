@@ -1305,13 +1305,47 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
+
+  const getCreateTzSelectType = (type) => {
+    axios
+      .get(`${API}/constructor/create/list?select_type=${type}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setCreateTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzSelectType());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
   //createTz
   return (
     <>
       <Context.Provider
         value={{
+          getCreateTzSelectType,
           getCreateTz,
           createTz,
+          setTzSearch,
+          tzSearch,
           getSampleBySection,
           updateSample,
           sampleUpdUz,

@@ -19,6 +19,8 @@
   "lkavtor2": "TEXNIK TOPSHIRIQLARNING NOMI",
   "lkavtor3": "YARATILINGAN KUNI",
   "lkavtor4": "HARAKATLAR",
+  "lkavtor5": "Sayt",
+  "lkavtor6": "Tizim",
   "createtz": "Ma'lumotnomalar tuzilishi",
   "createtz1": "Ma'lumotnomalar ro'yxatiga qaytish",
   "createtz2": "IP-ning to'liq nomi",
@@ -145,6 +147,6 @@
     "3": "DIQQAT!",
     "4": "OK",
     "5": "Agar siz ushbu sohani oʻchirmoqchi boʻlsangiz, saytning kontent sahifasiga oʻting va ushbu sohadagi kontentni toping va uni oʻsha yerdan oʻchirib tashlang.",
-    "6":"Shuni bilingki, agar hozir siz buni o'chirib tashlasangiz, keyin uni ortga qaytarish imkoni bo'lmaydi va u butkul o'chib ketadi."
+    "6": "Shuni bilingki, agar hozir siz buni o'chirib tashlasangiz, keyin uni ortga qaytarish imkoni bo'lmaydi va u butkul o'chib ketadi."
   }
 }

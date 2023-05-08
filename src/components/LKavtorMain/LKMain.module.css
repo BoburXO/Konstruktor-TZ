@@ -175,3 +175,8 @@
   display: flex;
   justify-content: center;
 }
+
+.selecttt {
+  width: 150px;
+  height: 48px;
+}
