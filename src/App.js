@@ -21,6 +21,7 @@ import IndexSpra from "./Params/IndexSpravochnik/IndexSpra";
 import ContentOfSiteUser from "./Params/ContentOfSiteUser/ContentOfSiteUser";
 import Sphere from "./pages/Sphere/Sphere";
 import HistoryStructure from "./pages/HistoryStructure/HistoryStructure";
+import LKMainUpdate from "./Params/LKMainUpdate/LKMainUpdate";
 function App() {
   return (
     <>
@@ -34,6 +35,7 @@ function App() {
         <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
         <Route path="/index-spravochnik/:slug" element={<IndexSpra />} />
         <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
+        <Route path="/lkavtor/:id" element={<LKMainUpdate />} />
         <Route
           path="/content-of-site-index/:slug"
           element={<ContentOfSiteUser />}

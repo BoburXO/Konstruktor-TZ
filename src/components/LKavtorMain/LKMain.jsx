@@ -5,7 +5,7 @@ import copyIcon from "../../assets/icons/copyIcon.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
 import skacatIcon from "../../assets/icons/skacatIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Context } from "../../Context/Context";
 import search from "../../assets/icons/search.svg";
@@ -97,9 +97,11 @@ const LKMain = () => {
                     <button className={s.lkmain_sect_crud_copy}>
                       <img src={copyIcon} alt="Copy" />
                     </button>
-                    <button className={s.lkmain_sect_crud_create}>
-                      <img src={createIcon} alt="Copy" />
-                    </button>
+                    <Link to={`/lkavtor/${el.id}/`}>
+                      <button className={s.lkmain_sect_crud_create}>
+                        <img src={createIcon} alt="Copy" />
+                      </button>
+                    </Link>
                     <button className={s.lkmain_sect_crud_skacat}>
                       <a
                         rel="noopener"

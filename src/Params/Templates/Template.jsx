@@ -44,8 +44,8 @@ const Template = () => {
   const { t } = useTranslation();
 
   React.useEffect(() => {
-    if (!localStorage.getItem("ConstructorRoleAccessToken")) {
-      navigate("/");
+    if (localStorage.getItem("roleName") === "Author") {
+      navigate("/")
     }
     allSample();
     setSampleUpdRu(paramsFind?.description_ru);

@@ -21,6 +21,8 @@
   "lkavtor4": "HARAKATLAR",
   "lkavtor5": "Sayt",
   "lkavtor6": "Tizim",
+  "lkavtor7":"Texnik topshiriq uchun sharhlar",
+  "lkavtor8": "Texnik topshiriqning nomi",
   "createtz": "Ma'lumotnomalar tuzilishi",
   "createtz1": "Ma'lumotnomalar ro'yxatiga qaytish",
   "createtz2": "IP-ning to'liq nomi",
@@ -118,7 +120,7 @@
     "20": "Bo'sh"
   },
   "ru": "Rus tili",
-  "uz": "O'zbekcha",
+  "uz": "O'zbek tili",
   "toast": "Element almashish uchun nusxalandi",
   "toast401": "Ruxsat berilmagan",
   "toast404": "Topilmadi",

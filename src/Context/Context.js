@@ -1337,10 +1337,69 @@ const ContextProvider = ({ children }) => {
       });
   };
   //createTz
+
+  //updateTz
+  const [tzNameUz, setTzNameUz] = useState("");
+  const [tzNameRu, setTzNameRu] = useState("");
+  const [tzCommentUz, setTzCommentUz] = useState("");
+  const [tzCommentRu, setTzCommentRu] = useState("");
+
+  const updateCreateTz = (id) => {
+    axios
+      .patch(
+        `${API}/constructor/detail/${id}`,
+        {
+          tz_name_ru: tzNameRu,
+          tz_name_uz: tzNameUz,
+          comment_ru: tzCommentRu,
+          comment_uz: tzCommentUz,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        navigate("/lkavtor");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => updateCreateTz());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  //updateTz
+
   return (
     <>
       <Context.Provider
         value={{
+          updateCreateTz,
+          tzCommentRu,
+          setTzCommentRu,
+          tzCommentUz,
+          setTzCommentUz,
+          tzNameRu,
+          setTzNameRu,
+          tzNameUz,
+          setTzNameUz,
           getCreateTzSelectType,
           getCreateTz,
           createTz,
