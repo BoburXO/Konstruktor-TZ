@@ -45,7 +45,7 @@
   width: 100%;
   height: 50px;
   padding: 15px 30px;
-  list-style: square;
+  list-style: none;
   background: #ffffff;
 
   border: 1px solid rgba(0, 0, 0, 0.1);

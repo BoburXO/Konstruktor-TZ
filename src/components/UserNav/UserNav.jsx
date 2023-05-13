@@ -120,14 +120,14 @@ const UserNav = () => {
                   {t("usernav3")}
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   to="/sphere"
                 >
                   {t("add-content.4")}
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </div>
         ) : (

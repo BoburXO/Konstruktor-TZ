@@ -128,7 +128,24 @@ const ContextProvider = ({ children }) => {
       })
       .then(({ data }) =>
         localStorage.setItem("ConstructorRoleAccessToken", data.access)
-      );
+      )
+      .catch((err) => {
+        if (err.response.status === 401) {
+          notify401();
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
   //refresh token
 
   // LogOut
@@ -153,7 +170,9 @@ const ContextProvider = ({ children }) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          refreshToken().then(() => LogOut());
+          refreshToken()
+            .then(() => LogOut())
+            .catch(() => notify401());
         }
         if (err.response.status === 404) {
           notify404();

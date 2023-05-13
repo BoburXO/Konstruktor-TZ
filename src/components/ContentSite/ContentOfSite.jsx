@@ -12,6 +12,23 @@ import { Context } from "../../Context/Context";
 import ContentPagination from "../../Pagination/ContentPagination";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import { FaEye } from "react-icons/fa";
+import { ImDownload } from "react-icons/im";
+import {TbSquareRoundedPlus} from 'react-icons/tb'
+
+const style_pdf = {
+  width: 420,
+  height: 140,
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: 4,
+  boxShadow: 0,
+  p: 4,
+};
 
 const ContentOfSite = () => {
   const style = {
@@ -51,10 +68,16 @@ const ContentOfSite = () => {
     { value: false, label: t("filter.3") },
   ];
 
+  //modal
   const [delId, setDelId] = useState("");
   const [openDel, setOpenDel] = useState(false);
   const handleOpenDel = () => setOpenDel(true);
   const handleCloseDel = () => setOpenDel(false);
+
+  const [downloadPdf, setDownloadPdf] = useState(false);
+  const handleDownloadOpen = () => setDownloadPdf(true);
+  const handleDownloadClose = () => setDownloadPdf(false);
+  //modal
 
   return (
     <>
@@ -108,6 +131,9 @@ const ContentOfSite = () => {
                 }))}
               />
             </div>
+            <Link to="/sphere" className={s.sphere_content_craete}>
+              <TbSquareRoundedPlus  style={{ color: "#9a9797", fontSize: "22px" }}/>
+            </Link>
           </div>
           <div className={s.content_db_labels}>
             <p style={{ textAlign: "start" }}>{t("content-site.4")}</p>
@@ -147,16 +173,52 @@ const ContentOfSite = () => {
                             <img src={createIcon} alt="Copy" />
                           </button>
                         </Link>
-                        <button className={s.content_crud_download}>
-                          <a
-                            rel="noopener"
-                            href={el?.doc_file}
-                            download
-                            target="_blank"
-                          >
-                            <img src={download} alt="Download" />
-                          </a>
+                        <button
+                          onClick={handleDownloadOpen}
+                          className={s.content_crud_download}
+                        >
+                          <img src={download} alt="Download" />
                         </button>
+                        <Modal
+                          slotProps={{
+                            backdrop: {
+                              style: { opacity: "0.3", boxShadow: 24 },
+                            },
+                          }}
+                          open={downloadPdf}
+                          onClose={handleDownloadClose}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style_pdf}>
+                            <div className={s.download_modal}>
+                              <a
+                                rel="noopener"
+                                href={el?.doc_file_ru}
+                                download
+                                target="_blank"
+                                className={s.download_ru}
+                              >
+                                <p>{t("ru")}:</p>
+                                <ImDownload
+                                  style={{ color: "#fff", fontSize: "18px" }}
+                                />
+                              </a>
+                              <a
+                                rel="noopener"
+                                href={el?.doc_file_uz}
+                                download
+                                target="_blank"
+                                className={s.download_ru}
+                              >
+                                <p>{t("uz")}:</p>
+                                <ImDownload
+                                  style={{ color: "#fff", fontSize: "18px" }}
+                                />
+                              </a>
+                            </div>
+                          </Box>
+                        </Modal>
                         <button
                           onClick={() => {
                             handleOpenDel();
@@ -221,7 +283,9 @@ const ContentOfSite = () => {
                         </button>
                         <Link to={`/content-of-site-index/${el?.slug}`}>
                           <button className={s.content_crud_create}>
-                            <img src={createIcon} alt="Show" />
+                            <FaEye
+                              style={{ color: "#2f80ed", fontSize: "16px" }}
+                            />
                           </button>
                         </Link>
                       </div>

@@ -27,57 +27,55 @@ const ContentOfSiteUser = () => {
     <>
       <UserNav />
       <div className={s.AddContent}>
-          <div className={s.AddContent_container}>
-            <div className={s.AddContent_labels}>
-              <h1>{t("add-content.2")}</h1>
+        <div className={s.AddContent_container}>
+          <div className={s.AddContent_labels}>
+            <h1>{t("add-content.2")}</h1>
+          </div>
+          <div className={s.AddContent_parent}>
+            <div className={s.AddContent_left}>
+              <p>{t("add-content.3")}</p>
+              <input defaultValue={contentParams?.header} type="text" />
+              <div className={s.AddContent_sfera}>
+                <p>{t("add-content.4")}</p>
+                <br />
+                <button className={s.active}>
+                  {contentParams?.sphere?.name}
+                </button>
+              </div>
+              <div className={s.AddContent_left_desc}>
+                <p>{t("add-content.9")}</p>
+                <input defaultValue={contentParams?.description} type="text" />
+              </div>
+              <p>{t("add-content.10")}</p>
+              <br />
+              <a
+                rel="noopener"
+                href={contentParams?.doc_file}
+                download
+                target="_blank"
+              >
+                <button className={s.content_crud_download}>
+                  <img src={download} alt="Download" />
+                </button>
+              </a>
+              <br />
+              <br />
+              <br />
+              <JoditEditor
+                defaultValue={contentParams?.text}
+                className={s.JoditEditor}
+              />
+              <br />
             </div>
-            <div className={s.AddContent_parent}>
-              <div className={s.AddContent_left}>
-                <p>{t("add-content.3")}</p>
-                <input defaultValue={contentParams?.header} type="text" />
-                <div className={s.AddContent_sfera}>
-                  <p>{t("add-content.4")}</p>
-                  <br />
-                  <button className={s.active}>
-                    {contentParams?.sphere?.name}
-                  </button>
-                </div>
-                <div className={s.AddContent_left_desc}>
-                  <p>{t("add-content.9")}</p>
-                  <input
-                    defaultValue={contentParams?.description}
-                    type="text"
-                  />
-                </div>
-                <p>{t("add-content.10")}</p>
-                <br />
-                <a
-                  rel="noopener"
-                  href={contentParams?.doc_file}
-                  download
-                  target="_blank"
-                >
-                  <button className={s.content_crud_download}>
-                    <img src={download} alt="Download" />
-                  </button>
-                </a>
-                <br />
-                <br />
-                <br />
-                <JoditEditor
-                  defaultValue={contentParams?.text}
-                  className={s.JoditEditor}
-                />
-                <br />
-              </div>
-              <div className={s.AddContent_right}>
-                <span>
-                  {contentParams?.created_at.slice(0, 16)}
-                  <img src={date} alt="Date" />
-                </span>
-              </div>
+            <div className={s.AddContent_right}>
+              <h4>{t("add-content.14")}</h4>
+              <input
+                value={contentParams?.created_at.slice(0, 16)}
+                type="datetime-local"
+              />
             </div>
           </div>
+        </div>
         <br />
         <br />
         <div className={s.back}>

@@ -16,6 +16,7 @@ import { Switch } from "antd";
 import { Link } from "react-router-dom";
 import { Context } from "../../Context/Context";
 import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
+import { FaEye } from 'react-icons/fa';
 
 const style = {
   position: "absolute",
@@ -364,7 +365,7 @@ const Spravochnik = () => {
 
                           <Link to={`/index-spravochnik/${el?.slug}`}>
                             <button className={s.lkmain_sect_crud_create}>
-                              <img src={createIcon} alt="Copy" />
+                              <FaEye style={{color:"#2f80ed", fontSize:"16px"}}/>
                             </button>
                           </Link>
                         </div>
