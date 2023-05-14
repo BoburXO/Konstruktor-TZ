@@ -16,7 +16,7 @@ import { Switch } from "antd";
 import { Link } from "react-router-dom";
 import { Context } from "../../Context/Context";
 import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
-import { FaEye } from 'react-icons/fa';
+import { FaEye } from "react-icons/fa";
 
 const style = {
   position: "absolute",
@@ -273,7 +273,7 @@ const Spravochnik = () => {
               <p style={{ width: "7%" }}>{t("spra8")}</p>
             </div>
             <div className={s.Spravochnik_sect_creators_parent}>
-              {spravochnik.count < 1 ? (
+              {spravochnik?.length === 0 ? (
                 <h1 className={s.notFound}>{t("toast404")}</h1>
               ) : (
                 spravochnik?.results?.map((el) => {
@@ -365,7 +365,9 @@ const Spravochnik = () => {
 
                           <Link to={`/index-spravochnik/${el?.slug}`}>
                             <button className={s.lkmain_sect_crud_create}>
-                              <FaEye style={{color:"#2f80ed", fontSize:"16px"}}/>
+                              <FaEye
+                                style={{ color: "#2f80ed", fontSize: "16px" }}
+                              />
                             </button>
                           </Link>
                         </div>

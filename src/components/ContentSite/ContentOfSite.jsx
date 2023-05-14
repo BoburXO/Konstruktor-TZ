@@ -14,7 +14,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { FaEye } from "react-icons/fa";
 import { ImDownload } from "react-icons/im";
-import {TbSquareRoundedPlus} from 'react-icons/tb'
+import { TbSquareRoundedPlus } from "react-icons/tb";
 
 const style_pdf = {
   width: 420,
@@ -132,7 +132,9 @@ const ContentOfSite = () => {
               />
             </div>
             <Link to="/sphere" className={s.sphere_content_craete}>
-              <TbSquareRoundedPlus  style={{ color: "#9a9797", fontSize: "22px" }}/>
+              <TbSquareRoundedPlus
+                style={{ color: "#9a9797", fontSize: "22px" }}
+              />
             </Link>
           </div>
           <div className={s.content_db_labels}>
@@ -143,7 +145,7 @@ const ContentOfSite = () => {
             <p style={{ textAlign: "end" }}>{t("content-site.8")}</p>
           </div>
           <div className={s.content_parent}>
-            {contentSite.count === 0 ? (
+            {contentSite ? (
               <h1 className={s.notFound}>{t("toast404")}</h1>
             ) : (
               contentSite?.results?.map((el, index) => {

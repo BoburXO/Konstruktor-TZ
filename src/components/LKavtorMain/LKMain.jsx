@@ -81,45 +81,49 @@ const LKMain = () => {
             <p style={{ width: "7%" }}>{t("lkavtor4")}</p>
           </div>
           <div className={s.lkmain_sect_creators_parent}>
-            {createTz?.results?.map((el) => {
-              return (
-                <div className={s.lkmain_sect_creators_parent_card} key={el.id}>
-                  <p style={{ width: "3%" }}>#{el?.row_number}</p>
-                  <p style={{ width: "55%" }}>{el?.tz_name}</p>
-                  <span
-                    style={{ width: "20%" }}
-                    className={s.lkmain_sect_dates}
-                  >
-                    <img src={date} alt="" />
-                    <p>{el?.created_at}</p>
-                  </span>
-                  <div className={s.lkmain_sect_crud}>
-                    <button className={s.lkmain_sect_crud_copy}>
-                      <img src={copyIcon} alt="Copy" />
-                    </button>
-                    <Link to={`/lkavtor/${el.id}/`}>
-                      <button className={s.lkmain_sect_crud_create}>
-                        <img src={createIcon} alt="Copy" />
-                      </button>
-                    </Link>
-                    <button className={s.lkmain_sect_crud_skacat}>
-                      <a
-                        rel="noopener"
-                        href={el?.pdf_file}
-                        download
-                        target="_blank"
-                      >
-                        {" "}
-                        <img src={skacatIcon} alt="Download" />
-                      </a>
-                    </button>
-                    <button className={s.lkmain_sect_crud_delete}>
-                      <img src={deleteIcon} alt="Delete" />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+              {createTz.length === 0 ? (
+                  createTz?.results?.map((el) => {
+                    return (
+                      <div className={s.lkmain_sect_creators_parent_card} key={el.id}>
+                        <p style={{ width: "3%" }}>#{el?.row_number}</p>
+                        <p style={{ width: "55%" }}>{el?.tz_name}</p>
+                        <span
+                          style={{ width: "20%" }}
+                          className={s.lkmain_sect_dates}
+                        >
+                          <img src={date} alt="" />
+                          <p>{el?.created_at}</p>
+                        </span>
+                        <div className={s.lkmain_sect_crud}>
+                          <button className={s.lkmain_sect_crud_copy}>
+                            <img src={copyIcon} alt="Copy" />
+                          </button>
+                          <Link to={`/lkavtor/${el.id}/`}>
+                            <button className={s.lkmain_sect_crud_create}>
+                              <img src={createIcon} alt="Copy" />
+                            </button>
+                          </Link>
+                          <button className={s.lkmain_sect_crud_skacat}>
+                            <a
+                              rel="noopener"
+                              href={el?.pdf_file}
+                              download
+                              target="_blank"
+                            >
+                              {" "}
+                              <img src={skacatIcon} alt="Download" />
+                            </a>
+                          </button>
+                          <button className={s.lkmain_sect_crud_delete}>
+                            <img src={deleteIcon} alt="Delete" />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })
+              ):(
+                <h1 className={s.notFound}>{t("toast404")}</h1>
+              )}
           </div>
           <br />
           <br />

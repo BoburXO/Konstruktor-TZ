@@ -180,3 +180,10 @@
   width: 150px;
   height: 48px;
 }
+
+.notFound {
+  text-align: center;
+  padding-top: 50px;
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+}
