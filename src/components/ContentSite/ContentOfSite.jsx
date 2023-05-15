@@ -131,11 +131,13 @@ const ContentOfSite = () => {
                 }))}
               />
             </div>
-            <Link to="/sphere" className={s.sphere_content_craete}>
-              <TbSquareRoundedPlus
-                style={{ color: "#9a9797", fontSize: "22px" }}
-              />
-            </Link>
+            {localStorage.getItem("roleName") !== "Author" ? (
+              <Link to="/sphere" className={s.sphere_content_craete}>
+                <TbSquareRoundedPlus
+                  style={{ color: "#9a9797", fontSize: "22px" }}
+                />
+              </Link>
+            ) : null}
           </div>
           <div className={s.content_db_labels}>
             <p style={{ textAlign: "start" }}>{t("content-site.4")}</p>

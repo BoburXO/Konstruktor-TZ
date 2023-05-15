@@ -128,24 +128,7 @@ const ContextProvider = ({ children }) => {
       })
       .then(({ data }) =>
         localStorage.setItem("ConstructorRoleAccessToken", data.access)
-      )
-      .catch((err) => {
-        if (err.response.status === 401) {
-          notify401();
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
+      );
   //refresh token
 
   // LogOut
@@ -170,9 +153,7 @@ const ContextProvider = ({ children }) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          refreshToken()
-            .then(() => LogOut())
-            .catch(() => notify401());
+          refreshToken().then(() => LogOut());
         }
         if (err.response.status === 404) {
           notify404();
@@ -1403,13 +1384,54 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
-
   //updateTz
+
+  //deleteTz
+  const deleteTz = (id) => {
+    axios
+      .delete(
+        `${API}/constructor/delete`,
+        {
+          data: {
+            constructor_id: id,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => deleteTz());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //deleteTz
 
   return (
     <>
       <Context.Provider
         value={{
+          deleteTz,
           updateCreateTz,
           tzCommentRu,
           setTzCommentRu,
