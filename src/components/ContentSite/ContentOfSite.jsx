@@ -147,7 +147,7 @@ const ContentOfSite = () => {
             <p style={{ textAlign: "end" }}>{t("content-site.8")}</p>
           </div>
           <div className={s.content_parent}>
-            {contentSite ? (
+            {contentSite?.results?.length < 1 ? (
               <h1 className={s.notFound}>{t("toast404")}</h1>
             ) : (
               contentSite?.results?.map((el, index) => {
@@ -210,7 +210,7 @@ const ContentOfSite = () => {
                               </a>
                               <a
                                 rel="noopener"
-                                href={el?.doc_file_uz}
+                                href={el?.doc_file_гя}
                                 download
                                 target="_blank"
                                 className={s.download_ru}
