@@ -99,7 +99,7 @@
 }
 
 .Temp_back:hover {
-  transform: scale(1.1);
-  background: transparent;
+  color: #fff;
+  background: gray;
   transition: 0.5s ease;
 }
