@@ -16,6 +16,7 @@ import { FaEye } from "react-icons/fa";
 import { ImDownload } from "react-icons/im";
 import { TbSquareRoundedPlus } from "react-icons/tb";
 
+//modal styles
 const style_pdf = {
   width: 420,
   height: 140,
@@ -30,18 +31,21 @@ const style_pdf = {
   p: 4,
 };
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: 4,
+  boxShadow: 0,
+  p: 4,
+};
+//modal styles
 const ContentOfSite = () => {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
-    border: "none",
-    borderRadius: 4,
-    boxShadow: 0,
-    p: 4,
-  };
+  const [pdfRu, setPdfRu] = useState("");
+  const [pdfUz, setPdfUz] = useState("");
 
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -178,7 +182,11 @@ const ContentOfSite = () => {
                           </button>
                         </Link>
                         <button
-                          onClick={handleDownloadOpen}
+                          onClick={() => {
+                            handleDownloadOpen();
+                            setPdfRu(el?.doc_file_ru);
+                            setPdfUz(el?.doc_file_uz);
+                          }}
                           className={s.content_crud_download}
                         >
                           <img src={download} alt="Download" />
@@ -195,32 +203,43 @@ const ContentOfSite = () => {
                           aria-describedby="modal-modal-description"
                         >
                           <Box sx={style_pdf}>
-                            <div className={s.download_modal}>
-                              <a
-                                rel="noopener"
-                                href={el?.doc_file_ru}
-                                download
-                                target="_blank"
-                                className={s.download_ru}
+                            {!pdfRu || !pdfUz ? (
+                              <h2
+                                style={{
+                                  textAlign: "center",
+                                  paddingTop: "25px",
+                                }}
                               >
-                                <p>{t("ru")}:</p>
-                                <ImDownload
-                                  style={{ color: "#fff", fontSize: "18px" }}
-                                />
-                              </a>
-                              <a
-                                rel="noopener"
-                                href={el?.doc_file_гя}
-                                download
-                                target="_blank"
-                                className={s.download_ru}
-                              >
-                                <p>{t("uz")}:</p>
-                                <ImDownload
-                                  style={{ color: "#fff", fontSize: "18px" }}
-                                />
-                              </a>
-                            </div>
+                                {t("toast404")}
+                              </h2>
+                            ) : (
+                              <div className={s.download_modal}>
+                                <a
+                                  rel="noopener"
+                                  href={pdfRu}
+                                  download
+                                  target="_blank"
+                                  className={s.download_ru}
+                                >
+                                  <p>{t("ru")}:</p>
+                                  <ImDownload
+                                    style={{ color: "#fff", fontSize: "18px" }}
+                                  />
+                                </a>
+                                <a
+                                  rel="noopener"
+                                  href={pdfUz}
+                                  download
+                                  target="_blank"
+                                  className={s.download_ru}
+                                >
+                                  <p>{t("uz")}:</p>
+                                  <ImDownload
+                                    style={{ color: "#fff", fontSize: "18px" }}
+                                  />
+                                </a>
+                              </div>
+                            )}
                           </Box>
                         </Modal>
                         <button
@@ -275,16 +294,56 @@ const ContentOfSite = () => {
                       </div>
                     ) : (
                       <div className={s.content_crud}>
-                        <button className={s.content_crud_download}>
-                          <a
-                            rel="noopener"
-                            href={el?.doc_file}
-                            download
-                            target="_blank"
-                          >
-                            <img src={download} alt="Download" />
-                          </a>
+                        <button
+                          onClick={() => {
+                            handleDownloadOpen();
+                            setPdfRu(el?.doc_file_ru);
+                            setPdfUz(el?.doc_file_uz);
+                          }}
+                          className={s.content_crud_download}
+                        >
+                          <img src={download} alt="Download" />
                         </button>
+                        <Modal
+                          slotProps={{
+                            backdrop: {
+                              style: { opacity: "0.3", boxShadow: 24 },
+                            },
+                          }}
+                          open={downloadPdf}
+                          onClose={handleDownloadClose}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style_pdf}>
+                            <div className={s.download_modal}>
+                              <a
+                                rel="noopener"
+                                href={pdfRu}
+                                download
+                                target="_blank"
+                                className={s.download_ru}
+                              >
+                                <p>{t("ru")}:</p>
+                                <ImDownload
+                                  style={{ color: "#fff", fontSize: "18px" }}
+                                />
+                              </a>
+                              <a
+                                rel="noopener"
+                                href={pdfUz}
+                                download
+                                target="_blank"
+                                className={s.download_ru}
+                              >
+                                <p>{t("uz")}:</p>
+                                <ImDownload
+                                  style={{ color: "#fff", fontSize: "18px" }}
+                                />
+                              </a>
+                            </div>
+                          </Box>
+                        </Modal>
                         <Link to={`/content-of-site-index/${el?.slug}`}>
                           <button className={s.content_crud_create}>
                             <FaEye
