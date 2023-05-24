@@ -1,7 +1,6 @@
 .structure_parent {
   width: 100%;
   height: max-content;
-
   display: flex;
   font-family: Rubik;
 }
@@ -14,18 +13,24 @@
   color: #222222;
 }
 
-.structure_dropdown button {
+.structure_dropdown button,
+.dropdown_without_child {
   width: 270px;
-
   background: transparent;
   border: none;
-  margin: 10px;
   text-align: start;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
+  margin-bottom: 20px;
   font-family: Rubik;
+  cursor: pointer;
 }
 
+.structure_dropdown ul {
+  margin-left: 20px;
+}
+
+/* 
 .structure_dropdown p {
   padding: 16px;
   padding-left: 25px;
@@ -36,7 +41,7 @@
 
 .structure_dropdown p:hover {
   color: #631ac0;
-}
+} */
 
 .structure_left_siderbar h2 {
   font-weight: 600;
@@ -45,7 +50,7 @@
 
 .structure_right_contents {
   width: 100%;
-  height: max-content;
+  min-height: calc(100vh - 346px);
 
   background: rgba(47, 128, 237, 0.1);
   padding: 40px 0;
@@ -143,7 +148,6 @@
 .structure_right_contents_card_insidePunkt span {
   width: 100%;
   height: 35px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -152,7 +156,6 @@
 
 .structure_right_contents_card_insidePunkt span div {
   height: 35px;
-
   display: flex;
   align-items: center;
   gap: 15px;
@@ -175,6 +178,7 @@
 .structure_add_plus {
   width: 100%;
   text-align: center;
+  margin-top: 50px;
 }
 
 .structure_add_plus button {
@@ -221,4 +225,78 @@
 .structure_modalType button:hover {
   background: rgba(47, 128, 237, 0.1);
   transition: 0.5s ease;
+}
+
+.create_structure_modal {
+  padding: 30px 30px 120px 30px;
+  position: relative;
+}
+
+.flex_names {
+  display: flex;
+  justify-content: space-between;
+}
+.flex_names div {
+  width: 49%;
+}
+
+.create_structure_modal p {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 32px;
+  margin-bottom: 20px;
+}
+
+.structure_btns {
+  width: 100%;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  padding-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.structure_cancel_btn {
+  width: 120px;
+  height: 48px;
+  color: rgba(34, 34, 34, 0.6);
+  border: 2px solid rgba(34, 34, 34, 0.6);
+  border-radius: 8px;
+  background: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+
+.structure_cancel_btn:hover {
+  background: rgba(34, 34, 34, 0.6);
+  color: #fff;
+  border: none;
+  transition: 0.5s ease;
+}
+
+.structure_save_btn {
+  width: 130px;
+  height: 48px;
+
+  border-radius: 8px;
+  border: 2px solid #0ba9cc;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: #0ba9cc;
+}
+
+.structure_save_btn:hover {
+  background: #fff;
+  color: #0ba9cc;
+}
+
+.structure_close_icon {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  cursor: pointer;
 }
