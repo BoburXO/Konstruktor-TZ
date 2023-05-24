@@ -131,9 +131,13 @@ const StructureComponent = () => {
                         <p>
                           {t("struc5")} {activeSection?.header_name}
                         </p>
-                        <Link>
-                          <img src={pen} alt="Изменить" />
-                        </Link>
+                        <>
+                          <img
+                            src={pen}
+                            alt="Изменить"
+                            onClick={() => console.log("hello world")}
+                          />
+                        </>
                       </span>
                       <p className={s.structure_right_contents_input_label}>
                         {t("struc3")}
