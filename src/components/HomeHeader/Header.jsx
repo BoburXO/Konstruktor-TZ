@@ -7,10 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const changeLanguage = (language) => {
-    i18n.changeLanguage(language);
-  };
+  const { t } = useTranslation();
   return (
     <>
       <header className={s.home_header}>

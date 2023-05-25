@@ -6,6 +6,7 @@ import { API } from "../api/Api";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useRef } from "react";
 
 const Context = createContext();
 
@@ -32,7 +33,7 @@ const ContextProvider = ({ children }) => {
   const notify400 = () => toast(t("toast400"));
   const notify403 = () => toast(t("toast403"));
   const notify500 = () => toast(t("toast500"));
-  const notify200 = () => toast(t("toast200"));
+  // const notify200 = () => toast(t("toast200"));
   //notify
 
   //createContent
@@ -203,6 +204,54 @@ const ContextProvider = ({ children }) => {
       });
   };
 
+  //spravochnik excel
+  const ref = useRef();
+
+  const SpravochnikExcel = async (language, id, filename) => {
+    await axios
+      .post(
+        `${API}/classificator/export-xlsx/`,
+        {
+          language: language,
+          id: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = ref.current;
+        link.href = url;
+        link.setAttribute("download", `${filename}.xls`);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => SpravochnikExcel());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //spravochnik excel
+
   //deleteElement
   const removeElementById = (id) => {
     axios
@@ -290,6 +339,7 @@ const ContextProvider = ({ children }) => {
         }
       )
       .then(() => {
+        navigate("/lkadminspravochnik");
         window.location.reload();
       })
       .catch((err) => {
@@ -371,10 +421,20 @@ const ContextProvider = ({ children }) => {
   //createElement
   const createElement = (id) => {
     axios
-      .post(`${API}/classificator/element/${id}/`, {
-        content_uz: contUz,
-        content_ru: contRu,
-      })
+      .post(
+        `${API}/classificator/element/${id}/`,
+        {
+          content_uz: contUz,
+          content_ru: contRu,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
       .then(() => {
         window.location.reload();
       })
@@ -590,7 +650,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => createContentOfSite());
           }
           if (err.response.status === 404) {
             notify404();
@@ -662,7 +722,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => createContentOfSiteFalse());
           }
           if (err.response.status === 404) {
             notify404();
@@ -736,7 +796,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => updateContentTrue());
           }
           if (err.response.status === 404) {
             notify404();
@@ -807,7 +867,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => updateContentFalse());
           }
           if (err.response.status === 404) {
             notify404();
@@ -899,7 +959,7 @@ const ContextProvider = ({ children }) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          notify401();
+          refreshToken().then(() => getSphere());
         }
         if (err.response.status === 404) {
           notify404();
@@ -973,7 +1033,7 @@ const ContextProvider = ({ children }) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          notify401();
+          refreshToken().then(() => deleteSphere());
         }
         if (err.response.status === 404) {
           notify404();
@@ -1431,6 +1491,8 @@ const ContextProvider = ({ children }) => {
     <>
       <Context.Provider
         value={{
+          ref,
+          SpravochnikExcel,
           deleteTz,
           updateCreateTz,
           tzCommentRu,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "../UserNav/UserNav.module.css";
 import logofff from "../../assets/imgs/logofff.svg";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ava from "../../assets/icons/ava.png";
 import { useTranslation } from "react-i18next";
 import { useContext } from "react";
@@ -9,7 +9,6 @@ import { Context } from "../../Context/Context";
 
 const UserNav = () => {
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
@@ -52,6 +51,9 @@ const UserNav = () => {
                 <option className={s.til_opt} value="uz">
                   O'zbek
                 </option>
+                <option className={s.til_opt} value="kr">
+                Ўзбек
+                </option>
               </select>
 
               <span className={s.nav_avtor_content}>
@@ -80,7 +82,7 @@ const UserNav = () => {
                     d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
                   />
                 </svg>
-                Выйти
+                {t("logOut.1")}
               </button>
             </li>
           </ul>

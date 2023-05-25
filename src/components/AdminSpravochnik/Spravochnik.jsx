@@ -71,6 +71,8 @@ const Spravochnik = () => {
     nameClassUz,
     nameClassRu,
     setNameClassRu,
+    SpravochnikExcel,
+    ref,
   } = useContext(Context);
 
   useEffect(() => {
@@ -92,6 +94,11 @@ const Spravochnik = () => {
     dispatch(deleteTodo(content_uz));
   };
 
+  setTimeout(() => {
+    const reloadWindow = () => {
+      window.location.reload();
+    };
+  }, 2000);
   return (
     <>
       <section className={s.Spravochnik}>
@@ -270,7 +277,7 @@ const Spravochnik = () => {
                 <p className={s.checkbox_active}>{t("active")}</p>
               ) : null}
               <p style={{ width: "27%" }}>{t("spra7")}</p>
-              <p style={{ width: "7%" }}>{t("spra8")}</p>
+              <p style={{ width: "9%" }}>{t("spra8")}</p>
             </div>
             <div className={s.Spravochnik_sect_creators_parent}>
               {spravochnik?.length === 0 ? (
@@ -297,7 +304,7 @@ const Spravochnik = () => {
                           />
                         </div>
                       ) : null}
-                      <p style={{ width: "10%" }}>
+                      <p style={{ width: "17%" }}>
                         {el.elements.length} {t("spra9")}
                       </p>
                       {localStorage.getItem("roleName") !== "Author" ? (
@@ -307,6 +314,17 @@ const Spravochnik = () => {
                               <img src={createIcon} alt="Copy" />
                             </button>
                           </Link>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              SpravochnikExcel("uz", el?.id, el?.title)
+                            }
+                            className={s.lkmain_sect_crud_download}
+                          >
+                            <img src={download} alt="Download" />
+                            <a ref={ref}></a>
+                          </button>
                           <button
                             onClick={() => {
                               handleOpenDel();
@@ -362,7 +380,6 @@ const Spravochnik = () => {
                           <button className={s.lkmain_sect_crud_download}>
                             <img src={download} alt="Download" />
                           </button>
-
                           <Link to={`/index-spravochnik/${el?.slug}`}>
                             <button className={s.lkmain_sect_crud_create}>
                               <FaEye

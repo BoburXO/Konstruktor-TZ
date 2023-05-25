@@ -91,15 +91,16 @@
   width: 90px;
   font-weight: 600;
   font-size: 16px;
-  border: 2px solid gray;
+  border: 1px solid rgba(34, 34, 34, 0.4);
   border-radius: 8px;
   background: #fff;
-  color: gray;
+  color: rgba(34, 34, 34, 0.4);
   transition: 0.5s ease;
 }
 
 .Temp_back:hover {
   color: #fff;
-  background: gray;
+  background: rgba(34, 34, 34, 0.4);
   transition: 0.5s ease;
+  border: none;
 }
