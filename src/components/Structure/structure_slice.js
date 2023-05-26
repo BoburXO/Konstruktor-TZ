@@ -40,6 +40,23 @@ export const createNewStructure = createAsyncThunk(
   }
 );
 
+export const updateStructure = createAsyncThunk(
+  "structure/update",
+  async ({ id, data }) => {
+    const { request } = useHttp();
+    return await request({
+      method: "PUT",
+      url: `/constructor/detail/${id}`,
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
 const structureSlice = createSlice({
   name: "structure",
   initialState,
@@ -68,6 +85,14 @@ const structureSlice = createSlice({
       })
       .addCase(createNewStructure.rejected, (state) => {
         state.isCreatingStructuresLoading = "error";
+      })
+      //update structure
+      .addCase(updateStructure.pending, (state) => {
+        state.isCreatingStructuresLoading = true;
+      })
+      .addCase(updateStructure.fulfilled, (state, { payload }) => {
+        state.currentStructure = payload;
+        state.isCreatingStructuresLoading = false;
       });
   },
 });

@@ -112,14 +112,15 @@ const StructureComponent = () => {
               </h1>
               <span className={s.structure_right_contents_update}>
                 <h2>
-                  {currentStructure.tz_name
-                    ? currentStructure.tz_name
+                  {currentStructure?.tz_name
+                    ? currentStructure?.tz_name
                     : t("struc2")}
                 </h2>
                 <img src={pen} alt="Update" onClick={handleOpenStructure} />
                 <CreateNewStructureModal
                   openStructure={openStructure}
                   handleCloseStructure={handleCloseStructure}
+                  updatedData={currentStructure?.id ? currentStructure : null}
                 />
               </span>
 
@@ -131,13 +132,17 @@ const StructureComponent = () => {
                         <p>
                           {t("struc5")} {activeSection?.header_name}
                         </p>
-                        <>
-                          <img
-                            src={pen}
-                            alt="Изменить"
-                            onClick={() => console.log("hello world")}
-                          />
-                        </>
+                        <img
+                          src={pen}
+                          alt="Изменить"
+                          onClick={handleOpenSection}
+                        />
+                        <CreateNewSectionModal
+                          openSection={openSection}
+                          handleCloseSection={handleCloseSection}
+                          activeSectionModal="section"
+                          updatedData={currentSection}
+                        />
                       </span>
                       <p className={s.structure_right_contents_input_label}>
                         {t("struc3")}

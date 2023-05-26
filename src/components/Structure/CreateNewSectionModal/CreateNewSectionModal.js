@@ -9,10 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createNewSection,
   createNewSubSection,
+  updateSection,
+  updateSubSection,
 } from "../CreateNewSectionModal/section_slice";
 import { toast } from "react-hot-toast";
 
 export default function CreateNewSectionModal({
+  updatedData,
   openSection,
   handleCloseSection,
   handleClose,
@@ -25,8 +28,8 @@ export default function CreateNewSectionModal({
   const { currentStructure, structures } = useSelector(
     (state) => state.structure
   );
-  const [nameRu, setNameRu] = useState("");
-  const [nameUz, setNameUz] = useState("");
+  const [nameRu, setNameRu] = useState(updatedData?.name_ru || "");
+  const [nameUz, setNameUz] = useState(updatedData?.name_uz || "");
 
   const punktHeader = () => {
     if (activeSectionModal === "section") {
@@ -70,6 +73,42 @@ export default function CreateNewSectionModal({
     setNameUz("");
   };
 
+  const handleUpdateSection = () => {
+    if (!nameRu || !nameUz) {
+      return toast("Please fill out all the required fields!");
+    }
+    if (activeSectionModal === "section") {
+      dispatch(
+        updateSection({
+          id: updatedData?.id,
+          data: {
+            header_name_ru: updatedData?.header_name || punktHeader(),
+            header_name_uz: updatedData?.header_name || punktHeader(),
+            name_ru: nameRu,
+            name_uz: nameUz,
+            result: currentStructure?.id,
+          },
+        })
+      );
+    } else {
+      dispatch(
+        updateSubSection({
+          id: updatedData?.id,
+          data: {
+            header_name_ru: updatedData?.header_name || punktHeader(),
+            header_name_uz: updatedData?.header_name || punktHeader(),
+            name_ru: nameRu,
+            name_uz: nameUz,
+            result: currentStructure?.id,
+            parent,
+          },
+        })
+      );
+    }
+    setNameRu("");
+    setNameUz("");
+  };
+
   return (
     <Modal
       open={openSection}
@@ -93,7 +132,7 @@ export default function CreateNewSectionModal({
         <div className={s.create_structure_modal}>
           <h1>Название технического задания</h1>
           <p>Заголовок</p>
-          <p>{`Punkt ${punktHeader()}`}</p>
+          <p>{`Punkt ${updatedData?.header_name || punktHeader()}`}</p>
           <p>Комментарий</p>
           {t("ru")}:
           <input
@@ -121,7 +160,11 @@ export default function CreateNewSectionModal({
             <button
               className={s.structure_save_btn}
               onClick={() => {
-                handleSubmitNewSection();
+                if (updatedData?.id) {
+                  handleUpdateSection();
+                } else {
+                  handleSubmitNewSection();
+                }
                 handleCloseSection();
                 if (handleClose) {
                   handleClose();

@@ -8,7 +8,7 @@ import s from "../Structure.module.css";
 import Select from "react-select";
 
 //asyncActions
-import { createNewStructure } from "../structure_slice";
+import { createNewStructure, updateStructure } from "../structure_slice";
 
 //icons
 import backX from "../../../assets/icons/backX.svg";
@@ -16,17 +16,22 @@ import backX from "../../../assets/icons/backX.svg";
 export default function CreateNewStructureModal({
   openStructure,
   handleCloseStructure,
+  updatedData,
 }) {
   const dispatch = useDispatch();
-  const { isCreatingStructuresLoading } = useSelector(
+  const { isCreatingStructuresLoading, currentStructure } = useSelector(
     (state) => state.structure
   );
   const { t } = useTranslation();
-  const [nameUz, setNameUz] = useState("");
-  const [nameRu, setNameRu] = useState("");
-  const [commentUz, setCommentUz] = useState("");
-  const [commentRu, setCommentRu] = useState("");
-  const [type, setType] = useState(1);
+  const [nameUz, setNameUz] = useState(updatedData?.tz_name_uz || "");
+  const [nameRu, setNameRu] = useState(updatedData?.tz_name_ru || "");
+  const [commentUz, setCommentUz] = useState(updatedData?.comment_uz || "");
+  const [commentRu, setCommentRu] = useState(updatedData?.comment_ru || "");
+  const [type, setType] = useState(updatedData?.select_type || 1);
+  const selectTypeOptions = [
+    { value: 1, label: "Site" },
+    { value: 2, label: "System" },
+  ];
 
   const handleSubmitNewStructure = () => {
     if (!nameUz || !nameRu || !commentRu || !commentUz) {
@@ -40,6 +45,31 @@ export default function CreateNewStructureModal({
         comment_ru: commentRu,
         select_type: type,
         is_draft: false,
+      })
+    );
+    setCommentRu("");
+    setNameRu("");
+    setNameUz("");
+    setCommentUz("");
+    setType(1);
+    handleCloseStructure();
+  };
+
+  const handleUpdateCurrentStructure = () => {
+    if (!nameUz || !nameRu || !commentRu || !commentUz) {
+      return toast("Please fill out all empty spaces");
+    }
+    dispatch(
+      updateStructure({
+        id: currentStructure?.id,
+        data: {
+          tz_name_uz: nameUz,
+          tz_name_ru: nameRu,
+          comment_uz: commentUz,
+          comment_ru: commentRu,
+          select_type: type,
+          is_draft: false,
+        },
       })
     );
     setCommentRu("");
@@ -92,8 +122,8 @@ export default function CreateNewStructureModal({
               {t("uz")}:
               <input
                 type="text"
-                onChange={(e) => setNameUz(e.target.value)}
                 value={nameUz}
+                onChange={(e) => setNameUz(e.target.value)}
                 className={s.structure_right_contents_input_punkt}
               />
             </div>
@@ -118,10 +148,8 @@ export default function CreateNewStructureModal({
           <p>Тип</p>
           <Select
             onChange={(e) => setType(e.value)}
-            options={[
-              { value: 1, label: "Site" },
-              { value: 2, label: "System" },
-            ]}
+            options={selectTypeOptions}
+            defaultValue={selectTypeOptions[type]}
           />
           <div className={s.structure_btns}>
             <button
@@ -133,7 +161,11 @@ export default function CreateNewStructureModal({
             <button
               className={s.structure_save_btn}
               onClick={() => {
-                handleSubmitNewStructure();
+                if (updatedData?.id) {
+                  handleUpdateCurrentStructure();
+                } else {
+                  handleSubmitNewStructure();
+                }
               }}
             >
               {isCreatingStructuresLoading ? "Loading..." : t("btn.4")}

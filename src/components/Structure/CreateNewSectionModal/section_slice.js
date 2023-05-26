@@ -41,6 +41,41 @@ export const createNewSubSection = createAsyncThunk(
     });
   }
 );
+
+export const updateSection = createAsyncThunk(
+  "section/update",
+  async ({ id, data }) => {
+    const { request } = useHttp();
+    return await request({
+      method: "PUT",
+      url: `/constructor/section/detail/${id}`,
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
+export const updateSubSection = createAsyncThunk(
+  "subsection/update",
+  async ({ id, data }) => {
+    const { request } = useHttp();
+    return await request({
+      method: "PUT",
+      data,
+      url: `/constructor/section/detail/${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
 const sectionSlice = createSlice({
   name: "section",
   initialState,
@@ -67,6 +102,22 @@ const sectionSlice = createSlice({
         state.isCreatingSubSectionLoading = true;
       })
       .addCase(createNewSubSection.fulfilled, (state, { payload }) => {
+        state.currentSubSection = payload;
+        state.isCreatingSubSectionLoading = false;
+      })
+      //updateSection
+      .addCase(updateSection.pending, (state) => {
+        state.isCreatingSectionLoading = true;
+      })
+      .addCase(updateSection.fulfilled, (state, { payload }) => {
+        state.currentSection = payload;
+        state.isCreatingSectionLoading = false;
+      })
+      //updateSubSection
+      .addCase(updateSubSection.pending, (state) => {
+        state.isCreatingSubSectionLoading = true;
+      })
+      .addCase(updateSubSection.fulfilled, (state, { payload }) => {
         state.currentSubSection = payload;
         state.isCreatingSubSectionLoading = false;
       });

@@ -17,6 +17,11 @@ export default function SectionsWithChildren({ item }) {
   const handleOpenSubChildren = () => setOpenSubChildren(true);
   const handleCloseSubChildren = () => setOpenSubChildren(false);
 
+  //updateSubChildren
+  const [updateSubChildren, setUpdateSubChildren] = useState(false);
+  const handleOpenUpdateSubChildren = () => setUpdateSubChildren(true);
+  const handleCloseUpdateSubChildren = () => setUpdateSubChildren(false);
+
   //Field Modal
   const [openField, setOpenField] = useState(false);
   const handleOpenField = () => setOpenField(true);
@@ -30,10 +35,27 @@ export default function SectionsWithChildren({ item }) {
         </p>
         <div>
           <Link>
-            <img src={pen} alt="Изменить" />
+            <img
+              src={pen}
+              alt="Изменить"
+              onClick={() => handleOpenUpdateSubChildren()}
+            />
+            <CreateNewSectionModal
+              updatedData={item}
+              section={item}
+              parent={item?.parent}
+              activeSectionModal="subsection"
+              openSection={updateSubChildren}
+              handleCloseSection={handleCloseUpdateSubChildren}
+            />
           </Link>
           <Link>
             <img onClick={handleOpenField} src={add} alt="Add" />
+            <CreateNewFieldModal
+              openField={openField}
+              handleCloseField={handleCloseField}
+              item={item}
+            />
           </Link>
           <Link>
             <img
@@ -42,19 +64,14 @@ export default function SectionsWithChildren({ item }) {
               alt="Add subsection"
               onClick={handleOpenSubChildren}
             />
+            <CreateNewSectionModal
+              section={item}
+              parent={item?.id}
+              activeSectionModal={"subsection"}
+              openSection={openSubChildren}
+              handleCloseSection={handleCloseSubChildren}
+            />
           </Link>
-          <CreateNewSectionModal
-            section={item}
-            parent={item?.id}
-            activeSectionModal={"subsection"}
-            openSection={openSubChildren}
-            handleCloseSection={handleCloseSubChildren}
-          />
-          <CreateNewFieldModal
-            openField={openField}
-            handleCloseField={handleCloseField}
-            item={item}
-          />
         </div>
       </span>
       <p className={s.structure_right_contents_input_label}>{t("struc3")}</p>

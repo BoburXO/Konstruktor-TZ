@@ -185,8 +185,7 @@ export default function CreateNewFieldModal({
                     <input
                       type="text"
                       value={fieldNameRu}
-                      setFieldNameRu
-                      onChange={(e) => e.target.value}
+                      onChange={(e) => setFieldNameRu(e.target.value)}
                       className={s.structure_right_contents_input_punkt}
                     />
                   </div>
