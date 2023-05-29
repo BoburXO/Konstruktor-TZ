@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import s from "../LKAminShablon/Shablonla.module.css";
 import search from "../../assets/icons/search.svg";
 import { Link } from "react-router-dom";
@@ -15,6 +15,7 @@ import { Context } from "../../Context/Context";
 import { useEffect } from "react";
 import Select1 from "react-select";
 import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
+import Loader from "../Loader/Loader";
 
 const style = {
   position: "absolute",
@@ -30,6 +31,7 @@ const style = {
 };
 
 const Shablonla = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     punktSearch,
     setPunktSearch,
@@ -46,21 +48,23 @@ const Shablonla = () => {
     getSampleBySection,
   } = useContext(Context);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [age, setAge] = React.useState("");
+  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
 
   useEffect(() => {
-    allSample();
-    getSelectPunkt();
+    allSample().then(() => setIsLoading(false));
+    getSelectPunkt().then(() => setIsLoading(false));
   }, [punktSearch]);
 
   const { t } = useTranslation();
+
+  if (isLoading) return <Loader />;
   return (
     <>
       <section className={s.templates_sect}>
@@ -207,13 +211,12 @@ const Shablonla = () => {
               <h2 style={{ textAlign: "center" }}>{t("toast404")}</h2>
             </>
           )}
-           <br />
-            <br />
-            <div className={s.spra_pagination}>
-              <SpravochnikPagination sample={sample?.total_pages} />
-            </div>
+          <br />
+          <br />
+          <div className={s.spra_pagination}>
+            <SpravochnikPagination sample={sample?.total_pages} />
+          </div>
         </div>
-
       </section>
     </>
   );

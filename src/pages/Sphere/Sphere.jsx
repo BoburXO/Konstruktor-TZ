@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import Footer from "../../components/Footer/Footer";
 import UserNav from "../../components/UserNav/UserNav";
@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
+import Loader from "../../components/Loader/Loader";
 
 const style = {
   position: "absolute",
@@ -24,6 +25,7 @@ const style = {
 };
 
 const Sphere = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     sphere,
     getSphere,
@@ -45,7 +47,7 @@ const Sphere = () => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
-    getSphere();
+    getSphere().then(() => setIsLoading(false));
     getContentSearch();
   }, []);
   //modal
@@ -83,7 +85,7 @@ const Sphere = () => {
       handleOpenDel();
     }
   };
-
+  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />

@@ -16,7 +16,10 @@ const CreateTZ = () => {
   const { t } = useTranslation();
   const [arr, setArr] = useState([]);
 
-  const notify = () => toast(t("toast"));
+  const notify = () =>
+    toast.success(t("toast"), {
+      style: { background: "white", color: "black" },
+    });
 
   const copy = (id, e) => {
     const currentPunkt = templates?.find((punkt) => {
@@ -226,7 +229,7 @@ const CreateTZ = () => {
               <div className={s.create1_form_card}>
                 <p>{t("createtz2")}</p>
                 <textarea
-                  ref={el => ref.current[0] === el}
+                  ref={(el) => ref.current[0] === el}
                   required
                   placeholder={t("createtz3")}
                 ></textarea>
@@ -244,7 +247,7 @@ const CreateTZ = () => {
               <div className={s.create1_form_card}>
                 <p>{t("createtz4")}</p>
                 <input
-                  ref={el => ref.current[1] === el}
+                  ref={(el) => ref.current[1] === el}
                   required
                   type="text"
                   maxLength={15}

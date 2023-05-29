@@ -13,6 +13,7 @@ import LkAvtorPagination from "../../Pagination/LkAvtorPagination";
 import Select from "react-select";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Loader from "../Loader/Loader";
 
 const style = {
   position: "absolute",
@@ -27,6 +28,7 @@ const style = {
 };
 
 const LKMain = () => {
+  const [isLoading, setIsLoading] = useState(true);
   //modal
   const [delId, setDelId] = useState("");
   const [openDel, setOpenDel] = useState(false);
@@ -45,8 +47,10 @@ const LKMain = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getCreateTz();
+    getCreateTz().then(() => setIsLoading(false));
   }, [tzSearch]);
+
+  if (isLoading) return <Loader />;
 
   const options = [
     { value: "", label: t("filter.1") },
@@ -178,7 +182,11 @@ const LKMain = () => {
                               </button>
                               <button
                                 type="button"
-                                onClick={() => deleteTz(delId)}
+                                onClick={() =>
+                                  deleteTz(delId).then(() =>
+                                    setIsLoading(false)
+                                  )
+                                }
                                 className={s.shablon_delete_btn}
                               >
                                 {t("btn.6")}

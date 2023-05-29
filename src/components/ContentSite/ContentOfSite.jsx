@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import { FaEye } from "react-icons/fa";
 import { ImDownload } from "react-icons/im";
 import { CiSquarePlus } from "react-icons/ci";
+import Loader from "../Loader/Loader";
 
 //modal styles
 const style_pdf = {
@@ -44,6 +45,7 @@ const style = {
 };
 //modal styles
 const ContentOfSite = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [pdfRu, setPdfRu] = useState("");
   const [pdfUz, setPdfUz] = useState("");
 
@@ -62,8 +64,8 @@ const ContentOfSite = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getContentSearch();
-    getSphere();
+    getContentSearch().then(() => setIsLoading(false));
+    getSphere().then(() => setIsLoading(false));
   }, [contentSearch]);
 
   const options = [
@@ -82,6 +84,8 @@ const ContentOfSite = () => {
   const handleDownloadOpen = () => setDownloadPdf(true);
   const handleDownloadClose = () => setDownloadPdf(false);
   //modal
+
+  if (isLoading) return <Loader />;
 
   return (
     <>

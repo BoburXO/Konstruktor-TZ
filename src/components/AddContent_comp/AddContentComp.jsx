@@ -11,24 +11,7 @@ const AddContentComp = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [sfera, setSfera] = useState(0);
-  const notify = () => toast(t("toastEmpty"))
-
-  //table start
-
-  // const [col, setCol] = useState(0);
-  // const [row, setRow] = useState(0);
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   setCol(event.target[0].value);
-  //   setRow(event.target[1].value);
-  // };
-
-  // const colArr = Array.from({ length: col }, () => 0);
-  // const rowArr = Array.from({ length: row }, () => 0);
-
-  //table end
+  const notify = () => toast(t("toastEmpty"));
 
   //context
   const {
@@ -65,7 +48,6 @@ const AddContentComp = () => {
   return (
     <>
       <div className={s.AddContent}>
-        {/* <Fade bottom cascade> */}
         <div className={s.AddContent_container}>
           <div className={s.AddContent_labels}>
             <span onClick={() => navigate("/contentofsite")}>
@@ -225,9 +207,7 @@ const AddContentComp = () => {
               <button
                 type="button"
                 onClick={() =>
-                  !headerRu || !headerUz
-                    ? notify()
-                    : createContentOfSiteFalse()
+                  !headerRu || !headerUz ? notify() : createContentOfSiteFalse()
                 }
                 className={s.chernovik}
               >
@@ -238,32 +218,7 @@ const AddContentComp = () => {
               </button>
             </div>
           </form>
-
-          {/* <form className={s.table_head} onSubmit={handleSubmit}>
-              <p>{t("add-content.17")}</p>
-              <br />
-              <input type="number" required placeholder={t("add-content.18")} />
-              <input
-                className={s.vertical_inp}
-                type="number"
-                required
-                placeholder={t("add-content.19")}
-              />
-              <button type="submit">{t("btn.4")}</button>
-            </form>
-            <table>
-              {rowArr?.map((index) => (
-                <tr key={index}>
-                  {colArr?.map((i) => (
-                    <td key={i}>
-                      <input type="text" placeholder={t("add-content.20")} />
-                    </td>
-                  ))}
-                </tr> 
-              ))}
-            </table> */}
         </div>
-        {/* </Fade> */}
       </div>
     </>
   );

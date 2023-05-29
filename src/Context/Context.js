@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
+import Loader from "../components/Loader/Loader";
 
 const Context = createContext();
 
@@ -173,8 +174,8 @@ const ContextProvider = ({ children }) => {
   // LogOut
 
   //all Spravochnik searchbar
-  const getAllSpraSearch = (page = 1) => {
-    axios
+  const getAllSpraSearch = async (page = 1) => {
+   await axios
       .get(`${API}/classificator/all/?search=${spraSearch}&page=${page}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -459,8 +460,8 @@ const ContextProvider = ({ children }) => {
   //createElement
 
   //getTZhome
-  const getTzHome = () => {
-    axios
+  const getTzHome = async () => {
+    await axios
       .get(`${API}/standard/home`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -492,8 +493,8 @@ const ContextProvider = ({ children }) => {
   //getTZhome
 
   //getContent-search,filter,sphere-filter
-  const getContentSearch = (page = 1) => {
-    axios
+  const getContentSearch = async (page = 1) => {
+   await axios
       .get(
         `${API}/standard/site-content-list/?search=${contentSearch}&page=${page}`,
         {
@@ -526,8 +527,8 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const getContentIsPublish = (isPublish) => {
-    axios
+  const getContentIsPublish = async (isPublish) => {
+    await axios
       .get(`${API}/standard/site-content-list/?is_published=${isPublish}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -557,8 +558,8 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const getContentSphereFilter = (id) => {
-    axios
+  const getContentSphereFilter = async (id) => {
+   await axios
       .get(`${API}/standard/site-content-list/?sphere=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -945,8 +946,8 @@ const ContextProvider = ({ children }) => {
 
   //getSphere
   const [sphere, setSphere] = useState([]);
-  const getSphere = () => {
-    axios
+  const getSphere = async () => {
+   await axios
       .get(`${API}/standard/sphere/list-create/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -1100,8 +1101,8 @@ const ContextProvider = ({ children }) => {
   const [sample, setSample] = useState({});
   const [punktSearch, setPunktSearch] = useState("");
 
-  const allSample = (page = 1) => {
-    axios
+  const allSample = async (page = 1) => {
+    await axios
       .get(
         `${API}/constructor/sample/create/list?description__icontains=${punktSearch}&page=${page}`,
         {
@@ -1172,8 +1173,8 @@ const ContextProvider = ({ children }) => {
 
   const [selectPunkt, setSelectPunkt] = useState({});
   //selectPunkt- create sample
-  const getSelectPunkt = () => {
-    axios
+  const getSelectPunkt = async () => {
+    await axios
       .get(`${API}/constructor/sections/moderator`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -1332,8 +1333,8 @@ const ContextProvider = ({ children }) => {
   const [createTz, setCreateTz] = useState({});
   const [tzSearch, setTzSearch] = useState("");
 
-  const getCreateTz = (page = 1) => {
-    axios
+  const getCreateTz = async (page = 1) => {
+    await axios
       .get(
         `${API}/constructor/create/list?tz_name__icontains=${tzSearch}&page=${page}`,
         {
@@ -1487,10 +1488,54 @@ const ContextProvider = ({ children }) => {
   };
   //deleteTz
 
+  //history-structure
+  const [isDraftFalse, setIsDraftFalse] = useState({});
+  const [iseDraftSearch, setIsDraftSearch] = useState("");
+
+  const getIsDraftFalse = async (page = 1) => {
+    await axios
+      .get(
+        `${API}/constructor/create/list?is_draft=False&tz_name__icontains=${iseDraftSearch}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setIsDraftFalse(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getIsDraftFalse());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //history-structure
+
   return (
     <>
       <Context.Provider
         value={{
+          setIsDraftSearch,
+          iseDraftSearch,
+          isDraftFalse,
+          setIsDraftFalse,
+          getIsDraftFalse,
           ref,
           SpravochnikExcel,
           deleteTz,

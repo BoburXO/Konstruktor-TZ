@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import s from "./Spravochnik.module.css";
 import search from "../../assets/icons/search.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../../Context/Context";
 import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
 import { FaEye } from "react-icons/fa";
+import Loader from "../Loader/Loader";
 
 const style = {
   position: "absolute",
@@ -45,6 +46,7 @@ const styleDel = {
 };
 
 const Spravochnik = () => {
+  const [isLoading, setIsLoading] = useState(true);
   //modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -76,7 +78,7 @@ const Spravochnik = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getAllSpraSearch();
+    getAllSpraSearch().then(() => setIsLoading(false));
   }, [spraSearch]);
 
   const onSubmit = (e) => {
@@ -94,11 +96,7 @@ const Spravochnik = () => {
     dispatch(deleteTodo(content_uz));
   };
 
-  setTimeout(() => {
-    const reloadWindow = () => {
-      window.location.reload();
-    };
-  }, 2000);
+  if (isLoading) return <Loader />;
   return (
     <>
       <section className={s.Spravochnik}>
@@ -377,8 +375,15 @@ const Spravochnik = () => {
                         </div>
                       ) : (
                         <div className={s.lkmain_sect_crud}>
-                          <button className={s.lkmain_sect_crud_download}>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              SpravochnikExcel("uz", el?.id, el?.title)
+                            }
+                            className={s.lkmain_sect_crud_download}
+                          >
                             <img src={download} alt="Download" />
+                            <a ref={ref}></a>
                           </button>
                           <Link to={`/index-spravochnik/${el?.slug}`}>
                             <button className={s.lkmain_sect_crud_create}>

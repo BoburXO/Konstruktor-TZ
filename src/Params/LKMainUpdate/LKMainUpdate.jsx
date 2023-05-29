@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
@@ -6,8 +6,10 @@ import UserNav from "../../components/UserNav/UserNav";
 import { Context } from "../../Context/Context";
 import s from "../LKMainUpdate/LKMainUpdate.module.css";
 import createIcon from "../../assets/icons/createIcon.svg";
+import Loader from "../../components/Loader/Loader";
 
 const LKMainUpdate = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const {
     getCreateTz,
@@ -30,13 +32,14 @@ const LKMainUpdate = () => {
   });
 
   useEffect(() => {
-    getCreateTz();
+    getCreateTz().then(() => setIsLoading(false));
     setTzNameRu(lkavtorParams?.tz_name_ru);
     setTzNameUz(lkavtorParams?.tz_name_uz);
     setTzCommentRu(lkavtorParams?.comment_ru);
     setTzCommentUz(lkavtorParams?.comment_uz);
   }, []);
 
+  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />

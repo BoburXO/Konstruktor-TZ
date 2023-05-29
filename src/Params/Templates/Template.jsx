@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import s from "../Templates/Templates.module.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import { Context } from "../../Context/Context";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Loader from "../../components/Loader/Loader";
 
 const style = {
   position: "absolute",
@@ -23,6 +24,7 @@ const style = {
 };
 
 const Template = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     sample,
     allSample,
@@ -45,9 +47,9 @@ const Template = () => {
 
   React.useEffect(() => {
     if (localStorage.getItem("roleName") === "Author") {
-      navigate("/")
+      navigate("/");
     }
-    allSample();
+    allSample().then(() => setIsLoading(false));
     setSampleUpdRu(paramsFind?.description_ru);
     setSampleUpdUz(paramsFind?.description_uz);
   }, []);
@@ -56,6 +58,7 @@ const Template = () => {
   const handleOpenDel = () => setOpenDel(true);
   const handleCloseDel = () => setOpenDel(false);
 
+  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />

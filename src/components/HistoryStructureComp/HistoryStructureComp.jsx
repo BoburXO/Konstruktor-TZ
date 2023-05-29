@@ -1,119 +1,196 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import s from "../HistoryStructureComp/historyStructure.module.css";
 import search from "../../assets/icons/search.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
-import download from "../../assets/icons/skacatIcon.svg";
-import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
-import { Switch } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../Context/Context";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import date from "../../assets/icons/dateIcon.svg";
+import copyIcon from "../../assets/icons/copyIcon.svg";
+import skacatIcon from "../../assets/icons/skacatIcon.svg";
+import Loader from "../Loader/Loader";
+import HistoryStructurePagination from "../../Pagination/HistoryStructurePagination";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: 4,
+  boxShadow: 0,
+  p: 4,
+};
 
 const HistoryStructureComp = () => {
-  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(true);
+  //modal
+  const [delId, setDelId] = useState("");
+  const [openDel, setOpenDel] = useState(false);
+  const handleOpenDel = () => setOpenDel(true);
+  const handleCloseDel = () => setOpenDel(false);
+  //modal
+
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const {
-    spravochnik,
-    removeSlug,
-    getAllSpraSearch,
-    setSpraSearch,
-    spraSearch,
-    isActiveClassificator,
+    isDraftFalse,
+    getIsDraftFalse,
+    setIsDraftSearch,
+    iseDraftSearch,
+    deleteTz,
   } = useContext(Context);
 
   useEffect(() => {
-    getAllSpraSearch();
-  }, [spraSearch]);
+    getIsDraftFalse().then(() => setIsLoading(false));
+  }, [iseDraftSearch]);
 
-
+  if (isLoading) return <Loader />;
   return (
     <>
-      <section className={s.Spravochnik}>
-        <div className={s.Spravochnik_container}>
-          <div className={s.Spravochnik_label}>
-            <h1>История структур</h1>      
-              <span>
-                <button className={s.Spravochnik_label_btn}>
-                  <span style={{ fontSize: "25px" }}>+</span>
-                  <span onClick={() => navigate("/structure")}>Создать структуру</span>
-                </button>
-              </span>
+      <section className={s.lkmain_sect}>
+        <div className={s.lkmain_sect_container}>
+          <h1>{t("lkavtor")}</h1>
+          <br />
+          <div className={s.lkmain_sect_labels}>
+            <div
+              style={{
+                width: "35%",
+                display: "flex",
+                height: "60px",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <div className={s.input_field}>
+                <img className={s.S_icon} src={search} alt="Search" />
+                <input
+                  onChange={(e) => setIsDraftSearch(e.target.value)}
+                  type="text"
+                  placeholder={t("content-site.3")}
+                />
+              </div>
+            </div>
+            <button
+              onClick={() => navigate("/createtz")}
+              className={s.lkmain_sect_create_btn}
+            >
+              <span style={{ fontSize: "25px" }}>+</span>
+              <span>{t("lkavtor1")}</span>
+            </button>
           </div>
-          <div className={s.input_field}>
-            <img className={s.S_icon} src={search} alt="Search" />
-            <input
-              onChange={(e) => setSpraSearch(e.target.value.trim())}
-              value={spraSearch}
-              type="text"
-              placeholder={t("spra5")}
-            />
+          <div className={s.lkmain_sect_creators_labels}>
+            <p style={{ width: "3%" }}>ID</p>
+            <p style={{ width: "55%" }}>{t("lkavtor2")}</p>
+            <p style={{ width: "27%" }}>{t("lkavtor3")}</p>
+            <p style={{ width: "7%" }}>{t("lkavtor4")}</p>
           </div>
-          <div className={s.Spravochnik_cards_labels}>
-            <p style={{ width: "3%" }}>№</p>
-            <p style={{ width: "52%" }}>{t("spra6")}</p>
-            <p className={s.checkbox_active}>{t("active")}</p>
-            <p style={{ width: "27%" }}>{t("spra7")}</p>
-            <p style={{ width: "7%" }}>{t("spra8")}</p>
-          </div>
-          <div className={s.Spravochnik_sect_creators_parent}>
-            {spravochnik.length === 0 ? (
-              <h1 className={s.notFound}>{t("toast404")}</h1>
-            ) : (
-              spravochnik?.results?.map((el, index) => {
+          <div className={s.lkmain_sect_creators_parent}>
+            {isDraftFalse?.results?.length > 1 ? (
+              isDraftFalse?.results?.map((el) => {
                 return (
                   <div
-                    className={s.Spravochnik_sect_creators_parent_cards}
+                    className={s.lkmain_sect_creators_parent_card}
                     key={el.id}
                   >
-                    <Fade top cascade>
-                      <span className={s.Spravochnik_twink}>
-                        <p>{index}</p>
-                        <p>{el.title_ru}</p>
-                      </span>
-                      <div className={s.switch_toggle}>
-                        <Switch
-                          defaultChecked={el?.is_active}
-                          onChange={() =>
-                            isActiveClassificator(el?.slug, el?.is_active)
-                          }
-                        />
-                      </div>
-                      <p style={{ width: "20%" }}>
-                        {el.elements.length} {t("spra9")}
-                      </p>
-                      {localStorage.getItem("roleName") !== "Author" ? (
-                        <div className={s.lkmain_sect_crud}>
-                          <Link to={`/spravochnikId/${el?.slug}`}>
-                            <button className={s.lkmain_sect_crud_create}>
-                              <img src={createIcon} alt="Copy" />
-                            </button>
-                          </Link>
-                          <button
-                            onClick={() => removeSlug(el?.slug)}
-                            className={s.lkmain_sect_crud_delete}
+                    <p style={{ width: "3%" }}>#{el?.row_number}</p>
+                    <p style={{ width: "55%" }}>{el?.tz_name}</p>
+                    <span
+                      style={{ width: "20%" }}
+                      className={s.lkmain_sect_dates}
+                    >
+                      <img src={date} alt="" />
+                      <p>{el?.created_at}</p>
+                    </span>
+                    <div className={s.lkmain_sect_crud}>
+                      <button className={s.lkmain_sect_crud_copy}>
+                        <img src={copyIcon} alt="Copy" />
+                      </button>
+                      <Link to={`/lkavtor/${el.id}/`}>
+                        <button className={s.lkmain_sect_crud_create}>
+                          <img src={createIcon} alt="Copy" />
+                        </button>
+                      </Link>
+                      <button className={s.lkmain_sect_crud_skacat}>
+                        <a
+                          rel="noopener"
+                          href={el?.pdf_file}
+                          download
+                          target="_blank"
+                        >
+                          {" "}
+                          <img src={skacatIcon} alt="Download" />
+                        </a>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleOpenDel();
+                          setDelId(el?.id);
+                        }}
+                        className={s.lkmain_sect_crud_delete}
+                      >
+                        <img src={deleteIcon} alt="Delete" />
+                      </button>
+                      <Modal
+                        slotProps={{
+                          backdrop: {
+                            style: { opacity: "0.3", boxShadow: 24 },
+                          },
+                        }}
+                        open={openDel}
+                        onClose={handleCloseDel}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          <form
+                            style={{ textAlign: "center" }}
+                            className={s.createElementForm}
                           >
-                            <img src={deleteIcon} alt="Delete" />
-                          </button>
-                        </div>
-                      ) : (
-                        <div className={s.lkmain_sect_crud}>
-                          <button className={s.lkmain_sect_crud_download}>
-                            <img src={download} alt="Download" />
-                          </button>
-
-                          <Link to={`/index-spravochnik/${el?.slug}`}>
-                            <button className={s.lkmain_sect_crud_create}>
-                              <img src={createIcon} alt="Copy" />
-                            </button>
-                          </Link>
-                        </div>
-                      )}
-                    </Fade>
+                            <h2>{t("sfera.3")}</h2>
+                            <br />
+                            <p>{t("sfera.6")}</p>
+                            <br />
+                            <div className={s.createElementFormBtns}>
+                              {" "}
+                              <button
+                                type="button"
+                                onClick={() => handleCloseDel()}
+                                className={s.shablon_save_btn}
+                              >
+                                {t("btn.5")}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  deleteTz(delId).then(() =>
+                                    setIsLoading(false)
+                                  )
+                                }
+                                className={s.shablon_delete_btn}
+                              >
+                                {t("btn.6")}
+                              </button>
+                            </div>
+                          </form>
+                        </Box>
+                      </Modal>
+                    </div>
                   </div>
                 );
               })
+            ) : (
+              <h1 className={s.notFound}>{t("toast404")}</h1>
             )}
+          </div>
+          <br />
+          <br />
+          <div className={s.content_pagination}>
+            <HistoryStructurePagination isDraftFalse={isDraftFalse?.total_pages} />
           </div>
         </div>
       </section>

@@ -8,8 +8,10 @@ import UserNav from "../../components/UserNav/UserNav";
 import { useContext } from "react";
 import { Context } from "../../Context/Context";
 import Footer from "../../components/Footer/Footer";
+import Loader from "../../components/Loader/Loader";
 
 const UpdContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     contentSite,
     getContentSearch,
@@ -47,18 +49,18 @@ const UpdContent = () => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
-    getSphere();
-    getContentSearch();
+    getSphere().then(() => setIsLoading(false));
+    getContentSearch().then(() => setIsLoading(false));
     setHeaderRu(ParamsContent?.header_ru);
     setHeaderUz(ParamsContent?.header_uz);
     setDescriptionRu(ParamsContent?.description_ru);
     setDescriptionUz(ParamsContent?.description_uz);
-    setTextRu(ParamsContent?.text_ru)
-    setTextUz(ParamsContent?.text_uz)
+    setTextRu(ParamsContent?.text_ru);
+    setTextUz(ParamsContent?.text_uz);
   }, []);
   const { t } = useTranslation();
-  //*****
-  //*****
+
+  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />

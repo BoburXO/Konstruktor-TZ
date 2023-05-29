@@ -1,4 +1,4 @@
-.Spravochnik {
+.lkmain_sect {
   width: 100%;
   height: max-content;
 
@@ -6,13 +6,13 @@
   padding: 60px 0;
 }
 
-.Spravochnik_container {
+.lkmain_sect_container {
   width: 90%;
   margin: 0 auto;
   font-family: Rubik;
 }
 
-.Spravochnik_label {
+.lkmain_sect_labels {
   height: 100px;
 
   display: flex;
@@ -21,13 +21,8 @@
   padding-bottom: 30px;
 }
 
-.Spravochnik_label h1 {
-  font-size: 32px;
-  font-weight: 600;
-}
-
-.Spravochnik_label_btn {
-  width: 200px;
+.lkmain_sect_create_btn {
+  width: 300px !important;
   height: 40px;
 
   display: flex;
@@ -44,10 +39,103 @@
   cursor: pointer;
 }
 
-.Spravochnik_label_btn:hover {
+.lkmain_sect_create_btn:hover {
   background: #fff;
   color: #0ba9cc;
   transition: 0.5s ease;
+}
+
+.lkmain_sect_container h1 {
+  font-weight: 600;
+  font-size: 32px;
+}
+
+.lkmain_sect_creators_labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 30px;
+  color: rgba(34, 34, 34, 0.6);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.lkmain_sect_dates {
+  display: flex;
+}
+
+.lkmain_sect_crud {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lkmain_sect_crud_copy {
+  width: 40px;
+  height: 40px;
+
+  border: 2px solid #631ac0;
+  border-radius: 8px;
+  background: #fff;
+  transition: 0.5s ease;
+}
+
+.lkmain_sect_crud_create {
+  width: 40px;
+  height: 40px;
+
+  border: 2px solid #2f80ed;
+  border-radius: 8px;
+  background: #fff;
+  transition: 0.5s ease;
+}
+
+.lkmain_sect_crud_skacat {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+  background: #fff;
+  transition: 0.5s ease;
+  border: 2px solid #0ba9cc;
+}
+
+.lkmain_sect_crud_delete {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+  background: #fff;
+  transition: 0.5s ease;
+  border: 2px solid #eb5757;
+}
+
+.lkmain_sect_crud button:hover {
+  transform: translateY(3px);
+  transition: 0.5s ease;
+}
+
+.lkmain_sect_creators_parent {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+}
+
+.lkmain_sect_creators_parent_card {
+  width: 100%;
+  height: 70px;
+
+  border-radius: 10px;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+
+.lkmain_sect_dates {
+  gap: 10px;
 }
 
 .input_field .S_icon {
@@ -82,123 +170,49 @@
   border: 2px solid #2684ff !important;
 }
 
-.Spravochnik_cards_labels {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 30px;
-  color: rgba(34, 34, 34, 0.6);
-  font-size: 14px;
-  font-weight: 400;
-}
-.lkmain_sect_crud {
-  width: 7%;
-  height: 70px;
-
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.lkmain_sect_crud_delete {
-  width: 40px;
-  height: 40px;
-
-  border-radius: 8px;
-  background: #fff;
-  transition: 0.5s ease;
-  border: 2px solid #eb5757;
-}
-.lkmain_sect_crud_create {
-  width: 40px;
-  height: 40px;
-
-  border: 2px solid #2f80ed;
-  border-radius: 8px;
-  background: #fff;
-  transition: 0.5s ease;
-}
-
-.Spravochnik_sect_creators_parent {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 10px;
-}
-
-.Spravochnik_sect_creators_parent_cards {
+.content_pagination {
   width: 100%;
-  height: 70px;
-
-  border-radius: 10px;
-  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
-  background: #fff;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
+  justify-content: center;
 }
 
-.Spravochnik_twink {
-  width: 43%;
-  height: 70px;
-
-  display: flex;
-  gap: 50px;
-  align-items: center;
-}
-
-.spravochnik_modal_parent {
-  padding: 0 20px;
-  font-family: Rubik;
-  color: #222;
-}
-
-.spravochnik_modal_parent h1 {
-  font-weight: 500;
-  font-size: 32px;
-  padding-bottom: 20px;
-}
-
-.spravochnik_modal_parent p {
-  padding: 15px 0;
-  font-size: 16px;
-  color: rgba(34, 34, 34, 0.8);
-}
-
-.spravochnik_empty {
-  width: 100%;
-
-  height: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.spravochnik_btns {
-  width: 100%;
-
-  padding-top: 16px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 20px;
-}
-
-.spravochnik_cancel_btn {
-  width: 120px;
+.selecttt {
+  width: 150px;
   height: 48px;
-  color: rgba(34, 34, 34, 0.6);
-  border: 2px solid rgba(34, 34, 34, 0.6);
+}
+
+.notFound {
+  text-align: center;
+  padding-top: 50px;
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+}
+
+.shablon_delete_btn {
+  width: 130px;
+  height: 48px;
+
   border-radius: 8px;
-  background: none;
+  border: 2px solid #eb5757;
+  color: #fff;
   font-weight: 600;
   font-size: 16px;
-  transition: 0.5s ease;
+  background: #eb5757;
 }
 
-.spravochnik_cancel_btn:hover {
-  background: rgba(34, 34, 34, 0.6);
-  color: #fff;
-  border: none;
-  transition: 0.5s ease;
+.shablon_delete_btn:hover {
+  background: #fff;
+  color: #eb5757;
 }
 
-.spravochnik_save_btn {
+.createElementFormBtns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.shablon_save_btn {
   width: 130px;
   height: 48px;
 
@@ -210,111 +224,7 @@
   background: #0ba9cc;
 }
 
-.spravochnik_save_btn:hover {
+.shablon_save_btn:hover {
   background: #fff;
   color: #0ba9cc;
-}
-
-.spravochnik_modal_parent input {
-  width: 100%;
-  height: 48px;
-
-  outline: none;
-  padding-left: 10px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  font-family: "Rubik";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  color: #222;
-}
-
-.spravochnik_modal_parent ol {
-  padding-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.spravochnik_modal_parent ol li {
-  width: max-content;
-  height: 38px;
-
-  background: #2f80ed1a;
-  border: none;
-  font-family: Rubik;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  gap: 10px;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
-.spravochnik_modal_parent ol li img {
-  cursor: pointer;
-}
-
-.spravochnik_modal_parent .accept {
-  width: 40px;
-  height: 40px;
-
-  background: #2f80ed;
-  border: 2px solid #2f80ed;
-  border-radius: 6px;
-}
-
-.spravochnik_modal_parent .accept:active {
-  background: #174d94;
-  border: 2px solid #fff;
-}
-
-.two_in_one .accept {
-  position: absolute;
-  min-width: 40px;
-  margin: 4px;
-  right: 5.7%;
-}
-
-.two_in_one {
-  width: 100%;
-}
-
-.two_in_one input {
-  width: 100%;
-  padding: 10px;
-}
-
-.checkbox_active {
-  position: relative;
-  left: -18%;
-}
-
-.switch_toggle {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  left: -11%;
-}
-/* .Spravochnik table{
-       width: 100%;
-       background: transparent;
-     } */
-
-.notFound {
-  padding-top: 60px;
-  text-align: center;
-}
-
-.lkmain_sect_crud_download {
-  width: 40px;
-  height: 40px;
-
-  border-radius: 8px;
-  background: #fff;
-  transition: 0.5s ease;
-  border: 2px solid #0ba9cc;
 }

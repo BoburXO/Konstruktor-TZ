@@ -1,12 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import Loader from "../../components/Loader/Loader";
 import UserNav from "../../components/UserNav/UserNav";
 import { Context } from "../../Context/Context";
 import s from "../IndexSpravochnik/indexSpra.module.css";
 
 const IndexSpra = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { slug } = useParams();
@@ -16,11 +18,13 @@ const IndexSpra = () => {
   });
 
   useEffect(() => {
-    getAllSpraSearch();
+    getAllSpraSearch().then(() => setIsLoading(false));
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
   }, [spraSearch]);
+
+  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />
@@ -28,12 +32,14 @@ const IndexSpra = () => {
         <div className={s.container}>
           <h1>{indexParams?.title}:</h1>
           <div className={s.class_elements}>
-              <br />
-              <br />
+            <br />
+            <br />
             {indexParams?.elements?.map((el) => {
               return (
                 <ul className={s.index_el}>
-                  <li><p>{el?.content}</p></li>
+                  <li>
+                    <p>{el?.content}</p>
+                  </li>
                   <br />
                 </ul>
               );

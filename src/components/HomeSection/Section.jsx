@@ -4,16 +4,19 @@ import download from "../../assets/icons/download.svg";
 import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
 import { Context } from "../../Context/Context";
+import Loader from "../Loader/Loader";
 
 const Section = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
   const { getTzHome, tzDB } = useContext(Context);
   const [more, setMore] = useState(6);
 
   useEffect(() => {
-    getTzHome();
+    getTzHome().then(() => setIsLoading(false));
   }, []);
 
+  if (isLoading) return <Loader />;
   return (
     <>
       <section className={s.home_section}>

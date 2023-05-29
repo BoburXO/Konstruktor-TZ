@@ -11,6 +11,7 @@ import { ImDownload } from "react-icons/im";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import JoditEditor from "jodit-react";
+import Loader from "../../components/Loader/Loader";
 
 const style_pdf = {
   width: 420,
@@ -27,6 +28,7 @@ const style_pdf = {
 };
 
 const ContentOfSiteUser = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { getContentSearch, contentSearch, contentSite } = useContext(Context);
@@ -43,11 +45,13 @@ const ContentOfSiteUser = () => {
   const handleDownloadClose = () => setDownloadPdf(false);
 
   useEffect(() => {
-    getContentSearch();
+    getContentSearch().then(() => setIsLoading(false));
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
   }, [contentSearch]);
+
+  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />
@@ -138,7 +142,7 @@ const ContentOfSiteUser = () => {
               <br />
               <br />
               <JoditEditor
-                valu={contentParams?.text}
+                value={contentParams?.text}
                 className={s.JoditEditor}
               />
               <br />
