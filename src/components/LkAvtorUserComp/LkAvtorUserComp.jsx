@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import s from "../LKavtorMain/LKMain.module.css";
 import date from "../../assets/icons/dateIcon.svg";
 import copyIcon from "../../assets/icons/copyIcon.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
@@ -9,10 +8,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Context } from "../../Context/Context";
 import search from "../../assets/icons/search.svg";
-import LkAvtorPagination from "../../Pagination/LkAvtorPagination";
 import Select from "react-select";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import s from "../LkAvtorUserComp/lkAvtorUserComp.module.css";
 import Loader from "../Loader/Loader";
 
 const style = {
@@ -27,7 +26,7 @@ const style = {
   p: 4,
 };
 
-const LKMain = () => {
+const LkAvtorUserComp = () => {
   const [isLoading, setIsLoading] = useState(true);
   //modal
   const [delId, setDelId] = useState("");
@@ -38,17 +37,17 @@ const LKMain = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const {
-    getCreateTz,
-    createTz,
-    setTzSearch,
-    tzSearch,
-    getCreateTzSelectType,
+    getCreateTzSelectTypeUser,
+    getCreateTzUser,
+    createTzUser,
+    setTzSearchUser,
+    tzSearchUser,
     deleteTz,
   } = useContext(Context);
 
   useEffect(() => {
-    getCreateTz().then(() => setIsLoading(false));
-  }, [tzSearch]);
+    getCreateTzUser().then(() => setIsLoading(false));
+  }, [tzSearchUser]);
 
   if (isLoading) return <Loader />;
 
@@ -69,7 +68,7 @@ const LKMain = () => {
     <>
       <section className={s.lkmain_sect}>
         <div className={s.lkmain_sect_container}>
-          <h1>{t("lkavtor")}</h1>
+          <h1>{t("lkavtor")}: "Author"</h1>
           <br />
           <div className={s.lkmain_sect_labels}>
             <div
@@ -84,7 +83,7 @@ const LKMain = () => {
               <div className={s.input_field}>
                 <img className={s.S_icon} src={search} alt="Search" />
                 <input
-                  onChange={(e) => setTzSearch(e.target.value)}
+                  onChange={(e) => setTzSearchUser(e.target.value)}
                   type="text"
                   placeholder={t("content-site.3")}
                 />
@@ -92,7 +91,7 @@ const LKMain = () => {
               <div>
                 <Select
                   placeholder={t("filter.4")}
-                  onChange={(value) => getCreateTzSelectType(value.value)}
+                  onChange={(value) => getCreateTzSelectTypeUser(value.value)}
                   className={s.selecttt}
                   options={options}
                 />
@@ -126,8 +125,8 @@ const LKMain = () => {
             <p style={{ width: "7%" }}>{t("lkavtor4")}</p>
           </div>
           <div className={s.lkmain_sect_creators_parent}>
-            {createTz?.results?.length > 1 ? (
-              createTz?.results?.map((el) => {
+            {createTzUser?.results?.length > 1 ? (
+              createTzUser?.results?.map((el) => {
                 return (
                   <div
                     className={s.lkmain_sect_creators_parent_card}
@@ -226,7 +225,7 @@ const LKMain = () => {
           <br />
           <br />
           <div className={s.content_pagination}>
-            <LkAvtorPagination createTz={createTz?.total_pages} />
+            {/* <LkAvtorPagination createTz={createTz?.total_pages} /> */}
           </div>
         </div>
       </section>
@@ -234,4 +233,4 @@ const LKMain = () => {
   );
 };
 
-export default LKMain;
+export default LkAvtorUserComp;

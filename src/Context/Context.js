@@ -1336,7 +1336,7 @@ const ContextProvider = ({ children }) => {
   const getCreateTz = async (page = 1) => {
     await axios
       .get(
-        `${API}/constructor/create/list?tz_name__icontains=${tzSearch}&page=${page}`,
+        `${API}/constructor/create/list?&tz_name__icontains=${tzSearch}&page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1398,6 +1398,77 @@ const ContextProvider = ({ children }) => {
       });
   };
   //createTz
+
+
+  //createTz User
+  const [createTzUser, setCreateTzUser] = useState({});
+  const [tzSearchUser, setTzSearchUser] = useState("");
+
+  const getCreateTzUser = async (page = 1) => {
+    await axios
+      .get(
+        `${API}/constructor/list/user?&tz_name__icontains=${tzSearchUser}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setCreateTzUser(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzUser());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getCreateTzSelectTypeUser = (type) => {
+    axios
+      .get(`${API}/constructor/list/user?select_type=${type}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setCreateTzUser(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzSelectTypeUser());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //createTz User
 
   //updateTz
   const [tzNameUz, setTzNameUz] = useState("");
@@ -1531,6 +1602,11 @@ const ContextProvider = ({ children }) => {
     <>
       <Context.Provider
         value={{
+          getCreateTzSelectTypeUser,
+          getCreateTzUser,
+          createTzUser,
+          setTzSearchUser,
+          tzSearchUser,
           setIsDraftSearch,
           iseDraftSearch,
           isDraftFalse,

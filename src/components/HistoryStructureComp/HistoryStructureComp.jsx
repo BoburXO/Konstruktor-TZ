@@ -54,7 +54,7 @@ const HistoryStructureComp = () => {
     <>
       <section className={s.lkmain_sect}>
         <div className={s.lkmain_sect_container}>
-          <h1>{t("lkavtor")}</h1>
+          <h1>{t("struc6")}</h1>
           <br />
           <div className={s.lkmain_sect_labels}>
             <div
@@ -76,11 +76,11 @@ const HistoryStructureComp = () => {
               </div>
             </div>
             <button
-              onClick={() => navigate("/createtz")}
+              onClick={() => navigate("/structure")}
               className={s.lkmain_sect_create_btn}
             >
               <span style={{ fontSize: "25px" }}>+</span>
-              <span>{t("lkavtor1")}</span>
+              <span>{t("struc7")}</span>
             </button>
           </div>
           <div className={s.lkmain_sect_creators_labels}>

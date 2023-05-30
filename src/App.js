@@ -22,6 +22,7 @@ import ContentOfSiteUser from "./Params/ContentOfSiteUser/ContentOfSiteUser";
 import Sphere from "./pages/Sphere/Sphere";
 import HistoryStructure from "./pages/HistoryStructure/HistoryStructure";
 import LKMainUpdate from "./Params/LKMainUpdate/LKMainUpdate";
+import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
 function App() {
   return (
     <>
@@ -50,7 +51,7 @@ function App() {
             <Route path="/templatePunkt/:id" element={<Templates />} />
             <Route path="/addcontent" element={<AddContent />} />
             <Route path="/updateContent" element={<UpdContent />} />
-
+            <Route path="/lkavtor-user" element={<LKAvtorUser />} />
             <Route path="/updateContent/:slug" element={<UpdContent />} />
             <Route path="/sphere" element={<Sphere />} />
             <Route path="/history-structure" element={<HistoryStructure />} />
@@ -66,7 +67,7 @@ function App() {
           duration: 5000,
           style: {
             background: "red",
-            color:"#FFF"
+            color: "#FFF",
           },
         }}
       />

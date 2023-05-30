@@ -52,7 +52,7 @@ const UserNav = () => {
                   O'zbek
                 </option>
                 <option className={s.til_opt} value="kr">
-                Ўзбек
+                  Ўзбек
                 </option>
               </select>
 
@@ -120,6 +120,14 @@ const UserNav = () => {
                   to="/contentofsite"
                 >
                   {t("usernav3")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/lkavtor"
+                >
+                  {t("lkavtor1")}
                 </NavLink>
               </li>
             </ul>
