@@ -20,6 +20,7 @@ import StructureLeftSidebar from "./StructureLeftSidebar/StructureLeftSidebar";
 import CreateNewSectionModal from "./CreateNewSectionModal/CreateNewSectionModal";
 import SectionsWithChildren from "./SectionsWithChildren/SectionsWithChildren";
 import Loader from "../Loader/Loader";
+import { deleteSection } from "./CreateNewSectionModal/section_slice";
 
 const style = {
   position: "absolute",
@@ -35,6 +36,23 @@ const style = {
 
 const StructureComponent = () => {
   const dispatch = useDispatch();
+
+  //default modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  //Structure modal
+  const [openStructure, setOpenStructure] = React.useState(false);
+  const handleOpenStructure = () => setOpenStructure(true);
+  const handleCloseStructure = () => setOpenStructure(false);
+  //Section Modal
+  const [openSection, setOpenSection] = useState(false);
+  const handleOpenSection = () => setOpenSection(true);
+  const handleCloseSection = () => setOpenSection(false);
+
+  //option modal = section || subsection
+  const [activeSectionModal, setActiveSectionModal] = useState("section");
+
   const {
     currentStructure,
     structures,
@@ -64,32 +82,30 @@ const StructureComponent = () => {
     return structures?.sections?.find((item) => item.id === currentSection?.id);
   }, [currentSection, structures]);
 
+  const sectionHeader = useMemo(() => {
+    return (
+      structures?.sections?.findIndex(
+        (section) => section?.id === activeSection?.id
+      ) + 1
+    );
+  }, [activeSection, structures]);
+
   const renderSectionsWithChildren = (sections) => {
-    return sections.map((item) => (
-      <Fragment key={item?.id}>
-        <SectionsWithChildren item={item} />
-        {item?.children?.length > 0
-          ? renderSectionsWithChildren(item.children)
-          : null}
-      </Fragment>
-    ));
+    return sections?.map((item) => {
+      return (
+        <Fragment key={item?.id}>
+          <SectionsWithChildren item={item} />
+          {item?.children?.length > 0
+            ? renderSectionsWithChildren(item.children)
+            : null}
+        </Fragment>
+      );
+    });
   };
 
-  //default modal
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  //Structure modal
-  const [openStructure, setOpenStructure] = React.useState(false);
-  const handleOpenStructure = () => setOpenStructure(true);
-  const handleCloseStructure = () => setOpenStructure(false);
-  //Section Modal
-  const [openSection, setOpenSection] = useState(false);
-  const handleOpenSection = () => setOpenSection(true);
-  const handleCloseSection = () => setOpenSection(false);
-
-  //option modal = section || subsection
-  const [activeSectionModal, setActiveSectionModal] = useState("section");
+  const handleDeleteSection = () => {
+    dispatch(deleteSection(currentSection?.id));
+  };
 
   const { t } = useTranslation();
   return (
@@ -130,19 +146,31 @@ const StructureComponent = () => {
                     <div className={s.structure_right_contents_card_punkt}>
                       <span>
                         <p>
-                          {t("struc5")} {activeSection?.header_name}
+                          {t("struc5")} {sectionHeader}
                         </p>
-                        <img
-                          src={pen}
-                          alt="Изменить"
-                          onClick={handleOpenSection}
-                        />
-                        <CreateNewSectionModal
-                          openSection={openSection}
-                          handleCloseSection={handleCloseSection}
-                          activeSectionModal="section"
-                          updatedData={currentSection}
-                        />
+                        <div>
+                          <img
+                            src={pen}
+                            alt="Изменить"
+                            onClick={handleOpenSection}
+                          />
+                          <CreateNewSectionModal
+                            openSection={openSection}
+                            handleCloseSection={handleCloseSection}
+                            activeSectionModal="section"
+                            updatedData={currentSection}
+                          />
+                          <i
+                            className="fa-regular fa-trash-can"
+                            style={{
+                              color: "gray",
+                              fontSize: "21px",
+                              marginLeft: "15px",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleDeleteSection}
+                          ></i>
+                        </div>
                       </span>
                       <p className={s.structure_right_contents_input_label}>
                         {t("struc3")}
@@ -153,6 +181,7 @@ const StructureComponent = () => {
                         type="text"
                         value={activeSection?.name_ru}
                         className={s.structure_right_contents_input_punkt}
+                        readOnly
                       />
                       <br />
                       <br />
@@ -161,6 +190,7 @@ const StructureComponent = () => {
                         type="text"
                         value={activeSection?.name_uz}
                         className={s.structure_right_contents_input_punkt}
+                        readOnly
                       />
                     </div>
                     {renderSectionsWithChildren(activeSection?.children)}
