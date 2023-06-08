@@ -16,6 +16,13 @@ import { FaEye } from "react-icons/fa";
 import { ImDownload } from "react-icons/im";
 import { CiSquarePlus } from "react-icons/ci";
 import Loader from "../Loader/Loader";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 //modal styles
 const style_pdf = {
@@ -147,232 +154,273 @@ const ContentOfSite = () => {
               </Link>
             ) : null}
           </div>
-          <div className={s.content_db_labels}>
-            <p style={{ textAlign: "start" }}>{t("content-site.4")}</p>
-            <p style={{ textAlign: "start" }}>{t("content-site.5")}</p>
-            <p style={{ textAlign: "start" }}>{t("content-site.6")}</p>
-            <p style={{ textAlign: "end" }}>{t("content-site.7")}</p>
-            <p style={{ textAlign: "end" }}>{t("content-site.8")}</p>
-          </div>
-          <div className={s.content_parent}>
-            {contentSite?.results?.length < 1 ? (
-              <h1 className={s.notFound}>{t("toast404")}</h1>
-            ) : (
-              contentSite?.results?.map((el, index) => {
-                return (
-                  <div className={s.content_parent_card} key={index}>
-                    <p>
-                      <b>{el.header_ru}</b>
-                    </p>
-                    <p className={s.sphere}>
-                      {el?.sphere?.name_ru === undefined || null
-                        ? "--"
-                        : el?.sphere?.name_ru}
-                    </p>
-                    <p className={s.Content_description}>
-                      {el?.description_ru === null || undefined
-                        ? "--"
-                        : el?.description_ru?.slice(0, 40)}
-                    </p>
-                    <span className={s.content_dates}>
-                      <img src={date} alt="" />
-                      <p>{el.created_at.slice(0, 10)}</p>
-                    </span>
-                    {localStorage.getItem("roleName") !== "Author" ? (
-                      <div className={s.content_crud}>
-                        <Link to={`/updateContent/${el?.slug}`}>
-                          <button className={s.content_crud_create}>
-                            <img src={createIcon} alt="Copy" />
-                          </button>
-                        </Link>
-                        <button
-                          onClick={() => {
-                            handleDownloadOpen();
-                            setPdfRu(el?.doc_file_ru);
-                            setPdfUz(el?.doc_file_uz);
-                          }}
-                          className={s.content_crud_download}
-                        >
-                          <img src={download} alt="Download" />
-                        </button>
-                        <Modal
-                          slotProps={{
-                            backdrop: {
-                              style: { opacity: "0.3", boxShadow: 24 },
-                            },
-                          }}
-                          open={downloadPdf}
-                          onClose={handleDownloadClose}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
-                        >
-                          <Box sx={style_pdf}>
-                            {!pdfRu || !pdfUz ? (
-                              <h2
-                                style={{
-                                  textAlign: "center",
-                                  paddingTop: "25px",
-                                }}
-                              >
-                                {t("toast404")}
-                              </h2>
-                            ) : (
-                              <div className={s.download_modal}>
-                                <a
-                                  rel="noopener"
-                                  href={pdfRu}
-                                  download
-                                  target="_blank"
-                                  className={s.download_ru}
-                                >
-                                  <p>{t("ru")}:</p>
-                                  <ImDownload
-                                    style={{ color: "#fff", fontSize: "18px" }}
-                                  />
-                                </a>
-                                <a
-                                  rel="noopener"
-                                  href={pdfUz}
-                                  download
-                                  target="_blank"
-                                  className={s.download_ru}
-                                >
-                                  <p>{t("uz")}:</p>
-                                  <ImDownload
-                                    style={{ color: "#fff", fontSize: "18px" }}
-                                  />
-                                </a>
-                              </div>
-                            )}
-                          </Box>
-                        </Modal>
-                        <button
-                          onClick={() => {
-                            handleOpenDel();
-                            setDelId(el?.slug);
-                          }}
-                          className={s.content_crud_delete}
-                        >
-                          <img src={deleteIcon} alt="Delete" />
-                        </button>
-                        <Modal
-                          slotProps={{
-                            backdrop: {
-                              style: { opacity: "0.3", boxShadow: 24 },
-                            },
-                          }}
-                          open={openDel}
-                          onClose={handleCloseDel}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
-                        >
-                          <Box sx={style}>
-                            <form
-                              style={{ textAlign: "center" }}
-                              className={s.createElementForm}
+          <br />
+          {contentSite?.results?.length > 0 ? (
+            <TableContainer component={Paper} classes={{ root: s.table }}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">{t("content-site.4")}</TableCell>
+                    <TableCell align="left">{t("content-site.5")}</TableCell>
+                    <TableCell align="left">{t("content-site.6")}</TableCell>
+                    <TableCell align="left">{t("content-site.7")}</TableCell>
+                    <TableCell align="right">{t("content-site.8")}</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody classes={{ root: s.tbody_root }}>
+                  {contentSite?.results?.map((el) => (
+                    <TableRow
+                      key={el.id}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>
+                        {" "}
+                        {el.header.length > 25 ? (
+                          <b>
+                            {el.header.slice(0, 25)}
+                            {"..."}
+                          </b>
+                        ) : (
+                          <b>{el.header}</b>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <p className={s.sphere}>
+                          {el?.sphere?.name === undefined || null
+                            ? "--"
+                            : el?.sphere?.name}
+                        </p>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <p className={s.Content_description}>
+                          {el?.description === null || undefined
+                            ? "--"
+                            : el?.description?.slice(0, 70)}
+                        </p>
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        <span className={s.content_dates}>
+                          <img src={date} alt="" />
+                          <p>{el.created_at.slice(0, 10)}</p>
+                        </span>
+                      </TableCell>
+                      <TableCell align="right">
+                        {" "}
+                        {localStorage.getItem("roleName") !== "Author" ? (
+                          <div className={s.content_crud}>
+                            <Link to={`/updateContent/${el?.slug}`}>
+                              <button className={s.content_crud_create}>
+                                <img src={createIcon} alt="Copy" />
+                              </button>
+                            </Link>
+                            <button
+                              onClick={() => {
+                                handleDownloadOpen();
+                                setPdfRu(el?.doc_file_ru);
+                                setPdfUz(el?.doc_file_uz);
+                              }}
+                              className={s.content_crud_download}
                             >
-                              <h2>{t("sfera.3")}</h2>
-                              <br />
-                              <p>{t("sfera.6")}</p>
-                              <br />
-                              <div className={s.createElementFormBtns}>
-                                {" "}
-                                <button
-                                  type="button"
-                                  onClick={() => handleCloseDel()}
-                                  className={s.shablon_save_btn}
+                              <img src={download} alt="Download" />
+                            </button>
+                            <Modal
+                              slotProps={{
+                                backdrop: {
+                                  style: { opacity: "1", boxShadow: 24 },
+                                },
+                              }}
+                              open={downloadPdf}
+                              onClose={handleDownloadClose}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style_pdf}>
+                                {!pdfRu || !pdfUz ? (
+                                  <h2
+                                    style={{
+                                      textAlign: "center",
+                                      paddingTop: "25px",
+                                    }}
+                                  >
+                                    {t("toast404")}
+                                  </h2>
+                                ) : (
+                                  <div className={s.download_modal}>
+                                    <a
+                                      rel="noopener"
+                                      href={pdfRu}
+                                      download
+                                      target="_blank"
+                                      className={s.download_ru}
+                                    >
+                                      <p>{t("ru")}:</p>
+                                      <ImDownload
+                                        style={{
+                                          color: "#fff",
+                                          fontSize: "18px",
+                                        }}
+                                      />
+                                    </a>
+                                    <a
+                                      rel="noopener"
+                                      href={pdfUz}
+                                      download
+                                      target="_blank"
+                                      className={s.download_ru}
+                                    >
+                                      <p>{t("uz")}:</p>
+                                      <ImDownload
+                                        style={{
+                                          color: "#fff",
+                                          fontSize: "18px",
+                                        }}
+                                      />
+                                    </a>
+                                  </div>
+                                )}
+                              </Box>
+                            </Modal>
+                            <button
+                              onClick={() => {
+                                handleOpenDel();
+                                setDelId(el?.slug);
+                              }}
+                              className={s.content_crud_delete}
+                            >
+                              <img src={deleteIcon} alt="Delete" />
+                            </button>
+                            <Modal
+                              slotProps={{
+                                backdrop: {
+                                  style: { opacity: "1", boxShadow: 24 },
+                                },
+                              }}
+                              open={openDel}
+                              onClose={handleCloseDel}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style}>
+                                <form
+                                  style={{ textAlign: "center" }}
+                                  className={s.createElementForm}
                                 >
-                                  {t("btn.5")}
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => deleteContent(delId)}
-                                  className={s.shablon_delete_btn}
-                                >
-                                  {t("btn.6")}
-                                </button>
-                              </div>
-                            </form>
-                          </Box>
-                        </Modal>
-                      </div>
-                    ) : (
-                      <div className={s.content_crud}>
-                        <button
-                          onClick={() => {
-                            handleDownloadOpen();
-                            setPdfRu(el?.doc_file_ru);
-                            setPdfUz(el?.doc_file_uz);
-                          }}
-                          className={s.content_crud_download}
-                        >
-                          <img src={download} alt="Download" />
-                        </button>
-                        <Modal
-                          slotProps={{
-                            backdrop: {
-                              style: { opacity: "0.3", boxShadow: 24 },
-                            },
-                          }}
-                          open={downloadPdf}
-                          onClose={handleDownloadClose}
-                          aria-labelledby="modal-modal-title"
-                          aria-describedby="modal-modal-description"
-                        >
-                          <Box sx={style_pdf}>
-                            {!pdfRu || !pdfUz ? (
-                              <h2
-                                style={{
-                                  textAlign: "center",
-                                  paddingTop: "25px",
-                                }}
-                              >
-                                {t("toast404")}
-                              </h2>
-                            ) : (
-                              <div className={s.download_modal}>
-                                <a
-                                  rel="noopener"
-                                  href={pdfRu}
-                                  download
-                                  target="_blank"
-                                  className={s.download_ru}
-                                >
-                                  <p>{t("ru")}:</p>
-                                  <ImDownload
-                                    style={{ color: "#fff", fontSize: "18px" }}
-                                  />
-                                </a>
-                                <a
-                                  rel="noopener"
-                                  href={pdfUz}
-                                  download
-                                  target="_blank"
-                                  className={s.download_ru}
-                                >
-                                  <p>{t("uz")}:</p>
-                                  <ImDownload
-                                    style={{ color: "#fff", fontSize: "18px" }}
-                                  />
-                                </a>
-                              </div>
-                            )}
-                          </Box>
-                        </Modal>
-                        <Link to={`/content-of-site-index/${el?.slug}`}>
-                          <button className={s.content_crud_create}>
-                            <FaEye
-                              style={{ color: "#2f80ed", fontSize: "16px" }}
-                            />
-                          </button>
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                );
-              })
-            )}
-          </div>
+                                  <h2>{t("sfera.3")}</h2>
+                                  <br />
+                                  <p>{t("sfera.6")}</p>
+                                  <br />
+                                  <div className={s.createElementFormBtns}>
+                                    {" "}
+                                    <button
+                                      type="button"
+                                      onClick={() => handleCloseDel()}
+                                      className={s.shablon_save_btn}
+                                    >
+                                      {t("btn.5")}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => deleteContent(delId)}
+                                      className={s.shablon_delete_btn}
+                                    >
+                                      {t("btn.6")}
+                                    </button>
+                                  </div>
+                                </form>
+                              </Box>
+                            </Modal>
+                          </div>
+                        ) : (
+                          <div className={s.content_crud}>
+                            <button
+                              onClick={() => {
+                                handleDownloadOpen();
+                                setPdfRu(el?.doc_file_ru);
+                                setPdfUz(el?.doc_file_uz);
+                              }}
+                              className={s.content_crud_download}
+                            >
+                              <img src={download} alt="Download" />
+                            </button>
+                            <Modal
+                              slotProps={{
+                                backdrop: {
+                                  style: { opacity: "1", boxShadow: 24 },
+                                },
+                              }}
+                              open={downloadPdf}
+                              onClose={handleDownloadClose}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style_pdf}>
+                                {!pdfRu || !pdfUz ? (
+                                  <h2
+                                    style={{
+                                      textAlign: "center",
+                                      paddingTop: "25px",
+                                    }}
+                                  >
+                                    {t("toast404")}
+                                  </h2>
+                                ) : (
+                                  <div className={s.download_modal}>
+                                    <a
+                                      rel="noopener"
+                                      href={pdfRu}
+                                      download
+                                      target="_blank"
+                                      className={s.download_ru}
+                                    >
+                                      <p>{t("ru")}:</p>
+                                      <ImDownload
+                                        style={{
+                                          color: "#fff",
+                                          fontSize: "18px",
+                                        }}
+                                      />
+                                    </a>
+                                    <a
+                                      rel="noopener"
+                                      href={pdfUz}
+                                      download
+                                      target="_blank"
+                                      className={s.download_ru}
+                                    >
+                                      <p>{t("uz")}:</p>
+                                      <ImDownload
+                                        style={{
+                                          color: "#fff",
+                                          fontSize: "18px",
+                                        }}
+                                      />
+                                    </a>
+                                  </div>
+                                )}
+                              </Box>
+                            </Modal>
+                            <Link to={`/content-of-site-index/${el?.slug}`}>
+                              <button className={s.content_crud_create}>
+                                <FaEye
+                                  style={{ color: "#2f80ed", fontSize: "16px" }}
+                                />
+                              </button>
+                            </Link>
+                          </div>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <>
+              <h1 className={s.notFound}>{t("toast404")}</h1>
+            </>
+          )}
           <br />
           <br />
           <div className={s.content_pagination}>

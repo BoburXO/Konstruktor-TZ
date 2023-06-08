@@ -1,6 +1,6 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import PageNotFound from "./pages/404/PageNotFound";
 import AddContent from "./pages/AddContent/AddContent";
 import Content from "./pages/ContentOfSite/Content";
@@ -23,6 +23,7 @@ import Sphere from "./pages/Sphere/Sphere";
 import HistoryStructure from "./pages/HistoryStructure/HistoryStructure";
 import LKMainUpdate from "./Params/LKMainUpdate/LKMainUpdate";
 import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
+import AuthorProfile from "./pages/AuthorProfile/AuthorProfile";
 function App() {
   return (
     <>
@@ -37,6 +38,7 @@ function App() {
         <Route path="/index-spravochnik/:slug" element={<IndexSpra />} />
         <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
         <Route path="/lkavtor/:id" element={<LKMainUpdate />} />
+        <Route path="/role-profile" element={<AuthorProfile />} />
         <Route
           path="/content-of-site-index/:slug"
           element={<ContentOfSiteUser />}

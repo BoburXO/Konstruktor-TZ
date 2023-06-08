@@ -194,11 +194,11 @@ const Shablonla = () => {
                           <b>...</b>
                         </span>
                         <br />
-                        <p>
-                          {el?.description?.length > 250
-                            ? el?.description?.slice(0, 250)
-                            : el?.description}
-                        </p>
+                        {el?.description?.length > 250 ? (
+                          <p>{el?.description?.slice(0, 250)}{"..."}</p>
+                        ):(
+                          <p>{el?.description}</p>
+                        )}
                       </div>
                     </Fade>
                   </Link>
@@ -208,7 +208,7 @@ const Shablonla = () => {
           ) : (
             <>
               <br />
-              <h2 style={{ textAlign: "center" }}>{t("toast404")}</h2>
+              <h2 className={s.notFound} style={{ textAlign: "center" }}>{t("toast404")}</h2>
             </>
           )}
           <br />

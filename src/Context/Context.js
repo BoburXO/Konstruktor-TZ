@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-import Loader from "../components/Loader/Loader";
 
 const Context = createContext();
 
@@ -51,8 +50,8 @@ const ContextProvider = ({ children }) => {
   //createContent
 
   //oneID roles post
-  const ssoOneId = () => {
-    axios
+  const ssoOneId = async () => {
+    await axios
       .post(`${API}/account/auth/user_roles/`, {
         code: localStorage.getItem("oneIDCode"),
       })
@@ -175,7 +174,7 @@ const ContextProvider = ({ children }) => {
 
   //all Spravochnik searchbar
   const getAllSpraSearch = async (page = 1) => {
-   await axios
+    await axios
       .get(`${API}/classificator/all/?search=${spraSearch}&page=${page}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -494,7 +493,7 @@ const ContextProvider = ({ children }) => {
 
   //getContent-search,filter,sphere-filter
   const getContentSearch = async (page = 1) => {
-   await axios
+    await axios
       .get(
         `${API}/standard/site-content-list/?search=${contentSearch}&page=${page}`,
         {
@@ -559,7 +558,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const getContentSphereFilter = async (id) => {
-   await axios
+    await axios
       .get(`${API}/standard/site-content-list/?sphere=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -947,7 +946,7 @@ const ContextProvider = ({ children }) => {
   //getSphere
   const [sphere, setSphere] = useState([]);
   const getSphere = async () => {
-   await axios
+    await axios
       .get(`${API}/standard/sphere/list-create/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -1336,7 +1335,8 @@ const ContextProvider = ({ children }) => {
   const getCreateTz = async (page = 1) => {
     await axios
       .get(
-        `${API}/constructor/create/list?&tz_name__icontains=${tzSearch}&page=${page}`,
+        `${API}/constructor/organization/list/?user_organization__user_results__tz_name__icontains=${tzSearch}&+page=${page}
+        `,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1367,15 +1367,53 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const getCreateTzSelectType = (type) => {
+  const getCreateTzSelectType = (type,owner) => {
     axios
-      .get(`${API}/constructor/create/list?select_type=${type}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
+      .get(
+        `${API}/constructor/organization/list?user_organization__user_results__select_type=${type}&owner=${owner}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setCreateTz(res.data);
       })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzSelectType());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+
+  const getCreateTzOwner = (owner) => {
+    axios
+      .get(
+        `${API}/constructor/organization/list?owner=${owner}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
       .then((res) => {
         setCreateTz(res.data);
       })
@@ -1398,7 +1436,6 @@ const ContextProvider = ({ children }) => {
       });
   };
   //createTz
-
 
   //createTz User
   const [createTzUser, setCreateTzUser] = useState({});
@@ -1602,6 +1639,7 @@ const ContextProvider = ({ children }) => {
     <>
       <Context.Provider
         value={{
+          getCreateTzOwner,
           getCreateTzSelectTypeUser,
           getCreateTzUser,
           createTzUser,

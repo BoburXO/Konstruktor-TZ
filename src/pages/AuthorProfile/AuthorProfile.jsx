@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import AuthorProfileComp from "../../components/AuthorProfileComp/AuthorProfileComp";
 import Footer from "../../components/Footer/Footer";
-import LkAvtorUserComp from "../../components/LkAvtorUserComp/LkAvtorUserComp";
 import UserNav from "../../components/UserNav/UserNav";
 
-const LKAvtorUser = () => {
+const AuthorProfile = () => {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
@@ -14,10 +14,10 @@ const LKAvtorUser = () => {
   return (
     <>
       <UserNav />
-      <LkAvtorUserComp />
+      <AuthorProfileComp />
       <Footer />
     </>
   );
 };
 
-export default LKAvtorUser;
+export default AuthorProfile;

@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import s from "../UserNav/UserNav.module.css";
+
 import logofff from "../../assets/imgs/logofff.svg";
 import { Link, NavLink } from "react-router-dom";
 import ava from "../../assets/icons/ava.png";
 import { useTranslation } from "react-i18next";
 import { useContext } from "react";
 import { Context } from "../../Context/Context";
+import Select from "react-select";
+
+const options = [
+  { label: "Русский", value: "ru" },
+  { label: "O'zbek", value: "uz" },
+  { label: "Ўзбек", value: "kr" },
+];
 
 const UserNav = () => {
   const { t, i18n } = useTranslation();
+
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
+    window.location.reload();
   };
 
   const { LogOut } = useContext(Context);
@@ -40,22 +50,32 @@ const UserNav = () => {
               </Link>
             </li>
             <li className={s.userNav_right_lists}>
-              <select
-                onChange={(e) => changeLanguage(e.target.value)}
-                className={s.til}
-                name="language"
-              >
-                <option className={s.til__opt} value="ru">
-                  Русский
-                </option>
-                <option className={s.til_opt} value="uz">
-                  O'zbek
-                </option>
-                <option className={s.til_opt} value="kr">
-                  Ўзбек
-                </option>
-              </select>
-
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor:
+                      state.isFocused && state.menuIsOpen ? "white" : "white",
+                    outlineColor: "white",
+                    background: "transparent",
+                  }),
+                  placeholder: (baseStyles) => ({
+                    ...baseStyles,
+                    color: "white",
+                  }),
+                }}
+                className={s.select_nav}
+                options={options}
+                placeholder={
+                  localStorage.getItem("i18nextLng") === "ru"
+                    ? "Русский"
+                    : localStorage.getItem("i18nextLng") === "uz"
+                    ? "O'zbek"
+                    : "Ўзбек"
+                }
+                onChange={({ value }) => changeLanguage(value)}
+                isSearchable={false}
+              />
               <span className={s.nav_avtor_content}>
                 <b>{localStorage.getItem("roleUserName")}</b>
                 <p>{localStorage.getItem("roleName")}</p>
@@ -130,6 +150,14 @@ const UserNav = () => {
                   {t("lkavtor1")}
                 </NavLink>
               </li>
+              {/* <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/role-profile"
+                >
+                  {t("profile.1")}
+                </NavLink>
+              </li> */}
             </ul>
           </div>
         ) : (
@@ -159,6 +187,14 @@ const UserNav = () => {
                   {t("lkavtor1")}
                 </NavLink>
               </li>
+              {/* <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/role-profile"
+                >
+                  {t("profile.1")}
+                </NavLink>
+              </li> */}
             </ul>
           </div>
         )}

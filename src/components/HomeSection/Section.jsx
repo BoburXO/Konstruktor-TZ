@@ -29,8 +29,8 @@ const Section = () => {
                   <div className={s.home_section_card} key={el.id}>
                     <div className={s.card_head}>
                       <div className={s.card_head_left_side}>
-                        <h2>{el.header_ru}</h2>
-                        <p>{el.sphere.name_ru}</p>
+                        <h2>{el.header}</h2>
+                        <p>{el.sphere.name}</p>
                       </div>
                       <a
                         rel="noreferrer"
@@ -44,18 +44,18 @@ const Section = () => {
                     </div>
                     <div className={s.home_section_card_body}>
                       {el.description.length < 70 ? (
-                        <h3>{el.description_ru}</h3>
+                        <h3>{el.description}</h3>
                       ) : (
                         <h3>
-                          {el.description_ru.slice(0, 80)}
+                          {el.description.slice(0, 80)}
                           {"..."}
                         </h3>
                       )}
-                      {el.text.length < 390 ? (
-                        <p>{el.text_ru}</p>
+                      {el.text.length < 220 ? (
+                        <p>{el.text}</p>
                       ) : (
                         <p>
-                          {el.text_ru.slice(0, 400)}
+                          {el.text.slice(0, 220)}
                           {"..."}
                         </p>
                       )}

@@ -14,6 +14,13 @@ import Select from "react-select";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Loader from "../Loader/Loader";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const style = {
   position: "absolute",
@@ -38,6 +45,7 @@ const LKMain = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const {
+    getCreateTzOwner,
     getCreateTz,
     createTz,
     setTzSearch,
@@ -58,12 +66,10 @@ const LKMain = () => {
     { value: 2, label: t("lkavtor6") },
   ];
 
-  const optionsRoles = [
-    { value: "/lkavtor-user", label: t("filter.5") },
-    { value: "/lkavtor", label: t("filter.6") },
+  const optionOwner = [
+    { value: true, label: "My" },
+    { value: false, label: "All" },
   ];
-
-  const handleNavigate = (value) => navigate(value);
 
   return (
     <>
@@ -97,19 +103,17 @@ const LKMain = () => {
                   options={options}
                 />
               </div>
-              <div>
-                {localStorage.getItem("roleName") === "Admin" ||
-                localStorage.getItem("roleName") === "SuperAdmin" ? (
+              {localStorage.getItem("roleName") === "Admin" ||
+              localStorage.getItem("roleName") === "SuperAdmin" ? (
+                <div>
                   <Select
-                    placeholder={t("lkavtor9")}
-                    onChange={(value) => {
-                      handleNavigate(value.value);
-                    }}
+                    placeholder={"Owner"}
+                    onChange={(value) => getCreateTzOwner(value.value)}
                     className={s.selecttt}
-                    options={optionsRoles}
+                    options={optionOwner}
                   />
-                ) : null}
-              </div>
+                </div>
+              ) : null}
             </div>
             <button
               onClick={() => navigate("/createtz")}
@@ -119,114 +123,195 @@ const LKMain = () => {
               <span>{t("lkavtor1")}</span>
             </button>
           </div>
-          <div className={s.lkmain_sect_creators_labels}>
-            <p style={{ width: "3%" }}>ID</p>
-            <p style={{ width: "55%" }}>{t("lkavtor2")}</p>
-            <p style={{ width: "27%" }}>{t("lkavtor3")}</p>
-            <p style={{ width: "7%" }}>{t("lkavtor4")}</p>
-          </div>
-          <div className={s.lkmain_sect_creators_parent}>
-            {createTz?.results?.length > 1 ? (
-              createTz?.results?.map((el) => {
-                return (
-                  <div
-                    className={s.lkmain_sect_creators_parent_card}
-                    key={el.id}
-                  >
-                    <p style={{ width: "3%" }}>#{el?.row_number}</p>
-                    <p style={{ width: "55%" }}>{el?.tz_name}</p>
-                    <span
-                      style={{ width: "20%" }}
-                      className={s.lkmain_sect_dates}
-                    >
-                      <img src={date} alt="" />
-                      <p>{el?.created_at}</p>
-                    </span>
-                    <div className={s.lkmain_sect_crud}>
-                      <button className={s.lkmain_sect_crud_copy}>
-                        <img src={copyIcon} alt="Copy" />
-                      </button>
-                      <Link to={`/lkavtor/${el.id}/`}>
-                        <button className={s.lkmain_sect_crud_create}>
-                          <img src={createIcon} alt="Copy" />
-                        </button>
-                      </Link>
-                      <button className={s.lkmain_sect_crud_skacat}>
-                        <a
-                          rel="noopener"
-                          href={el?.pdf_file}
-                          download
-                          target="_blank"
-                        >
-                          {" "}
-                          <img src={skacatIcon} alt="Download" />
-                        </a>
-                      </button>
-                      <button
-                        onClick={() => {
-                          handleOpenDel();
-                          setDelId(el?.id);
-                        }}
-                        className={s.lkmain_sect_crud_delete}
-                      >
-                        <img src={deleteIcon} alt="Delete" />
-                      </button>
-                      <Modal
-                        slotProps={{
-                          backdrop: {
-                            style: { opacity: "0.3", boxShadow: 24 },
-                          },
-                        }}
-                        open={openDel}
-                        onClose={handleCloseDel}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style}>
-                          <form
-                            style={{ textAlign: "center" }}
-                            className={s.createElementForm}
-                          >
-                            <h2>{t("sfera.3")}</h2>
-                            <br />
-                            <p>{t("sfera.6")}</p>
-                            <br />
-                            <div className={s.createElementFormBtns}>
-                              {" "}
-                              <button
-                                type="button"
-                                onClick={() => handleCloseDel()}
-                                className={s.shablon_save_btn}
-                              >
-                                {t("btn.5")}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  deleteTz(delId).then(() =>
-                                    setIsLoading(false)
-                                  )
-                                }
-                                className={s.shablon_delete_btn}
-                              >
-                                {t("btn.6")}
-                              </button>
-                            </div>
-                          </form>
-                        </Box>
-                      </Modal>
-                    </div>
+          {createTz?.results?.length ? (
+            <div>
+              {createTz?.results?.map((el) => (
+                <div key={el?.id}>
+                  <br />
+                  <br />
+                  <div className={s.organization_label}>
+                    <p>{el?.name}</p>
+                    <p>№{el?.count_of_result}</p>
+                    <br />
+                    <br />
                   </div>
-                );
-              })
-            ) : (
+                  <TableContainer component={Paper} classes={{ root: s.table }}>
+                    {el?.user_organization?.map((user) => (
+                      <Table
+                        key={user.id}
+                        sx={{ minWidth: 650 }}
+                        aria-label="simple table"
+                      >
+                        <TableHead>
+                          <TableRow>
+                            <TableCell align="left">
+                              <p>ID</p>
+                            </TableCell>
+                            <TableCell align="left">
+                              <p>{t("lkavtor10")}</p>
+                            </TableCell>
+                            <TableCell align="left">
+                              {" "}
+                              <p>{t("lkavtor2")}</p>
+                            </TableCell>
+                            <TableCell align="left">
+                              {" "}
+                              <p>{t("lkavtor3")}</p>
+                            </TableCell>
+                            <TableCell align="right">
+                              {" "}
+                              <p>{t("lkavtor4")}</p>
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody classes={{ root: s.tbody_root }}>
+                          {user?.paginated_results?.results?.map((tz) => (
+                            <TableRow
+                              key={tz?.id}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell align="left">
+                                <p>#{tz?.row_number}</p>
+                              </TableCell>
+                              <TableCell align="left">
+                                {" "}
+                                <p>{user?.username}</p>
+                              </TableCell>
+                              <TableCell
+                                component="th"
+                                scope="row"
+                                align="left"
+                              >
+                                <p>{tz?.tz_name}</p>
+                              </TableCell>
+                              <TableCell align="left">
+                                {" "}
+                                <span className={s.lkmain_sect_dates}>
+                                  <img src={date} alt="" />
+                                  <p>{tz?.created_at}</p>
+                                </span>{" "}
+                              </TableCell>
+                              <TableCell align="right">
+                                {user?.username ===
+                                localStorage.getItem("roleUserName") ? (
+                                  <div className={s.lkmain_sect_crud}>
+                                    <button className={s.lkmain_sect_crud_copy}>
+                                      <img src={copyIcon} alt="Copy" />
+                                    </button>
+                                    <Link to={`/lkavtor/${tz.id}/`}>
+                                      <button
+                                        className={s.lkmain_sect_crud_create}
+                                      >
+                                        <img src={createIcon} alt="Copy" />
+                                      </button>
+                                    </Link>
+                                    <button
+                                      className={s.lkmain_sect_crud_skacat}
+                                    >
+                                      <a
+                                        rel="noopener"
+                                        href={el?.pdf_file}
+                                        download
+                                        target="_blank"
+                                      >
+                                        {" "}
+                                        <img src={skacatIcon} alt="Download" />
+                                      </a>
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        handleOpenDel();
+                                        setDelId(el?.id);
+                                      }}
+                                      className={s.lkmain_sect_crud_delete}
+                                    >
+                                      <img src={deleteIcon} alt="Delete" />
+                                    </button>
+                                    <Modal
+                                      slotProps={{
+                                        backdrop: {
+                                          style: {
+                                            opacity: "0.7",
+                                            boxShadow: 24,
+                                          },
+                                        },
+                                      }}
+                                      open={openDel}
+                                      onClose={handleCloseDel}
+                                      aria-labelledby="modal-modal-title"
+                                      aria-describedby="modal-modal-description"
+                                    >
+                                      <Box sx={style}>
+                                        <form
+                                          style={{ textAlign: "center" }}
+                                          className={s.createElementForm}
+                                        >
+                                          <h2>{t("sfera.3")}</h2>
+                                          <br />
+                                          <p>{t("sfera.6")}</p>
+                                          <br />
+                                          <div
+                                            className={s.createElementFormBtns}
+                                          >
+                                            {" "}
+                                            <button
+                                              type="button"
+                                              onClick={() => handleCloseDel()}
+                                              className={s.shablon_save_btn}
+                                            >
+                                              {t("btn.5")}
+                                            </button>
+                                            <button
+                                              type="button"
+                                              onClick={() =>
+                                                deleteTz(delId).then(() =>
+                                                  setIsLoading(false)
+                                                )
+                                              }
+                                              className={s.shablon_delete_btn}
+                                            >
+                                              {t("btn.6")}
+                                            </button>
+                                          </div>
+                                        </form>
+                                      </Box>
+                                    </Modal>
+                                  </div>
+                                ) : (
+                                  <div className={s.lkmain_sect_crud}>
+                                    <button className={s.lkmain_sect_crud_copy}>
+                                      <img src={copyIcon} alt="Copy" />
+                                    </button>
+                                  </div>
+                                )}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    ))}
+                  </TableContainer>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <>
               <h1 className={s.notFound}>{t("toast404")}</h1>
-            )}
-          </div>
+            </>
+          )}
           <br />
           <br />
           <div className={s.content_pagination}>
-            <LkAvtorPagination createTz={createTz?.total_pages} />
+            <LkAvtorPagination
+              createTz={
+                createTz?.results[0]?.user_organization[0]?.paginated_results
+                  ?.total_pages
+              }
+            />
           </div>
         </div>
       </section>

@@ -104,7 +104,7 @@ const Template = () => {
             <Modal
               slotProps={{
                 backdrop: {
-                  style: { opacity: "0.3", boxShadow: 24 },
+                  style: { opacity: "1", boxShadow: 24 },
                 },
               }}
               open={openDel}
