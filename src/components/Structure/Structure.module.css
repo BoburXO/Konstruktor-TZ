@@ -5,6 +5,11 @@
   font-family: Rubik;
 }
 
+.container {
+  width: 85%;
+  margin: auto;
+}
+
 .structure_left_siderbar {
   width: 362px;
   height: auto;
@@ -54,6 +59,14 @@
 
   background: rgba(47, 128, 237, 0.1);
   padding: 40px 0;
+}
+
+.structure_right_contents_labels {
+  height: 100px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .structure_right_contents_label {
@@ -318,4 +331,28 @@
   right: 30px;
   top: 30px;
   cursor: pointer;
+}
+
+.srtucture_history {
+  width: 200px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: #0ba9cc;
+  border: 2px solid #0ba9cc;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.srtucture_history:hover {
+  background: #fff;
+  color: #0ba9cc;
+  transition: 0.5s ease;
 }

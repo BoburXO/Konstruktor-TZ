@@ -19,3 +19,7 @@ textarea:focus,
 input:focus {
   border: 2px solid #2684ff !important;
 }
+
+.css-1to7aaw-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
+  background-color: #2684ff !important;
+}

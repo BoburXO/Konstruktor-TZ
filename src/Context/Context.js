@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { API } from "../api/Api";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useRef } from "react";
 
 const Context = createContext();
 
@@ -32,7 +33,7 @@ const ContextProvider = ({ children }) => {
   const notify400 = () => toast(t("toast400"));
   const notify403 = () => toast(t("toast403"));
   const notify500 = () => toast(t("toast500"));
-  const notify200 = () => toast(t("toast200"));
+  // const notify200 = () => toast(t("toast200"));
   //notify
 
   //createContent
@@ -49,8 +50,8 @@ const ContextProvider = ({ children }) => {
   //createContent
 
   //oneID roles post
-  const ssoOneId = () => {
-    axios
+  const ssoOneId = async () => {
+    await axios
       .post(`${API}/account/auth/user_roles/`, {
         code: localStorage.getItem("oneIDCode"),
       })
@@ -172,9 +173,9 @@ const ContextProvider = ({ children }) => {
   // LogOut
 
   //all Spravochnik searchbar
-  const getAllSpraSearch = () => {
-    axios
-      .get(`${API}/classificator/all/?search=${spraSearch}`, {
+  const getAllSpraSearch = async (page = 1) => {
+    await axios
+      .get(`${API}/classificator/all/?search=${spraSearch}&page=${page}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "ConstructorRoleAccessToken"
@@ -202,6 +203,54 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
+
+  //spravochnik excel
+  const ref = useRef();
+
+  const SpravochnikExcel = async (language, id, filename) => {
+    await axios
+      .post(
+        `${API}/classificator/export-xlsx/`,
+        {
+          language: language,
+          id: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = ref.current;
+        link.href = url;
+        link.setAttribute("download", `${filename}.xls`);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => SpravochnikExcel());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //spravochnik excel
 
   //deleteElement
   const removeElementById = (id) => {
@@ -290,6 +339,7 @@ const ContextProvider = ({ children }) => {
         }
       )
       .then(() => {
+        navigate("/lkadminspravochnik");
         window.location.reload();
       })
       .catch((err) => {
@@ -371,10 +421,20 @@ const ContextProvider = ({ children }) => {
   //createElement
   const createElement = (id) => {
     axios
-      .post(`${API}/classificator/element/${id}/`, {
-        content_uz: contUz,
-        content_ru: contRu,
-      })
+      .post(
+        `${API}/classificator/element/${id}/`,
+        {
+          content_uz: contUz,
+          content_ru: contRu,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
       .then(() => {
         window.location.reload();
       })
@@ -399,8 +459,8 @@ const ContextProvider = ({ children }) => {
   //createElement
 
   //getTZhome
-  const getTzHome = () => {
-    axios
+  const getTzHome = async () => {
+    await axios
       .get(`${API}/standard/home`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -432,15 +492,18 @@ const ContextProvider = ({ children }) => {
   //getTZhome
 
   //getContent-search,filter,sphere-filter
-  const getContentSearch = () => {
-    axios
-      .get(`${API}/standard/site-content-list/?search=${contentSearch}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
+  const getContentSearch = async (page = 1) => {
+    await axios
+      .get(
+        `${API}/standard/site-content-list/?search=${contentSearch}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
       .then((res) => {
         setContentSite(res.data);
       })
@@ -463,8 +526,8 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const getContentIsPublish = (isPublish) => {
-    axios
+  const getContentIsPublish = async (isPublish) => {
+    await axios
       .get(`${API}/standard/site-content-list/?is_published=${isPublish}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -494,8 +557,8 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const getContentSphereFilter = (id) => {
-    axios
+  const getContentSphereFilter = async (id) => {
+    await axios
       .get(`${API}/standard/site-content-list/?sphere=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -587,7 +650,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => createContentOfSite());
           }
           if (err.response.status === 404) {
             notify404();
@@ -659,7 +722,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => createContentOfSiteFalse());
           }
           if (err.response.status === 404) {
             notify404();
@@ -733,7 +796,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => updateContentTrue());
           }
           if (err.response.status === 404) {
             notify404();
@@ -804,7 +867,7 @@ const ContextProvider = ({ children }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            notify401();
+            refreshToken().then(() => updateContentFalse());
           }
           if (err.response.status === 404) {
             notify404();
@@ -882,15 +945,21 @@ const ContextProvider = ({ children }) => {
 
   //getSphere
   const [sphere, setSphere] = useState([]);
-  const getSphere = () => {
-    axios
-      .get(`${API}/standard/sphere/list-create/`)
+  const getSphere = async () => {
+    await axios
+      .get(`${API}/standard/sphere/list-create/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then((res) => {
         setSphere(res.data);
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          notify401();
+          refreshToken().then(() => getSphere());
         }
         if (err.response.status === 404) {
           notify404();
@@ -952,7 +1021,7 @@ const ContextProvider = ({ children }) => {
   //deleteSphere
   const deleteSphere = (id) => {
     axios
-      .delete(`${API}/standard/sphere/${id}/`, {
+      .delete(`${API}/standard/sphere/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "ConstructorRoleAccessToken"
@@ -964,7 +1033,7 @@ const ContextProvider = ({ children }) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          notify401();
+          refreshToken().then(() => deleteSphere());
         }
         if (err.response.status === 404) {
           notify404();
@@ -1027,10 +1096,597 @@ const ContextProvider = ({ children }) => {
 
   //editSphere
 
+  //shablon-sample all
+  const [sample, setSample] = useState({});
+  const [punktSearch, setPunktSearch] = useState("");
+
+  const allSample = async (page = 1) => {
+    await axios
+      .get(
+        `${API}/constructor/sample/create/list?description__icontains=${punktSearch}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setSample(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => allSample());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //shablon-sample all
+
+  //getSample by section id
+
+  const getSampleBySection = (id) => {
+    axios
+      .get(`${API}/constructor/sample/create/list?section=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSample(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getSampleBySection());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  //getSample by sectiion id
+
+  const [selectPunkt, setSelectPunkt] = useState({});
+  //selectPunkt- create sample
+  const getSelectPunkt = async () => {
+    await axios
+      .get(`${API}/constructor/sections/moderator`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSelectPunkt(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getSelectPunkt());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //selectPunkt- create sample
+
+  //createSample
+  const [sampleSect, setSampleSect] = useState("");
+  const [sampleDescRu, setSampleDescRu] = useState("");
+  const [sampleDescUz, setSampleDescUz] = useState("");
+
+  const createSample = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `${API}/constructor/sample/create/list`,
+        {
+          section: sampleSect,
+          description_ru: sampleDescRu,
+          description_uz: sampleDescUz,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => createSample());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //createSample
+
+  //sample-delete
+  const sampleDelete = (id) => {
+    axios
+      .delete(`${API}/constructor/sample/detail/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then(() => {
+        navigate("/lkadminshablon");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => sampleDelete());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //sample-delete
+
+  //update-sample
+  const [sampleUpdUz, setSampleUpdUz] = useState("");
+  const [sampleUpdRu, setSampleUpdRu] = useState("");
+
+  const updateSample = (id) => {
+    axios
+      .patch(
+        `${API}/constructor/sample/detail/${id}`,
+        {
+          description_uz: sampleUpdUz,
+          description_ru: sampleUpdRu,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        navigate("/lkadminshablon");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => updateSample());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //update-sample
+
+  //createTz
+  const [createTz, setCreateTz] = useState({});
+  const [tzSearch, setTzSearch] = useState("");
+
+  const getCreateTz = async (page = 1) => {
+    await axios
+      .get(
+        `${API}/constructor/organization/list/?user_organization__user_results__tz_name__icontains=${tzSearch}&+page=${page}
+        `,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setCreateTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTz());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getCreateTzSelectType = (type,owner) => {
+    axios
+      .get(
+        `${API}/constructor/organization/list?user_organization__user_results__select_type=${type}&owner=${owner}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setCreateTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzSelectType());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+
+  const getCreateTzOwner = (owner) => {
+    axios
+      .get(
+        `${API}/constructor/organization/list?owner=${owner}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setCreateTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzSelectType());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //createTz
+
+  //createTz User
+  const [createTzUser, setCreateTzUser] = useState({});
+  const [tzSearchUser, setTzSearchUser] = useState("");
+
+  const getCreateTzUser = async (page = 1) => {
+    await axios
+      .get(
+        `${API}/constructor/list/user?&tz_name__icontains=${tzSearchUser}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setCreateTzUser(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzUser());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getCreateTzSelectTypeUser = (type) => {
+    axios
+      .get(`${API}/constructor/list/user?select_type=${type}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setCreateTzUser(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getCreateTzSelectTypeUser());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //createTz User
+
+  //updateTz
+  const [tzNameUz, setTzNameUz] = useState("");
+  const [tzNameRu, setTzNameRu] = useState("");
+  const [tzCommentUz, setTzCommentUz] = useState("");
+  const [tzCommentRu, setTzCommentRu] = useState("");
+
+  const updateCreateTz = (id) => {
+    axios
+      .patch(
+        `${API}/constructor/detail/${id}`,
+        {
+          tz_name_ru: tzNameRu,
+          tz_name_uz: tzNameUz,
+          comment_ru: tzCommentRu,
+          comment_uz: tzCommentUz,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        navigate("/lkavtor");
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => updateCreateTz());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //updateTz
+
+  //deleteTz
+  const deleteTz = (id) => {
+    axios
+      .delete(
+        `${API}/constructor/delete`,
+        {
+          data: {
+            constructor_id: id,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => deleteTz());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //deleteTz
+
+  //history-structure
+  const [isDraftFalse, setIsDraftFalse] = useState({});
+  const [iseDraftSearch, setIsDraftSearch] = useState("");
+
+  const getIsDraftFalse = async (page = 1) => {
+    await axios
+      .get(
+        `${API}/constructor/create/list?is_draft=False&tz_name__icontains=${iseDraftSearch}&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setIsDraftFalse(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getIsDraftFalse());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //history-structure
+
   return (
     <>
       <Context.Provider
         value={{
+          getCreateTzOwner,
+          getCreateTzSelectTypeUser,
+          getCreateTzUser,
+          createTzUser,
+          setTzSearchUser,
+          tzSearchUser,
+          setIsDraftSearch,
+          iseDraftSearch,
+          isDraftFalse,
+          setIsDraftFalse,
+          getIsDraftFalse,
+          ref,
+          SpravochnikExcel,
+          deleteTz,
+          updateCreateTz,
+          tzCommentRu,
+          setTzCommentRu,
+          tzCommentUz,
+          setTzCommentUz,
+          tzNameRu,
+          setTzNameRu,
+          tzNameUz,
+          setTzNameUz,
+          getCreateTzSelectType,
+          getCreateTz,
+          createTz,
+          setTzSearch,
+          tzSearch,
+          getSampleBySection,
+          updateSample,
+          sampleUpdUz,
+          setSampleUpdUz,
+          sampleUpdRu,
+          setSampleUpdRu,
+          punktSearch,
+          setPunktSearch,
+          sampleDelete,
+          createSample,
+          sampleSect,
+          setSampleSect,
+          sampleDescRu,
+          setSampleDescRu,
+          sampleDescUz,
+          setSampleDescUz,
+          selectPunkt,
+          getSelectPunkt,
+          sample,
+          allSample,
           spravochnik,
           ssoOneId,
           roles,

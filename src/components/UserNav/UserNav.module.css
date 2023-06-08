@@ -21,32 +21,10 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-.til {
-  width: 100px;
-  border: none;
-  font-size: 16px;
-  font-weight: 400;
-  outline: none;
-  cursor: pointer;
-  font-family: Rubik;
-  background: transparent;
-  color: #fff;
+.select_nav{
+  width: 120px;
 }
 
-.til:focus {
-  border: none;
-}
-.til__opt:hover {
-  border: none;
-  background: transparent;
-}
-
-select option {
-  margin: 40px;
-  background: #fff;
-  color: #000;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-}
 
 .userNav_right_lists {
   display: flex;
@@ -78,11 +56,12 @@ select option {
 }
 
 .admin_routes {
-  width: 60%;
+  width: 100%;
   height: 72px;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 40px;
   align-items: center;
 }
 
@@ -102,12 +81,13 @@ select option {
 }
 
 .author_routes {
-  width: 45%;
+  width: 100%;
   height: 72px;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  gap: 50px;
 }
 
 .author_routes a {

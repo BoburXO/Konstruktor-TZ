@@ -28,7 +28,10 @@ const CreateTZ = () => {
     (state) => state.userStructure
   );
 
-  const notify = () => toast(t("toast"));
+  const notify = () =>
+    toast.success(t("toast"), {
+      style: { background: "white", color: "black" },
+    });
 
   const copy = (id, e) => {
     const currentPunkt = templates?.find((punkt) => {

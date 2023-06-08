@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import s from "../Spravochnik/spravochnik.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
@@ -9,6 +9,7 @@ import UserNav from "../../components/UserNav/UserNav";
 import { Context } from "../../Context/Context";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Loader from "../../components/Loader/Loader";
 
 const style = {
   position: "absolute",
@@ -23,6 +24,7 @@ const style = {
 };
 
 const SpravochnikId = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const {
     spravochnik,
@@ -39,14 +41,14 @@ const SpravochnikId = () => {
   } = useContext(Context);
 
   //modal
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   //modal
 
   const { t } = useTranslation();
   const { slug } = useParams();
-  const ParamsSlug = spravochnik?.find((el) => {
+  const ParamsSlug = spravochnik?.results?.find((el) => {
     return el?.slug === slug;
   });
 
@@ -54,9 +56,10 @@ const SpravochnikId = () => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
-    getAllSpraSearch();
+    getAllSpraSearch().then(() => setIsLoading(false));
   }, [spraSearch]);
 
+  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />
