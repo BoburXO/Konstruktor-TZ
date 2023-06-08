@@ -57,6 +57,11 @@ export const updateStructure = createAsyncThunk(
   }
 );
 
+export const deleteStructure = createAsyncThunk(
+  "structure/delete",
+  async () => {}
+);
+
 const structureSlice = createSlice({
   name: "structure",
   initialState,
@@ -64,6 +69,7 @@ const structureSlice = createSlice({
     setActiveSectionId: (state, { payload }) => {
       state.activeSectionId = payload;
     },
+    addStaticSectionHeadersInStructure: (state, { payload }) => {},
   },
   extraReducers: (builder) => {
     builder

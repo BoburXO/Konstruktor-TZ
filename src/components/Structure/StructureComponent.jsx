@@ -1,12 +1,10 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 
 //redux libraries
 import { useSelector, useDispatch } from "react-redux";
 
 import s from "../Structure/Structure.module.css";
 import pen from "../../assets/icons/pen.svg";
-import add from "../../assets/icons/plus-add.svg";
 import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
 import Modal from "@mui/material/Modal";
@@ -16,11 +14,15 @@ import Box from "@mui/material/Box";
 import { fetchStructureById } from "./structure_slice";
 import CreateNewStructureModal from "./CreateNewStructureModal/CreateNewStructureModal";
 import { toast } from "react-hot-toast";
-import StructureLeftSidebar from "./StructureLeftSidebar/StructureLeftSidebar";
 import CreateNewSectionModal from "./CreateNewSectionModal/CreateNewSectionModal";
-import SectionsWithChildren from "./SectionsWithChildren/SectionsWithChildren";
+import { renderSectionsWithChildren } from "../../helpers/helpers";
 import Loader from "../Loader/Loader";
-import { deleteSection } from "./CreateNewSectionModal/section_slice";
+import {
+  deleteSection,
+  setCurrentSection,
+} from "./CreateNewSectionModal/section_slice";
+import StructureLeftSidebar from "../StructureLeftSidebar/StructureLeftSidebar";
+import RenderSectionsWithChildren from "../RenderSectionsWithChildren/RenderSectionsWithChildren";
 
 const style = {
   position: "absolute",
@@ -78,30 +80,17 @@ const StructureComponent = () => {
     //eslint-disable-next-line
   }, [currentStructure, currentSection, currentSubSection, currentField]);
 
+  useEffect(() => {
+    if (structures?.sections?.length) {
+      if (!currentSection?.id) {
+        dispatch(setCurrentSection(structures?.sections[0]));
+      }
+    }
+  }, [structures]);
+
   const activeSection = useMemo(() => {
     return structures?.sections?.find((item) => item.id === currentSection?.id);
   }, [currentSection, structures]);
-
-  const sectionHeader = useMemo(() => {
-    return (
-      structures?.sections?.findIndex(
-        (section) => section?.id === activeSection?.id
-      ) + 1
-    );
-  }, [activeSection, structures]);
-
-  const renderSectionsWithChildren = (sections) => {
-    return sections?.map((item) => {
-      return (
-        <Fragment key={item?.id}>
-          <SectionsWithChildren item={item} />
-          {item?.children?.length > 0
-            ? renderSectionsWithChildren(item.children)
-            : null}
-        </Fragment>
-      );
-    });
-  };
 
   const handleDeleteSection = () => {
     dispatch(deleteSection(currentSection?.id));
@@ -121,7 +110,11 @@ const StructureComponent = () => {
       ) : (
         <div className={s.structure_parent}>
           <Fade bottom cascade>
-            <StructureLeftSidebar sections={structures?.sections} />
+            <StructureLeftSidebar
+              sections={structures?.sections}
+              currentSection={currentSection}
+              setCurrentSection={setCurrentSection}
+            />
             <div className={s.structure_right_contents}>
               <h1 className={s.structure_right_contents_label}>
                 {t("struc1")}
@@ -146,7 +139,7 @@ const StructureComponent = () => {
                     <div className={s.structure_right_contents_card_punkt}>
                       <span>
                         <p>
-                          {t("struc5")} {sectionHeader}
+                          {t("struc5")} {activeSection?.header_name_ru}
                         </p>
                         <div>
                           <img
@@ -193,7 +186,10 @@ const StructureComponent = () => {
                         readOnly
                       />
                     </div>
-                    {renderSectionsWithChildren(activeSection?.children)}
+                    <RenderSectionsWithChildren
+                      sections={activeSection?.children}
+                      userRole="moderator"
+                    />
                   </div>
                 </>
               ) : null}

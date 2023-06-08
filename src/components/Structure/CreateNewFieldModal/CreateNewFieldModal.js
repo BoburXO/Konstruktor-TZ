@@ -64,6 +64,12 @@ export default function CreateNewFieldModal({
         setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
       }
     }
+    if (beingUpdatedData?.id && fieldType === 6) {
+      if (tableCols > 0 && tableRaws > 0) {
+        setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataRu);
+        setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
+      }
+    }
   }, [tableRaws, tableCols]);
 
   const fieldTypeOptions = [
@@ -208,14 +214,20 @@ export default function CreateNewFieldModal({
             "Loading..."
           ) : (
             <>
-              {fieldType === 8 && classificators?.count > 0 ? (
-                <Select
-                  onChange={(e) => setClassificator(e.value)}
-                  options={classificatorOptions}
-                  defaultValue={
-                    classificatorOptions[defaultClassificatorOptionIndex]
-                  }
-                />
+              {fieldType === 8 && classificators?.links ? (
+                <>
+                  {classificators.count > 0 ? (
+                    <Select
+                      onChange={(e) => setClassificator(e.value)}
+                      options={classificatorOptions}
+                      defaultValue={
+                        classificatorOptions[defaultClassificatorOptionIndex]
+                      }
+                    />
+                  ) : (
+                    "Classificators not found"
+                  )}
+                </>
               ) : fieldType === 6 ? (
                 <>
                   <div className={s.flex_names}>

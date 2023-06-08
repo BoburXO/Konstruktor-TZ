@@ -93,6 +93,23 @@ export const deleteSection = createAsyncThunk("section/delete", async (id) => {
   });
 });
 
+export const deleteSubSection = createAsyncThunk(
+  "delete/subSection",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      method: "DELETE",
+      url: `/constructor/section/delete`,
+      data: { section_id: id },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
 const sectionSlice = createSlice({
   name: "section",
   initialState,
@@ -143,8 +160,16 @@ const sectionSlice = createSlice({
         state.isCreatingSectionLoading = true;
       })
       .addCase(deleteSection.fulfilled, (state, { payload }) => {
-        state.deletedSection = payload;
+        state.currentSection = {};
         state.isCreatingSectionLoading = false;
+      })
+      //deleteSubSection
+      .addCase(deleteSubSection.pending, (state) => {
+        state.isCreatingSubSectionLoading = false;
+      })
+      .addCase(deleteSubSection.fulfilled, (state) => {
+        state.currentSubSection = {};
+        state.isCreatingSubSectionLoading = false;
       });
   },
 });

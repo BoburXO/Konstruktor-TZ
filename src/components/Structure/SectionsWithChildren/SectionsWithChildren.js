@@ -1,19 +1,19 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import s from "../Structure.module.css";
 import pen from "../../../assets/icons/pen.svg";
 import add from "../../../assets/icons/plus-add.svg";
-import addSub from "../../../assets/icons/addSub.png";
 import CreateNewSectionModal from "../CreateNewSectionModal/CreateNewSectionModal";
 import CreateNewFieldModal from "../CreateNewFieldModal/CreateNewFieldModal";
 import FieldPart from "./FieldPart";
-import SectionDropdown from "../../DropdownSection/DropdownSection";
-import { Dropdown } from "rsuite";
 import "../../../../node_modules/rsuite/Dropdown/styles/index.less";
+import { deleteSubSection } from "../CreateNewSectionModal/section_slice";
 
 export default function SectionsWithChildren({ item }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   //add sub to subsection
   const [openSubChildren, setOpenSubChildren] = useState(false);
@@ -30,7 +30,9 @@ export default function SectionsWithChildren({ item }) {
   const handleOpenField = () => setOpenField(true);
   const handleCloseField = () => setOpenField(false);
 
-  const subsectionHeader = useMemo(() => {});
+  const handleDeleteSubSection = () => {
+    dispatch(deleteSubSection(item?.id));
+  };
 
   return (
     <div className={s.structure_right_contents_card_insidePunkt}>
@@ -80,6 +82,7 @@ export default function SectionsWithChildren({ item }) {
             <i
               className="fa-regular fa-trash-can"
               style={{ color: "gray", fontSize: "21px" }}
+              onClick={handleDeleteSubSection}
             ></i>
           </Link>
         </div>
