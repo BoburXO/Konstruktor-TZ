@@ -62,6 +62,7 @@ const CreateTZ = () => {
         <CreateTZ1center activeSection={activeSection} />
         <CreateTZ1right copy={copy} />
       </section>
+      <div>Hello world</div>
     </>
   );
 };
