@@ -188,14 +188,14 @@ const ContentOfSite = () => {
                         {" "}
                         <p className={s.sphere}>
                           {el?.sphere?.name === undefined || null
-                            ? "--"
+                            ? "..."
                             : el?.sphere?.name}
                         </p>
                       </TableCell>
                       <TableCell component="th" scope="row">
                         <p className={s.Content_description}>
-                          {el?.description === null || undefined
-                            ? "--"
+                          {!el?.description
+                            ? "..."
                             : el?.description?.slice(0, 70)}
                         </p>
                       </TableCell>
@@ -210,7 +210,7 @@ const ContentOfSite = () => {
                         {" "}
                         {localStorage.getItem("roleName") !== "Author" ? (
                           <div className={s.content_crud}>
-                            <Link to={`/updateContent/${el?.slug}`}>
+                            <Link to={`/updateContent/${el?.id}`}>
                               <button className={s.content_crud_create}>
                                 <img src={createIcon} alt="Copy" />
                               </button>

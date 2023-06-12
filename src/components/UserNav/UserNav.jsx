@@ -142,22 +142,29 @@ const UserNav = () => {
                   {t("usernav3")}
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  to="/lkavtor"
-                >
-                  {t("lkavtor1")}
-                </NavLink>
-              </li>
-              {/* <li>
-                <NavLink
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  to="/role-profile"
-                >
-                  {t("profile.1")}
-                </NavLink>
-              </li> */}
+              {localStorage.getItem("roleName") === "SuperAdmin" ? (
+                <li>
+                  <NavLink
+                    style={({ isActive }) =>
+                      isActive ? activeStyle : undefined
+                    }
+                    to="/organizations"
+                  >
+                    {t("super.1")}
+                  </NavLink>
+                </li>
+              ) : (
+                <li>
+                  <NavLink
+                    style={({ isActive }) =>
+                      isActive ? activeStyle : undefined
+                    }
+                    to="/lkavtor"
+                  >
+                    {t("lkavtor1")}
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
         ) : (

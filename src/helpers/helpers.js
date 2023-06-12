@@ -1,3 +1,6 @@
+import { Fragment } from "react";
+import SectionsWithChildren from "../components/Structure/SectionsWithChildren/SectionsWithChildren";
+
 export const setDefaultTableWithoutValue = (
   tableRaws,
   tableCols,
@@ -53,4 +56,17 @@ export const drawTableWithValues = (
       ))}
     </table>
   );
+};
+
+export const renderSectionsWithChildren = (sections) => {
+  return sections?.map((item) => {
+    return (
+      <Fragment key={item?.id}>
+        <SectionsWithChildren item={item} />
+        {item?.children?.length > 0
+          ? renderSectionsWithChildren(item.children)
+          : null}
+      </Fragment>
+    );
+  });
 };

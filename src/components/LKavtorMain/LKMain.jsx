@@ -68,7 +68,7 @@ const LKMain = () => {
 
   const optionOwner = [
     { value: true, label: "My" },
-    { value: false, label: "All" },
+    { value: "", label: "All" },
   ];
 
   return (
@@ -214,18 +214,17 @@ const LKMain = () => {
                                     >
                                       <a
                                         rel="noopener"
-                                        href={el?.pdf_file}
+                                        href={tz?.pdf_file}
                                         download
                                         target="_blank"
                                       >
-                                        {" "}
                                         <img src={skacatIcon} alt="Download" />
                                       </a>
                                     </button>
                                     <button
                                       onClick={() => {
                                         handleOpenDel();
-                                        setDelId(el?.id);
+                                        setDelId(tz?.id);
                                       }}
                                       className={s.lkmain_sect_crud_delete}
                                     >
@@ -235,7 +234,7 @@ const LKMain = () => {
                                       slotProps={{
                                         backdrop: {
                                           style: {
-                                            opacity: "0.7",
+                                            opacity: "0.4",
                                             boxShadow: 24,
                                           },
                                         },
@@ -308,8 +307,10 @@ const LKMain = () => {
           <div className={s.content_pagination}>
             <LkAvtorPagination
               createTz={
-                createTz?.results[0]?.user_organization[0]?.paginated_results
-                  ?.total_pages
+                createTz?.results
+                  ?.find((_, index) => index === 0)
+                  ?.user_organization?.find((_, index) => index === 0)
+                  ?.paginated_results?.total_pages
               }
             />
           </div>

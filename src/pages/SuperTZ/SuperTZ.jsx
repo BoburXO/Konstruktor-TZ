@@ -1,23 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import AuthorProfileComp from "../../components/AuthorProfileComp/AuthorProfileComp";
 import Footer from "../../components/Footer/Footer";
+import SuperTzComp from "../../components/SuperTzComp/SuperTzComp";
 import UserNav from "../../components/UserNav/UserNav";
 
-const AuthorProfile = () => {
+const SuperTZ = () => {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
+    if (localStorage.getItem("roleName") !== "SuperAdmin") {
+      navigate("/main");
+    }
   }, []);
   return (
     <>
       <UserNav />
-      <AuthorProfileComp />
+      <SuperTzComp />
       <Footer />
     </>
   );
 };
 
-export default AuthorProfile;
+export default SuperTZ;

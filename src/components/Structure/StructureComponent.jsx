@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import s from "../Structure/Structure.module.css";
 import pen from "../../assets/icons/pen.svg";
-import add from "../../assets/icons/plus-add.svg";
 import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
 import Modal from "@mui/material/Modal";
@@ -16,10 +15,15 @@ import Box from "@mui/material/Box";
 import { fetchStructureById } from "./structure_slice";
 import CreateNewStructureModal from "./CreateNewStructureModal/CreateNewStructureModal";
 import { toast } from "react-hot-toast";
-import StructureLeftSidebar from "./StructureLeftSidebar/StructureLeftSidebar";
 import CreateNewSectionModal from "./CreateNewSectionModal/CreateNewSectionModal";
-import SectionsWithChildren from "./SectionsWithChildren/SectionsWithChildren";
+import { renderSectionsWithChildren } from "../../helpers/helpers";
 import Loader from "../Loader/Loader";
+import {
+  deleteSection,
+  setCurrentSection,
+} from "./CreateNewSectionModal/section_slice";
+import StructureLeftSidebar from "../StructureLeftSidebar/StructureLeftSidebar";
+import RenderSectionsWithChildren from "../RenderSectionsWithChildren/RenderSectionsWithChildren";
 
 const style = {
   position: "absolute",
@@ -36,6 +40,23 @@ const style = {
 const StructureComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //default modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  //Structure modal
+  const [openStructure, setOpenStructure] = React.useState(false);
+  const handleOpenStructure = () => setOpenStructure(true);
+  const handleCloseStructure = () => setOpenStructure(false);
+  //Section Modal
+  const [openSection, setOpenSection] = useState(false);
+  const handleOpenSection = () => setOpenSection(true);
+  const handleCloseSection = () => setOpenSection(false);
+
+  //option modal = section || subsection
+  const [activeSectionModal, setActiveSectionModal] = useState("section");
+
   const {
     currentStructure,
     structures,
@@ -61,36 +82,21 @@ const StructureComponent = () => {
     //eslint-disable-next-line
   }, [currentStructure, currentSection, currentSubSection, currentField]);
 
+  useEffect(() => {
+    if (structures?.sections?.length) {
+      if (!currentSection?.id) {
+        dispatch(setCurrentSection(structures?.sections[0]));
+      }
+    }
+  }, [structures]);
+
   const activeSection = useMemo(() => {
     return structures?.sections?.find((item) => item.id === currentSection?.id);
   }, [currentSection, structures]);
 
-  const renderSectionsWithChildren = (sections) => {
-    return sections.map((item) => (
-      <Fragment key={item?.id}>
-        <SectionsWithChildren item={item} />
-        {item?.children?.length > 0
-          ? renderSectionsWithChildren(item.children)
-          : null}
-      </Fragment>
-    ));
+  const handleDeleteSection = () => {
+    dispatch(deleteSection(currentSection?.id));
   };
-
-  //default modal
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  //Structure modal
-  const [openStructure, setOpenStructure] = React.useState(false);
-  const handleOpenStructure = () => setOpenStructure(true);
-  const handleCloseStructure = () => setOpenStructure(false);
-  //Section Modal
-  const [openSection, setOpenSection] = useState(false);
-  const handleOpenSection = () => setOpenSection(true);
-  const handleCloseSection = () => setOpenSection(false);
-
-  //option modal = section || subsection
-  const [activeSectionModal, setActiveSectionModal] = useState("section");
 
   const { t } = useTranslation();
   return (
@@ -106,7 +112,11 @@ const StructureComponent = () => {
       ) : (
         <div className={s.structure_parent}>
           <Fade bottom cascade>
-            <StructureLeftSidebar sections={structures?.sections} />
+            <StructureLeftSidebar
+              sections={structures?.sections}
+              currentSection={currentSection}
+              setCurrentSection={setCurrentSection}
+            />
             <div className={s.structure_right_contents}>
               <div className={s.container}>
                 <div className={s.structure_right_contents_labels}>
@@ -141,19 +151,31 @@ const StructureComponent = () => {
                     <div className={s.structure_right_contents_card_punkt}>
                       <span>
                         <p>
-                          {t("struc5")} {activeSection?.header_name}
+                          {t("struc5")} {activeSection?.header_name_ru}
                         </p>
-                        <img
-                          src={pen}
-                          alt="Изменить"
-                          onClick={handleOpenSection}
-                        />
-                        <CreateNewSectionModal
-                          openSection={openSection}
-                          handleCloseSection={handleCloseSection}
-                          activeSectionModal="section"
-                          updatedData={currentSection}
-                        />
+                        <div>
+                          <img
+                            src={pen}
+                            alt="Изменить"
+                            onClick={handleOpenSection}
+                          />
+                          <CreateNewSectionModal
+                            openSection={openSection}
+                            handleCloseSection={handleCloseSection}
+                            activeSectionModal="section"
+                            updatedData={currentSection}
+                          />
+                          <i
+                            className="fa-regular fa-trash-can"
+                            style={{
+                              color: "gray",
+                              fontSize: "21px",
+                              marginLeft: "15px",
+                              cursor: "pointer",
+                            }}
+                            onClick={handleDeleteSection}
+                          ></i>
+                        </div>
                       </span>
                       <p className={s.structure_right_contents_input_label}>
                         {t("struc3")}
@@ -164,6 +186,7 @@ const StructureComponent = () => {
                         type="text"
                         value={activeSection?.name_ru}
                         className={s.structure_right_contents_input_punkt}
+                        readOnly
                       />
                       <br />
                       <br />
@@ -172,9 +195,13 @@ const StructureComponent = () => {
                         type="text"
                         value={activeSection?.name_uz}
                         className={s.structure_right_contents_input_punkt}
+                        readOnly
                       />
                     </div>
-                    {renderSectionsWithChildren(activeSection?.children)}
+                    <RenderSectionsWithChildren
+                      sections={activeSection?.children}
+                      userRole="moderator"
+                    />
                   </div>
                 </>
               ) : null}

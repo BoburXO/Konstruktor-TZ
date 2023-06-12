@@ -1,26 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import OrganizationsComp from "../../components/OrganizationsComp/OrganizationsComp";
 import UserNav from "../../components/UserNav/UserNav";
-import LKMain from "../../components/LKavtorMain/LKMain";
 
-const LKavtor = () => {
+const Organizations = () => {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
-    if (localStorage.getItem("roleName") === "SuperAdmin") {
-      navigate(-1);
+    if (localStorage.getItem("roleName") !== "SuperAdmin") {
+      navigate("/main");
     }
   }, []);
   return (
     <>
       <UserNav />
-      <LKMain />
+      <OrganizationsComp />
       <Footer />
     </>
   );
 };
 
-export default LKavtor;
+export default Organizations;

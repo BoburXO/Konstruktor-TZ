@@ -23,7 +23,8 @@ import Sphere from "./pages/Sphere/Sphere";
 import HistoryStructure from "./pages/HistoryStructure/HistoryStructure";
 import LKMainUpdate from "./Params/LKMainUpdate/LKMainUpdate";
 import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
-import AuthorProfile from "./pages/AuthorProfile/AuthorProfile";
+import Organizations from "./pages/Organizations/Organizations";
+import SuperTZ from "./pages/SuperTZ/SuperTZ";
 function App() {
   return (
     <>
@@ -38,15 +39,19 @@ function App() {
         <Route path="/index-spravochnik/:slug" element={<IndexSpra />} />
         <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
         <Route path="/lkavtor/:id" element={<LKMainUpdate />} />
-        <Route path="/role-profile" element={<AuthorProfile />} />
         <Route
           path="/content-of-site-index/:slug"
           element={<ContentOfSiteUser />}
         />
+        <Route path="/oneid/:one" element={<OneId />} />
+        <Route path="*" element={<PageNotFound />} />
+
         {localStorage.getItem("roleName") !== "Author" ? (
           <>
+            <Route path="/organizations" element={<Organizations />} />
+            <Route path="/organizations/:id" element={<SuperTZ />} />
             <Route path="/lkadminshablon" element={<LKAdminstrator />} />
-            <Route path="/spravochnikId/:slug" element={<SpravochnikId />} />
+            <Route path="/spravochnikId/:id" element={<SpravochnikId />} />
             <Route path="/structure" element={<Structure />} />
             <Route path="/createtz" element={<CreateTZ />} />
             <Route path="/createtz2" element={<CreateTZ2 />} />
@@ -54,13 +59,11 @@ function App() {
             <Route path="/addcontent" element={<AddContent />} />
             <Route path="/updateContent" element={<UpdContent />} />
             <Route path="/lkavtor-user" element={<LKAvtorUser />} />
-            <Route path="/updateContent/:slug" element={<UpdContent />} />
+            <Route path="/updateContent/:id" element={<UpdContent />} />
             <Route path="/sphere" element={<Sphere />} />
             <Route path="/history-structure" element={<HistoryStructure />} />
           </>
         ) : null}
-        <Route path="/oneid/:one" element={<OneId />} />
-        <Route path="*" element={<PageNotFound />} />
       </Routes>
 
       <Toaster

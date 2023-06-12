@@ -25,16 +25,7 @@ const style = {
 
 const Template = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const {
-    sample,
-    allSample,
-    sampleDelete,
-    updateSample,
-    sampleUpdUz,
-    setSampleUpdUz,
-    sampleUpdRu,
-    setSampleUpdRu,
-  } = useContext(Context);
+  const { sample, allSample, sampleDelete, updateSample } = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -50,8 +41,6 @@ const Template = () => {
       navigate("/");
     }
     allSample().then(() => setIsLoading(false));
-    setSampleUpdRu(paramsFind?.description_ru);
-    setSampleUpdUz(paramsFind?.description_uz);
   }, []);
 
   const [openDel, setOpenDel] = React.useState(false);
@@ -64,7 +53,10 @@ const Template = () => {
       <UserNav />
       <section className={s.templates_parent}>
         {sample?.count > 0 ? (
-          <div className={s.templates_container}>
+          <form
+            onSubmit={(e) => updateSample(e, paramsFind?.id)}
+            className={s.templates_container}
+          >
             <div className={s.templates_card}>
               <h1>
                 {t("struc5")} {paramsFind?.section}
@@ -75,30 +67,33 @@ const Template = () => {
                   <p>{t("ru")}:</p>
                   <br />
                   <textarea
-                    value={sampleUpdRu}
-                    onChange={(e) => setSampleUpdRu(e.target.value)}
+                    defaultValue={paramsFind?.description_ru}
                   ></textarea>
                 </span>
                 <span>
                   <p>{t("uz")}:</p>
                   <br />
                   <textarea
-                    value={sampleUpdUz}
-                    onChange={(e) => setSampleUpdUz(e.target.value)}
+                    defaultValue={paramsFind?.description_uz}
                   ></textarea>
                 </span>
               </span>
             </div>
-            <button className={s.Temp_back} onClick={() => navigate(-1)}>
+            <button
+              type="button"
+              className={s.Temp_back}
+              onClick={() => navigate(-1)}
+            >
               {t("btn.1")}
             </button>
-            <button
-              onClick={() => updateSample(paramsFind?.id)}
-              className={s.Temp_update}
-            >
+            <button type="submit" className={s.Temp_update}>
               <img src={createIcon} alt="Update" />
             </button>
-            <button onClick={() => handleOpenDel()} className={s.Temp_delete}>
+            <button
+              type="button"
+              onClick={() => handleOpenDel()}
+              className={s.Temp_delete}
+            >
               <img src={deleteIcon} alt="Delete" />
             </button>
             <Modal
@@ -141,7 +136,7 @@ const Template = () => {
                 </form>
               </Box>
             </Modal>
-          </div>
+          </form>
         ) : (
           <h3 style={{ textAlign: "center", padding: "120px" }}>
             {t("toast404")}

@@ -7,8 +7,7 @@ import { templates } from "../../templates";
 import copyIcon from "../../assets/icons/copyIcon.svg";
 import { useTranslation } from "react-i18next";
 
-
-const CreateTZ1right = ({copy}) => {
+const CreateTZ1right = ({ copy }) => {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +23,7 @@ const CreateTZ1right = ({copy}) => {
                   <h3>
                     {t("struc5")} {el.punkt}
                   </h3>
-                  <span onClick={(e) => copy(el.id,e)}>
+                  <span onClick={(e) => copy(el.id, e)}>
                     <img src={copyIcon} alt="CopyPast" />
                   </span>
                 </div>

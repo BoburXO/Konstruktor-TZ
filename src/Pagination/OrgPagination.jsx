@@ -3,17 +3,17 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Context } from "../Context/Context";
 
-const LkAvtorPagination = ({ createTz }) => {
-  const { getCreateTz } = useContext(Context);
+const OrgPagination = ({ organization }) => {
+  const { SuperOrganizations } = useContext(Context);
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e,page) => getCreateTz(page)}
-        count={createTz}
+        onChange={(e, page) => SuperOrganizations(page)}
+        count={organization}
         color="primary"
       />
     </Stack>
   );
 };
 
-export default LkAvtorPagination;
+export default OrgPagination;

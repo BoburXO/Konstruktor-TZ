@@ -12,8 +12,8 @@ const LKMainUpdate = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const {
-    getCreateTz,
-    createTz,
+    getDetailTzId,
+    detailIdTz,
     updateCreateTz,
     tzCommentRu,
     setTzCommentRu,
@@ -27,19 +27,18 @@ const LKMainUpdate = () => {
 
   const { t } = useTranslation();
   const { id } = useParams();
-  const lkavtorParams = createTz?.results?.find((el) => {
-    return el?.id === id;
-  });
 
   useEffect(() => {
-    getCreateTz().then(() => setIsLoading(false));
-    setTzNameRu(lkavtorParams?.tz_name_ru);
-    setTzNameUz(lkavtorParams?.tz_name_uz);
-    setTzCommentRu(lkavtorParams?.comment_ru);
-    setTzCommentUz(lkavtorParams?.comment_uz);
+    getDetailTzId(id).then(() => setIsLoading(false));
+    setTzNameRu(detailIdTz?.tz_name_ru);
+    setTzNameUz(detailIdTz?.tz_name_uz);
+    setTzCommentRu(detailIdTz?.comment_ru);
+    setTzCommentUz(detailIdTz?.comment_uz);
   }, []);
 
   if (isLoading) return <Loader />;
+
+  console.log(detailIdTz);
   return (
     <>
       <UserNav />
@@ -90,7 +89,7 @@ const LKMainUpdate = () => {
           </div>
           <div className={s.lk_main_card_btns}>
             <button
-              onClick={() => updateCreateTz(lkavtorParams?.id)}
+              onClick={() => updateCreateTz(detailIdTz?.id)}
               className={s.Temp_update}
             >
               <img src={createIcon} alt="Update" />

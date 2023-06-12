@@ -1,16 +1,18 @@
 import { useTranslation } from "react-i18next";
-import s from "../../Structure/Structure.module.css";
+import s from "./StructureLeftSidebar.module.css";
 import { Dropdown } from "rsuite";
-import { setCurrentSection } from "../CreateNewSectionModal/section_slice";
 import { Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-export default function StructureLeftSidebar({ sections }) {
+export default function StructureLeftSidebar({
+  sections,
+  currentSection,
+  setCurrentSection = Function.prototype,
+}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { currentSection } = useSelector((state) => state.section);
 
-  const renderSectionsWithChildren = (sections) => {
+  const renderSectionsListInLeftSidebar = (sections) => {
     return (
       <>
         {sections?.map((section) => (
@@ -27,7 +29,7 @@ export default function StructureLeftSidebar({ sections }) {
                   }
                 }}
               >
-                {renderSectionsWithChildren(section.children)}
+                {renderSectionsListInLeftSidebar(section.children)}
               </Dropdown>
             ) : (
               <div
@@ -54,9 +56,18 @@ export default function StructureLeftSidebar({ sections }) {
       <h2>{t("struc")}</h2>
       <br />
       <br />
-      {currentSection?.id
-        ? renderSectionsWithChildren(sections)
+      {!setCurrentSection
+        ? sections?.length
+          ? renderSectionsListInLeftSidebar(sections)
+          : "Nothing here yet"
+        : currentSection?.id
+        ? renderSectionsListInLeftSidebar(sections)
         : "Nothing here yet"}
+      {/* {setCurrentSection
+        ? currentSection?.id
+          ? renderSectionsListInLeftSidebar(sections)
+          : "Nothing here yet"
+        : renderSectionsListInLeftSidebar(sections)} */}
     </div>
   );
 }
