@@ -36,7 +36,7 @@ function App() {
         <Route path="/createtz2" element={<CreateTZ2 />} />
         <Route path="/contentofsite" element={<Content />} />
         <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
-        <Route path="/index-spravochnik/:slug" element={<IndexSpra />} />
+        <Route path="/index-spravochnik/:id" element={<IndexSpra />} />
         <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
         <Route path="/lkavtor/:id" element={<LKMainUpdate />} />
         <Route

@@ -14,9 +14,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const OrganizationsComp = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const {
     SuperOrganizations,
@@ -28,8 +29,8 @@ const OrganizationsComp = () => {
   const { t } = useTranslation();
 
   const optionOwner = [
-    { value: true, label: "My" },
-    { value: "", label: "All" },
+    { value: true, label: t("super.2") },
+    { value: "", label: t("filter.1") },
   ];
 
   useEffect(() => {
@@ -42,7 +43,16 @@ const OrganizationsComp = () => {
     <>
       <section className={s.lkmain_sect}>
         <div className={s.lkmain_sect_container}>
-          <h1>{t("super.1")}</h1>
+          <div className={s.lkmain_sect_labels}>
+            <h1>{t("super.1")}</h1>
+            <button
+              onClick={() => navigate("/createtz")}
+              className={s.lkmain_sect_create_btn}
+            >
+              <span style={{ fontSize: "25px" }}>+</span>
+              <span>{t("lkavtor1")}</span>
+            </button>
+          </div>
           <br />
           <div className={s.lkmain_sect_labels}>
             <div
@@ -65,7 +75,9 @@ const OrganizationsComp = () => {
               <div>
                 <Select
                   placeholder={"Owner"}
-                  onChange={(value) => orgIsOwner(value.value)}
+                  onChange={(value) => {
+                    orgIsOwner(value.value);
+                  }}
                   className={s.selecttt}
                   options={optionOwner}
                 />

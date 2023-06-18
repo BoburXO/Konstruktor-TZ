@@ -162,6 +162,7 @@
     "1": "Chiqish"
   },
   "super": {
-    "1": "Tashkilotlar"
+    "1": "Tashkilotlar",
+    "2":"Men"
   }
 }

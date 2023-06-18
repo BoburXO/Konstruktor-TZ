@@ -166,10 +166,12 @@ const Shablonla = () => {
                 placeholder={t("struc5")}
                 onChange={(value) => getSampleBySection(value.value)}
                 className={s.sample_select}
-                options={selectPunkt?.results?.map((el) => ({
-                  value: el.id,
-                  label: el.name,
-                }))}
+                options={[{ id: "", name: t("filter.1") }]
+                  .concat(selectPunkt?.results)
+                  .map((el) => ({
+                    value: el.id,
+                    label: el.name,
+                  }))}
               />
             </div>
           </div>
@@ -195,8 +197,11 @@ const Shablonla = () => {
                         </span>
                         <br />
                         {el?.description?.length > 250 ? (
-                          <p>{el?.description?.slice(0, 250)}{"..."}</p>
-                        ):(
+                          <p>
+                            {el?.description?.slice(0, 250)}
+                            {"..."}
+                          </p>
+                        ) : (
                           <p>{el?.description}</p>
                         )}
                       </div>
@@ -208,7 +213,9 @@ const Shablonla = () => {
           ) : (
             <>
               <br />
-              <h2 className={s.notFound} style={{ textAlign: "center" }}>{t("toast404")}</h2>
+              <h2 className={s.notFound} style={{ textAlign: "center" }}>
+                {t("toast404")}
+              </h2>
             </>
           )}
           <br />

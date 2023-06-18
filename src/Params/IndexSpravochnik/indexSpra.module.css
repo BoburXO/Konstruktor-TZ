@@ -64,3 +64,10 @@
 .index_el li p {
   font-size: 18px;
 }
+
+.notFound {
+  text-align: center;
+  padding: 60px 0;
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+}

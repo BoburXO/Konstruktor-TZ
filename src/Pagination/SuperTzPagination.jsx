@@ -3,12 +3,12 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Context } from "../Context/Context";
 
-const LkAvtorPagination = ({ superTz }) => {
+const SuperTzPagination = ({ superTz, paramsID }) => {
   const { SuperTzGetPagination } = useContext(Context);
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e,page) => SuperTzGetPagination(page)}
+        onChange={(e, page) => SuperTzGetPagination(page, paramsID)}
         count={superTz}
         color="primary"
       />
@@ -16,4 +16,4 @@ const LkAvtorPagination = ({ superTz }) => {
   );
 };
 
-export default LkAvtorPagination;
+export default SuperTzPagination;

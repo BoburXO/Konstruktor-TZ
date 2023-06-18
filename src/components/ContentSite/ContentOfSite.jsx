@@ -142,10 +142,12 @@ const ContentOfSite = () => {
                 placeholder={t("add-content.4")}
                 onChange={(value) => getContentSphereFilter(value.value)}
                 className={s.selecttt2}
-                options={sphere.map((el) => ({
-                  value: el.id,
-                  label: el.name_ru,
-                }))}
+                options={[{ id: "", name: t("filter.1") }]
+                  ?.concat(sphere)
+                  ?.map((el) => ({
+                    value: el.id,
+                    label: el.name,
+                  }))}
               />
             </div>
             {localStorage.getItem("roleName") !== "Author" ? (
@@ -228,7 +230,7 @@ const ContentOfSite = () => {
                             <Modal
                               slotProps={{
                                 backdrop: {
-                                  style: { opacity: "1", boxShadow: 24 },
+                                  style: { opacity: "0.7", boxShadow: 24 },
                                 },
                               }}
                               open={downloadPdf}
@@ -294,7 +296,7 @@ const ContentOfSite = () => {
                             <Modal
                               slotProps={{
                                 backdrop: {
-                                  style: { opacity: "1", boxShadow: 24 },
+                                  style: { opacity: "0.7", boxShadow: 24 },
                                 },
                               }}
                               open={openDel}
@@ -347,7 +349,7 @@ const ContentOfSite = () => {
                             <Modal
                               slotProps={{
                                 backdrop: {
-                                  style: { opacity: "1", boxShadow: 24 },
+                                  style: { opacity: "0.7", boxShadow: 24 },
                                 },
                               }}
                               open={downloadPdf}
