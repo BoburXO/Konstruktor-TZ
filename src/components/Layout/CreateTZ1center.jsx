@@ -11,7 +11,7 @@ export default function CreateTZ1center({ activeSection }) {
   const ref = useRef([]);
 
   return (
-    <div className={s.craete1_center}>
+    <form className={s.craete1_center}>
       <span onClick={() => navigate(-1)} className={s.craete1_center_navigate}>
         <img src={arrowleft} alt="←" />
         <p>{t("createtz1")}</p>
@@ -34,6 +34,6 @@ export default function CreateTZ1center({ activeSection }) {
           />
         </div>
       </div>
-    </div>
+    </form>
   );
 }

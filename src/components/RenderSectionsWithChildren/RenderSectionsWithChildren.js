@@ -12,7 +12,7 @@ export default function RenderSectionsWithChildren({ sections, userRole }) {
           <SectionsWithChildren item={item} />
         )}
         {item?.children?.length > 0
-          ? renderSectionsWithChildren(item.children, "author")
+          ? renderSectionsWithChildren(item?.children, userRole)
           : null}
       </Fragment>
     ));

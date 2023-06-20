@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import s from "../CreateTZ1-component/CreateTZ1.module.css";
-import { Dropdown } from "rsuite";
-import { NavLink, useNavigate } from "react-router-dom";
-import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
 import CreateTZ1right from "../Layout/CreateTZ1right";
 import toast from "react-hot-toast";
 import { templates } from "../../templates";
-import arrowleft from "../../assets/icons/arrowLeft.svg";
-import { useRef } from "react";
 import StructureLeftSidebar from "../StructureLeftSidebar/StructureLeftSidebar";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -19,12 +14,10 @@ import CreateTZ1center from "../Layout/CreateTZ1center";
 
 const CreateTZ = () => {
   const dispatch = useDispatch();
-  const ref = useRef([]);
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const [arr, setArr] = useState([]);
 
-  const { loading, structure, activeSection } = useSelector(
+  const {  structure, activeSection } = useSelector(
     (state) => state.userStructure
   );
 
@@ -42,7 +35,7 @@ const CreateTZ = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchStructureByIdForUser("7eb528dc-fb85-41ea-aad1-36527d9a0606"));
+    dispatch(fetchStructureByIdForUser("91f0a3dd-a3a3-4a8a-ae7b-53914c2ef060"));
   }, []);
 
   useEffect(() => {
@@ -62,7 +55,6 @@ const CreateTZ = () => {
         <CreateTZ1center activeSection={activeSection} />
         <CreateTZ1right copy={copy} />
       </section>
-      <div>Hello world</div>
     </>
   );
 };

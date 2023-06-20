@@ -1,11 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import s from "./CreateTZ1.module.css";
+import DrawTableWithValues from "../DrawTableWithValues/DrawTableWithValues";
+import { useEffect } from "react";
 
 export default function SectionsField({ field }) {
   const { t } = useTranslation();
   const ref = useRef([]);
-  return (
+  const [tableData, setTableData] = useState(field?.json_data?.data_uz)
+  useEffect(() => {
+    console.log(tableData)
+  }, [tableData])
+    return (
     <>
       {field?.select_type === 1 ? (
         <div className={s.create1_form_card}>
@@ -28,7 +34,10 @@ export default function SectionsField({ field }) {
           ></textarea>
         </div>
       ) : field?.select_type === 6 ? (
-        "Table"
+        <div className={s.create1_form_card}>
+          <p>{field?.json_data?.table_title_uz || "Jadval Nomi"}</p>  
+          <DrawTableWithValues tableData={tableData} setTableData={setTableData} userRole={"author"} />
+        </div>
       ) : field?.select_type === 7 ? (
         "Image"
       ) : field?.select_type === 8 ? (

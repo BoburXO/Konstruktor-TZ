@@ -22,7 +22,6 @@ export default function DrawTableWithValues({
                     : {
                         border: "1px solid #E6E6E6",
                         height: "30px",
-                        padding: "0 5px",
                       }
                 }
               >
