@@ -55,6 +55,7 @@ const SuperTzComp = () => {
     getSuperTzSelect,
     DuplicateTz,
     getSuperTzDraft,
+    SuperAuthor,
   } = useContext(Context);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
@@ -78,9 +79,13 @@ const SuperTzComp = () => {
   ];
 
   const optionsAuthor = [
-    { value: true, label: t("filter.1") },
-    { value: false, label: t("filter.5") },
+    { value: "All", label: "Admin/Moderator" },
+    { value: "Author", label: t("filter.5") },
   ];
+
+  const handleChange = (value, id) => {
+    value === "All" ? SuperTzGet(id) : SuperAuthor();
+  };
 
   return (
     <div>
@@ -136,7 +141,7 @@ const SuperTzComp = () => {
               <div>
                 <Select
                   placeholder={t("filter.1")}
-                  // onChange={(value) => getSuperTzSelect(value.value, id)}
+                  onChange={(value) => handleChange(value.value, id)}
                   className={s.selecttt}
                   options={optionsAuthor}
                 />

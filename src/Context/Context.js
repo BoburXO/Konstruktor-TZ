@@ -1871,10 +1871,25 @@ const ContextProvider = ({ children }) => {
   };
   //tz duplicate
 
+  //superAuthor
+  const SuperAuthor = () => {
+    axios.get(`${API}/constructor/list/user`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    }).then((res) => {
+    setSuperTz(res.data)
+    })
+  };
+  //superAuthor
+
   return (
     <>
       <Context.Provider
         value={{
+          SuperAuthor,
           getModeratorDraft,
           getModeratorSelect,
           AdminTzDraft,
