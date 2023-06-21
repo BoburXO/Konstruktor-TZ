@@ -16,7 +16,11 @@ const Header = () => {
             <div className={s.header_parent}>
               <h1 className={s.header_label}>{t("hheader")}</h1>
               <button
-                onClick={() => navigate("/lkavtor")}
+                onClick={() =>
+                  localStorage.getItem("roleName") === "SuperAdmin"
+                    ? navigate("/organizations")
+                    : navigate("/lkavtor")
+                }
                 className={s.header_btn}
               >
                 {t("hheaderbtn")}

@@ -37,6 +37,9 @@ const Template = () => {
   const { t } = useTranslation();
 
   React.useEffect(() => {
+    if (!localStorage.getItem("ConstructorRoleAccessToken")) {
+      navigate("/");
+    }
     if (localStorage.getItem("roleName") === "Author") {
       navigate("/");
     }
@@ -52,6 +55,7 @@ const Template = () => {
     <>
       <UserNav />
       <section className={s.templates_parent}>
+        <h1 className={s.sample_org}>{paramsFind?.organization}</h1>
         {sample?.count > 0 ? (
           <form
             onSubmit={(e) => updateSample(e, paramsFind?.id)}

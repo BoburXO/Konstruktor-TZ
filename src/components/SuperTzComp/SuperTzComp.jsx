@@ -199,7 +199,7 @@ const SuperTzComp = () => {
                             {" "}
                             <span className={s.lkmain_sect_dates}>
                               <img src={date} alt="" />
-                              <p>{tz?.created_at}</p>
+                              <p>{tz?.created_at.slice(0, 10)}</p>
                             </span>{" "}
                           </TableCell>
                           <TableCell align="right">

@@ -73,7 +73,7 @@ const LKMain = () => {
 
   const optionOwner = [
     { value: true, label: t("super.2") },
-    { value: "", label: t("filter.1") },
+    { value: false, label: t("filter.1") },
   ];
 
   const optionsDraft = [
@@ -165,6 +165,10 @@ const LKMain = () => {
             <>
               <div className={s.org_name_div}>
                 <h4>{superTz?.name}</h4>
+                <h4>
+                  {"№ "}
+                  {superTz?.user_organization[0]?.paginated_results?.count}
+                </h4>
               </div>
               <TableContainer component={Paper} classes={{ root: s.table }}>
                 {superTz?.user_organization?.map((user) => (
@@ -209,7 +213,6 @@ const LKMain = () => {
                             <p>#{tz?.row_number}</p>
                           </TableCell>
                           <TableCell align="left">
-                            {" "}
                             <p>{user?.username}</p>
                           </TableCell>
                           <TableCell component="th" scope="row" align="left">
@@ -219,7 +222,7 @@ const LKMain = () => {
                             {" "}
                             <span className={s.lkmain_sect_dates}>
                               <img src={date} alt="" />
-                              <p>{tz?.created_at}</p>
+                              <p>{tz?.created_at.slice(0, 10)}</p>
                             </span>{" "}
                           </TableCell>
                           <TableCell align="right">

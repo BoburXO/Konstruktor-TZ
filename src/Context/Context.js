@@ -29,11 +29,12 @@ const ContextProvider = ({ children }) => {
   const [nameClassUz, setNameClassUz] = useState("");
   const [nameClassRu, setNameClassRu] = useState("");
   //notify
-  const notify401 = () => toast(t("toast401"));
-  const notify404 = () => toast(t("toast404"));
-  const notify400 = () => toast(t("toast400"));
-  const notify403 = () => toast(t("toast403"));
-  const notify500 = () => toast(t("toast500"));
+  const notify401 = () => toast.error(t("toast401"));
+  const notify404 = () => toast.error(t("toast404"));
+  const notify400 = () => toast.error(t("toast400"));
+  const notify403 = () => toast.error(t("toast403"));
+  const notify500 = () => toast.error(t("toast500"));
+  const notify200 = () => toast.success(t("toast200"));
   //notify
 
   //createContent
@@ -1767,16 +1768,13 @@ const ContextProvider = ({ children }) => {
   //moderatorTz
   const getModeratorSelect = (type) => {
     axios
-      .get(
-        `${API}/constructor/organization/detail?select_type=${type}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
+      .get(`${API}/constructor/organization/detail?select_type=${type}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then((res) => {
         setSuperTz(res.data);
       })
@@ -1801,16 +1799,13 @@ const ContextProvider = ({ children }) => {
 
   const getModeratorDraft = (is_draft) => {
     axios
-      .get(
-        `${API}/constructor/organization/detail?is_draft=${is_draft}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
+      .get(`${API}/constructor/organization/detail?is_draft=${is_draft}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then((res) => {
         setSuperTz(res.data);
       })
@@ -1849,11 +1844,12 @@ const ContextProvider = ({ children }) => {
         }
       )
       .then(() => {
-        if (localStorage.getItem("roleName") === "SuperAdmin") {
-          navigate("/organizations");
-        } else {
-          window.location.reload();
-        }
+        notify200();
+        // if (localStorage.getItem("roleName") === "SuperAdmin") {
+        //   navigate("/organizations");
+        // } else {
+        //   window.location.reload();
+        // }
       })
       .catch((err) => {
         if (err.response.status === 401) {

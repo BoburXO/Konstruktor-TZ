@@ -169,8 +169,8 @@ const Shablonla = () => {
                 options={[{ id: "", name: t("filter.1") }]
                   .concat(selectPunkt?.results)
                   .map((el) => ({
-                    value: el.id,
-                    label: el.name,
+                    value: el?.id,
+                    label: el?.name,
                   }))}
               />
             </div>

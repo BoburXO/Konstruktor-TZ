@@ -163,6 +163,10 @@
   },
   "super": {
     "1": "Tashkilotlar",
-    "2":"Men"
+    "2":"Men",
+    "3":"Tashkilot",
+    "4":"Natijalar",
+    "5":"Foydalanuvchilar",
+    "6":"Ko'rish"
   }
 }

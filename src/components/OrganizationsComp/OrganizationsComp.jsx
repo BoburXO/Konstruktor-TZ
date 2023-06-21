@@ -74,7 +74,7 @@ const OrganizationsComp = () => {
               </div>
               <div>
                 <Select
-                  placeholder={"Owner"}
+                  placeholder={t("filter.1")}
                   onChange={(value) => {
                     orgIsOwner(value.value);
                   }}
@@ -91,10 +91,10 @@ const OrganizationsComp = () => {
                 <TableHead>
                   <TableRow>
                     <TableCell>№ </TableCell>
-                    <TableCell align="left">Organization</TableCell>
-                    <TableCell align="center">Results</TableCell>
-                    <TableCell align="center">Users</TableCell>
-                    <TableCell align="right">Show</TableCell>
+                    <TableCell align="left">{t("super.3")}</TableCell>
+                    <TableCell align="center">{t("super.4")}</TableCell>
+                    <TableCell align="center">{t("super.5")}</TableCell>
+                    <TableCell align="right">{t("super.6")}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody classes={{ root: s.tbody_root }}>

@@ -12,10 +12,10 @@
 }
 
 .back {
-  width: 90%;
   margin: auto;
   display: flex;
   justify-content: flex-end;
+  padding-top: 20px;
 }
 
 .shablon_cancel_btn {
@@ -57,12 +57,8 @@
   transition: 0.3s ease;
 }
 
-.index_el li:hover {
-  border: 2px solid #2684ff !important;
-}
-
 .index_el li p {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .notFound {

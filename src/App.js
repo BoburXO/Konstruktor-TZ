@@ -70,10 +70,6 @@ function App() {
         position="top-center"
         toastOptions={{
           duration: 5000,
-          style: {
-            background: "red",
-            color: "#FFF",
-          },
         }}
       />
     </>
