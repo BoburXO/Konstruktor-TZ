@@ -1881,7 +1881,23 @@ const ContextProvider = ({ children }) => {
       },
     }).then((res) => {
     setSuperTz(res.data)
-    })
+    }) .catch((err) => {
+      if (err.response.status === 401) {
+        refreshToken().then(() => SuperAuthor());
+      }
+      if (err.response.status === 404) {
+        notify404();
+      }
+      if (err.response.status === 400) {
+        notify400();
+      }
+      if (err.response.status === 403) {
+        notify403();
+      }
+      if (err.response.status === 500) {
+        notify500();
+      }
+    });
   };
   //superAuthor
 
