@@ -17,7 +17,7 @@ const CreateTZ = () => {
   const { t } = useTranslation();
   const [arr, setArr] = useState([]);
 
-  const {  structure, activeSection } = useSelector(
+  const { structure, activeSection } = useSelector(
     (state) => state.userStructure
   );
 
@@ -35,7 +35,7 @@ const CreateTZ = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchStructureByIdForUser("91f0a3dd-a3a3-4a8a-ae7b-53914c2ef060"));
+    dispatch(fetchStructureByIdForUser("d9678adb-86c5-42cf-bbf9-445122f04cff"));
   }, []);
 
   useEffect(() => {

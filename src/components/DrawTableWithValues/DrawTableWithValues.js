@@ -3,6 +3,7 @@ export default function DrawTableWithValues({
   tableData,
   setTableData,
   fill = true,
+  userRole,
 }) {
   const beingRenderedTableData = defaultTable
     ? tableData.filter((_, rawIndex) => rawIndex === 0)
@@ -29,7 +30,8 @@ export default function DrawTableWithValues({
                   <input
                     type="text"
                     value={cell}
-                    style={{ borderRadius: "0" }}
+                    style={{ borderRadius: "0", border: "1px solid #E6E6E6" }}
+                    disabled={userRole === "author" && rawIndex === 0}
                     onChange={(e) => {
                       setTableData((prev) => {
                         const updatedData = [...prev];
