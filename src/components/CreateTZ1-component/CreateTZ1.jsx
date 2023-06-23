@@ -17,12 +17,13 @@ const CreateTZ = () => {
   const { t } = useTranslation();
   const [arr, setArr] = useState([]);
 
-  const { structure, activeSection } = useSelector(
+  const notify = () =>
+    toast.success(t("toast"), {
+      style: { background: "white", color: "black" },
+    });
+  const { loading, structure, activeSection } = useSelector(
     (state) => state.userStructure
   );
-
-  const notify = () => toast(t("toast"));
-
   const copy = (id, e) => {
     const currentPunkt = templates?.find((punkt) => {
       setArr([...arr, punkt.desc]);

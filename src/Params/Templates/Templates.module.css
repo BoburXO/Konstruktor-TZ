@@ -45,7 +45,7 @@
 
 .templates_card textarea {
   width: 100%;
-  height: 40vh !important;
+  height: 30vh;
 
   resize: vertical;
   padding: 15px;
@@ -78,4 +78,85 @@
 .Temp_update:hover {
   transform: scale(1.1) !important;
   background: transparent !important;
+}
+
+.sample_parent {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.sample_parent span {
+  width: 100%;
+}
+
+.shablon_delete_btn {
+  width: 130px;
+  height: 48px;
+
+  border-radius: 8px;
+  border: 2px solid #eb5757;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: #eb5757;
+}
+
+.shablon_delete_btn:hover {
+  background: #fff;
+  color: #eb5757;
+}
+
+.createElementFormBtns {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.shablon_save_btn {
+  width: 130px;
+  height: 48px;
+
+  border-radius: 8px;
+  border: 2px solid #0ba9cc;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: #0ba9cc;
+}
+
+.shablon_save_btn:hover {
+  background: #fff;
+  color: #0ba9cc;
+}
+
+.createElementForm input {
+  width: 100%;
+  height: 40px;
+
+  outline: none;
+  padding-left: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #222;
+}
+
+.createElementForm input:focus {
+  border: #222 solid 1px;
+}
+
+
+.sample_org{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
 }

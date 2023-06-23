@@ -8,6 +8,8 @@ import { store } from "./redux/store";
 import "./i18n";
 import { ContextProvider } from "./Context/Context";
 
+import 'react-languages-select/css/react-languages-select.css';
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>

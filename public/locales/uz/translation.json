@@ -19,6 +19,12 @@
   "lkavtor2": "TEXNIK TOPSHIRIQLARNING NOMI",
   "lkavtor3": "YARATILINGAN KUNI",
   "lkavtor4": "HARAKATLAR",
+  "lkavtor5": "Sayt",
+  "lkavtor6": "Tizim",
+  "lkavtor7": "Texnik topshiriq uchun sharhlar",
+  "lkavtor8": "Texnik topshiriqning nomi",
+  "lkavtor9": "Rollar",
+  "lkavtor10": "Foydalanuvchi nomi",
   "createtz": "Ma'lumotnomalar tuzilishi",
   "createtz1": "Ma'lumotnomalar ro'yxatiga qaytish",
   "createtz2": "IP-ning to'liq nomi",
@@ -65,6 +71,8 @@
   "struc3": "Punkt sarlavhasi",
   "struc4": "Kirish maydoni",
   "struc5": "Punkt",
+  "struc6": "Tuzilmalar tarixi",
+  "struc7": "Tuzilma yaratish",
   "spra": "Ma'lumotnomalar",
   "spra1": "Ma'lumotnoma yaratish",
   "spra2": "Ma'lumotnoma yaratilishi",
@@ -74,7 +82,7 @@
   "spra6": "MA'LUMOTNOMA NOMLARI",
   "spra7": "ELEMENTLAR SONI",
   "spra8": "HARAKATLAR",
-  "spra9": "ta element",
+  "spra9": "element",
   "spra10": "Bo'sh",
   "shablon": "Shablonlar",
   "shablon1": "Shablon yaratish",
@@ -116,14 +124,15 @@
     "20": "Bo'sh"
   },
   "ru": "Rus tili",
-  "uz": "O'zbekcha",
+  "uz": "O'zbek tili",
   "toast": "Element almashish uchun nusxalandi",
-  "toast401": "Ruxsat berilmagan",
+  "toast401": "Ruxsat etilmagan",
   "toast404": "Topilmadi",
   "toast400": "Noto'g'ri so'rov, yoki qaysidur qiymat kiritilmagan",
   "toast403": "Taqiqlangan",
   "toast500": "Serverda xatolik",
   "toast200": "Muvaffaqiyatli yakunlandi",
+  "toastEmpty": "Hech bo'lmasa sarlavha qo'shilishi shart!",
   "spra_id": "Bu yerda siz kataloglarni tahrirlashingiz yoki o'chirishingiz mumkin",
   "spra_id1": "Sarlavhani nomini o'zgartirish...",
   "spra_id2": "Elementni o'zgartirish...",
@@ -134,16 +143,30 @@
     "element": "Element yaratish"
   },
   "filter": {
-    "1": "Umumiy",
+    "1": "Hammasi",
     "2": "Nashr etilgan",
     "3": "Qoralama",
-    "4": "Filtr"
+    "4": "Filtr",
+    "5": "Avtor",
+    "6": "Moderator"
   },
   "sfera": {
     "1": "Soha yaratish",
     "2": "Sohani o'zgartirish",
     "3": "DIQQAT!",
     "4": "OK",
-    "5": "Agar siz ushbu sohani oʻchirmoqchi boʻlsangiz, saytning kontent sahifasiga oʻting va ushbu sohadagi kontentni toping va uni oʻsha yerdan oʻchirib tashlang."
+    "5": "Agar siz ushbu sohani oʻchirmoqchi boʻlsangiz, saytning kontent sahifasiga oʻting va ushbu sohadagi kontentni toping va uni oʻsha yerdan oʻchirib tashlang.",
+    "6": "Shuni bilingki, agar hozir siz buni o'chirib tashlasangiz, keyin uni ortga qaytarish imkoni bo'lmaydi va u butkul o'chib ketadi."
+  },
+  "logOut": {
+    "1": "Chiqish"
+  },
+  "super": {
+    "1": "Tashkilotlar",
+    "2":"Men",
+    "3":"Tashkilot",
+    "4":"Natijalar",
+    "5":"Foydalanuvchilar",
+    "6":"Ko'rish"
   }
 }

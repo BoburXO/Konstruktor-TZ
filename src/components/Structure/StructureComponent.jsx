@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 //redux libraries
 import { useSelector, useDispatch } from "react-redux";
@@ -37,6 +38,7 @@ const style = {
 };
 
 const StructureComponent = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //default modal
@@ -116,9 +118,19 @@ const StructureComponent = () => {
               setCurrentSection={setCurrentSection}
             />
             <div className={s.structure_right_contents}>
-              <h1 className={s.structure_right_contents_label}>
-                {t("struc1")}
-              </h1>
+              <div className={s.container}>
+                <div className={s.structure_right_contents_labels}>
+                  <h1 className={s.structure_right_contents_label}>
+                    {t("struc1")}
+                  </h1>
+                  <button
+                    onClick={() => navigate("/history-structure")}
+                    className={s.srtucture_history}
+                  >
+                    {t("struc6")}
+                  </button>
+                </div>
+              </div>
               <span className={s.structure_right_contents_update}>
                 <h2>
                   {currentStructure?.tz_name

@@ -7,10 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const changeLanguage = (language) => {
-    i18n.changeLanguage(language);
-  };
+  const { t } = useTranslation();
   return (
     <>
       <header className={s.home_header}>
@@ -19,7 +16,11 @@ const Header = () => {
             <div className={s.header_parent}>
               <h1 className={s.header_label}>{t("hheader")}</h1>
               <button
-                onClick={() => navigate("/lkavtor")}
+                onClick={() =>
+                  localStorage.getItem("roleName") === "SuperAdmin"
+                    ? navigate("/organizations")
+                    : navigate("/lkavtor")
+                }
                 className={s.header_btn}
               >
                 {t("hheaderbtn")}

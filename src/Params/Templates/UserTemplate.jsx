@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import UserNav from "../../components/UserNav/UserNav";
 import s from "../Templates/Templates.module.css";
@@ -20,7 +20,7 @@ const UserTemplate = () => {
   const { t } = useTranslation();
   return (
     <>
-    <UserNav/>
+      <UserNav />
       <section className={s.templates_parent}>
         <div className={s.templates_container}>
           <div className={s.templates_card}>

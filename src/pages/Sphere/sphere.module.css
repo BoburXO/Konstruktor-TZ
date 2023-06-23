@@ -159,4 +159,19 @@
   padding: 10px !important;
 }
 
+.shablon_delete_btn{
+  width: 130px;
+  height: 48px;
 
+  border-radius: 8px;
+  border: 2px solid #eb5757;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: #eb5757;
+}
+
+.shablon_delete_btn:hover {
+  background: #fff;
+  color: #eb5757;
+}

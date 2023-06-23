@@ -41,6 +41,9 @@ const Nav = () => {
                 <option className={s.til_opt} value="uz">
                   O'zbek
                 </option>
+                <option className={s.til_opt} value="kr">
+                Ўзбек
+                </option>
               </select>
               <NavLink to="/lkavtor">
                 {" "}
