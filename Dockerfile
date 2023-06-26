@@ -9,6 +9,6 @@ RUN find ./dist -type f | xargs gzip -k
 FROM nginx
 RUN mkdir -p /run/nginx/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /. /usr/local/nginx/html/
+COPY --from=build /app /usr/local/nginx/html/
 EXPOSE 80
 CMD nginx -g 'daemon off;'
