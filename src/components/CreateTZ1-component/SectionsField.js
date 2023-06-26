@@ -20,7 +20,9 @@ export default function SectionsField({ field }) {
   const [stringField, setStringField] = useState("");
   const [otherField, setOtherField] = useState("");
   const [classificatorElement, setClassificatorElement] = useState("");
-  const { classificator } = useSelector((state) => state.userStructure);
+  const { classificator, activeSection } = useSelector(
+    (state) => state.userStructure
+  );
 
   useEffect(() => {
     if (field?.select_type === 8) {
@@ -34,21 +36,14 @@ export default function SectionsField({ field }) {
         setFieldsData({
           section_id: field?.section,
           field_id: field?.id,
+          select_type: field?.select_type,
           json_data: { data_uz: tableData, data_ru: tableData },
         })
       );
     }
   }, [tableData]);
 
-  const activeClassificator = useMemo(() => {
-    if (field?.select_type === 8) {
-      return classificator?.results?.find(
-        (item) => item?.id === field?.classificator
-      );
-    }
-  }, [classificator]);
-
-  const classificatorElemOptions = activeClassificator?.elements?.map(
+  const classificatorElemOptions = field?.classificator?.elements?.map(
     (item) => ({
       value: item?.content,
       label: item?.content,
@@ -61,18 +56,21 @@ export default function SectionsField({ field }) {
         <div className={s.create1_form_card}>
           <p>{field?.field_name}</p>
           <input
-            ref={(el) => ref.current[1] === el}
             required
             placeholder={`Введите ${field?.field_name}`}
-            value={charField || null}
+            value={charField}
+            tabIndex={0}
             onChange={(e) => {
               setCharField(e.target.value);
+            }}
+            onBlur={() => {
               dispatch(
                 setFieldsData({
                   section_id: field?.section,
+                  select_type: 1,
                   field_id: field?.id,
-                  field_uz: stringField,
-                  field_ru: stringField,
+                  field_uz: charField,
+                  field_ru: charField,
                 })
               );
             }}
@@ -82,16 +80,18 @@ export default function SectionsField({ field }) {
         <div className={s.create1_form_card}>
           <p>{field?.field_name}</p>
           <textarea
-            ref={(el) => ref.current[0] === el}
             required
             placeholder={`Введите ${field?.field_name}`}
-            value={stringField || null}
+            value={stringField}
             onChange={(e) => {
               setStringField(e.target.value);
+            }}
+            onBlur={() => {
               dispatch(
                 setFieldsData({
                   section_id: field?.section,
                   field_id: field?.id,
+                  select_type: 2,
                   field_uz: stringField,
                   field_ru: stringField,
                 })
@@ -112,7 +112,7 @@ export default function SectionsField({ field }) {
         "Image"
       ) : field?.select_type === 8 ? (
         <div className={s.create1_form_card}>
-          <p>{activeClassificator?.title || "Jadval Nomi"}</p>
+          <p>{field?.classificator?.title || "Jadval Nomi"}</p>
           <Select
             options={classificatorElemOptions}
             onChange={(e) => {
@@ -120,9 +120,10 @@ export default function SectionsField({ field }) {
               dispatch(
                 setFieldsData({
                   section_id: field?.section,
+                  select_type: 8,
                   field_id: field?.id,
-                  field_uz: classificatorElement,
-                  field_ru: classificatorElement,
+                  field_uz: e.value,
+                  field_ru: e.value,
                 })
               );
             }}
@@ -132,18 +133,20 @@ export default function SectionsField({ field }) {
         <div className={s.create1_form_card}>
           <p>{field?.field_name}</p>
           <input
-            ref={(el) => ref.current[1] === el}
             required
             placeholder={`Введите ${field?.field_name}`}
             value={otherField}
             onChange={(e) => {
               setOtherField(e.target.value);
+            }}
+            onBlur={() => {
               dispatch(
                 setFieldsData({
                   section_id: field?.section,
+                  select_type: field.select_type,
                   field_id: field?.id,
-                  field_uz: stringField,
-                  field_ru: stringField,
+                  field_uz: otherField,
+                  field_ru: otherField,
                 })
               );
             }}

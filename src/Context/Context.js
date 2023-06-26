@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-import ky from "ky";
+// import ky from "ky";
 
 const Context = createContext();
 
@@ -1873,15 +1873,17 @@ const ContextProvider = ({ children }) => {
 
   //superAuthor
   const SuperAuthor = () => {
-    axios.get(`${API}/constructor/list/user`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          "ConstructorRoleAccessToken"
-        )}`,
-      },
-    }).then((res) => {
-    setSuperTz(res.data)
-    })
+    axios
+      .get(`${API}/constructor/list/user`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSuperTz(res.data);
+      });
   };
   //superAuthor
 

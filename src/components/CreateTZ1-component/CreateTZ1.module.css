@@ -80,7 +80,7 @@
   gap: 16px;
 }
 
-.create1_form_route_btn input {
+.create1_form_route_btn button:last-child {
   width: 140px;
   height: 48px;
 
@@ -91,12 +91,12 @@
   font-size: 16px;
   border-radius: 8px;
 }
-.create1_form_route_btn input:focus {
+.create1_form_route_btn button:last-child:focus {
   background: #fff;
   color: #631ac0;
 }
 
-.create1_form_route_btn button {
+.create1_form_route_btn button:first-child {
   width: 140px;
   height: 48px;
 
@@ -108,7 +108,7 @@
   border-radius: 8px;
 }
 
-.create1_form_route_btn button:active {
+.create1_form_route_btn button:first-child:active {
   background: rgba(34, 34, 34, 0.6);
   color: #fff;
 }

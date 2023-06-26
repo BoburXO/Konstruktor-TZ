@@ -21,6 +21,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import {
+  doubleAndFillTz,
+  setTzIdForFilling,
+} from "../../pages/LKavtor/lkavtor_slice";
+import { useSelector, useDispatch } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -35,6 +40,7 @@ const style = {
 };
 
 const LKMain = () => {
+  const dispatch = useDispatch();
   const [own, setOwn] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   //modal
@@ -59,9 +65,17 @@ const LKMain = () => {
     getModeratorDraft,
   } = useContext(Context);
 
+  const { loading, message } = useSelector((state) => state.lkavtor);
+
   useEffect(() => {
     SuperTzGet().then(() => setIsLoading(false));
   }, [superTzSearch]);
+
+  useEffect(() => {
+    if (message?.id) {
+      navigate("/createTz");
+    }
+  }, [message]);
 
   if (isLoading) return <Loader />;
 
@@ -230,12 +244,31 @@ const LKMain = () => {
                             localStorage.getItem("roleUserName") ? (
                               <div className={s.lkmain_sect_crud}>
                                 <button
+                                  className={s.lkmain_sect_crud_copy}
+                                  style={{
+                                    borderColor: "green",
+                                    color: "green",
+                                    fontWeight: "500",
+                                  }}
+                                  onClick={() => {
+                                    dispatch(setTzIdForFilling(tz?.id));
+                                    dispatch(
+                                      doubleAndFillTz({
+                                        id: tz?.id,
+                                        data: { is_double: true },
+                                      })
+                                    );
+                                  }}
+                                >
+                                  Fill
+                                </button>
+                                <button
                                   onClick={() => DuplicateTz(tz?.id)}
                                   className={s.lkmain_sect_crud_copy}
                                 >
                                   <img src={copyIcon} alt="Copy" />
                                 </button>
-                                <Link to={`/lkavtor/${tz.id}/`}>
+                                <Link to={`/structure/${tz?.id}`}>
                                   <button className={s.lkmain_sect_crud_create}>
                                     <img src={createIcon} alt="Copy" />
                                   </button>
