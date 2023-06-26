@@ -279,12 +279,12 @@ table {
   border-radius: 6px;
 }
 
-table input {
+table  input {
   width: 100%;
   height: 40px;
   border: none;
   padding-left: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
   border-radius: 6px;
 }
 

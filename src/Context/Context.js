@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-import ky from "ky";
+// import ky from "ky";
 
 const Context = createContext();
 
@@ -1864,9 +1864,11 @@ const ContextProvider = ({ children }) => {
   //tz duplicate
 
   //superAuthor
+
   const SuperAuthor = async (page = 1, id) => {
     await axios
       .get(`${API}/constructor/list/user?page=${page}&organization_id=${id}`, {
+
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "ConstructorRoleAccessToken"
