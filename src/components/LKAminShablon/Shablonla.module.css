@@ -218,6 +218,11 @@
   justify-content: center;
 }
 
+.sample_count{
+  font-size: 24px;
+  font-weight: 500;
+}
+
 
 @media all and (max-width: 1216px) {
   .templates_sect_parent {

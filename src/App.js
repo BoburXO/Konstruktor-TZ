@@ -20,7 +20,6 @@ import OneId from "./pages/oneid/RegOneId";
 import IndexSpra from "./Params/IndexSpravochnik/IndexSpra";
 import ContentOfSiteUser from "./Params/ContentOfSiteUser/ContentOfSiteUser";
 import Sphere from "./pages/Sphere/Sphere";
-import HistoryStructure from "./pages/HistoryStructure/HistoryStructure";
 import LKMainUpdate from "./Params/LKMainUpdate/LKMainUpdate";
 import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
 import Organizations from "./pages/Organizations/Organizations";
@@ -61,7 +60,6 @@ function App() {
             <Route path="/lkavtor-user" element={<LKAvtorUser />} />
             <Route path="/updateContent/:id" element={<UpdContent />} />
             <Route path="/sphere" element={<Sphere />} />
-            <Route path="/history-structure" element={<HistoryStructure />} />
           </>
         ) : null}
       </Routes>

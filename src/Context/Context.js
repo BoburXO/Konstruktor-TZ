@@ -210,22 +210,14 @@ const ContextProvider = ({ children }) => {
 
   const SpravochnikExcel = async (language, id, filename) => {
     await axios
-      .post(
-        `${API}/classificator/export-xlsx/`,
-        {
-          language: language,
-          id: id,
+      .get(`${API}/classificator/export-xlsx/?id=${id}&lang=${language}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
+      })
       .then((res) => {
-        console.log(res);
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = ref.current;
         link.href = url;
@@ -1872,32 +1864,35 @@ const ContextProvider = ({ children }) => {
   //tz duplicate
 
   //superAuthor
-  const SuperAuthor = () => {
-    axios.get(`${API}/constructor/list/user`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          "ConstructorRoleAccessToken"
-        )}`,
-      },
-    }).then((res) => {
-    setSuperTz(res.data)
-    }) .catch((err) => {
-      if (err.response.status === 401) {
-        refreshToken().then(() => SuperAuthor());
-      }
-      if (err.response.status === 404) {
-        notify404();
-      }
-      if (err.response.status === 400) {
-        notify400();
-      }
-      if (err.response.status === 403) {
-        notify403();
-      }
-      if (err.response.status === 500) {
-        notify500();
-      }
-    });
+  const SuperAuthor = async (page = 1, id) => {
+    await axios
+      .get(`${API}/constructor/list/user?page=${page}&organization_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => SuperAuthor());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
   };
   //superAuthor
 

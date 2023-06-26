@@ -23,6 +23,7 @@ import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 import SuperTzPagination from "../../Pagination/SuperTzPagination";
 import Select from "react-select";
+import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
 
 const style = {
   position: "absolute",
@@ -37,6 +38,7 @@ const style = {
 };
 
 const SuperTzComp = () => {
+  const [isAuthor, setIsAuthor] = useState("");
   //modal
   const [delId, setDelId] = useState("");
   const [openDel, setOpenDel] = useState(false);
@@ -83,8 +85,8 @@ const SuperTzComp = () => {
     { value: "Author", label: t("filter.5") },
   ];
 
-  const handleChange = (value, id) => {
-    value === "All" ? SuperTzGet(id) : SuperAuthor();
+  const handleChange = (value, id,e) => {
+    value === "All" ? SuperTzGet(id) : SuperAuthor(e,id);
   };
 
   return (
@@ -141,7 +143,10 @@ const SuperTzComp = () => {
               <div>
                 <Select
                   placeholder={t("filter.1")}
-                  onChange={(value) => handleChange(value.value, id)}
+                  onChange={(value) => {
+                    handleChange(value.value, id);
+                    setIsAuthor(value.value);
+                  }}
                   className={s.selecttt}
                   options={optionsAuthor}
                 />
@@ -309,13 +314,25 @@ const SuperTzComp = () => {
               <br />
               <br />
               <div className={s.content_pagination}>
-                <SuperTzPagination
+                {isAuthor !== "Author" ? (
+                  <SuperTzPagination
+                    paramsID={id}
+                    superTz={
+                      superTz?.user_organization?.find(
+                        (_, index) => index === 0
+                      )?.paginated_results?.total_pages
+                    }
+                  />
+                ) : (
+                  <LkAvtorUserPagination
                   paramsID={id}
-                  superTz={
-                    superTz?.user_organization?.find((_, index) => index === 0)
-                      ?.paginated_results?.total_pages
-                  }
-                />
+                    superTz={
+                      superTz?.user_organization?.find(
+                        (_, index) => index === 0
+                      )?.paginated_results?.total_pages
+                    }
+                  />
+                )}
               </div>
             </>
           ) : (

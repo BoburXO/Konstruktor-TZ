@@ -70,7 +70,9 @@ const Shablonla = () => {
       <section className={s.templates_sect}>
         <div className={s.templates_sect_container}>
           <div className={s.templates_sect_label}>
-            <h1>{t("shablon")}</h1>
+            <h1>
+              {t("shablon")} - <span className={s.sample_count}>№{sample?.count}</span>
+            </h1>
             <button
               onClick={handleOpen}
               className={s.templates_sect_create_btn}

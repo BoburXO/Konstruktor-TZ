@@ -123,12 +123,6 @@ const StructureComponent = () => {
                   <h1 className={s.structure_right_contents_label}>
                     {t("struc1")}
                   </h1>
-                  <button
-                    onClick={() => navigate("/history-structure")}
-                    className={s.srtucture_history}
-                  >
-                    {t("struc6")}
-                  </button>
                 </div>
               </div>
               <span className={s.structure_right_contents_update}>
