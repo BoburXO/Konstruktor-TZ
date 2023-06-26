@@ -1,1 +1,1 @@
-export const API = "https://contructor.egov.uz/api/v1";
+export const API = "https://constructor.egov.uz/api/v1";
