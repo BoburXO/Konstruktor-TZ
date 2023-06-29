@@ -124,7 +124,7 @@ export default function CreateTZ1center({ activeSection }) {
       <div className={s.craete1_center_form_parent}>
         <RenderSectionsWithChildren
           sections={activeSection?.children}
-          userRole={"author"}
+          action={"createTz"}
         />
         <div className={s.create1_form_route_btn}>
           {activeSectionIndex !== 0 ? (

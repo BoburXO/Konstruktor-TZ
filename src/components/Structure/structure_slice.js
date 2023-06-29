@@ -69,7 +69,10 @@ const structureSlice = createSlice({
     setActiveSectionId: (state, { payload }) => {
       state.activeSectionId = payload;
     },
-    addStaticSectionHeadersInStructure: (state, { payload }) => {},
+    clearStructure: (state) => {
+      state.currentStructure = {};
+      state.structures = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -104,4 +107,4 @@ const structureSlice = createSlice({
 });
 
 export default structureSlice.reducer;
-export const { setActiveSectionId } = structureSlice.actions;
+export const { setActiveSectionId, clearStructure } = structureSlice.actions;

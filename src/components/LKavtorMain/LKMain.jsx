@@ -243,25 +243,30 @@ const LKMain = () => {
                             {user?.username ===
                             localStorage.getItem("roleUserName") ? (
                               <div className={s.lkmain_sect_crud}>
-                                <button
-                                  className={s.lkmain_sect_crud_copy}
-                                  style={{
-                                    borderColor: "green",
-                                    color: "green",
-                                    fontWeight: "500",
-                                  }}
-                                  onClick={() => {
-                                    dispatch(setTzIdForFilling(tz?.id));
-                                    dispatch(
-                                      doubleAndFillTz({
-                                        id: tz?.id,
-                                        data: { is_double: true },
-                                      })
-                                    );
-                                  }}
-                                >
-                                  Fill
-                                </button>
+                                {localStorage.getItem("roleName") === "Admin" ||
+                                localStorage.getItem("roleName") ===
+                                  "SuperAdmin" ? (
+                                  <button
+                                    className={s.lkmain_sect_crud_copy}
+                                    style={{
+                                      borderColor: "green",
+                                      color: "green",
+                                      fontWeight: "500",
+                                    }}
+                                    onClick={() => {
+                                      dispatch(setTzIdForFilling(tz?.id));
+                                      dispatch(
+                                        doubleAndFillTz({
+                                          id: tz?.id,
+                                          data: { is_double: true },
+                                        })
+                                      );
+                                    }}
+                                  >
+                                    Fill
+                                  </button>
+                                ) : null}
+
                                 <button
                                   onClick={() => DuplicateTz(tz?.id)}
                                   className={s.lkmain_sect_crud_copy}
@@ -347,6 +352,18 @@ const LKMain = () => {
                                   className={s.lkmain_sect_crud_copy}
                                 >
                                   <img src={copyIcon} alt="Copy" />
+                                </button>
+                                <button
+                                  className={s.lkmain_sect_crud_copy}
+                                  style={{ borderColor: "#0ba9cc" }}
+                                >
+                                  <i
+                                    className="fa-regular fa-eye"
+                                    style={{
+                                      color: "#0ba9cc",
+                                      fontSize: 20,
+                                    }}
+                                  ></i>
                                 </button>
                               </div>
                             )}

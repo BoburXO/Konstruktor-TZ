@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useHttp } from "../../../hooks/useHttp";
 
-const data_structure = {
-  id: undefined,
-  f_section: [],
-  children: [],
-};
-
 const initialState = {
   loading: false,
   structure: {},
@@ -14,6 +8,7 @@ const initialState = {
   classificator: {},
   fieldsData: [],
   data: {},
+  userAction: "edit",
 };
 
 export const fetchStructureByIdForUser = createAsyncThunk(
@@ -112,6 +107,9 @@ const userStructureSlice = createSlice({
     clearFieldsData: (state) => {
       state.fieldsData = [];
     },
+    setUserAction: (state, { payload }) => {
+      state.userAction = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -140,5 +138,9 @@ const userStructureSlice = createSlice({
 });
 
 export default userStructureSlice.reducer;
-export const { setActiveSection, setFieldsData, clearFieldsData } =
-  userStructureSlice.actions;
+export const {
+  setActiveSection,
+  setFieldsData,
+  clearFieldsData,
+  setUserAction,
+} = userStructureSlice.actions;

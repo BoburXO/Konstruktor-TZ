@@ -12,18 +12,20 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
 //asyncActions
-import { fetchStructureById } from "./structure_slice";
+import { clearStructure, fetchStructureById } from "./structure_slice";
 import CreateNewStructureModal from "./CreateNewStructureModal/CreateNewStructureModal";
 import { toast } from "react-hot-toast";
 import CreateNewSectionModal from "./CreateNewSectionModal/CreateNewSectionModal";
 import { renderSectionsWithChildren } from "../../helpers/helpers";
 import Loader from "../Loader/Loader";
 import {
+  clearSection,
   deleteSection,
   setCurrentSection,
 } from "./CreateNewSectionModal/section_slice";
 import StructureLeftSidebar from "../StructureLeftSidebar/StructureLeftSidebar";
 import RenderSectionsWithChildren from "../RenderSectionsWithChildren/RenderSectionsWithChildren";
+import { clearField } from "./CreateNewFieldModal/field_slice";
 
 const style = {
   position: "absolute",
@@ -74,6 +76,16 @@ const StructureComponent = () => {
   const { currentField, isCreatingFieldLoading } = useSelector(
     (state) => state.field
   );
+
+  const userStructure = useSelector((state) => state.userStructure);
+
+  useEffect(() => {
+    if (structures?.id && userStructure?.structure?.id) {
+      if (structures?.id === userStructure?.structure?.id) {
+        window.location.reload();
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (currentStructure?.id) {
@@ -194,7 +206,7 @@ const StructureComponent = () => {
                     </div>
                     <RenderSectionsWithChildren
                       sections={activeSection?.children}
-                      userRole="moderator"
+                      action={"createStructure"}
                     />
                   </div>
                 </>
