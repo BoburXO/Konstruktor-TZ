@@ -11,10 +11,10 @@ const IndexSpra = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { slug } = useParams();
+  const { id } = useParams();
   const { spravochnik, getAllSpraSearch, spraSearch } = useContext(Context);
   const indexParams = spravochnik?.results?.find((el) => {
-    return el?.slug === slug;
+    return el?.id === id;
   });
 
   useEffect(() => {
@@ -30,13 +30,15 @@ const IndexSpra = () => {
       <UserNav />
       <main className={s.indexSpra}>
         <div className={s.container}>
-          <h1>{indexParams?.title}:</h1>
+          {indexParams !== undefined ? (
+            <>
+            <h1>{indexParams?.title}:</h1>
           <div className={s.class_elements}>
             <br />
             <br />
             {indexParams?.elements?.map((el) => {
               return (
-                <ul className={s.index_el}>
+                <ul key={el?.id} className={s.index_el}>
                   <li>
                     <p>{el?.content}</p>
                   </li>
@@ -53,6 +55,10 @@ const IndexSpra = () => {
               {t("btn.1")}
             </button>
           </div>
+            </>
+          ):(
+            <h1 className={s.notFound}>{t("toast404")}</h1>
+          )}
         </div>
       </main>
       <Footer />

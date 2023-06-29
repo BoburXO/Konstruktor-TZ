@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-import Loader from "../components/Loader/Loader";
+// import ky from "ky";
 
 const Context = createContext();
 
@@ -29,12 +29,12 @@ const ContextProvider = ({ children }) => {
   const [nameClassUz, setNameClassUz] = useState("");
   const [nameClassRu, setNameClassRu] = useState("");
   //notify
-  const notify401 = () => toast(t("toast401"));
-  const notify404 = () => toast(t("toast404"));
-  const notify400 = () => toast(t("toast400"));
-  const notify403 = () => toast(t("toast403"));
-  const notify500 = () => toast(t("toast500"));
-  // const notify200 = () => toast(t("toast200"));
+  const notify401 = () => toast.error(t("toast401"));
+  const notify404 = () => toast.error(t("toast404"));
+  const notify400 = () => toast.error(t("toast400"));
+  const notify403 = () => toast.error(t("toast403"));
+  const notify500 = () => toast.error(t("toast500"));
+  const notify200 = () => toast.success(t("toast200"));
   //notify
 
   //createContent
@@ -51,8 +51,8 @@ const ContextProvider = ({ children }) => {
   //createContent
 
   //oneID roles post
-  const ssoOneId = () => {
-    axios
+  const ssoOneId = async () => {
+    await axios
       .post(`${API}/account/auth/user_roles/`, {
         code: localStorage.getItem("oneIDCode"),
       })
@@ -175,7 +175,7 @@ const ContextProvider = ({ children }) => {
 
   //all Spravochnik searchbar
   const getAllSpraSearch = async (page = 1) => {
-   await axios
+    await axios
       .get(`${API}/classificator/all/?search=${spraSearch}&page=${page}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -210,22 +210,14 @@ const ContextProvider = ({ children }) => {
 
   const SpravochnikExcel = async (language, id, filename) => {
     await axios
-      .post(
-        `${API}/classificator/export-xlsx/`,
-        {
-          language: language,
-          id: id,
+      .get(`${API}/classificator/export-xlsx/?id=${id}&lang=${language}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
+      })
       .then((res) => {
-        console.log(res);
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = ref.current;
         link.href = url;
@@ -294,7 +286,6 @@ const ContextProvider = ({ children }) => {
       })
 
       .then(() => {
-        // getElementBySlug(slug);
         window.location.reload();
       })
       .catch((err) => {
@@ -340,7 +331,6 @@ const ContextProvider = ({ children }) => {
         }
       )
       .then(() => {
-        navigate("/lkadminspravochnik");
         window.location.reload();
       })
       .catch((err) => {
@@ -494,7 +484,7 @@ const ContextProvider = ({ children }) => {
 
   //getContent-search,filter,sphere-filter
   const getContentSearch = async (page = 1) => {
-   await axios
+    await axios
       .get(
         `${API}/standard/site-content-list/?search=${contentSearch}&page=${page}`,
         {
@@ -559,7 +549,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const getContentSphereFilter = async (id) => {
-   await axios
+    await axios
       .get(`${API}/standard/site-content-list/?sphere=${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -947,7 +937,7 @@ const ContextProvider = ({ children }) => {
   //getSphere
   const [sphere, setSphere] = useState([]);
   const getSphere = async () => {
-   await axios
+    await axios
       .get(`${API}/standard/sphere/list-create/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
@@ -1286,16 +1276,14 @@ const ContextProvider = ({ children }) => {
   //sample-delete
 
   //update-sample
-  const [sampleUpdUz, setSampleUpdUz] = useState("");
-  const [sampleUpdRu, setSampleUpdRu] = useState("");
-
-  const updateSample = (id) => {
+  const updateSample = (e, id) => {
+    e.preventDefault();
     axios
       .patch(
         `${API}/constructor/sample/detail/${id}`,
         {
-          description_uz: sampleUpdUz,
-          description_ru: sampleUpdRu,
+          description_uz: e.target[0].value,
+          description_ru: e.target[1].value,
         },
         {
           headers: {
@@ -1306,7 +1294,6 @@ const ContextProvider = ({ children }) => {
         }
       )
       .then(() => {
-        navigate("/lkadminshablon");
         window.location.reload();
       })
       .catch((err) => {
@@ -1328,15 +1315,14 @@ const ContextProvider = ({ children }) => {
       });
   };
   //update-sample
+  //organizations
+  const [organization, setOrganization] = useState({});
+  const [orgSearch, setOrgSearch] = useState("");
 
-  //createTz
-  const [createTz, setCreateTz] = useState({});
-  const [tzSearch, setTzSearch] = useState("");
-
-  const getCreateTz = async (page = 1) => {
+  const SuperOrganizations = async (page = 1) => {
     await axios
       .get(
-        `${API}/constructor/create/list?&tz_name__icontains=${tzSearch}&page=${page}`,
+        `${API}/constructor/organization/list?name__icontains=${orgSearch}&page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1346,11 +1332,11 @@ const ContextProvider = ({ children }) => {
         }
       )
       .then((res) => {
-        setCreateTz(res.data);
+        setOrganization(res.data);
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          refreshToken().then(() => getCreateTz());
+          refreshToken().then(() => SuperOrganizations());
         }
         if (err.response.status === 404) {
           notify404();
@@ -1367,80 +1353,9 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const getCreateTzSelectType = (type) => {
-    axios
-      .get(`${API}/constructor/create/list?select_type=${type}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
-      .then((res) => {
-        setCreateTz(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => getCreateTzSelectType());
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
-  //createTz
-
-
-  //createTz User
-  const [createTzUser, setCreateTzUser] = useState({});
-  const [tzSearchUser, setTzSearchUser] = useState("");
-
-  const getCreateTzUser = async (page = 1) => {
+  const orgIsOwner = async (owner = "") => {
     await axios
-      .get(
-        `${API}/constructor/list/user?&tz_name__icontains=${tzSearchUser}&page=${page}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
-      .then((res) => {
-        setCreateTzUser(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => getCreateTzUser());
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
-
-  const getCreateTzSelectTypeUser = (type) => {
-    axios
-      .get(`${API}/constructor/list/user?select_type=${type}`, {
+      .get(`${API}/constructor/organization/list?is_owner=${owner}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "ConstructorRoleAccessToken"
@@ -1448,11 +1363,11 @@ const ContextProvider = ({ children }) => {
         },
       })
       .then((res) => {
-        setCreateTzUser(res.data);
+        setOrganization(res.data);
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          refreshToken().then(() => getCreateTzSelectTypeUser());
+          refreshToken().then(() => orgIsOwner());
         }
         if (err.response.status === 404) {
           notify404();
@@ -1468,23 +1383,53 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
-  //createTz User
+  //organizations
+
+  //getDetail
+  const [detailIdTz, setDetailIdTz] = useState({});
+  const getDetailTzId = async (id) => {
+    await axios
+      .get(`${API}/constructor/detail/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setDetailIdTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getDetailTzId());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //getDetail
 
   //updateTz
-  const [tzNameUz, setTzNameUz] = useState("");
-  const [tzNameRu, setTzNameRu] = useState("");
-  const [tzCommentUz, setTzCommentUz] = useState("");
-  const [tzCommentRu, setTzCommentRu] = useState("");
-
-  const updateCreateTz = (id) => {
+  const updateCreateTz = (e, id) => {
+    e.preventDefault();
     axios
       .patch(
         `${API}/constructor/detail/${id}`,
         {
-          tz_name_ru: tzNameRu,
-          tz_name_uz: tzNameUz,
-          comment_ru: tzCommentRu,
-          comment_uz: tzCommentUz,
+          tz_name_ru: e.target[0].value,
+          tz_name_uz: e.target[1].value,
+          comment_ru: e.target[2].value,
+          comment_uz: e.target[3].value,
         },
         {
           headers: {
@@ -1495,8 +1440,9 @@ const ContextProvider = ({ children }) => {
         }
       )
       .then(() => {
-        navigate("/lkavtor");
-        window.location.reload();
+        alert("changed!");
+        // navigate("/lkavtor");
+        // window.location.reload();
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -1598,15 +1544,384 @@ const ContextProvider = ({ children }) => {
   };
   //history-structure
 
+  //superTZ
+  const [superTz, setSuperTz] = useState({});
+  const [superTzSearch, setSuperTzSearch] = useState("");
+
+  const SuperTzGet = async (id) => {
+    await axios
+      .get(
+        `${API}/constructor/organization/detail?organization_id=${id}
+        &tz_name=${superTzSearch}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => SuperTzGet());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const SuperTzGetPagination = async (page = 1, id) => {
+    await axios
+      .get(
+        `${API}/constructor/organization/detail?page=${page}&organization_id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => SuperTzGet());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getSuperTzSelect = (type, id, draft) => {
+    axios
+      .get(
+        `${API}/constructor/organization/detail?select_type=${type}&organization_id=${id}&is_draft=${draft}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getSuperTzSelect());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getSuperTzDraft = (draft, id) => {
+    axios
+      .get(
+        `${API}/constructor/organization/detail?is_draft=${draft}&organization_id=${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getSuperTzDraft());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //superTZ
+
+  //adminOwner
+  const AdminOwner = async (is_owner = "") => {
+    await axios
+      .get(
+        `${API}/constructor/organization/detail?is_owner=${is_owner}
+        &tz_name=${superTzSearch}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => AdminOwner());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const AdminTzDraft = (is_owner, draft) => {
+    axios
+      .get(
+        `${API}/constructor/organization/detail?is_owner=${is_owner}&is_draft=${draft}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => AdminTzDraft());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //adminOwner
+
+  //moderatorTz
+  const getModeratorSelect = (type) => {
+    axios
+      .get(`${API}/constructor/organization/detail?select_type=${type}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getModeratorSelect());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+
+  const getModeratorDraft = (is_draft) => {
+    axios
+      .get(`${API}/constructor/organization/detail?is_draft=${is_draft}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => getModeratorDraft());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //moderatorTz
+
+  //tz duplicate
+  const DuplicateTz = (id) => {
+    axios
+      .post(
+        `${API}/constructor/duplicate/constructor?constructor_id=${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        notify200();
+        // if (localStorage.getItem("roleName") === "SuperAdmin") {
+        //   navigate("/organizations");
+        // } else {
+        //   window.location.reload();
+        // }
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => DuplicateTz());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //tz duplicate
+
+  //superAuthor
+
+  const SuperAuthor = async (page = 1, id) => {
+    await axios
+      .get(`${API}/constructor/list/user?page=${page}&organization_id=${id}`, {
+
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => SuperAuthor());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
+  //superAuthor
+
   return (
     <>
       <Context.Provider
         value={{
-          getCreateTzSelectTypeUser,
-          getCreateTzUser,
-          createTzUser,
-          setTzSearchUser,
-          tzSearchUser,
+          SuperAuthor,
+          getModeratorDraft,
+          getModeratorSelect,
+          AdminTzDraft,
+          AdminOwner,
+          getSuperTzDraft,
+          DuplicateTz,
+          getSuperTzSelect,
+          SuperTzGetPagination,
+          superTzSearch,
+          setSuperTzSearch,
+          superTz,
+          SuperTzGet,
+          orgIsOwner,
+          orgSearch,
+          setOrgSearch,
+          organization,
+          SuperOrganizations,
+          getDetailTzId,
+          detailIdTz,
           setIsDraftSearch,
           iseDraftSearch,
           isDraftFalse,
@@ -1615,26 +1930,8 @@ const ContextProvider = ({ children }) => {
           ref,
           SpravochnikExcel,
           deleteTz,
-          updateCreateTz,
-          tzCommentRu,
-          setTzCommentRu,
-          tzCommentUz,
-          setTzCommentUz,
-          tzNameRu,
-          setTzNameRu,
-          tzNameUz,
-          setTzNameUz,
-          getCreateTzSelectType,
-          getCreateTz,
-          createTz,
-          setTzSearch,
-          tzSearch,
           getSampleBySection,
           updateSample,
-          sampleUpdUz,
-          setSampleUpdUz,
-          sampleUpdRu,
-          setSampleUpdRu,
           punktSearch,
           setPunktSearch,
           sampleDelete,

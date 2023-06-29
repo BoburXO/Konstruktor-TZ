@@ -6,6 +6,7 @@ import Nav from "../../components/HomeNav/Nav";
 import Section from "../../components/HomeSection/Section";
 import UserNav from "../../components/UserNav/UserNav";
 import "../Home/Home.module.css";
+import { Dropdown } from "rsuite";
 
 const Home = () => {
   const navigate = useNavigate();

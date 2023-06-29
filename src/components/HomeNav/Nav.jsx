@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 import logo1 from "../../assets/imgs/logo1.svg";
@@ -42,7 +42,7 @@ const Nav = () => {
                   O'zbek
                 </option>
                 <option className={s.til_opt} value="kr">
-                Ўзбек
+                  Ўзбек
                 </option>
               </select>
               <NavLink to="/lkavtor">
