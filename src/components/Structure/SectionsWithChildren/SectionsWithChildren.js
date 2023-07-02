@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
@@ -30,6 +30,8 @@ export default function SectionsWithChildren({ item }) {
   const handleOpenField = () => setOpenField(true);
   const handleCloseField = () => setOpenField(false);
 
+  const { structureAction } = useSelector((state) => state.structure);
+
   const handleDeleteSubSection = () => {
     dispatch(deleteSubSection(item?.id));
   };
@@ -40,52 +42,54 @@ export default function SectionsWithChildren({ item }) {
         <p>
           {t("struc5")} {item?.header_name}
         </p>
-        <div>
-          <Link>
-            <img
-              src={pen}
-              alt="Изменить"
-              onClick={() => handleOpenUpdateSubChildren()}
-            />
-            <CreateNewSectionModal
-              updatedData={item}
-              section={item}
-              parent={item?.parent}
-              activeSectionModal="subsection"
-              openSection={updateSubChildren}
-              handleCloseSection={handleCloseUpdateSubChildren}
-            />
-          </Link>
-          <Link>
-            <img onClick={handleOpenField} src={add} alt="Add" />
-            <CreateNewFieldModal
-              openField={openField}
-              handleCloseField={handleCloseField}
-              item={item}
-            />
-          </Link>
-          <Link>
-            <i
-              className="fa-solid fa-file-circle-plus"
-              style={{ color: "gray", fontSize: "21px" }}
-              onClick={handleOpenSubChildren}
-            ></i>
-            <CreateNewSectionModal
-              section={item}
-              parent={item?.id}
-              activeSectionModal={"subsection"}
-              openSection={openSubChildren}
-              handleCloseSection={handleCloseSubChildren}
-            />
-          </Link>
-          <Link>
-            <i
-              className="fa-regular fa-trash-can"
-              style={{ color: "gray", fontSize: "21px" }}
-              onClick={handleDeleteSubSection}
-            ></i>
-          </Link>
-        </div>
+        {structureAction !== "review" ? (
+          <div>
+            <Link>
+              <img
+                src={pen}
+                alt="Изменить"
+                onClick={() => handleOpenUpdateSubChildren()}
+              />
+              <CreateNewSectionModal
+                updatedData={item}
+                section={item}
+                parent={item?.parent}
+                activeSectionModal="subsection"
+                openSection={updateSubChildren}
+                handleCloseSection={handleCloseUpdateSubChildren}
+              />
+            </Link>
+            <Link>
+              <img onClick={handleOpenField} src={add} alt="Add" />
+              <CreateNewFieldModal
+                openField={openField}
+                handleCloseField={handleCloseField}
+                item={item}
+              />
+            </Link>
+            <Link>
+              <i
+                className="fa-solid fa-file-circle-plus"
+                style={{ color: "gray", fontSize: "21px" }}
+                onClick={handleOpenSubChildren}
+              ></i>
+              <CreateNewSectionModal
+                section={item}
+                parent={item?.id}
+                activeSectionModal={"subsection"}
+                openSection={openSubChildren}
+                handleCloseSection={handleCloseSubChildren}
+              />
+            </Link>
+            <Link>
+              <i
+                className="fa-regular fa-trash-can"
+                style={{ color: "gray", fontSize: "21px" }}
+                onClick={handleDeleteSubSection}
+              ></i>
+            </Link>
+          </div>
+        ) : null}
       </span>
       <p className={s.structure_right_contents_input_label}>{t("struc3")}</p>
       <br />

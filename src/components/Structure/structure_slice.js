@@ -6,6 +6,7 @@ const initialState = {
   isCreatingStructuresLoading: false,
   structures: {},
   currentStructure: {},
+  structureAction: "create",
 };
 
 export const fetchStructureById = createAsyncThunk(
@@ -73,6 +74,9 @@ const structureSlice = createSlice({
       state.currentStructure = {};
       state.structures = {};
     },
+    setStructureAction: (state, { payload }) => {
+      state.structureAction = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -100,11 +104,12 @@ const structureSlice = createSlice({
         state.isCreatingStructuresLoading = true;
       })
       .addCase(updateStructure.fulfilled, (state, { payload }) => {
-        state.currentStructure = payload;
+        state.structures = payload;
         state.isCreatingStructuresLoading = false;
       });
   },
 });
 
 export default structureSlice.reducer;
-export const { setActiveSectionId, clearStructure } = structureSlice.actions;
+export const { setActiveSectionId, clearStructure, setStructureAction } =
+  structureSlice.actions;

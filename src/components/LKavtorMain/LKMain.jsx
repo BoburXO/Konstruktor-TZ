@@ -273,9 +273,9 @@ const LKMain = () => {
                                 >
                                   <img src={copyIcon} alt="Copy" />
                                 </button>
-                                <Link to={`/structure/${tz?.id}`}>
+                                <Link to={`/structure/edit/${tz?.id}`}>
                                   <button className={s.lkmain_sect_crud_create}>
-                                    <img src={createIcon} alt="Copy" />
+                                    <img src={createIcon} alt="Edit" />
                                   </button>
                                 </Link>
                                 <button className={s.lkmain_sect_crud_skacat}>
