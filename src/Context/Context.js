@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-// import ky from "ky";
 
 const Context = createContext();
 
@@ -216,14 +215,21 @@ const ContextProvider = ({ children }) => {
             "ConstructorRoleAccessToken"
           )}`,
         },
+        responseType: "blob",
+        responseEncoding: "binary",
       })
       .then((res) => {
-        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const href = URL.createObjectURL(res.data);
+
         const link = ref.current;
-        link.href = url;
+
+        link.href = href;
         link.setAttribute("download", `${filename}.xls`);
         document.body.appendChild(link);
         link.click();
+
+        document.body.removeChild(link);
+        URL.revokeObjectURL(href);
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -1868,7 +1874,38 @@ const ContextProvider = ({ children }) => {
   const SuperAuthor = async (page = 1, id) => {
     await axios
       .get(`${API}/constructor/list/user?page=${page}&organization_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
+      .then((res) => {
+        setSuperTz(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          refreshToken().then(() => SuperAuthor());
+        }
+        if (err.response.status === 404) {
+          notify404();
+        }
+        if (err.response.status === 400) {
+          notify400();
+        }
+        if (err.response.status === 403) {
+          notify403();
+        }
+        if (err.response.status === 500) {
+          notify500();
+        }
+      });
+  };
 
+
+  const filterTzAdmin = async (owner=true,page = 1) => {
+    await axios
+      .get(`${API}/constructor/list/user?is_owner=${owner}&page=${page}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem(
             "ConstructorRoleAccessToken"
@@ -1902,6 +1939,7 @@ const ContextProvider = ({ children }) => {
     <>
       <Context.Provider
         value={{
+          filterTzAdmin,
           SuperAuthor,
           getModeratorDraft,
           getModeratorSelect,

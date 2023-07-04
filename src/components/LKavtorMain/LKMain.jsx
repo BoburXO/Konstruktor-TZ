@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { Context } from "../../Context/Context";
 import search from "../../assets/icons/search.svg";
 import LkAvtorPagination from "../../Pagination/LkAvtorPagination";
+import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
 import Select from "react-select";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -43,6 +44,9 @@ const LKMain = () => {
   const dispatch = useDispatch();
   const [own, setOwn] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isAuthor, setIsAuthor] = useState("");
+
   //modal
   const [delId, setDelId] = useState("");
   const [openDel, setOpenDel] = useState(false);
@@ -63,6 +67,7 @@ const LKMain = () => {
     AdminTzDraft,
     getModeratorSelect,
     getModeratorDraft,
+    filterTzAdmin,
   } = useContext(Context);
 
   const { loading, message } = useSelector((state) => state.lkavtor);
@@ -95,11 +100,31 @@ const LKMain = () => {
     { value: true, label: t("filter.3") },
   ];
 
+  const optionsTzSructure = [
+    { value: false, label: t("super.9") },
+    { value: true, label: t("super.10") },
+  ];
+
+  const handleChange = (value) => {
+    value === true ? filterTzAdmin() && setIsAuthor() : SuperTzGet();
+  };
+
   return (
     <>
       <section className={s.lkmain_sect}>
         <div className={s.lkmain_sect_container}>
-          <h1>{t("lkavtor")}</h1>
+          <div className={s.twink}>
+            <h1>{t("lkavtor")}</h1>
+            {localStorage.getItem("roleName") === "Admin" ? (
+              <button
+                onClick={() => navigate("/createtz")}
+                className={s.lkmain_sect_create_btn}
+              >
+                <span style={{ fontSize: "25px" }}>+</span>
+                <span>{t("lkavtor1")}</span>
+              </button>
+            ) : null}
+          </div>
           <br />
           <div className={s.lkmain_sect_labels}>
             <div
@@ -145,14 +170,27 @@ const LKMain = () => {
                 </div>
               ) : null}
               {own ? (
-                <div>
-                  <Select
-                    placeholder={t("filter.1")}
-                    onChange={(value) => AdminTzDraft(own, value.value)}
-                    className={s.selecttt}
-                    options={optionsDraft}
-                  />
-                </div>
+                <>
+                  <div>
+                    <Select
+                      placeholder={t("filter.1")}
+                      onChange={(value) => AdminTzDraft(own, value.value)}
+                      className={s.selecttt}
+                      options={optionsDraft}
+                    />
+                  </div>
+                  <div>
+                    <Select
+                      placeholder={t("filter.1")}
+                      onChange={(value) => {
+                        handleChange(value.value);
+                        setIsAuthor(value.value);
+                      }}
+                      className={s.selecttt}
+                      options={optionsTzSructure}
+                    />
+                  </div>
+                </>
               ) : null}
               {localStorage.getItem("roleName") === "Moderator" ? (
                 <div>
@@ -165,15 +203,6 @@ const LKMain = () => {
                 </div>
               ) : null}
             </div>
-            {localStorage.getItem("roleName") !== "Author" ? (
-              <button
-                onClick={() => navigate("/createtz")}
-                className={s.lkmain_sect_create_btn}
-              >
-                <span style={{ fontSize: "25px" }}>+</span>
-                <span>{t("lkavtor1")}</span>
-              </button>
-            ) : null}
           </div>
           {superTz?.user_organization[0]?.paginated_results?.results?.length ? (
             <>
@@ -360,12 +389,23 @@ const LKMain = () => {
               <br />
               <br />
               <div className={s.content_pagination}>
-                <LkAvtorPagination
-                  superTz={
-                    superTz?.user_organization?.find((_, index) => index === 0)
-                      ?.paginated_results?.total_pages
-                  }
-                />
+                {isAuthor ? (
+                  <LkAvtorUserPagination
+                    superTz={
+                      superTz?.user_organization?.find(
+                        (_, index) => index === 0
+                      )?.paginated_results?.total_pages
+                    }
+                  />
+                ) : (
+                  <LkAvtorPagination
+                    superTz={
+                      superTz?.user_organization?.find(
+                        (_, index) => index === 0
+                      )?.paginated_results?.total_pages
+                    }
+                  />
+                )}
               </div>
             </>
           ) : (

@@ -171,7 +171,7 @@ const UpdContent = () => {
                   <br />
                   {docFileRu !== null || undefined
                     ? docFileRu.name
-                    : ParamsContent?.doc_file_ru}
+                    : ParamsContent?.doc_file_ru.slice(0,60)}
                 </label>
               </div>
               <br />
@@ -194,7 +194,7 @@ const UpdContent = () => {
                   <br />
                   {docFileUz !== null || undefined
                     ? docFileUz.name
-                    : ParamsContent?.doc_file_uz}
+                    : ParamsContent?.doc_file_uz.slice(0,60)}
                 </label>
               </div>
               <br />

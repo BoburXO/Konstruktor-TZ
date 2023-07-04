@@ -81,12 +81,12 @@ const SuperTzComp = () => {
   ];
 
   const optionsAuthor = [
-    { value: "All", label: "Admin/Moderator" },
-    { value: "Author", label: t("filter.5") },
+    { value: "All", label: t("super.7") },
+    { value: "Author", label: t("super.8") },
   ];
 
-  const handleChange = (value, id,e) => {
-    value === "All" ? SuperTzGet(id) : SuperAuthor(e,id);
+  const handleChange = (value, id, e) => {
+    value === "All" ? SuperTzGet(id) : SuperAuthor(e, id);
   };
 
   return (
@@ -325,7 +325,7 @@ const SuperTzComp = () => {
                   />
                 ) : (
                   <LkAvtorUserPagination
-                  paramsID={id}
+                    paramsID={id}
                     superTz={
                       superTz?.user_organization?.find(
                         (_, index) => index === 0
