@@ -39,7 +39,7 @@ function App() {
         <Route path="/index-spravochnik/:id" element={<IndexSpra />} />
         <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
         <Route path="/lkavtor/:id" element={<LKMainUpdate />} />
-        <Route path="structure/edit/:id" element={<Structure />} />
+        <Route path="/structure/edit/:id" element={<Structure />} />
         <Route path="/structure/:id" element={<Structure />} />
         <Route
           path="/content-of-site-index/:slug"
