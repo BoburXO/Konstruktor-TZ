@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import arrowBottom from "../../assets/icons/arrowBottom.svg";
 import s from "../../components/CreateTZ1-component/CreateTZ1.module.css";
 import Fade from "react-reveal/Fade";
-import { templates } from "../../templates";
 import copyIcon from "../../assets/icons/copyIcon.svg";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const CreateTZ1right = ({ copy }) => {
   const { t } = useTranslation();
-
+  const { templates } = useSelector((state) => state.userStructure);
   return (
     <Fade bottom cascade>
       <div className={s.craete1_right}>
         <h2>{t("createtz26")}</h2>
         <p>{t("createtz27")}</p>
         <div className={s.create1_punktlar}>
-          {templates?.slice(0, 3).map((el) => {
+          {templates?.section_smaple?.slice(0, 3).map((el) => {
             return (
               <div className={s.create1_punktlar_card} key={el.id}>
                 <div className={s.twink_copy}>

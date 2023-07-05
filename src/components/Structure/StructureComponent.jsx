@@ -124,7 +124,6 @@ const StructureComponent = () => {
       dispatch(fetchStructureById(id));
     }
   }, [structureAction, currentField, currentSection, currentSubSection]);
-
   useEffect(() => {
     if (structures?.sections?.length) {
       if (!currentSection?.id) {

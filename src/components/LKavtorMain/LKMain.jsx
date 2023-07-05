@@ -266,89 +266,106 @@ const LKMain = () => {
                                     Fill
                                   </button>
                                 ) : null}
-
                                 <button
-                                  onClick={() => DuplicateTz(tz?.id)}
+                                  onClick={() => {
+                                    DuplicateTz(tz?.id);
+                                    dispatch(doubleAndFillTz(tz?.id));
+                                  }}
                                   className={s.lkmain_sect_crud_copy}
                                 >
                                   <img src={copyIcon} alt="Copy" />
                                 </button>
-                                <Link to={`/structure/edit/${tz?.id}`}>
-                                  <button className={s.lkmain_sect_crud_create}>
-                                    <img src={createIcon} alt="Edit" />
-                                  </button>
-                                </Link>
-                                <button className={s.lkmain_sect_crud_skacat}>
-                                  <a
-                                    rel="noopener"
-                                    href={tz?.pdf_file}
-                                    download
-                                    target="_blank"
-                                  >
-                                    <img src={skacatIcon} alt="Download" />
-                                  </a>
-                                </button>
-                                <button
-                                  onClick={() => {
-                                    handleOpenDel();
-                                    setDelId(tz?.id);
-                                  }}
-                                  className={s.lkmain_sect_crud_delete}
-                                >
-                                  <img src={deleteIcon} alt="Delete" />
-                                </button>
-                                <Modal
-                                  slotProps={{
-                                    backdrop: {
-                                      style: {
-                                        opacity: "0.4",
-                                        boxShadow: 24,
-                                      },
-                                    },
-                                  }}
-                                  open={openDel}
-                                  onClose={handleCloseDel}
-                                  aria-labelledby="modal-modal-title"
-                                  aria-describedby="modal-modal-description"
-                                >
-                                  <Box sx={style}>
-                                    <form
-                                      style={{ textAlign: "center" }}
-                                      className={s.createElementForm}
+                                {localStorage.getItem("roleName") !==
+                                "Author" ? (
+                                  <>
+                                    {" "}
+                                    <Link to={`/structure/edit/${tz?.id}`}>
+                                      <button
+                                        className={s.lkmain_sect_crud_create}
+                                      >
+                                        <img src={createIcon} alt="Edit" />
+                                      </button>
+                                    </Link>
+                                    <button
+                                      className={s.lkmain_sect_crud_skacat}
                                     >
-                                      <h2>{t("sfera.3")}</h2>
-                                      <br />
-                                      <p>{t("sfera.6")}</p>
-                                      <br />
-                                      <div className={s.createElementFormBtns}>
-                                        {" "}
-                                        <button
-                                          type="button"
-                                          onClick={() => handleCloseDel()}
-                                          className={s.shablon_save_btn}
+                                      <a
+                                        rel="noopener"
+                                        href={tz?.pdf_file}
+                                        download
+                                        target="_blank"
+                                      >
+                                        <img src={skacatIcon} alt="Download" />
+                                      </a>
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        handleOpenDel();
+                                        setDelId(tz?.id);
+                                      }}
+                                      className={s.lkmain_sect_crud_delete}
+                                    >
+                                      <img src={deleteIcon} alt="Delete" />
+                                    </button>
+                                    <Modal
+                                      slotProps={{
+                                        backdrop: {
+                                          style: {
+                                            opacity: "0.4",
+                                            boxShadow: 24,
+                                          },
+                                        },
+                                      }}
+                                      open={openDel}
+                                      onClose={handleCloseDel}
+                                      aria-labelledby="modal-modal-title"
+                                      aria-describedby="modal-modal-description"
+                                    >
+                                      <Box sx={style}>
+                                        <form
+                                          style={{ textAlign: "center" }}
+                                          className={s.createElementForm}
                                         >
-                                          {t("btn.5")}
-                                        </button>
-                                        <button
-                                          type="button"
-                                          onClick={() =>
-                                            deleteTz(delId).then(() =>
-                                              setIsLoading(false)
-                                            )
-                                          }
-                                          className={s.shablon_delete_btn}
-                                        >
-                                          {t("btn.6")}
-                                        </button>
-                                      </div>
-                                    </form>
-                                  </Box>
-                                </Modal>
+                                          <h2>{t("sfera.3")}</h2>
+                                          <br />
+                                          <p>{t("sfera.6")}</p>
+                                          <br />
+                                          <div
+                                            className={s.createElementFormBtns}
+                                          >
+                                            {" "}
+                                            <button
+                                              type="button"
+                                              onClick={() => handleCloseDel()}
+                                              className={s.shablon_save_btn}
+                                            >
+                                              {t("btn.5")}
+                                            </button>
+                                            <button
+                                              type="button"
+                                              onClick={() =>
+                                                deleteTz(delId).then(() =>
+                                                  setIsLoading(false)
+                                                )
+                                              }
+                                              className={s.shablon_delete_btn}
+                                            >
+                                              {t("btn.6")}
+                                            </button>
+                                          </div>
+                                        </form>
+                                      </Box>
+                                    </Modal>
+                                  </>
+                                ) : null}
                               </div>
                             ) : (
                               <div className={s.lkmain_sect_crud}>
                                 <button
-                                  onClick={() => DuplicateTz(tz?.id)}
+                                  onClick={() => {
+                                    DuplicateTz(tz?.id);
+                                    dispatch(doubleAndFillTz(tz?.id));
+                                  }}
                                   className={s.lkmain_sect_crud_copy}
                                 >
                                   <img src={copyIcon} alt="Copy" />
@@ -356,6 +373,9 @@ const LKMain = () => {
                                 <button
                                   className={s.lkmain_sect_crud_copy}
                                   style={{ borderColor: "#0ba9cc" }}
+                                  onClick={() =>
+                                    navigate(`/structure/${tz?.id}`)
+                                  }
                                 >
                                   <i
                                     className="fa-regular fa-eye"

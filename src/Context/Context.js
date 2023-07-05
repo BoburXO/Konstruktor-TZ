@@ -1554,7 +1554,7 @@ const ContextProvider = ({ children }) => {
         `${API}/constructor/organization/detail?organization_id=${id}
         &tz_name=${superTzSearch}`,
         {
-          headers: {
+          headers: { 
             Authorization: `Bearer ${localStorage.getItem(
               "ConstructorRoleAccessToken"
             )}`,

@@ -40,6 +40,12 @@ export default function FieldPart({ field }) {
                 onClick={hanldeOpenUpdateFieldModal}
                 alt="Edit icon"
               />
+              <CreateNewFieldModal
+                openField={showUpdateFieldModal}
+                handleCloseField={hanldeCloseUpdateFieldModal}
+                item={field}
+                beingUpdatedData={field}
+              />
               <i
                 className="fa-regular fa-trash-can"
                 style={{
@@ -116,12 +122,6 @@ export default function FieldPart({ field }) {
           />
         </>
       )}
-      <CreateNewFieldModal
-        openField={showUpdateFieldModal}
-        handleCloseField={hanldeCloseUpdateFieldModal}
-        item={field}
-        beingUpdatedData={field}
-      />
     </>
   );
 }

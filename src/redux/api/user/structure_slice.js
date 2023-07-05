@@ -9,6 +9,8 @@ const initialState = {
   fieldsData: [],
   data: {},
   userAction: "edit",
+  templatesLoading: false,
+  templates: [],
 };
 
 export const fetchStructureByIdForUser = createAsyncThunk(
@@ -49,6 +51,21 @@ export const sendAllFieldsData = createAsyncThunk(
       method: "PUT",
       url: `/constructor/section/field/${id}`,
       data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
+export const fetchTemplates = createAsyncThunk(
+  "templates/fetchAll",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      url: `/constructor/section/detail/${id}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem(
           "ConstructorRoleAccessToken"
@@ -133,6 +150,13 @@ const userStructureSlice = createSlice({
       .addCase(sendAllFieldsData.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.loading = false;
+      })
+      .addCase(fetchTemplates.pending, (state) => {
+        state.templatesLoading = true;
+      })
+      .addCase(fetchTemplates.fulfilled, (state, { payload }) => {
+        state.templates = payload;
+        state.templatesLoading = false;
       });
   },
 });
