@@ -11,10 +11,12 @@ const initialState = {
 
 export const fetchAllTzOfUser = createAsyncThunk(
   "userTz/fetchAll",
-  async (page = 1) => {
+  async ({ page = 1, tz_name }) => {
     const { request } = useHttp();
     return await request({
-      url: `/constructor/list/user?page=${page}`,
+      url: tz_name
+        ? `/constructor/list/user?page=${page}&tz_name=${tz_name}`
+        : `/constructor/list/user?page=${page}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem(
           "ConstructorRoleAccessToken"

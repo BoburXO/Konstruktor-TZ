@@ -3,15 +3,14 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { useDispatch } from "react-redux";
 import { fetchAllTzOfUser } from "../pages/Profile/profile_slice";
-import { useState } from "react";
 
-const ProfilePagination = ({ superTz }) => {
+const ProfilePagination = ({ superTz, tz_name }) => {
   const dispatch = useDispatch();
   return (
     <Stack spacing={2}>
       <Pagination
         onChange={(e, page) => {
-          dispatch(fetchAllTzOfUser(page));
+          dispatch(fetchAllTzOfUser({ page, tz_name }));
         }}
         count={superTz}
         color="primary"

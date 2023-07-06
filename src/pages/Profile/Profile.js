@@ -2,17 +2,13 @@ import { Footer } from "rsuite";
 import { useTranslation } from "react-i18next";
 import UserNav from "../../components/UserNav/UserNav";
 import s from "../../components/LKavtorMain/LKMain.module.css";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import date from "../../assets/icons/dateIcon.svg";
-import copyIcon from "../../assets/icons/copyIcon.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
 import skacatIcon from "../../assets/icons/skacatIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { Context } from "../../Context/Context";
+import { useNavigate } from "react-router-dom";
 import search from "../../assets/icons/search.svg";
-import LkAvtorPagination from "../../Pagination/LkAvtorPagination";
-import Select from "react-select";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Loader from "../../components/Loader/Loader";
@@ -23,10 +19,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {
-  doubleAndFillTz,
-  setTzIdForFilling,
-} from "../../pages/LKavtor/lkavtor_slice";
+import { setTzIdForFilling } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTz, fetchAllTzOfUser } from "./profile_slice";
 import ProfilePagination from "../../Pagination/ProfilePagination";
@@ -52,27 +45,15 @@ export default function Profile() {
   const handleOpenDel = () => setOpenDel(true);
   const handleCloseDel = () => setOpenDel(false);
 
+  //searchPanel
+  const [searchText, setSearchText] = useState("");
+
   const { tz, loading, deletedTz } = useSelector((state) => state.profile);
 
   useEffect(() => {
-    dispatch(fetchAllTzOfUser(1));
-  }, [deletedTz]);
+    dispatch(fetchAllTzOfUser({ tz_name: searchText }));
+  }, [deletedTz, searchText]);
 
-  const options = [
-    { value: "", label: t("filter.1") },
-    { value: 1, label: t("lkavtor5") },
-    { value: 2, label: t("lkavtor6") },
-  ];
-
-  const optionOwner = [
-    { value: true, label: t("super.2") },
-    { value: false, label: t("filter.1") },
-  ];
-
-  const optionsDraft = [
-    { value: false, label: t("filter.2") },
-    { value: true, label: t("filter.3") },
-  ];
   return (
     <>
       {loading && !tz?.id ? (
@@ -96,7 +77,11 @@ export default function Profile() {
                 >
                   <div className={s.input_field}>
                     <img className={s.S_icon} src={search} alt="Search" />
-                    <input type="text" placeholder={t("content-site.3")} />
+                    <input
+                      type="text"
+                      placeholder={t("content-site.3")}
+                      onChange={(e) => setSearchText(e.target.value)}
+                    />
                   </div>
                 </div>
               </div>
@@ -266,6 +251,7 @@ export default function Profile() {
                         tz?.user_organization?.find((_, index) => index === 0)
                           ?.paginated_results?.total_pages
                       }
+                      tz_name={searchText}
                     />
                   </div>
                 </>
