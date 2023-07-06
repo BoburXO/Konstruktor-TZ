@@ -11,6 +11,7 @@ export default function FieldPart({ field }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { classificators } = useSelector((state) => state.field);
+  const { structureAction } = useSelector((state) => state.structure);
 
   const [showUpdateFieldModal, setShowUpdateFieldModal] = useState(false);
   const hanldeOpenUpdateFieldModal = () => setShowUpdateFieldModal(true);
@@ -33,30 +34,32 @@ export default function FieldPart({ field }) {
       {field?.select_type === 6 ? (
         <div>
           <p className={s.structure_right_contents_input_label}>
-            Table
-            <div>
-              <img
-                src={editBtn}
-                onClick={hanldeOpenUpdateFieldModal}
-                alt="Edit icon"
-              />
-              <CreateNewFieldModal
-                openField={showUpdateFieldModal}
-                handleCloseField={hanldeCloseUpdateFieldModal}
-                item={field}
-                beingUpdatedData={field}
-              />
-              <i
-                className="fa-regular fa-trash-can"
-                style={{
-                  color: "grey",
-                  fontSize: "21px",
-                  marginLeft: "15px",
-                  cursor: "pointer",
-                }}
-                onClick={handleDeleteField}
-              ></i>
-            </div>
+            {t("table")}
+            {structureAction !== "review" ? (
+              <div>
+                <img
+                  src={editBtn}
+                  onClick={hanldeOpenUpdateFieldModal}
+                  alt="Edit icon"
+                />
+                <CreateNewFieldModal
+                  openField={showUpdateFieldModal}
+                  handleCloseField={hanldeCloseUpdateFieldModal}
+                  item={field}
+                  beingUpdatedData={field}
+                />
+                <i
+                  className="fa-regular fa-trash-can"
+                  style={{
+                    color: "grey",
+                    fontSize: "21px",
+                    marginLeft: "15px",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleDeleteField}
+                ></i>
+              </div>
+            ) : null}
           </p>
           <div style={{ marginTop: "10px" }}>
             <p style={{ marginBottom: "10px" }}>{t("ru")}:</p>
@@ -76,24 +79,26 @@ export default function FieldPart({ field }) {
       ) : (
         <>
           <p className={s.structure_right_contents_input_label}>
-            {field?.select_type === 8 ? "Classificator" : t("struc4")}
-            <div>
-              <img
-                src={editBtn}
-                onClick={hanldeOpenUpdateFieldModal}
-                alt="Edit icon"
-              />
-              <i
-                className="fa-regular fa-trash-can"
-                style={{
-                  color: "gray",
-                  fontSize: "21px",
-                  marginLeft: "15px",
-                  cursor: "pointer",
-                }}
-                onClick={handleDeleteField}
-              ></i>
-            </div>
+            {field?.select_type === 8 ? t("Classificator") : t("struc4")}
+            {structureAction !== "review" ? (
+              <div>
+                <img
+                  src={editBtn}
+                  onClick={hanldeOpenUpdateFieldModal}
+                  alt="Edit icon"
+                />
+                <i
+                  className="fa-regular fa-trash-can"
+                  style={{
+                    color: "gray",
+                    fontSize: "21px",
+                    marginLeft: "15px",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleDeleteField}
+                ></i>
+              </div>
+            ) : null}
           </p>
           <br />
           {t("ru")}:

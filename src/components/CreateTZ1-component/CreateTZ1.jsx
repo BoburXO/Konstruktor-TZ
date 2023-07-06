@@ -26,7 +26,7 @@ const CreateTZ = () => {
     toast.success(t("toast"), {
       style: { background: "white", color: "black" },
     });
-  const { structure, activeSection, data } = useSelector(
+  const { structure, activeSection, data, userAction } = useSelector(
     (state) => state.userStructure
   );
   const { id } = useSelector((state) => state.lkavtor);

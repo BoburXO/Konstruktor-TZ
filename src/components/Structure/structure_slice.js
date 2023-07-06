@@ -4,9 +4,11 @@ import { useHttp } from "../../hooks/useHttp";
 const initialState = {
   isFetchingStructuresLoading: false,
   isCreatingStructuresLoading: false,
+  templatesLoading: false,
   structures: {},
   currentStructure: {},
   structureAction: "create",
+  templates: [],
 };
 
 export const fetchStructureById = createAsyncThunk(
@@ -63,7 +65,20 @@ export const deleteStructure = createAsyncThunk(
   async () => {}
 );
 
-
+export const fetchTemplates = createAsyncThunk(
+  "templates/fetchAll",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      url: `/constructor/section/detail/${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
 
 const structureSlice = createSlice({
   name: "structure",
@@ -109,7 +124,13 @@ const structureSlice = createSlice({
         state.structures = payload;
         state.isCreatingStructuresLoading = false;
       })
-      
+      .addCase(fetchTemplates.pending, (state) => {
+        state.templatesLoading = true;
+      })
+      .addCase(fetchTemplates.fulfilled, (state, { payload }) => {
+        state.templates = payload;
+        state.templatesLoading = false;
+      });
   },
 });
 

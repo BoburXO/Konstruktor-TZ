@@ -165,7 +165,7 @@ const LKMain = () => {
                 </div>
               ) : null}
             </div>
-            {localStorage.getItem("roleName") !== "Author" ? (
+            {/* {localStorage.getItem("roleName") !== "Author" ? (
               <button
                 onClick={() => navigate("/createtz")}
                 className={s.lkmain_sect_create_btn}
@@ -173,7 +173,7 @@ const LKMain = () => {
                 <span style={{ fontSize: "25px" }}>+</span>
                 <span>{t("lkavtor1")}</span>
               </button>
-            ) : null}
+            ) : null} */}
           </div>
           {superTz?.user_organization[0]?.paginated_results?.results?.length ? (
             <>
@@ -357,14 +357,31 @@ const LKMain = () => {
                                       </Box>
                                     </Modal>
                                   </>
-                                ) : null}
+                                ) : (
+                                  <>
+                                    <button
+                                      className={s.lkmain_sect_crud_copy}
+                                      style={{ borderColor: "#0ba9cc" }}
+                                      onClick={() =>
+                                        navigate(`/structure/${tz?.id}`)
+                                      }
+                                    >
+                                      <i
+                                        className="fa-regular fa-eye"
+                                        style={{
+                                          color: "#0ba9cc",
+                                          fontSize: 20,
+                                        }}
+                                      ></i>
+                                    </button>
+                                  </>
+                                )}
                               </div>
                             ) : (
                               <div className={s.lkmain_sect_crud}>
                                 <button
                                   onClick={() => {
                                     DuplicateTz(tz?.id);
-                                    dispatch(doubleAndFillTz(tz?.id));
                                   }}
                                   className={s.lkmain_sect_crud_copy}
                                 >

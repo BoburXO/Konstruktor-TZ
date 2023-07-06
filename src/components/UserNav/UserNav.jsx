@@ -81,7 +81,14 @@ const UserNav = () => {
                 <p>{localStorage.getItem("roleName")}</p>
               </span>
 
-              <Link className={s.avatar_link}>
+              <Link
+                className={s.avatar_link}
+                to={
+                  localStorage.getItem("roleName") === "Author"
+                    ? "/profile"
+                    : null
+                }
+              >
                 <img src={ava} alt="Avatar" />
               </Link>
               <button onClick={() => LogOut()} className={s.logoutBtn}>
