@@ -1,7 +1,7 @@
 FROM node:16.19.0-alpine as build
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install --no-cache
+RUN npm install -g npm@9.8.0 --no-cache
 COPY . ./
 RUN npm run build
 RUN find ./dist -type f | xargs gzip -k
