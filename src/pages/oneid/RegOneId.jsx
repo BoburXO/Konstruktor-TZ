@@ -1,24 +1,25 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 import { Context } from "../../Context/Context";
 import s from "../Reg/regOneId.module.css";
 
 const OneId = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  React.useEffect(() => {
-    if (localStorage.getItem("ConstructorRoleAccessToken")) {
-      navigate("/main");
-    }
-  }, []);
-  
   const search = useLocation().search;
   const code = new URLSearchParams(search).get("code");
   const { ssoOneId, roles, RoleId } = useContext(Context);
 
   useEffect(() => {
+    if (localStorage.getItem("ConstructorRoleAccessToken")) {
+      navigate("/main");
+    }
     localStorage.setItem("oneIDCode", code);
-    ssoOneId();
+    ssoOneId().then(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className={s.reg_parent}>
@@ -28,7 +29,7 @@ const OneId = () => {
           <a
             target="_blank"
             onClick={() =>
-              (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=https://constructor.egov.uz/&state=test&scope=myportal`)
+              (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=http://localhost:3000/&state=test&scope=myportal`)
             }
           >
             <button>Войти через OneID</button>

@@ -25,56 +25,51 @@ export default function CreateNewSectionModal({
 }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { currentStructure, structures } = useSelector(
-    (state) => state.structure
+  const { structures } = useSelector((state) => state.structure);
+
+  const [headerNameRu, setHeaderNameRu] = useState(
+    updatedData?.header_name_ru || ""
+  );
+  const [headerNameUz, setHeaderNameUz] = useState(
+    updatedData?.header_name_uz || ""
   );
   const [nameRu, setNameRu] = useState(updatedData?.name_ru || "");
   const [nameUz, setNameUz] = useState(updatedData?.name_uz || "");
 
-  const punktHeader = () => {
-    if (activeSectionModal === "section") {
-      return !structures?.sections?.length
-        ? 1
-        : structures?.sections?.length + 1;
-    } else {
-      return !section?.children?.length
-        ? `${section?.header_name_uz}.1`
-        : `${section?.header_name_uz}.${section?.children?.length + 1}`;
-    }
-  };
-
   const handleSubmitNewSection = () => {
-    if (!nameRu || !nameUz) {
+    if (!nameRu || !nameUz || !headerNameRu || !headerNameUz) {
       return toast("Please fill out all the required fields!");
     }
     if (activeSectionModal === "section") {
       dispatch(
         createNewSection({
-          header_name_ru: punktHeader(),
-          header_name_uz: punktHeader(),
+          header_name_ru: headerNameRu,
+          header_name_uz: headerNameUz,
           name_ru: nameRu,
           name_uz: nameUz,
-          result: currentStructure?.id,
+          result: structures?.id,
         })
       );
     } else {
       dispatch(
         createNewSubSection({
-          header_name_ru: punktHeader(),
-          header_name_uz: punktHeader(),
+          header_name_ru: headerNameRu,
+          header_name_uz: headerNameUz,
           name_ru: nameRu,
           name_uz: nameUz,
-          result: currentStructure?.id,
+          result: structures?.id,
           parent,
         })
       );
     }
+    setHeaderNameRu("");
+    setHeaderNameUz("");
     setNameRu("");
     setNameUz("");
   };
 
   const handleUpdateSection = () => {
-    if (!nameRu || !nameUz) {
+    if (!nameRu || !nameUz || !headerNameRu || !headerNameUz) {
       return toast("Please fill out all the required fields!");
     }
     if (activeSectionModal === "section") {
@@ -82,11 +77,11 @@ export default function CreateNewSectionModal({
         updateSection({
           id: updatedData?.id,
           data: {
-            header_name_ru: updatedData?.header_name || punktHeader(),
-            header_name_uz: updatedData?.header_name || punktHeader(),
+            header_name_ru: headerNameRu,
+            header_name_uz: headerNameUz,
             name_ru: nameRu,
             name_uz: nameUz,
-            result: currentStructure?.id,
+            result: structures?.id,
           },
         })
       );
@@ -95,16 +90,18 @@ export default function CreateNewSectionModal({
         updateSubSection({
           id: updatedData?.id,
           data: {
-            header_name_ru: updatedData?.header_name || punktHeader(),
-            header_name_uz: updatedData?.header_name || punktHeader(),
+            header_name_ru: headerNameRu,
+            header_name_uz: headerNameUz,
             name_ru: nameRu,
             name_uz: nameUz,
-            result: currentStructure?.id,
+            result: structures?.id,
             parent,
           },
         })
       );
     }
+    setHeaderNameRu("");
+    setHeaderNameUz("");
     setNameRu("");
     setNameUz("");
   };
@@ -132,7 +129,26 @@ export default function CreateNewSectionModal({
         <div className={s.create_structure_modal}>
           <h1>Название технического задания</h1>
           <p>Заголовок</p>
-          <p>{`Punkt ${updatedData?.header_name || punktHeader()}`}</p>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ width: "49%" }}>
+              {t("ru")}:
+              <input
+                type="text"
+                value={headerNameRu}
+                onChange={(e) => setHeaderNameRu(e.target.value)}
+                className={s.structure_right_contents_input_punkt}
+              />
+            </div>
+            <div style={{ width: "49%" }}>
+              {t("ru")}:
+              <input
+                type="text"
+                value={headerNameUz}
+                onChange={(e) => setHeaderNameUz(e.target.value)}
+                className={s.structure_right_contents_input_punkt}
+              />
+            </div>
+          </div>
           <p>Комментарий</p>
           {t("ru")}:
           <input

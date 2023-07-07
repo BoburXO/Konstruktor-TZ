@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import s from "../LkAvtorUserComp/lkAvtorUserComp.module.css";
 import Loader from "../Loader/Loader";
+import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
 
 const style = {
   position: "absolute",
@@ -68,7 +69,9 @@ const LkAvtorUserComp = () => {
     <>
       <section className={s.lkmain_sect}>
         <div className={s.lkmain_sect_container}>
-          <h1>{t("lkavtor")}: "Author"</h1>
+          <h1>
+            {t("lkavtor")}: {t("filter.5")}
+          </h1>
           <br />
           <div className={s.lkmain_sect_labels}>
             <div
@@ -133,7 +136,14 @@ const LkAvtorUserComp = () => {
                     key={el.id}
                   >
                     <p style={{ width: "3%" }}>#{el?.row_number}</p>
-                    <p style={{ width: "55%" }}>{el?.tz_name}</p>
+                    {el?.tz_name.length > 80 ? (
+                      <p style={{ width: "55%" }}>
+                        {el?.tz_name.slice(0, 80)}
+                        {"..."}
+                      </p>
+                    ) : (
+                      <p style={{ width: "55%" }}>{el?.tz_name}</p>
+                    )}
                     <span
                       style={{ width: "20%" }}
                       className={s.lkmain_sect_dates}
@@ -225,7 +235,7 @@ const LkAvtorUserComp = () => {
           <br />
           <br />
           <div className={s.content_pagination}>
-            {/* <LkAvtorPagination createTz={createTz?.total_pages} /> */}
+            <LkAvtorUserPagination createTzUser={createTzUser?.total_pages} />
           </div>
         </div>
       </section>

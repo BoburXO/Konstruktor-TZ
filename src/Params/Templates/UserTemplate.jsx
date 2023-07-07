@@ -5,10 +5,8 @@ import s from "../Templates/Templates.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { templates } from "../../templates";
 import { useTranslation } from "react-i18next";
-import Loader from "../../components/Loader/Loader";
 
 const UserTemplate = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
@@ -20,7 +18,6 @@ const UserTemplate = () => {
     return el.id === +id;
   });
   const { t } = useTranslation();
-  if (isLoading) return <Loader />;
   return (
     <>
       <UserNav />

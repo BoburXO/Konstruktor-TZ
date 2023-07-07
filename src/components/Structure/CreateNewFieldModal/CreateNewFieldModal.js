@@ -4,22 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createNewField,
   fetchAllClassificators,
+  updateField,
 } from "../CreateNewFieldModal/field_slice";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import backX from "../../../assets/icons/backX.svg";
 import Select from "react-select";
 import { toast } from "react-hot-toast";
-import {
-  drawTableWithValues,
-  setDefaultTableWithoutValue,
-} from "../../../helpers/helpers";
+import { setDefaultTableWithoutValue } from "../../../helpers/helpers";
 import DrawTableWithValues from "../../DrawTableWithValues/DrawTableWithValues";
 
 export default function CreateNewFieldModal({
   openField,
   handleCloseField,
   item,
+  beingUpdatedData,
 }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -27,23 +26,75 @@ export default function CreateNewFieldModal({
     (state) => state.field
   );
 
-  const [fieldType, setFieldType] = useState(1);
-  const [classificator, setClassificator] = useState("");
-  const [fieldNameRu, setFieldNameRu] = useState("");
-  const [fieldNameUz, setFieldNameUz] = useState("");
+  const [fieldType, setFieldType] = useState(
+    beingUpdatedData?.select_type || ""
+  );
+  const [classificator, setClassificator] = useState({});
+  const [fieldNameRu, setFieldNameRu] = useState(
+    beingUpdatedData?.field_name_ru || ""
+  );
+  const [fieldNameUz, setFieldNameUz] = useState(
+    beingUpdatedData?.field_name_uz || ""
+  );
 
   //states for table
-  const [tableCols, setTableCols] = useState(0);
-  const [tableRaws, setTableRaws] = useState(0);
-  const [tableDataUz, setTableDataUz] = useState([]);
-  const [tableDataRu, setTableDataRu] = useState([]);
+  const [tableCols, setTableCols] = useState(
+    +beingUpdatedData?.json_data?.tableCols || 0
+  );
+  const [tableRaws, setTableRaws] = useState(
+    +beingUpdatedData?.json_data?.tableRaws || 0
+  );
+  const [tableDataUz, setTableDataUz] = useState(
+    beingUpdatedData?.json_data?.data_uz || []
+  );
+  const [tableDataRu, setTableDataRu] = useState(
+    beingUpdatedData?.json_data?.data_ru || []
+  );
 
   useEffect(() => {
-    if (tableCols > 0 && tableRaws > 0) {
-      setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
-      setDefaultTableWithoutValue(tableCols, tableCols, setTableDataRu);
+    if (fieldType === 8) {
+      dispatch(fetchAllClassificators());
     }
+  }, [fieldType]);
+
+  useEffect(() => {
+    if (!beingUpdatedData?.id) {
+      if (tableCols > 0 && tableRaws > 0) {
+        setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataRu);
+        setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
+      }
+    }
+    // if (beingUpdatedData?.id && fieldType === 6) {
+    //   if (tableCols > 0 && tableRaws > 0) {
+    //     setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataRu);
+    //     setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
+    //   }
+    // }
   }, [tableRaws, tableCols]);
+
+  const fieldTypeOptions = [
+    { value: 1, label: "255 symbol CHAR" },
+    { value: 2, label: "text" },
+    { value: 3, label: "int" },
+    { value: 4, label: "email" },
+    { value: 5, label: "date" },
+    { value: 6, label: "table" },
+    { value: 7, label: "image" },
+    { value: 8, label: "classificator" },
+  ];
+
+  const classificatorOptions = useMemo(() => {
+    return classificators?.results?.map((item) => ({
+      value: item.id,
+      label: item.title,
+    }));
+  }, [classificators]);
+
+  const defaultClassificatorOptionIndex = useMemo(() => {
+    return classificatorOptions?.findIndex(
+      (item) => item.value === beingUpdatedData?.classificator
+    );
+  }, [classificatorOptions]);
 
   const handleSubmitNewField = () => {
     if (fieldType !== 8 && fieldType !== 6) {
@@ -88,11 +139,47 @@ export default function CreateNewFieldModal({
     setFieldType(1);
   };
 
-  useEffect(() => {
-    if (fieldType === 8) {
-      dispatch(fetchAllClassificators());
+  const handleUpdateField = () => {
+    if (fieldType !== 8 && fieldType !== 6) {
+      if (!fieldType || !fieldNameRu || !fieldNameUz) {
+        return toast("Iltimos hamma bosh joylarni toldiring!");
+      }
+    } else if (fieldType === 8) {
+      if (!classificator) {
+        return toast("Iltimos classificatorlardan birini tanlang");
+      }
     }
-  }, [fieldType]);
+
+    dispatch(
+      updateField({
+        id: beingUpdatedData?.id,
+        data:
+          fieldType === 8
+            ? {
+                select_type: fieldType,
+                classificator,
+              }
+            : fieldType === 6
+            ? {
+                json_data: {
+                  data_uz: tableDataUz,
+                  data_ru: tableDataRu,
+                  tableCols,
+                  tableRaws,
+                },
+              }
+            : {
+                select_type: fieldType,
+                field_name_ru: fieldNameRu,
+                field_name_uz: fieldNameUz,
+              },
+      })
+    );
+    setClassificator("");
+    setFieldNameRu("");
+    setFieldNameUz("");
+    setFieldType(1);
+  };
 
   return (
     <Modal
@@ -119,30 +206,28 @@ export default function CreateNewFieldModal({
           <p>Тип</p>
           <Select
             onChange={(e) => setFieldType(e.value)}
-            options={[
-              { value: 1, label: "255 symbol CHAR" },
-              { value: 2, label: "text" },
-              { value: 3, label: "int" },
-              { value: 4, label: "email" },
-              { value: 5, label: "date" },
-              { value: 6, label: "table" },
-              { value: 7, label: "image" },
-              { value: 8, label: "classificator" },
-            ]}
+            defaultValue={fieldTypeOptions[parseInt(fieldType) - 1]}
+            options={fieldTypeOptions}
           />
           <p>Заголовок</p>
           {isFetchingClassificatorLoading ? (
             "Loading..."
           ) : (
             <>
-              {fieldType === 8 && classificators?.count > 0 ? (
-                <Select
-                  onChange={(e) => setClassificator(e.value)}
-                  options={classificators?.results?.map((item) => ({
-                    value: item.id,
-                    label: item.title,
-                  }))}
-                />
+              {fieldType === 8 && classificators?.links ? (
+                <>
+                  {classificators.count > 0 ? (
+                    <Select
+                      onChange={(e) => setClassificator(e.value)}
+                      options={classificatorOptions}
+                      defaultValue={
+                        classificatorOptions[defaultClassificatorOptionIndex]
+                      }
+                    />
+                  ) : (
+                    "Classificators not found"
+                  )}
+                </>
               ) : fieldType === 6 ? (
                 <>
                   <div className={s.flex_names}>
@@ -210,7 +295,11 @@ export default function CreateNewFieldModal({
                 <button
                   className={s.structure_save_btn}
                   onClick={() => {
-                    handleSubmitNewField();
+                    if (beingUpdatedData?.id) {
+                      handleUpdateField();
+                    } else {
+                      handleSubmitNewField();
+                    }
                     handleCloseField();
                   }}
                 >

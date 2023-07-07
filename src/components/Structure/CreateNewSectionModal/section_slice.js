@@ -6,6 +6,7 @@ const initialState = {
   isCreatingSubSectionLoading: false,
   currentSection: {},
   currentSubSection: {},
+  deletedSection: {},
   activeSectionId: "",
 };
 export const createNewSection = createAsyncThunk(
@@ -76,6 +77,39 @@ export const updateSubSection = createAsyncThunk(
   }
 );
 
+export const deleteSection = createAsyncThunk("section/delete", async (id) => {
+  const { request } = useHttp();
+  return await request({
+    url: `/constructor/section/delete`,
+    method: "DELETE",
+    data: {
+      section_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(
+        "ConstructorRoleAccessToken"
+      )}`,
+    },
+  });
+});
+
+export const deleteSubSection = createAsyncThunk(
+  "delete/subSection",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      method: "DELETE",
+      url: `/constructor/section/delete`,
+      data: { section_id: id },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
 const sectionSlice = createSlice({
   name: "section",
   initialState,
@@ -85,6 +119,12 @@ const sectionSlice = createSlice({
     },
     setCurrentSection: (state, { payload }) => {
       state.currentSection = payload;
+    },
+    clearSection: (state) => {
+      state.currentSection = {};
+      state.deletedSection = {};
+      state.activeSectionId = "";
+      state.currentSubSection = {};
     },
   },
   extraReducers: (builder) => {
@@ -120,9 +160,26 @@ const sectionSlice = createSlice({
       .addCase(updateSubSection.fulfilled, (state, { payload }) => {
         state.currentSubSection = payload;
         state.isCreatingSubSectionLoading = false;
+      })
+      //deleteSection
+      .addCase(deleteSection.pending, (state) => {
+        state.isCreatingSectionLoading = true;
+      })
+      .addCase(deleteSection.fulfilled, (state, { payload }) => {
+        state.currentSection = {};
+        state.isCreatingSectionLoading = false;
+      })
+      //deleteSubSection
+      .addCase(deleteSubSection.pending, (state) => {
+        state.isCreatingSubSectionLoading = false;
+      })
+      .addCase(deleteSubSection.fulfilled, (state) => {
+        state.currentSubSection = {};
+        state.isCreatingSubSectionLoading = false;
       });
   },
 });
 
-export const { setActiveSectionId, setCurrentSection } = sectionSlice.actions;
+export const { setActiveSectionId, setCurrentSection, clearSection } =
+  sectionSlice.actions;
 export default sectionSlice.reducer;

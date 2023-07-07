@@ -5,7 +5,93 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5a7dfa4-aa89-4b15-af81-1ed2c4dd4bd9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Konstruktor-TZ" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Pagination/LkAvtorUserPagination.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Pagination/OrgPagination.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Pagination/ProfilePagination.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Pagination/SuperTzPagination.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/CreateTZ1-component/SectionsField.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/DropdownSection/DropdownSection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/DropdownSection/DropdownSection.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/OrganizationsComp/OrganizationsComp.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/OrganizationsComp/organizations.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/RenderSectionsWithChildren/RenderSectionsWithChildren.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SectionsWithChildrenForAuthor/SectionsWithChildrenForAuthor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/StructureLeftSidebar/StructureLeftSidebar.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/SuperTzComp/SuperTzComp.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/LKavtor/lkavtor_slice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Organizations/Organizations.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Profile/Profile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Profile/profile_slice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/redux/api/user/structure_slice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/locales/kr/translation.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/locales/kr/translation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/locales/ru/translation.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/locales/ru/translation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/locales/uz/translation.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/locales/uz/translation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Context/Context.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Context/Context.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pagination/LkAvtorPagination.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pagination/LkAvtorPagination.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/IndexSpravochnik/IndexSpra.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/IndexSpravochnik/IndexSpra.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/IndexSpravochnik/indexSpra.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/IndexSpravochnik/indexSpra.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/LKMainUpdate/LKMainUpdate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/LKMainUpdate/LKMainUpdate.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/Spravochnik/SpravochnikId.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/Spravochnik/SpravochnikId.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/Templates/Template.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/Templates/Template.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/Templates/Templates.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/Templates/Templates.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/Templates/UserTemplate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/Templates/UserTemplate.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/UpdContent/UpdContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/UpdContent/UpdContent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Params/UpdContent/UpdContent.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Params/UpdContent/UpdContent.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/icons/ava.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/icons/ava.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AddContent_comp/AddContent.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddContent_comp/AddContent.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AddContent_comp/AddContentComp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddContent_comp/AddContentComp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AdminSpravochnik/Spravochnik.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminSpravochnik/Spravochnik.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AdminSpravochnik/Spravochnik.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AdminSpravochnik/Spravochnik.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ContentSite/ContentOfSite.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ContentSite/ContentOfSite.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ContentSite/ContentOfSite.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ContentSite/ContentOfSite.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreateTZ1-component/CreateTZ1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CreateTZ1-component/CreateTZ1.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreateTZ1-component/CreateTZ1.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CreateTZ1-component/CreateTZ1.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreateTZ2-component/Createtz2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CreateTZ2-component/Createtz2.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DrawTableWithValues/DrawTableWithValues.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DrawTableWithValues/DrawTableWithValues.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Footer/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Footer/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HistoryStructureComp/HistoryStructureComp.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HistoryStructureComp/historyStructure.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SuperTzComp/superTz.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HomeHeader/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HomeHeader/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HomeNav/Nav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HomeNav/Nav.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HomeSection/Section.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HomeSection/Section.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LKAminShablon/Shablonla.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LKAminShablon/Shablonla.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LKAminShablon/Shablonla.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LKAminShablon/Shablonla.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LKavtorMain/LKMain.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LKavtorMain/LKMain.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LKavtorMain/LKMain.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LKavtorMain/LKMain.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/CreateTZ1center.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/CreateTZ1center.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/CreateTZ1right.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/CreateTZ1right.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/LkAvtorUserComp/LkAvtorUserComp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LkAvtorUserComp/LkAvtorUserComp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Loader/Loader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Loader/Loader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/CreateNewFieldModal/CreateNewFieldModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/CreateNewFieldModal/CreateNewFieldModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/CreateNewFieldModal/field_slice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/CreateNewFieldModal/field_slice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/CreateNewSectionModal/CreateNewSectionModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/CreateNewSectionModal/CreateNewSectionModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/CreateNewSectionModal/section_slice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/CreateNewSectionModal/section_slice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/CreateNewStructureModal/CreateNewStructureModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/CreateNewStructureModal/CreateNewStructureModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/SectionsWithChildren/FieldPart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/SectionsWithChildren/FieldPart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/SectionsWithChildren/SectionsWithChildren.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/SectionsWithChildren/SectionsWithChildren.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/Structure.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/Structure.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/StructureComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/StructureComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/StructureLeftSidebar/Dropdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/StructureLeftSidebar/StructureLeftSidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StructureLeftSidebar/StructureLeftSidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Structure/structure_slice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Structure/structure_slice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserNav/UserNav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserNav/UserNav.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserNav/UserNav.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserNav/UserNav.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/helpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/HistoryStructure/HistoryStructure.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/SuperTZ/SuperTZ.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LKAvtorUser/LKAvtorUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LKAvtorUser/LKAvtorUser.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/LKavtor/LKavtor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LKavtor/LKavtor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Reg/RegOneId.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Reg/RegOneId.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/oneid/RegOneId.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/oneid/RegOneId.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

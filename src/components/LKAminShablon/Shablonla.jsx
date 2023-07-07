@@ -70,7 +70,9 @@ const Shablonla = () => {
       <section className={s.templates_sect}>
         <div className={s.templates_sect_container}>
           <div className={s.templates_sect_label}>
-            <h1>{t("shablon")}</h1>
+            <h1>
+              {t("shablon")} - <span className={s.sample_count}>№{sample?.count}</span>
+            </h1>
             <button
               onClick={handleOpen}
               className={s.templates_sect_create_btn}
@@ -166,10 +168,12 @@ const Shablonla = () => {
                 placeholder={t("struc5")}
                 onChange={(value) => getSampleBySection(value.value)}
                 className={s.sample_select}
-                options={selectPunkt?.results?.map((el) => ({
-                  value: el.id,
-                  label: el.name,
-                }))}
+                options={[{ id: "", name: t("filter.1") }]
+                  .concat(selectPunkt?.results)
+                  .map((el) => ({
+                    value: el?.id,
+                    label: el?.name,
+                  }))}
               />
             </div>
           </div>
@@ -194,11 +198,14 @@ const Shablonla = () => {
                           <b>...</b>
                         </span>
                         <br />
-                        <p>
-                          {el?.description?.length > 250
-                            ? el?.description?.slice(0, 250)
-                            : el?.description}
-                        </p>
+                        {el?.description?.length > 250 ? (
+                          <p>
+                            {el?.description?.slice(0, 250)}
+                            {"..."}
+                          </p>
+                        ) : (
+                          <p>{el?.description}</p>
+                        )}
                       </div>
                     </Fade>
                   </Link>
@@ -208,7 +215,9 @@ const Shablonla = () => {
           ) : (
             <>
               <br />
-              <h2 style={{ textAlign: "center" }}>{t("toast404")}</h2>
+              <h2 className={s.notFound} style={{ textAlign: "center" }}>
+                {t("toast404")}
+              </h2>
             </>
           )}
           <br />

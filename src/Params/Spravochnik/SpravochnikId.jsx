@@ -47,9 +47,9 @@ const SpravochnikId = () => {
   //modal
 
   const { t } = useTranslation();
-  const { slug } = useParams();
+  const { id } = useParams();
   const ParamsSlug = spravochnik?.results?.find((el) => {
-    return el?.slug === slug;
+    return el?.id === id;
   });
 
   React.useEffect(() => {

@@ -40,18 +40,73 @@ export const fetchAllClassificators = createAsyncThunk(
   }
 );
 
+export const updateField = createAsyncThunk(
+  "field/update",
+  async ({ data, id }) => {
+    const { request } = useHttp();
+    return await request({
+      method: "PATCH",
+      url: `/constructor/field/update/${id}`,
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
+export const deleteField = createAsyncThunk("field/delete", async (id) => {
+  const { request } = useHttp();
+  return await request({
+    method: "DELETE",
+    url: `/constructor/field/delete`,
+    data: {
+      field_id: id,
+    },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(
+        "ConstructorRoleAccessToken"
+      )}`,
+    },
+  });
+});
+
 const fieldSlice = createSlice({
   name: "field",
   initialState,
-  reducers: {},
+  reducers: {
+    clearField: (state) => {
+      state.classificators = {};
+      state.currentField = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
+      //createField
       .addCase(createNewField.pending, (state) => {
         state.isCreatingFieldLoading = true;
       })
       .addCase(createNewField.fulfilled, (state, action) => {
         console.log(action);
         state.currentField = action.payload;
+        state.isCreatingFieldLoading = false;
+      })
+      //updateField
+      .addCase(updateField.pending, (state) => {
+        state.isCreatingFieldLoading = true;
+      })
+      .addCase(updateField.fulfilled, (state, { payload }) => {
+        state.currentField = payload;
+        state.isCreatingFieldLoading = false;
+      })
+      //deleteField
+      .addCase(deleteField.pending, (state) => {
+        state.isCreatingFieldLoading = true;
+      })
+      .addCase(deleteField.fulfilled, (state) => {
+        state.currentField = {};
         state.isCreatingFieldLoading = false;
       })
       .addCase(fetchAllClassificators.pending, (state) => {
@@ -64,5 +119,5 @@ const fieldSlice = createSlice({
   },
 });
 
-export const {} = fieldSlice.actions;
+export const { clearField } = fieldSlice.actions;
 export default fieldSlice.reducer;
