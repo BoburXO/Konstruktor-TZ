@@ -12,7 +12,9 @@ i18n
   .use(initReactI18next)
   .init({
     // Стандартный язык
-    fallbackLng: localStorage.getItem("i18nextLng") || 'ru',
+    fallbackLng: localStorage.getItem("i18nextLng") || "uz",
+    //language togillab beradi ozi
+    localeDetection: false,
     debug: true,
     // Распознавание и кэширование языковых кук
     detection: {
