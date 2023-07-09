@@ -1,1 +1,6 @@
-export const API = "http://89.249.60.132:8000/api/v1";
+export const API = `http://constructor.egov.uz${
+  localStorage.getItem("i18nextLng") === "uz" ||
+  localStorage.getItem("i18nextLng") === "kr"
+    ? ""  
+    : "/ru"
+}/api/v1`;

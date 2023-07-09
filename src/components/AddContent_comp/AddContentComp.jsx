@@ -43,6 +43,15 @@ const AddContentComp = () => {
 
   useEffect(() => {
     getSphere();
+    setCreatedAt("");
+    setDescriptionRu("");
+    setDescriptionUz("");
+    setDocFileRu("");
+    setDocFileUz("");
+    setHeaderRu("");
+    setHeaderUz("");
+    setTextRu("");
+    setTextUz("");
   }, []);
 
   return (

@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
-import HistoryStructureComp from "../../components/HistoryStructureComp/HistoryStructureComp";
+import SuperTzComp from "../../components/SuperTzComp/SuperTzComp";
 import UserNav from "../../components/UserNav/UserNav";
 
-const HistoryStructure = () => {
+const SuperTZ = () => {
   const navigate = useNavigate();
-  useEffect(() => {
+  React.useEffect(() => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
+    }
+    if (localStorage.getItem("roleName") !== "SuperAdmin") {
+      navigate("/main");
     }
   }, []);
   return (
     <>
       <UserNav />
-      <HistoryStructureComp />
+      <SuperTzComp />
       <Footer />
     </>
   );
 };
 
-export default HistoryStructure;
+export default SuperTZ;

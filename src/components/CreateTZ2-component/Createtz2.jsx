@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 const Createtz2 = () => {
   const navigate = useNavigate();
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   return (
     <>
       <section className={s.create2_parent}>
@@ -195,7 +195,7 @@ const Createtz2 = () => {
               className={s.create2_center_back_btn}
             >
               <img src={arrowLeft} alt="" />
-            {t("createtz1")}
+              {t("createtz1")}
             </button>
             <h1 className={s.create2_center_title}>9. Источники разработки</h1>
             <div className={s.create2_source}>

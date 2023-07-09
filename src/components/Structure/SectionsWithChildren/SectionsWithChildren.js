@@ -1,16 +1,19 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import s from "../Structure.module.css";
 import pen from "../../../assets/icons/pen.svg";
 import add from "../../../assets/icons/plus-add.svg";
-import addSub from "../../../assets/icons/addSub.png";
 import CreateNewSectionModal from "../CreateNewSectionModal/CreateNewSectionModal";
 import CreateNewFieldModal from "../CreateNewFieldModal/CreateNewFieldModal";
 import FieldPart from "./FieldPart";
+import "../../../../node_modules/rsuite/Dropdown/styles/index.less";
+import { deleteSubSection } from "../CreateNewSectionModal/section_slice";
 
 export default function SectionsWithChildren({ item }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   //add sub to subsection
   const [openSubChildren, setOpenSubChildren] = useState(false);
@@ -27,8 +30,12 @@ export default function SectionsWithChildren({ item }) {
   const handleOpenField = () => setOpenField(true);
   const handleCloseField = () => setOpenField(false);
 
+  const handleDeleteSubSection = () => {
+    dispatch(deleteSubSection(item?.id));
+  };
+
   return (
-    <div className={s.structure_right_contents_card_insidePunkt} key={item?.id}>
+    <div className={s.structure_right_contents_card_insidePunkt}>
       <span>
         <p>
           {t("struc5")} {item?.header_name}
@@ -58,12 +65,11 @@ export default function SectionsWithChildren({ item }) {
             />
           </Link>
           <Link>
-            <img
-              src={addSub}
-              style={{ height: "24px" }}
-              alt="Add subsection"
+            <i
+              className="fa-solid fa-file-circle-plus"
+              style={{ color: "gray", fontSize: "21px" }}
               onClick={handleOpenSubChildren}
-            />
+            ></i>
             <CreateNewSectionModal
               section={item}
               parent={item?.id}
@@ -71,6 +77,13 @@ export default function SectionsWithChildren({ item }) {
               openSection={openSubChildren}
               handleCloseSection={handleCloseSubChildren}
             />
+          </Link>
+          <Link>
+            <i
+              className="fa-regular fa-trash-can"
+              style={{ color: "gray", fontSize: "21px" }}
+              onClick={handleDeleteSubSection}
+            ></i>
           </Link>
         </div>
       </span>
@@ -81,6 +94,7 @@ export default function SectionsWithChildren({ item }) {
         type="text"
         value={item?.name_ru}
         className={s.structure_right_contents_input_punkt}
+        readOnly
       />
       <br />
       <br />
@@ -89,10 +103,11 @@ export default function SectionsWithChildren({ item }) {
         type="text"
         value={item?.name_uz}
         className={s.structure_right_contents_input_punkt}
+        readOnly
       />
       <div className={s.structure_right_contents_input_polya_vvoda}>
         {item?.f_section?.map((field) => (
-          <FieldPart field={field} key={item?.id} />
+          <FieldPart field={field} key={field?.id} />
         ))}
       </div>
     </div>

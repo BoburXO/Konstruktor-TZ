@@ -38,17 +38,14 @@ const UpdContent = () => {
     setTextRu,
   } = useContext(Context);
 
-  const { slug } = useParams();
+  const { id } = useParams();
   const ParamsContent = contentSite?.results?.find((el) => {
-    return el?.slug === slug;
+    return el?.id === id;
   });
 
   const [sfera, setSfera] = useState(ParamsContent?.sphere?.id);
   const navigate = useNavigate();
   React.useEffect(() => {
-    if (!localStorage.getItem("ConstructorRoleAccessToken")) {
-      navigate("/");
-    }
     getSphere().then(() => setIsLoading(false));
     getContentSearch().then(() => setIsLoading(false));
     setHeaderRu(ParamsContent?.header_ru);
@@ -57,6 +54,9 @@ const UpdContent = () => {
     setDescriptionUz(ParamsContent?.description_uz);
     setTextRu(ParamsContent?.text_ru);
     setTextUz(ParamsContent?.text_uz);
+    if (!localStorage.getItem("ConstructorRoleAccessToken")) {
+      navigate("/");
+    }
   }, []);
   const { t } = useTranslation();
 
@@ -171,7 +171,7 @@ const UpdContent = () => {
                   <br />
                   {docFileRu !== null || undefined
                     ? docFileRu.name
-                    : ParamsContent?.doc_file_ru}
+                    : ParamsContent?.doc_file_ru.slice(0,60)}
                 </label>
               </div>
               <br />
@@ -194,7 +194,7 @@ const UpdContent = () => {
                   <br />
                   {docFileUz !== null || undefined
                     ? docFileUz.name
-                    : ParamsContent?.doc_file_uz}
+                    : ParamsContent?.doc_file_uz.slice(0,60)}
                 </label>
               </div>
               <br />

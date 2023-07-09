@@ -11,40 +11,25 @@ import Loader from "../../components/Loader/Loader";
 const LKMainUpdate = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const {
-    getCreateTz,
-    createTz,
-    updateCreateTz,
-    tzCommentRu,
-    setTzCommentRu,
-    tzCommentUz,
-    setTzCommentUz,
-    tzNameRu,
-    setTzNameRu,
-    tzNameUz,
-    setTzNameUz,
-  } = useContext(Context);
+  const { getDetailTzId, detailIdTz, updateCreateTz } = useContext(Context);
 
   const { t } = useTranslation();
   const { id } = useParams();
-  const lkavtorParams = createTz?.results?.find((el) => {
-    return el?.id === id;
-  });
 
   useEffect(() => {
-    getCreateTz().then(() => setIsLoading(false));
-    setTzNameRu(lkavtorParams?.tz_name_ru);
-    setTzNameUz(lkavtorParams?.tz_name_uz);
-    setTzCommentRu(lkavtorParams?.comment_ru);
-    setTzCommentUz(lkavtorParams?.comment_uz);
+    getDetailTzId(id).then(() => setIsLoading(false));
   }, []);
 
   if (isLoading) return <Loader />;
+
   return (
     <>
       <UserNav />
       <div className={s.lk_main_update}>
-        <div className={s.lk_main_container}>
+        <form
+          onSubmit={(e) => updateCreateTz(e, detailIdTz?.id)}
+          className={s.lk_main_container}
+        >
           <h1>{t("lkavtor8")}:</h1>
           <br />
           <br />
@@ -52,18 +37,12 @@ const LKMainUpdate = () => {
             <div className={s.tz_name_left}>
               <p> {t("ru")}:</p>
               <br />
-              <textarea
-                value={tzNameRu}
-                onChange={(e) => setTzNameRu(e.target.value)}
-              ></textarea>
+              <textarea defaultValue={detailIdTz?.tz_name_uz}></textarea>
             </div>
             <div className={s.tz_name_right}>
               <p> {t("uz")}:</p>
               <br />
-              <textarea
-                value={tzNameUz}
-                onChange={(e) => setTzNameUz(e.target.value)}
-              ></textarea>
+              <textarea defaultValue={detailIdTz?.tz_name_uz}></textarea>
             </div>
           </div>
           <br />
@@ -74,32 +53,27 @@ const LKMainUpdate = () => {
             <div className={s.tz_name_left}>
               <p> {t("ru")}:</p>
               <br />
-              <textarea
-                value={tzCommentRu}
-                onChange={(e) => setTzCommentRu(e.target.value)}
-              ></textarea>
+              <textarea defaultValue={detailIdTz?.comment_ru}></textarea>
             </div>
             <div className={s.tz_name_right}>
               <p> {t("uz")}:</p>
               <br />
-              <textarea
-                value={tzCommentUz}
-                onChange={(e) => setTzCommentUz(e.target.value)}
-              ></textarea>
+              <textarea defaultValue={detailIdTz?.comment_uz}></textarea>
             </div>
           </div>
           <div className={s.lk_main_card_btns}>
-            <button
-              onClick={() => updateCreateTz(lkavtorParams?.id)}
-              className={s.Temp_update}
-            >
+            <button type="submit" className={s.Temp_update}>
               <img src={createIcon} alt="Update" />
             </button>
-            <button className={s.Temp_back} onClick={() => navigate(-1)}>
+            <button
+              type="button"
+              className={s.Temp_back}
+              onClick={() => navigate(-1)}
+            >
               {t("btn.1")}
             </button>
           </div>
-        </div>
+        </form>
       </div>
       <Footer />
     </>

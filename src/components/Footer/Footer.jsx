@@ -28,42 +28,50 @@ const Footer = () => {
             </li>
             <li className={s.twinkk3}>
               <img src={logodots} alt="" />
-              <p>
-              {t("footer1")}
-              </p>
+              <p>{t("footer1")}</p>
             </li>
             <li className={s.phone_style}>
               <h6>{t("footer2")}</h6>
-              <span className={s.twinkk} style={{ paddingLeft: "5px" }}>
+              <a
+                target="_blank"
+                href="https://mail.google.com/"
+                className={s.twinkk}
+                style={{ paddingLeft: "5px" }}
+              >
                 <img style={{ width: "20px" }} src={mail} alt="" />
                 <p>info@egov.uz</p>
-              </span>
-              <span className={s.twinkk}>
+              </a>
+              <a target="_blank" href="tel: +998998557385" className={s.twinkk}>
                 <img src={phone} alt="" />
                 <p>(+998) 55 501–36–36</p>
-              </span>
-              <span style={{ padding: "30px 0" }} className={s.twinkk}>
+              </a>
+              <a
+                target="_blank"
+                href="https://yandex.uz/maps/10335/tashkent/house/YkAYdAFkTUIDQFprfX9yc35mZw==/?ll=69.264475%2C41.332253&z=16"
+                style={{ padding: "30px 0" }}
+                className={s.twinkk}
+              >
                 <img style={{ height: "30px" }} src={location} alt="" />
                 <p>
                   100128, Ташкент, <br /> ул Лабзак 70, Б-блок
                 </p>
-              </span>
+              </a>
             </li>
-            <li  className={s.phone_style}>
+            <li className={s.phone_style}>
               <h6>{t("footer3")}</h6>
-              <a href="https://www.facebook.com/">
+              <a target="_blank" href="https://www.facebook.com/">
                 <span className={s.twinkk}>
                   <img src={facebook} alt="" />
                   <p>Facebook</p>
                 </span>
               </a>
-              <a href="https://www.instagram.com/">
+              <a target="_blank" href="https://www.instagram.com/">
                 <span className={s.twinkk}>
                   <img src={instagram} alt="" />
                   <p>Instagram</p>
                 </span>
               </a>
-              <a href="https://web.telegram.org/k/">
+              <a target="_blank" href="https://web.telegram.org/">
                 <span className={s.twinkk}>
                   <img src={telegram} alt="" />
                   <p>Telegram</p>
@@ -72,9 +80,7 @@ const Footer = () => {
             </li>
             <li className={s.twinkk2}>
               <img src={logodots} alt="" />
-              <p>
-              {t("footer1")}
-              </p>
+              <p>{t("footer1")}</p>
             </li>
           </ul>
           <hr />

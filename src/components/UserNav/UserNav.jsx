@@ -1,16 +1,39 @@
 import React, { useState } from "react";
 import s from "../UserNav/UserNav.module.css";
+
 import logofff from "../../assets/imgs/logofff.svg";
 import { Link, NavLink } from "react-router-dom";
 import ava from "../../assets/icons/ava.png";
 import { useTranslation } from "react-i18next";
 import { useContext } from "react";
 import { Context } from "../../Context/Context";
+import Select from "react-select";
+
+// import component 👇
+import Drawer from "react-modern-drawer";
+
+//import styles 👇
+import "react-modern-drawer/dist/index.css";
+
+const options = [
+  { label: "Русский", value: "ru" },
+  { label: "O'zbek", value: "uz" },
+  { label: "Ўзбек", value: "kr" },
+];
 
 const UserNav = () => {
+  //drawer
+  const [isOpen, setIsOpen] = React.useState(false);
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+  //drawer
+
   const { t, i18n } = useTranslation();
+
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
+    window.location.reload();
   };
 
   const { LogOut } = useContext(Context);
@@ -40,22 +63,32 @@ const UserNav = () => {
               </Link>
             </li>
             <li className={s.userNav_right_lists}>
-              <select
-                onChange={(e) => changeLanguage(e.target.value)}
-                className={s.til}
-                name="language"
-              >
-                <option className={s.til__opt} value="ru">
-                  Русский
-                </option>
-                <option className={s.til_opt} value="uz">
-                  O'zbek
-                </option>
-                <option className={s.til_opt} value="kr">
-                  Ўзбек
-                </option>
-              </select>
-
+              <Select
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    borderColor:
+                      state.isFocused && state.menuIsOpen ? "white" : "white",
+                    outlineColor: "white",
+                    background: "transparent",
+                  }),
+                  placeholder: (baseStyles) => ({
+                    ...baseStyles,
+                    color: "white",
+                  }),
+                }}
+                className={s.select_nav}
+                options={options}
+                placeholder={
+                  localStorage.getItem("i18nextLng") === "ru"
+                    ? "Русский"
+                    : localStorage.getItem("i18nextLng") === "uz"
+                    ? "O'zbek"
+                    : "Ўзбек"
+                }
+                onChange={({ value }) => changeLanguage(value)}
+                isSearchable={false}
+              />
               <span className={s.nav_avtor_content}>
                 <b>{localStorage.getItem("roleUserName")}</b>
                 <p>{localStorage.getItem("roleName")}</p>
@@ -82,7 +115,7 @@ const UserNav = () => {
                     d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
                   />
                 </svg>
-                {t("logOut.1")}
+                <span> {t("logOut.1")}</span>
               </button>
             </li>
           </ul>
@@ -122,14 +155,155 @@ const UserNav = () => {
                   {t("usernav3")}
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  to="/lkavtor"
+              <button className={s.drawer} onClick={toggleDrawer}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="bi bi-list"
+                  viewBox="0 0 16 16"
                 >
-                  {t("lkavtor1")}
-                </NavLink>
-              </li>
+                  <path
+                    fillRule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                  />
+                </svg>
+              </button>
+
+              <Drawer
+                open={isOpen}
+                onClose={toggleDrawer}
+                direction="left"
+                className="bla bla bla"
+                size={"75%"}
+              >
+                <div className={s.mobile_nav}>
+                  <div className={s.mobile_container}>
+                    <div className={s.mobile_lists}>
+                      <span className={s.logofff_list_side}>
+                        <NavLink to="/main">
+                          <img src={logofff} alt="Logo" />
+                        </NavLink>
+                      </span>
+                      <span className={s.select_side_bar}>
+                        <Select
+                          styles={{
+                            control: (baseStyles, state) => ({
+                              ...baseStyles,
+                              borderColor:
+                                state.isFocused && state.menuIsOpen
+                                  ? "white"
+                                  : "white",
+                              outlineColor: "white",
+                              background: "transparent",
+                            }),
+                            placeholder: (baseStyles) => ({
+                              ...baseStyles,
+                              color: "white",
+                            }),
+                          }}
+                          className={s.select_side_bar}
+                          options={options}
+                          placeholder={
+                            localStorage.getItem("i18nextLng") === "ru"
+                              ? "Русский"
+                              : localStorage.getItem("i18nextLng") === "uz"
+                              ? "O'zbek"
+                              : "Ўзбек"
+                          }
+                          onChange={({ value }) => changeLanguage(value)}
+                          isSearchable={false}
+                        />
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/structure"
+                        >
+                          {t("usernav")}
+                        </NavLink>
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/lkadminspravochnik"
+                        >
+                          {t("usernav1")}
+                        </NavLink>
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/lkadminshablon"
+                        >
+                          {t("usernav2")}
+                        </NavLink>
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/contentofsite"
+                        >
+                          {t("usernav3")}
+                        </NavLink>
+                      </span>
+                      {localStorage.getItem("roleName") === "SuperAdmin" ? (
+                        <span>
+                          <NavLink
+                            style={({ isActive }) =>
+                              isActive ? activeStyle : undefined
+                            }
+                            to="/organizations"
+                          >
+                            {t("super.1")}
+                          </NavLink>
+                        </span>
+                      ) : (
+                        <span>
+                          <NavLink
+                            style={({ isActive }) =>
+                              isActive ? activeStyle : undefined
+                            }
+                            to="/lkavtor"
+                          >
+                            {t("lkavtor1")}
+                          </NavLink>
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </Drawer>
+              {localStorage.getItem("roleName") === "SuperAdmin" ? (
+                <li>
+                  <NavLink
+                    style={({ isActive }) =>
+                      isActive ? activeStyle : undefined
+                    }
+                    to="/organizations"
+                  >
+                    {t("super.1")}
+                  </NavLink>
+                </li>
+              ) : (
+                <li>
+                  <NavLink
+                    style={({ isActive }) =>
+                      isActive ? activeStyle : undefined
+                    }
+                    to="/lkavtor"
+                  >
+                    {t("lkavtor1")}
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </div>
         ) : (
@@ -159,6 +333,106 @@ const UserNav = () => {
                   {t("lkavtor1")}
                 </NavLink>
               </li>
+              <button className={s.drawer} onClick={toggleDrawer}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className="bi bi-list"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                  />
+                </svg>
+              </button>
+              <Drawer
+                open={isOpen}
+                onClose={toggleDrawer}
+                direction="left"
+                className="bla bla bla"
+                size={"75%"}
+              >
+                <div className={s.mobile_nav}>
+                  <div className={s.mobile_container}>
+                    <div className={s.mobile_lists}>
+                      <span className={s.logofff_list_side}>
+                        <NavLink to="/main">
+                          <img src={logofff} alt="Logo" />
+                        </NavLink>
+                      </span>
+                      <span className={s.select_side_bar}>
+                        <Select
+                          styles={{
+                            control: (baseStyles, state) => ({
+                              ...baseStyles,
+                              borderColor:
+                                state.isFocused && state.menuIsOpen
+                                  ? "white"
+                                  : "white",
+                              outlineColor: "white",
+                              background: "transparent",
+                            }),
+                            placeholder: (baseStyles) => ({
+                              ...baseStyles,
+                              color: "white",
+                            }),
+                          }}
+                          className={s.select_side_bar}
+                          options={options}
+                          placeholder={
+                            localStorage.getItem("i18nextLng") === "ru"
+                              ? "Русский"
+                              : localStorage.getItem("i18nextLng") === "uz"
+                              ? "O'zbek"
+                              : "Ўзбек"
+                          }
+                          onChange={({ value }) => changeLanguage(value)}
+                          isSearchable={false}
+                        />
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/lkadminspravochnik"
+                        >
+                          {t("usernav1")}
+                        </NavLink>
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/contentofsite"
+                        >
+                          {t("usernav3")}
+                        </NavLink>
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/lkavtor"
+                        >
+                          {t("lkavtor1")}
+                        </NavLink>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Drawer>
+              {/* <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/role-profile"
+                >
+                  {t("profile.1")}
+                </NavLink>
+              </li> */}
             </ul>
           </div>
         )}
