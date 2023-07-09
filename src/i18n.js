@@ -13,6 +13,7 @@ i18n
   .init({
     // Стандартный язык
     fallbackLng: localStorage.getItem("i18nextLng") || 'uz',
+    localeDetection: false,
     debug: true,
     // Распознавание и кэширование языковых кук
     detection: {
