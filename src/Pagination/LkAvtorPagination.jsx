@@ -8,7 +8,7 @@ const LkAvtorPagination = ({ superTz }) => {
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e,page) => SuperTzGetPagination(page)}
+        onChange={(e, page) => SuperTzGetPagination(page)}
         count={superTz}
         color="primary"
       />

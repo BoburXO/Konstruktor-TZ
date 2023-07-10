@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useHttp } from "../../../hooks/useHttp";
 
-const data_structure = {
-  id: undefined,
-  f_section: [],
-  children: [],
-};
-
 const initialState = {
   loading: false,
   structure: {},
@@ -14,6 +8,9 @@ const initialState = {
   classificator: {},
   fieldsData: [],
   data: {},
+  userAction: "edit",
+  templatesLoading: false,
+  templates: [],
 };
 
 export const fetchStructureByIdForUser = createAsyncThunk(
@@ -54,6 +51,22 @@ export const sendAllFieldsData = createAsyncThunk(
       method: "PUT",
       url: `/constructor/section/field/${id}`,
       data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
+
+export const fetchTemplates = createAsyncThunk(
+  "templates/fetchAll",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      url: `/constructor/section/detail/${id}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem(
           "ConstructorRoleAccessToken"
@@ -112,6 +125,10 @@ const userStructureSlice = createSlice({
     clearFieldsData: (state) => {
       state.fieldsData = [];
     },
+
+    setUserAction: (state, { payload }) => {
+      state.userAction = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -135,10 +152,22 @@ const userStructureSlice = createSlice({
       .addCase(sendAllFieldsData.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.loading = false;
+
+      })
+      .addCase(fetchTemplates.pending, (state) => {
+        state.templatesLoading = true;
+      })
+      .addCase(fetchTemplates.fulfilled, (state, { payload }) => {
+        state.templates = payload;
+        state.templatesLoading = false;
       });
   },
 });
 
 export default userStructureSlice.reducer;
-export const { setActiveSection, setFieldsData, clearFieldsData } =
-  userStructureSlice.actions;
+export const {
+  setActiveSection,
+  setFieldsData,
+  clearFieldsData,
+  setUserAction,
+} = userStructureSlice.actions;

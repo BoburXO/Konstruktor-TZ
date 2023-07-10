@@ -163,14 +163,18 @@
   },
   "super": {
     "1": "Tashkilotlar",
-    "2":"Men",
-    "3":"Tashkilot",
-    "4":"Natijalar",
-    "5":"Foydalanuvchilar",
-    "6":"Ko'rish",
-    "7":"Tuzilmalar",
-    "8":"Texnik topshiriqlar",
-    "9":"Tuzilmalarim",
-    "10":"Texnik topshiriqlarim"
-  }
+    "2": "Men",
+    "3": "Tashkilot",
+    "4": "Natijalar",
+    "5": "Foydalanuvchilar",
+    "6": "Ko'rish",
+    "7": "Tuzilmalar",
+    "8": "Texnik topshiriqlar",
+    "9": "Tuzilmalarim",
+    "10": "Texnik topshiriqlarim"
+  },
+
+  "notFound": "Hech narsa topilmadi",
+  "table": "Jadval",
+  "classificator": "Klassifikator"
 }

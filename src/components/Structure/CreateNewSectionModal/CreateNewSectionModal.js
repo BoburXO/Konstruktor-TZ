@@ -25,9 +25,7 @@ export default function CreateNewSectionModal({
 }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { currentStructure, structures } = useSelector(
-    (state) => state.structure
-  );
+  const { structures } = useSelector((state) => state.structure);
 
   const [headerNameRu, setHeaderNameRu] = useState(
     updatedData?.header_name_ru || ""
@@ -49,7 +47,7 @@ export default function CreateNewSectionModal({
           header_name_uz: headerNameUz,
           name_ru: nameRu,
           name_uz: nameUz,
-          result: currentStructure?.id,
+          result: structures?.id,
         })
       );
     } else {
@@ -59,7 +57,7 @@ export default function CreateNewSectionModal({
           header_name_uz: headerNameUz,
           name_ru: nameRu,
           name_uz: nameUz,
-          result: currentStructure?.id,
+          result: structures?.id,
           parent,
         })
       );
@@ -83,7 +81,7 @@ export default function CreateNewSectionModal({
             header_name_uz: headerNameUz,
             name_ru: nameRu,
             name_uz: nameUz,
-            result: currentStructure?.id,
+            result: structures?.id,
           },
         })
       );
@@ -96,7 +94,7 @@ export default function CreateNewSectionModal({
             header_name_uz: headerNameUz,
             name_ru: nameRu,
             name_uz: nameUz,
-            result: currentStructure?.id,
+            result: structures?.id,
             parent,
           },
         })

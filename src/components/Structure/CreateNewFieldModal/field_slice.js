@@ -76,7 +76,12 @@ export const deleteField = createAsyncThunk("field/delete", async (id) => {
 const fieldSlice = createSlice({
   name: "field",
   initialState,
-  reducers: {},
+  reducers: {
+    clearField: (state) => {
+      state.classificators = {};
+      state.currentField = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       //createField
@@ -114,5 +119,5 @@ const fieldSlice = createSlice({
   },
 });
 
-export const {} = fieldSlice.actions;
+export const { clearField } = fieldSlice.actions;
 export default fieldSlice.reducer;
