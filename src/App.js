@@ -24,6 +24,7 @@ import LKMainUpdate from "./Params/LKMainUpdate/LKMainUpdate";
 import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
 import Organizations from "./pages/Organizations/Organizations";
 import SuperTZ from "./pages/SuperTZ/SuperTZ";
+import Profile from "./pages/Profile/Profile";
 function App() {
   return (
     <>
@@ -38,6 +39,8 @@ function App() {
         <Route path="/index-spravochnik/:id" element={<IndexSpra />} />
         <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
         <Route path="/lkavtor/:id" element={<LKMainUpdate />} />
+        <Route path="/structure/edit/:id" element={<Structure />} />
+        <Route path="/structure/:id" element={<Structure />} />
         <Route
           path="/content-of-site-index/:slug"
           element={<ContentOfSiteUser />}
@@ -61,7 +64,9 @@ function App() {
             <Route path="/updateContent/:id" element={<UpdContent />} />
             <Route path="/sphere" element={<Sphere />} />
           </>
-        ) : null}
+        ) : (
+          <Route path="/profile" element={<Profile />} />
+        )}
       </Routes>
 
       <Toaster

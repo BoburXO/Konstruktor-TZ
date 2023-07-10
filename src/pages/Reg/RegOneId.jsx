@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import s from "../Reg/regOneId.module.css";
-import oneId from '../../assets/icons/one-login.svg'
+import oneId from "../../assets/icons/one-login.svg";
 
 const RegOneId = () => {
   const navigate = useNavigate();
@@ -18,10 +18,14 @@ const RegOneId = () => {
         <a
           target="_blank"
           onClick={() =>
-            (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=https://constructor.egov.uz/oneid/one&state=test&scope=myportal`)
+            (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=https://constructor.egov.uz/&state=test&scope=myportal`)
           }
         >
-          <button>Войти через 
+          {/*  process.env.NODE_ENV === "production"
+                  ? "https://constructor.egov.uz"
+                  : "http://localhost:3000"*/}
+          <button>
+            Войти через
             <img src={oneId} alt="ONE ID" />
           </button>
         </a>

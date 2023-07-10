@@ -16,13 +16,11 @@ export default function SectionsField({ field }) {
   const { t } = useTranslation();
   const ref = useRef([]);
   const [tableData, setTableData] = useState(field?.json_data?.data_uz);
-  const [charField, setCharField] = useState("");
-  const [stringField, setStringField] = useState("");
-  const [otherField, setOtherField] = useState("");
+
+  const [charField, setCharField] = useState(field?.field || "");
+  const [stringField, setStringField] = useState(field?.field || "");
+  const [otherField, setOtherField] = useState(field?.field || "");
   const [classificatorElement, setClassificatorElement] = useState("");
-  const { classificator, activeSection } = useSelector(
-    (state) => state.userStructure
-  );
 
   useEffect(() => {
     if (field?.select_type === 8) {
@@ -127,6 +125,9 @@ export default function SectionsField({ field }) {
                 })
               );
             }}
+            defaultValue={classificatorElemOptions.find(
+              (item) => item.value === field?.field
+            )}
           />
         </div>
       ) : (

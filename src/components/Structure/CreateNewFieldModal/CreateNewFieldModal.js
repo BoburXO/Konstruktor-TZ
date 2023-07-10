@@ -64,12 +64,12 @@ export default function CreateNewFieldModal({
         setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
       }
     }
-    if (beingUpdatedData?.id && fieldType === 6) {
-      if (tableCols > 0 && tableRaws > 0) {
-        setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataRu);
-        setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
-      }
-    }
+    // if (beingUpdatedData?.id && fieldType === 6) {
+    //   if (tableCols > 0 && tableRaws > 0) {
+    //     setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataRu);
+    //     setDefaultTableWithoutValue(tableRaws, tableCols, setTableDataUz);
+    //   }
+    // }
   }, [tableRaws, tableCols]);
 
   const fieldTypeOptions = [

@@ -120,6 +120,12 @@ const sectionSlice = createSlice({
     setCurrentSection: (state, { payload }) => {
       state.currentSection = payload;
     },
+    clearSection: (state) => {
+      state.currentSection = {};
+      state.deletedSection = {};
+      state.activeSectionId = "";
+      state.currentSubSection = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -174,5 +180,6 @@ const sectionSlice = createSlice({
   },
 });
 
-export const { setActiveSectionId, setCurrentSection } = sectionSlice.actions;
+export const { setActiveSectionId, setCurrentSection, clearSection } =
+  sectionSlice.actions;
 export default sectionSlice.reducer;

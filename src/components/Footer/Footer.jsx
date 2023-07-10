@@ -33,6 +33,7 @@ const Footer = () => {
             <li className={s.phone_style}>
               <h6>{t("footer2")}</h6>
               <a
+                rel="noreferrer"
                 target="_blank"
                 href="https://mail.google.com/"
                 className={s.twinkk}
@@ -41,7 +42,12 @@ const Footer = () => {
                 <img style={{ width: "20px" }} src={mail} alt="" />
                 <p>info@egov.uz</p>
               </a>
-              <a target="_blank" href="tel: +998998557385" className={s.twinkk}>
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="tel: +998998557385"
+                className={s.twinkk}
+              >
                 <img src={phone} alt="" />
                 <p>(+998) 55 501–36–36</p>
               </a>
@@ -59,19 +65,31 @@ const Footer = () => {
             </li>
             <li className={s.phone_style}>
               <h6>{t("footer3")}</h6>
-              <a target="_blank" href="https://www.facebook.com/">
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://www.facebook.com/"
+              >
                 <span className={s.twinkk}>
                   <img src={facebook} alt="" />
                   <p>Facebook</p>
                 </span>
               </a>
-              <a target="_blank" href="https://www.instagram.com/">
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://www.instagram.com/"
+              >
                 <span className={s.twinkk}>
                   <img src={instagram} alt="" />
                   <p>Instagram</p>
                 </span>
               </a>
-              <a target="_blank" href="https://web.telegram.org/">
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://web.telegram.org/"
+              >
                 <span className={s.twinkk}>
                   <img src={telegram} alt="" />
                   <p>Telegram</p>

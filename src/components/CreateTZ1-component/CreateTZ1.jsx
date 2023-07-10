@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+
+import { useNavigate, useLocation } from "react-router-dom";
 import s from "../CreateTZ1-component/CreateTZ1.module.css";
 import { useTranslation } from "react-i18next";
 import CreateTZ1right from "../Layout/CreateTZ1right";
@@ -10,11 +11,13 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchStructureByIdForUser,
   setActiveSection,
+  setUserAction,
 } from "../../redux/api/user/structure_slice";
 import CreateTZ1center from "../Layout/CreateTZ1center";
 import { clearMessage } from "../../pages/LKavtor/lkavtor_slice";
 
 const CreateTZ = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -24,7 +27,8 @@ const CreateTZ = () => {
     toast.success(t("toast"), {
       style: { background: "white", color: "black" },
     });
-  const { structure, activeSection } = useSelector(
+
+  const { structure, activeSection, data, userAction } = useSelector(
     (state) => state.userStructure
   );
   const { id } = useSelector((state) => state.lkavtor);
@@ -44,15 +48,23 @@ const CreateTZ = () => {
       navigate("/lkavtor");
       return;
     }
-    dispatch(fetchStructureByIdForUser(id));
+    if (location.pathname === "/createTz") {
+      dispatch(setUserAction("edit"));
+    } else {
+      dispatch(setUserAction("review"));
+    }
     dispatch(clearMessage());
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchStructureByIdForUser(id));
+  }, [data]);
 
   useEffect(() => {
     if (structure?.id) {
       dispatch(setActiveSection(structure?.sections[0]));
     }
-  }, [structure]);
+  }, [structure?.id]);
 
   return (
     <>
