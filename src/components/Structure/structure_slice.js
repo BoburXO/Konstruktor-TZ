@@ -4,8 +4,11 @@ import { useHttp } from "../../hooks/useHttp";
 const initialState = {
   isFetchingStructuresLoading: false,
   isCreatingStructuresLoading: false,
+  templatesLoading: false,
   structures: {},
   currentStructure: {},
+  structureAction: "create",
+  templates: [],
 };
 
 export const fetchStructureById = createAsyncThunk(
@@ -62,6 +65,21 @@ export const deleteStructure = createAsyncThunk(
   async () => {}
 );
 
+
+export const fetchTemplates = createAsyncThunk(
+  "templates/fetchAll",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      url: `/constructor/section/detail/${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
 const structureSlice = createSlice({
   name: "structure",
   initialState,
@@ -69,7 +87,13 @@ const structureSlice = createSlice({
     setActiveSectionId: (state, { payload }) => {
       state.activeSectionId = payload;
     },
-    addStaticSectionHeadersInStructure: (state, { payload }) => {},
+    clearStructure: (state) => {
+      state.currentStructure = {};
+      state.structures = {};
+    },
+    setStructureAction: (state, { payload }) => {
+      state.structureAction = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -97,11 +121,19 @@ const structureSlice = createSlice({
         state.isCreatingStructuresLoading = true;
       })
       .addCase(updateStructure.fulfilled, (state, { payload }) => {
-        state.currentStructure = payload;
+        state.structures = payload;
         state.isCreatingStructuresLoading = false;
+      })
+      .addCase(fetchTemplates.pending, (state) => {
+        state.templatesLoading = true;
+      })
+      .addCase(fetchTemplates.fulfilled, (state, { payload }) => {
+        state.templates = payload;
+        state.templatesLoading = false;
       });
   },
 });
 
 export default structureSlice.reducer;
-export const { setActiveSectionId } = structureSlice.actions;
+export const { setActiveSectionId, clearStructure, setStructureAction } =
+  structureSlice.actions;

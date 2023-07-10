@@ -19,7 +19,7 @@ export default function CreateNewStructureModal({
   updatedData,
 }) {
   const dispatch = useDispatch();
-  const { isCreatingStructuresLoading, currentStructure } = useSelector(
+  const { isCreatingStructuresLoading, structures } = useSelector(
     (state) => state.structure
   );
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ export default function CreateNewStructureModal({
     }
     dispatch(
       updateStructure({
-        id: currentStructure?.id,
+        id: structures?.id,
         data: {
           tz_name_uz: nameUz,
           tz_name_ru: nameRu,

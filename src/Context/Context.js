@@ -221,6 +221,11 @@ const ContextProvider = ({ children }) => {
       .then((res) => {
         const href = URL.createObjectURL(res.data);
 
+// =======
+//       })
+//       .then((res) => {
+//         const url = window.URL.createObjectURL(new Blob([res.data]));
+// >>>>>>> 7afd087ae7a96d9ddfc85ec3220ae58aedc05c13
         const link = ref.current;
 
         link.href = href;
@@ -1560,7 +1565,7 @@ const ContextProvider = ({ children }) => {
         `${API}/constructor/organization/detail?organization_id=${id}
         &tz_name=${superTzSearch}`,
         {
-          headers: {
+          headers: { 
             Authorization: `Bearer ${localStorage.getItem(
               "ConstructorRoleAccessToken"
             )}`,

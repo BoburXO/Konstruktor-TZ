@@ -59,15 +59,10 @@ export default function StructureLeftSidebar({
       {!setCurrentSection
         ? sections?.length
           ? renderSectionsListInLeftSidebar(sections)
-          : "Nothing here yet"
+          : t("notFound")
         : currentSection?.id
         ? renderSectionsListInLeftSidebar(sections)
-        : "Nothing here yet"}
-      {/* {setCurrentSection
-        ? currentSection?.id
-          ? renderSectionsListInLeftSidebar(sections)
-          : "Nothing here yet"
-        : renderSectionsListInLeftSidebar(sections)} */}
+        : t("notFound")}
     </div>
   );
 }

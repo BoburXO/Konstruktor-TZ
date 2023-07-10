@@ -95,13 +95,13 @@ const SuperTzComp = () => {
         <div className={s.lkmain_sect_container}>
           <div className={s.lkmain_sect_labels}>
             <h1>{superTz?.name}</h1>
-            <button
+            {/* <button
               onClick={() => navigate("/createtz")}
               className={s.lkmain_sect_create_btn}
             >
               <span style={{ fontSize: "25px" }}>+</span>
               <span>{t("lkavtor1")}</span>
-            </button>
+            </button> */}
           </div>
           <div className={s.lkmain_sect_labels}>
             <div
@@ -154,7 +154,8 @@ const SuperTzComp = () => {
             </div>
           </div>
           <br />
-          {superTz?.user_organization[0]?.paginated_results?.results?.length ? (
+          {superTz?.user_organization?.find((_, index) => index === 0)
+            ?.paginated_results?.results?.length ? (
             <>
               <TableContainer component={Paper} classes={{ root: s.table }}>
                 {superTz?.user_organization?.map((user) => (

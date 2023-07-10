@@ -45,13 +45,13 @@ const OrganizationsComp = () => {
         <div className={s.lkmain_sect_container}>
           <div className={s.lkmain_sect_labels}>
             <h1>{t("super.1")}</h1>
-            <button
+            {/* <button
               onClick={() => navigate("/createtz")}
               className={s.lkmain_sect_create_btn}
             >
               <span style={{ fontSize: "25px" }}>+</span>
               <span>{t("lkavtor1")}</span>
-            </button>
+            </button> */}
           </div>
           <br />
           <div className={s.lkmain_sect_labels}>
