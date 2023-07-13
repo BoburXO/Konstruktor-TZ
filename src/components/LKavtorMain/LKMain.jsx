@@ -299,7 +299,6 @@ const LKMain = () => {
                                 <button
                                   onClick={() => {
                                     DuplicateTz(tz?.id);
-                                    dispatch(doubleAndFillTz(tz?.id));
                                   }}
                                   className={s.lkmain_sect_crud_copy}
                                 >
