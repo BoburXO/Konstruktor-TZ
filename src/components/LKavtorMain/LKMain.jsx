@@ -204,13 +204,13 @@ const LKMain = () => {
               ) : null}
             </div>
           </div>
-          {superTz?.user_organization[0]?.paginated_results?.results?.length ? (
+          {superTz?.user_organization?.find((_, index) => index === 0)?.paginated_results?.results?.length ? (
             <>
               <div className={s.org_name_div}>
                 <h4>{superTz?.name}</h4>
                 <h4>
                   {"№ "}
-                  {superTz?.user_organization[0]?.paginated_results?.count}
+                  {superTz?.user_organization?.find((_, index) => index === 0)?.paginated_results?.count}
                 </h4>
               </div>
               <TableContainer component={Paper} classes={{ root: s.table }}>
@@ -298,7 +298,6 @@ const LKMain = () => {
                                 <button
                                   onClick={() => {
                                     DuplicateTz(tz?.id);
-                                    dispatch(doubleAndFillTz(tz?.id));
                                   }}
                                   className={s.lkmain_sect_crud_copy}
                                 >
