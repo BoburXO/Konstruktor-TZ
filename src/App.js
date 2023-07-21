@@ -25,6 +25,7 @@ import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
 import Organizations from "./pages/Organizations/Organizations";
 import SuperTZ from "./pages/SuperTZ/SuperTZ";
 import Profile from "./pages/Profile/Profile";
+import { ProtectedAuthorRoute } from "./components/ProtectedRoutes/ProtectedAuthorRoute";
 function App() {
   return (
     <>
@@ -64,9 +65,15 @@ function App() {
             <Route path="/updateContent/:id" element={<UpdContent />} />
             <Route path="/sphere" element={<Sphere />} />
           </>
-        ) : (
-          <Route path="/profile" element={<Profile />} />
-        )}
+        ) : null}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedAuthorRoute>
+              <Profile />
+            </ProtectedAuthorRoute>
+          }
+        />
       </Routes>
 
       <Toaster
