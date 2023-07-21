@@ -29,7 +29,7 @@ const OneId = () => {
           <a
             target="_blank"
             onClick={() =>
-              (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=https://constructor.egov.uz/oneid/one&state=test&scope=myportal`)
+              (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=http://localhost:3000/oneid/one&state=test&scope=myportal`)
             }
           >
             {/*  process.env.NODE_ENV === "production"

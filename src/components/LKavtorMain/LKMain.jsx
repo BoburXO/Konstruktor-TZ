@@ -92,7 +92,7 @@ const LKMain = () => {
 
   const optionOwner = [
     { value: true, label: t("super.2") },
-    { value: false, label: t("filter.1") },
+    { value: false, label: t("super.5") },
   ];
 
   const optionsDraft = [
@@ -108,7 +108,6 @@ const LKMain = () => {
   const handleChange = (value) => {
     value === true ? filterTzAdmin() && setIsAuthor() : SuperTzGet();
   };
-
 
   return (
     <>
@@ -160,7 +159,7 @@ const LKMain = () => {
               {localStorage.getItem("roleName") === "Admin" ? (
                 <div>
                   <Select
-                    placeholder={t("filter.1")}
+                    placeholder={t("super.5")}
                     onChange={(value) => {
                       AdminOwner(value.value);
                       setOwn(value.value);
@@ -373,11 +372,7 @@ const LKMain = () => {
                                             </button>
                                             <button
                                               type="button"
-                                              onClick={() =>
-                                                deleteTz(delId).then(() =>
-                                                  setIsLoading(false)
-                                                )
-                                              }
+                                              onClick={() => deleteTz(delId)}
                                               className={s.shablon_delete_btn}
                                             >
                                               {t("btn.6")}

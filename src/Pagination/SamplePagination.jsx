@@ -3,12 +3,12 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Context } from "../Context/Context";
 
-const SamplePagination = ({ sample }) => {
+const SamplePagination = ({ sample,sectId }) => {
   const { allSample } = useContext(Context);
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(page) => allSample(page)}
+        onChange={(e,page) => allSample(sectId, page)}
         count={sample}
         color="primary"
       />

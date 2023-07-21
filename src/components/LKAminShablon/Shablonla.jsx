@@ -14,8 +14,8 @@ import { useTranslation } from "react-i18next";
 import { Context } from "../../Context/Context";
 import { useEffect } from "react";
 import Select1 from "react-select";
-import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
 import Loader from "../Loader/Loader";
+import SamplePagination from "../../Pagination/SamplePagination";
 
 const style = {
   position: "absolute",
@@ -32,6 +32,7 @@ const style = {
 
 const Shablonla = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [sectId, setSectId] = useState("");
   const {
     punktSearch,
     setPunktSearch,
@@ -45,7 +46,6 @@ const Shablonla = () => {
     setSampleDescRu,
     sampleDescUz,
     setSampleDescUz,
-    getSampleBySection,
   } = useContext(Context);
 
   const [open, setOpen] = useState(false);
@@ -71,7 +71,8 @@ const Shablonla = () => {
         <div className={s.templates_sect_container}>
           <div className={s.templates_sect_label}>
             <h1>
-              {t("shablon")} - <span className={s.sample_count}>№{sample?.count}</span>
+              {t("shablon")} -{" "}
+              <span className={s.sample_count}>№{sample?.count}</span>
             </h1>
             <button
               onClick={handleOpen}
@@ -109,7 +110,9 @@ const Shablonla = () => {
                       {selectPunkt?.results?.map((el) => {
                         return (
                           <MenuItem
-                            onClick={() => setSampleSect(el?.id)}
+                            onClick={() => {
+                              setSampleSect(el?.id);
+                            }}
                             key={el?.id}
                             value={el?.name}
                           >
@@ -166,7 +169,10 @@ const Shablonla = () => {
             <div>
               <Select1
                 placeholder={t("struc5")}
-                onChange={(value) => getSampleBySection(value.value)}
+                onChange={(value) => {
+                  allSample(value.value);
+                  setSectId(value.value);
+                }}
                 className={s.sample_select}
                 options={[{ id: "", name: t("filter.1") }]
                   .concat(selectPunkt?.results)
@@ -223,7 +229,7 @@ const Shablonla = () => {
           <br />
           <br />
           <div className={s.spra_pagination}>
-            <SpravochnikPagination sample={sample?.total_pages} />
+            <SamplePagination sectId={sectId} sample={sample?.total_pages} />
           </div>
         </div>
       </section>

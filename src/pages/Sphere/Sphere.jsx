@@ -91,11 +91,11 @@ const Sphere = () => {
       <UserNav />
       <div className={s.reg_parent}>
         <div className={s.reg_user_roles}>
-          {sphere?.length > 1  ? (
+          {sphere?.length  ? (
             sphere?.map((el) => {
               return (
                 <div key={el.id} className={s.lkmain_sect_crud}>
-                  <button key={el?.id}>{el.name_ru}</button>
+                  <button key={el?.id}>{el.name}</button>
                   <button
                     onClick={() => {
                       handleClick(el.id);

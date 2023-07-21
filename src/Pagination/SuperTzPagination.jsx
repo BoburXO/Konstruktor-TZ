@@ -4,11 +4,11 @@ import Stack from "@mui/material/Stack";
 import { Context } from "../Context/Context";
 
 const SuperTzPagination = ({ superTz, paramsID }) => {
-  const { SuperTzGetPagination } = useContext(Context);
+  const { SuperTzGet } = useContext(Context);
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e, page) => SuperTzGetPagination(page, paramsID)}
+        onChange={(e, page) => SuperTzGet(paramsID, page)}
         count={superTz}
         color="primary"
       />

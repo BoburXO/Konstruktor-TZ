@@ -46,7 +46,7 @@ const SuperTzComp = () => {
   const handleCloseDel = () => setOpenDel(false);
   //modal
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { t } = useTranslation();
   const {
     superTz,
@@ -85,6 +85,11 @@ const SuperTzComp = () => {
     { value: "Author", label: t("super.8") },
   ];
 
+  const optionOwner = [
+    { value: true, label: t("super.2") },
+    { value: "", label: t("filter.1") },
+  ];
+
   const handleChange = (value, id, e) => {
     value === "All" ? SuperTzGet(id) : SuperAuthor(e, id);
   };
@@ -95,13 +100,6 @@ const SuperTzComp = () => {
         <div className={s.lkmain_sect_container}>
           <div className={s.lkmain_sect_labels}>
             <h1>{superTz?.name}</h1>
-            {/* <button
-              onClick={() => navigate("/createtz")}
-              className={s.lkmain_sect_create_btn}
-            >
-              <span style={{ fontSize: "25px" }}>+</span>
-              <span>{t("lkavtor1")}</span>
-            </button> */}
           </div>
           <div className={s.lkmain_sect_labels}>
             <div
@@ -140,6 +138,16 @@ const SuperTzComp = () => {
                   />
                 </div>
               ) : null}
+              <div>
+                <Select
+                  placeholder={t("filter.1")}
+                  onChange={(value) => {
+                    SuperTzGet(value.value)
+                  }}
+                  className={s.selecttt}
+                  options={optionOwner}
+                />
+              </div>
               <div>
                 <Select
                   placeholder={t("filter.1")}

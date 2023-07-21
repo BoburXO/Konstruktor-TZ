@@ -176,5 +176,8 @@
 
   "notFound": "Hech narsa topilmadi",
   "table": "Jadval",
-  "classificator": "Klassifikator"
+  "classificator": "Klassifikator",
+  "profile": {
+    "1": "Shaxsiy kabinet"
+  }
 }

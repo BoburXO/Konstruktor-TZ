@@ -53,6 +53,8 @@ const style = {
 //modal styles
 const ContentOfSite = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isPublish, setIsPublish] = useState("");
+  const [spId,setSpId] = useState("")
   const [pdfRu, setPdfRu] = useState("");
   const [pdfUz, setPdfUz] = useState("");
 
@@ -66,8 +68,6 @@ const ContentOfSite = () => {
     deleteContent,
     getSphere,
     sphere,
-    getContentIsPublish,
-    getContentSphereFilter,
   } = useContext(Context);
 
   useEffect(() => {
@@ -131,7 +131,10 @@ const ContentOfSite = () => {
               <div>
                 <Select
                   placeholder={t("filter.4")}
-                  onChange={(value) => getContentIsPublish(value.value)}
+                  onChange={(value) => {
+                    setIsPublish(value.value);
+                    getContentSearch(value.value);
+                  }}
                   className={s.selecttt}
                   options={options}
                 />
@@ -140,7 +143,10 @@ const ContentOfSite = () => {
             <div>
               <Select
                 placeholder={t("add-content.4")}
-                onChange={(value) => getContentSphereFilter(value.value)}
+                onChange={(value) => {
+                  getContentSearch(value.value)
+                  setSpId(value.value)
+                }}
                 className={s.selecttt2}
                 options={[{ id: "", name: t("filter.1") }]
                   ?.concat(sphere)
@@ -230,7 +236,7 @@ const ContentOfSite = () => {
                             <Modal
                               slotProps={{
                                 backdrop: {
-                                  style: { opacity: "0.7", boxShadow: 24 },
+                                  style: { opacity: "0.3", boxShadow: 24 },
                                 },
                               }}
                               open={downloadPdf}
@@ -296,7 +302,7 @@ const ContentOfSite = () => {
                             <Modal
                               slotProps={{
                                 backdrop: {
-                                  style: { opacity: "0.7", boxShadow: 24 },
+                                  style: { opacity: "0.3", boxShadow: 24 },
                                 },
                               }}
                               open={openDel}
@@ -426,7 +432,7 @@ const ContentOfSite = () => {
           <br />
           <br />
           <div className={s.content_pagination}>
-            <ContentPagination contentSite={contentSite?.total_pages} />
+            <ContentPagination spId={spId} isPublish={isPublish} contentSite={contentSite?.total_pages} />
           </div>
         </div>
       </section>

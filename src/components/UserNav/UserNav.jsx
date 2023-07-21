@@ -340,6 +340,14 @@ const UserNav = () => {
                   {t("lkavtor1")}
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
+                  to="/profile"
+                >
+                  {t("profile.1")}
+                </NavLink>
+              </li>
               <button className={s.drawer} onClick={toggleDrawer}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -426,6 +434,16 @@ const UserNav = () => {
                           to="/lkavtor"
                         >
                           {t("lkavtor1")}
+                        </NavLink>
+                      </span>
+                      <span>
+                        <NavLink
+                          style={({ isActive }) =>
+                            isActive ? activeStyle : undefined
+                          }
+                          to="/profile"
+                        >
+                          {t("profile.1")}
                         </NavLink>
                       </span>
                     </div>
