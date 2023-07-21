@@ -5,6 +5,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import s from "../Structure/Structure.module.css";
+import m from "../LKavtorMain/LKMain.module.css";
 import pen from "../../assets/icons/pen.svg";
 import Fade from "react-reveal/Fade";
 import { useTranslation } from "react-i18next";
@@ -44,6 +45,18 @@ const style = {
   width: 360,
 };
 
+const style_delete_modal = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: 4,
+  boxShadow: 0,
+  p: 4,
+};
+
 const StructureComponent = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -62,6 +75,11 @@ const StructureComponent = () => {
   const [openSection, setOpenSection] = useState(false);
   const handleOpenSection = () => setOpenSection(true);
   const handleCloseSection = () => setOpenSection(false);
+
+  //deleteModal
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
   //option modal = section || subsection
   const [activeSectionModal, setActiveSectionModal] = useState("section");
@@ -231,8 +249,51 @@ const StructureComponent = () => {
                                 marginLeft: "15px",
                                 cursor: "pointer",
                               }}
-                              onClick={handleDeleteSection}
+                              onClick={handleOpenDeleteModal}
                             ></i>
+                            <Modal
+                              slotProps={{
+                                backdrop: {
+                                  style: {
+                                    opacity: "0.4",
+                                    boxShadow: 24,
+                                  },
+                                },
+                              }}
+                              open={openDeleteModal}
+                              onClose={handleCloseDeleteModal}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style_delete_modal}>
+                                <form
+                                  style={{ textAlign: "center" }}
+                                  className={m.createElementForm}
+                                >
+                                  <h2>{t("sfera.3")}</h2>
+                                  <br />
+                                  <p>{t("sfera.6")}</p>
+                                  <br />
+                                  <div className={m.createElementFormBtns}>
+                                    {" "}
+                                    <button
+                                      type="button"
+                                      onClick={() => handleCloseDeleteModal()}
+                                      className={m.shablon_save_btn}
+                                    >
+                                      {t("btn.5")}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={handleDeleteSection}
+                                      className={m.shablon_delete_btn}
+                                    >
+                                      {t("btn.6")}
+                                    </button>
+                                  </div>
+                                </form>
+                              </Box>
+                            </Modal>
                           </div>
                         ) : null}
                       </span>
