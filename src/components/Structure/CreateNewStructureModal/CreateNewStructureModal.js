@@ -34,7 +34,7 @@ export default function CreateNewStructureModal({
   ];
 
   const handleSubmitNewStructure = () => {
-    if (!nameUz || !nameRu || !commentRu || !commentUz) {
+    if (!nameUz || !nameRu) {
       return toast("Please fill out all empty spaces");
     }
     dispatch(
@@ -56,7 +56,7 @@ export default function CreateNewStructureModal({
   };
 
   const handleUpdateCurrentStructure = () => {
-    if (!nameUz || !nameRu || !commentRu || !commentUz) {
+    if (!nameUz || !nameRu) {
       return toast("Please fill out all empty spaces");
     }
     dispatch(
