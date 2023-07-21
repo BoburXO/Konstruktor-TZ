@@ -109,7 +109,6 @@ const LKMain = () => {
     value === true ? filterTzAdmin() && setIsAuthor() : SuperTzGet();
   };
 
-
   return (
     <>
       <section className={s.lkmain_sect}>
@@ -205,13 +204,17 @@ const LKMain = () => {
               ) : null}
             </div>
           </div>
-          {superTz?.user_organization?.find((_, index) => index === 0)?.paginated_results?.results?.length ? (
+          {superTz?.user_organization?.find((_, index) => index === 0)
+            ?.paginated_results?.results?.length ? (
             <>
               <div className={s.org_name_div}>
                 <h4>{superTz?.name}</h4>
                 <h4>
                   {"№ "}
-                  {superTz?.user_organization?.find((_, index) => index === 0)?.paginated_results?.count}
+                  {
+                    superTz?.user_organization?.find((_, index) => index === 0)
+                      ?.paginated_results?.count
+                  }
                 </h4>
               </div>
               <TableContainer component={Paper} classes={{ root: s.table }}>
@@ -386,25 +389,25 @@ const LKMain = () => {
                                       </Box>
                                     </Modal>
                                   </>
-                                ) : (
-                                  <>
-                                    <button
-                                      className={s.lkmain_sect_crud_copy}
-                                      style={{ borderColor: "#0ba9cc" }}
-                                      onClick={() =>
-                                        navigate(`/structure/${tz?.id}`)
-                                      }
-                                    >
-                                      <i
-                                        className="fa-regular fa-eye"
-                                        style={{
-                                          color: "#0ba9cc",
-                                          fontSize: 20,
-                                        }}
-                                      ></i>
-                                    </button>
-                                  </>
-                                )}
+                                ) : null
+                                // <>
+                                //   <button
+                                //     className={s.lkmain_sect_crud_copy}
+                                //     style={{ borderColor: "#0ba9cc" }}
+                                //     onClick={() =>
+                                //       navigate(`/structure/${tz?.id}`)
+                                //     }
+                                //   >
+                                //     <i
+                                //       className="fa-regular fa-eye"
+                                //       style={{
+                                //         color: "#0ba9cc",
+                                //         fontSize: 20,
+                                //       }}
+                                //     ></i>
+                                //   </button>
+                                // </>
+                                }
                               </div>
                             ) : (
                               <div className={s.lkmain_sect_crud}>
