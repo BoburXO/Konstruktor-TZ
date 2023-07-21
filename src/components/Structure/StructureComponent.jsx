@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 import {
   clearStructure,
   fetchStructureById,
+  publishStructure,
   setStructureAction,
 } from "./structure_slice";
 import CreateNewStructureModal from "./CreateNewStructureModal/CreateNewStructureModal";
@@ -46,7 +47,7 @@ const style = {
 const StructureComponent = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const { id } = useParams();
 
   //default modal
@@ -69,8 +70,10 @@ const StructureComponent = () => {
     currentStructure,
     structures,
     structureAction,
+    publishedStructure,
     isCreatingStructuresLoading,
     isFetchingStructuresLoading,
+    isPublishingLoading,
   } = useSelector((state) => state.structure);
 
   const {
@@ -119,13 +122,27 @@ const StructureComponent = () => {
       }
     }
     //eslint-disable-next-line
-  }, [currentStructure, currentSection, currentSubSection, currentField]);
+  }, [
+    currentStructure,
+    currentSection,
+    currentSubSection,
+    currentField,
+    publishedStructure,
+  ]);
 
   useEffect(() => {
     if (structureAction === "edit" || structureAction === "review") {
       dispatch(fetchStructureById(id));
     }
-  }, [structureAction, currentField, currentSection, currentSubSection]);
+    //eslint-disable-next-line
+  }, [
+    structureAction,
+    currentField,
+    currentSection,
+    currentSubSection,
+    publishedStructure,
+  ]);
+
   useEffect(() => {
     if (structures?.sections?.length) {
       if (!currentSection?.id) {
@@ -141,14 +158,19 @@ const StructureComponent = () => {
   const handleDeleteSection = () => {
     dispatch(deleteSection(currentSection?.id));
   };
-  const { t } = useTranslation();
+
+  const handlePublishStcuture = () => {
+    dispatch(publishStructure(structures?.id));
+  };
+
   return (
     <>
       {isCreatingStructuresLoading ||
       isFetchingStructuresLoading ||
       isCreatingSectionLoading ||
       isCreatingSubSectionLoading ||
-      isCreatingFieldLoading ? (
+      isCreatingFieldLoading ||
+      isPublishingLoading ? (
         <div style={{ width: "100vw", height: "100vh" }}>
           <Loader />
         </div>
@@ -244,81 +266,101 @@ const StructureComponent = () => {
               ) : null}
 
               {structureAction !== "review" ? (
-                <div className={s.structure_add_plus}>
-                  <button
-                    onClick={() => {
-                      if (structures?.id) {
-                        handleOpen();
-                      } else {
-                        return toast(
-                          "Iltimos avval texnik zadaniyaga nom yaratib oling"
-                        );
-                      }
-                    }}
-                  >
-                    +
-                  </button>
-                  <Modal
-                    slotprops={{
-                      backdrop: {
-                        style: { opacity: "0.3", boxShadow: 24 },
-                      },
-                    }}
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                  >
-                    <Box sx={style}>
-                      <div className={s.structure_modal}>
-                        <button
-                          onClick={() => {
-                            if (structures?.id) {
-                              setActiveSectionModal("section");
-                              handleOpenSection();
-                            } else {
-                              handleClose();
-                            }
-                          }}
-                        >
-                          Добавить новый пункт
-                        </button>
-                        <br />
-                        <button
-                          onClick={() => {
-                            if (structures?.id && currentSection?.id) {
-                              setActiveSectionModal("subSection");
-                              handleOpenSection();
-                            } else {
-                              handleClose();
-                              if (!structures?.id) {
-                                return toast(
-                                  "Iltimos avval texnik vazifaga nom yaratib oling"
-                                );
+                <>
+                  <div className={s.structure_add_plus}>
+                    <button
+                      onClick={() => {
+                        if (structures?.id) {
+                          handleOpen();
+                        } else {
+                          return toast(
+                            "Iltimos avval texnik zadaniyaga nom yaratib oling"
+                          );
+                        }
+                      }}
+                    >
+                      +
+                    </button>
+                    <Modal
+                      slotprops={{
+                        backdrop: {
+                          style: { opacity: "0.3", boxShadow: 24 },
+                        },
+                      }}
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <div className={s.structure_modal}>
+                          <button
+                            onClick={() => {
+                              if (structures?.id) {
+                                setActiveSectionModal("section");
+                                handleOpenSection();
+                              } else {
+                                handleClose();
                               }
-                              if (!structures?.id) {
-                                return toast(
-                                  "Avval asosiy punktni yaratib olishingiz kerak"
-                                );
+                            }}
+                          >
+                            Добавить новый пункт
+                          </button>
+                          <br />
+                          <button
+                            onClick={() => {
+                              if (structures?.id && currentSection?.id) {
+                                setActiveSectionModal("subSection");
+                                handleOpenSection();
+                              } else {
+                                handleClose();
+                                if (!structures?.id) {
+                                  return toast(
+                                    "Iltimos avval texnik vazifaga nom yaratib oling"
+                                  );
+                                }
+                                if (!structures?.id) {
+                                  return toast(
+                                    "Avval asosiy punktni yaratib olishingiz kerak"
+                                  );
+                                }
                               }
-                            }
-                          }}
-                        >
-                          Добавить подпункт
-                        </button>
-                        <br />
-                      </div>
-                      <CreateNewSectionModal
-                        section={activeSection}
-                        openSection={openSection}
-                        handleCloseSection={handleCloseSection}
-                        handleClose={handleClose}
-                        activeSectionModal={activeSectionModal}
-                        parent={activeSection?.id}
-                      />
-                    </Box>
-                  </Modal>
-                </div>
+                            }}
+                          >
+                            Добавить подпункт
+                          </button>
+                          <br />
+                        </div>
+                        <CreateNewSectionModal
+                          section={activeSection}
+                          openSection={openSection}
+                          handleCloseSection={handleCloseSection}
+                          handleClose={handleClose}
+                          activeSectionModal={activeSectionModal}
+                          parent={activeSection?.id}
+                        />
+                      </Box>
+                    </Modal>
+                  </div>
+                  {structures?.is_draft ? (
+                    <div className={s.btn_wrapper_end}>
+                      <button
+                        className={s.structure_publish_btn}
+                        onClick={() => {
+                          if (structures?.id) {
+                            handlePublishStcuture();
+                          } else {
+                            return toast(
+                              "Iltimos avval struktura yaratib oling"
+                            );
+                          }
+                        }}
+                      >
+                        {t("publish")}
+                      </button>
+                    </div>
+                  ) : null}
+                </>
               ) : null}
             </div>
           </Fade>

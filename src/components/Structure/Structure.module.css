@@ -326,6 +326,30 @@
   color: #0ba9cc;
 }
 
+.btn_wrapper_end {
+  display: flex;
+  justify-content: end;
+  margin-right: 150px;
+  margin-top: 40px;
+}
+
+.structure_publish_btn {
+  width: 130px;
+  height: 48px;
+
+  border-radius: 8px;
+  border: 2px solid #631ac0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  background: #631ac0;
+}
+
+.structure_publish_btn:hover {
+  background-color: #fff;
+  color: #631ac0;
+}
+
 .structure_close_icon {
   position: absolute;
   right: 30px;

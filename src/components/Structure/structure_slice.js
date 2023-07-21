@@ -4,10 +4,12 @@ import { useHttp } from "../../hooks/useHttp";
 const initialState = {
   isFetchingStructuresLoading: false,
   isCreatingStructuresLoading: false,
+  isPublishingLoading: false,
   templatesLoading: false,
   structures: {},
   currentStructure: {},
   structureAction: "create",
+  publishedStructure: {},
   templates: [],
 };
 
@@ -65,7 +67,6 @@ export const deleteStructure = createAsyncThunk(
   async () => {}
 );
 
-
 export const fetchTemplates = createAsyncThunk(
   "templates/fetchAll",
   async (id) => {
@@ -80,6 +81,26 @@ export const fetchTemplates = createAsyncThunk(
     });
   }
 );
+
+export const publishStructure = createAsyncThunk(
+  "structure/publish",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      method: "PATCH",
+      url: `/constructor/detail/${id}`,
+      data: {
+        is_draft: false,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
 const structureSlice = createSlice({
   name: "structure",
   initialState,
@@ -90,6 +111,7 @@ const structureSlice = createSlice({
     clearStructure: (state) => {
       state.currentStructure = {};
       state.structures = {};
+      state.publishedStructure = {};
     },
     setStructureAction: (state, { payload }) => {
       state.structureAction = payload;
@@ -130,6 +152,13 @@ const structureSlice = createSlice({
       .addCase(fetchTemplates.fulfilled, (state, { payload }) => {
         state.templates = payload;
         state.templatesLoading = false;
+      })
+      .addCase(publishStructure.pending, (state) => {
+        state.isPublishingLoading = true;
+      })
+      .addCase(publishStructure.fulfilled, (state, { payload }) => {
+        state.publishedStructure = payload;
+        state.isPublishingLoading = false;
       });
   },
 });
