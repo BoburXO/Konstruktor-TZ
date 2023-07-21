@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import SuperTzPagination from "../../Pagination/SuperTzPagination";
 import Select from "react-select";
 import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
+import { FaEye } from "react-icons/fa";
 
 const style = {
   position: "absolute",
@@ -142,7 +143,7 @@ const SuperTzComp = () => {
                 <Select
                   placeholder={t("filter.1")}
                   onChange={(value) => {
-                    SuperTzGet(value.value)
+                    SuperTzGet(value.value);
                   }}
                   className={s.selecttt}
                   options={optionOwner}
@@ -231,7 +232,7 @@ const SuperTzComp = () => {
                                 >
                                   <img src={copyIcon} alt="Copy" />
                                 </button>
-                                <Link to={`/lkavtor/${tz.id}/`}>
+                                <Link to={`/structure/edit/${tz?.id}`}>
                                   <button className={s.lkmain_sect_crud_create}>
                                     <img src={createIcon} alt="Copy" />
                                   </button>
@@ -311,6 +312,16 @@ const SuperTzComp = () => {
                                 >
                                   <img src={copyIcon} alt="Copy" />
                                 </button>
+                                <Link to={`/structure/${tz?.id}`}>
+                                  <button className={s.content_crud_create}>
+                                    <FaEye
+                                      style={{
+                                        color: "#2f80ed",
+                                        fontSize: "16px",
+                                      }}
+                                    />
+                                  </button>
+                                </Link>
                               </div>
                             )}
                           </TableCell>
