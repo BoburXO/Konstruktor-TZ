@@ -238,7 +238,6 @@ const StructureComponent = () => {
                     <RenderSectionsWithChildren
                       sections={activeSection?.children}
                       action={"createStructure"}
-
                     />
                   </div>
                 </>
@@ -246,7 +245,19 @@ const StructureComponent = () => {
 
               {structureAction !== "review" ? (
                 <div className={s.structure_add_plus}>
-                  <button onClick={handleOpen}>+</button>
+                  <button
+                    onClick={() => {
+                      if (structures?.id) {
+                        handleOpen();
+                      } else {
+                        return toast(
+                          "Iltimos avval texnik zadaniyaga nom yaratib oling"
+                        );
+                      }
+                    }}
+                  >
+                    +
+                  </button>
                   <Modal
                     slotprops={{
                       backdrop: {
@@ -267,9 +278,6 @@ const StructureComponent = () => {
                               handleOpenSection();
                             } else {
                               handleClose();
-                              return toast(
-                                "Iltimos avval texnik vazifaga nom yaratib oling"
-                              );
                             }
                           }}
                         >
