@@ -1,8 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import pen from "../../../assets/icons/pen.svg";
 import backX from "../../../assets/icons/backX.svg";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Box, Modal } from "@mui/material";
 import s from "../Structure.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,18 +31,23 @@ export default function CreateNewSectionModal({
   const [headerNameUz, setHeaderNameUz] = useState(
     updatedData?.header_name_uz || ""
   );
+
+  const [headerName, setHeaderName] = useState(
+    updatedData?.header_name_ru || ""
+  );
+
   const [nameRu, setNameRu] = useState(updatedData?.name_ru || "");
   const [nameUz, setNameUz] = useState(updatedData?.name_uz || "");
 
   const handleSubmitNewSection = () => {
-    if (!nameRu || !nameUz || !headerNameRu || !headerNameUz) {
+    if (!nameRu || !nameUz || !headerName) {
       return toast("Please fill out all the required fields!");
     }
     if (activeSectionModal === "section") {
       dispatch(
         createNewSection({
-          header_name_ru: headerNameRu,
-          header_name_uz: headerNameUz,
+          header_name_ru: headerName,
+          header_name_uz: headerName,
           name_ru: nameRu,
           name_uz: nameUz,
           result: structures?.id,
@@ -53,8 +56,8 @@ export default function CreateNewSectionModal({
     } else {
       dispatch(
         createNewSubSection({
-          header_name_ru: headerNameRu,
-          header_name_uz: headerNameUz,
+          header_name_ru: headerName,
+          header_name_uz: headerName,
           name_ru: nameRu,
           name_uz: nameUz,
           result: structures?.id,
@@ -62,14 +65,13 @@ export default function CreateNewSectionModal({
         })
       );
     }
-    setHeaderNameRu("");
-    setHeaderNameUz("");
+    setHeaderName("");
     setNameRu("");
     setNameUz("");
   };
 
   const handleUpdateSection = () => {
-    if (!nameRu || !nameUz || !headerNameRu || !headerNameUz) {
+    if (!nameRu || !nameUz || !headerName) {
       return toast("Please fill out all the required fields!");
     }
     if (activeSectionModal === "section") {
@@ -77,8 +79,8 @@ export default function CreateNewSectionModal({
         updateSection({
           id: updatedData?.id,
           data: {
-            header_name_ru: headerNameRu,
-            header_name_uz: headerNameUz,
+            header_name_ru: headerName,
+            header_name_uz: headerName,
             name_ru: nameRu,
             name_uz: nameUz,
             result: structures?.id,
@@ -90,8 +92,8 @@ export default function CreateNewSectionModal({
         updateSubSection({
           id: updatedData?.id,
           data: {
-            header_name_ru: headerNameRu,
-            header_name_uz: headerNameUz,
+            header_name_ru: headerName,
+            header_name_uz: headerName,
             name_ru: nameRu,
             name_uz: nameUz,
             result: structures?.id,
@@ -100,8 +102,7 @@ export default function CreateNewSectionModal({
         })
       );
     }
-    setHeaderNameRu("");
-    setHeaderNameUz("");
+    setHeaderName("");
     setNameRu("");
     setNameUz("");
   };
@@ -130,21 +131,12 @@ export default function CreateNewSectionModal({
           <h1>Название технического задания</h1>
           <p>Заголовок</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{ width: "49%" }}>
+            <div style={{ width: "100%" }}>
               {t("ru")}:
               <input
                 type="text"
-                value={headerNameRu}
-                onChange={(e) => setHeaderNameRu(e.target.value)}
-                className={s.structure_right_contents_input_punkt}
-              />
-            </div>
-            <div style={{ width: "49%" }}>
-              {t("ru")}:
-              <input
-                type="text"
-                value={headerNameUz}
-                onChange={(e) => setHeaderNameUz(e.target.value)}
+                value={headerName}
+                onChange={(e) => setHeaderName(e.target.value)}
                 className={s.structure_right_contents_input_punkt}
               />
             </div>
