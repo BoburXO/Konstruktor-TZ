@@ -99,11 +99,11 @@ export default function CreateNewFieldModal({
   const handleSubmitNewField = () => {
     if (fieldType !== 8 && fieldType !== 6) {
       if (!fieldType || !fieldNameRu || !fieldNameUz) {
-        return toast("Iltimos hamma bosh joylarni toldiring!");
+        return toast(t("field.unfilled"));
       }
     } else if (fieldType === 8) {
       if (!classificator) {
-        return toast("Iltimos classificatorlardan birini tanlang");
+        return toast(t("unSelectedClass"));
       }
     }
 
@@ -142,11 +142,11 @@ export default function CreateNewFieldModal({
   const handleUpdateField = () => {
     if (fieldType !== 8 && fieldType !== 6) {
       if (!fieldType || !fieldNameRu || !fieldNameUz) {
-        return toast("Iltimos hamma bosh joylarni toldiring!");
+        return toast(t("field.unfilled"));
       }
     } else if (fieldType === 8) {
       if (!classificator) {
-        return toast("Iltimos classificatorlardan birini tanlang");
+        return toast(t("unSelectedClass"));
       }
     }
 
@@ -202,14 +202,14 @@ export default function CreateNewFieldModal({
         }}
       >
         <div className={s.create_structure_modal}>
-          <h1>Название технического задания</h1>
-          <p>Тип</p>
+          <h1>{t("field.name")}</h1>
+          <p>{t("field.type")}</p>
           <Select
             onChange={(e) => setFieldType(e.value)}
             defaultValue={fieldTypeOptions[parseInt(fieldType) - 1]}
             options={fieldTypeOptions}
           />
-          <p>Заголовок</p>
+          <p>{t("field.title")}</p>
           {isFetchingClassificatorLoading ? (
             "Loading..."
           ) : (
@@ -225,14 +225,14 @@ export default function CreateNewFieldModal({
                       }
                     />
                   ) : (
-                    "Classificators not found"
+                    t("notFound")
                   )}
                 </>
               ) : fieldType === 6 ? (
                 <>
                   <div className={s.flex_names}>
                     <div>
-                      Coloumns:
+                      {t("table.cols")}:
                       <input
                         type="number"
                         value={tableCols}
@@ -241,7 +241,7 @@ export default function CreateNewFieldModal({
                       />
                     </div>
                     <div>
-                      Raws:
+                      {t("table.raws")}:
                       <input
                         type="number"
                         value={tableRaws}

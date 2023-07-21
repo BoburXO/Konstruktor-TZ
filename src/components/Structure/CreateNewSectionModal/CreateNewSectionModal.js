@@ -25,13 +25,6 @@ export default function CreateNewSectionModal({
   const dispatch = useDispatch();
   const { structures } = useSelector((state) => state.structure);
 
-  const [headerNameRu, setHeaderNameRu] = useState(
-    updatedData?.header_name_ru || ""
-  );
-  const [headerNameUz, setHeaderNameUz] = useState(
-    updatedData?.header_name_uz || ""
-  );
-
   const [headerName, setHeaderName] = useState(
     updatedData?.header_name_ru || ""
   );
@@ -41,7 +34,7 @@ export default function CreateNewSectionModal({
 
   const handleSubmitNewSection = () => {
     if (!nameRu || !nameUz || !headerName) {
-      return toast("Please fill out all the required fields!");
+      return toast(t("field.unfilled"));
     }
     if (activeSectionModal === "section") {
       dispatch(
@@ -72,7 +65,7 @@ export default function CreateNewSectionModal({
 
   const handleUpdateSection = () => {
     if (!nameRu || !nameUz || !headerName) {
-      return toast("Please fill out all the required fields!");
+      return toast(t("field.unfilled"));
     }
     if (activeSectionModal === "section") {
       dispatch(
@@ -128,8 +121,8 @@ export default function CreateNewSectionModal({
         }}
       >
         <div className={s.create_structure_modal}>
-          <h1>Название технического задания</h1>
-          <p>Заголовок</p>
+          <h1>{t("section.name")}</h1>
+          <p>{t("section.number")}</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ width: "100%" }}>
               {t("ru")}:
@@ -141,7 +134,7 @@ export default function CreateNewSectionModal({
               />
             </div>
           </div>
-          <p>Комментарий</p>
+          <p>{t("section.title")}</p>
           {t("ru")}:
           <input
             type="text"

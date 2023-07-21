@@ -53,7 +53,7 @@ export default function FieldPart({ field }) {
       {field?.select_type === 6 ? (
         <div>
           <p className={s.structure_right_contents_input_label}>
-            {t("table")}
+            {t("table.name")}
             {structureAction !== "review" ? (
               <div>
                 <img
@@ -141,7 +141,7 @@ export default function FieldPart({ field }) {
       ) : (
         <>
           <p className={s.structure_right_contents_input_label}>
-            {field?.select_type === 8 ? t("Classificator") : t("struc4")}
+            {field?.select_type === 8 ? t("classificator") : t("struc4")}
             {structureAction !== "review" ? (
               <div>
                 <img

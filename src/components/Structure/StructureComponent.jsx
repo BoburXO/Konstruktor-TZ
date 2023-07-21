@@ -334,9 +334,7 @@ const StructureComponent = () => {
                         if (structures?.id) {
                           handleOpen();
                         } else {
-                          return toast(
-                            "Iltimos avval texnik zadaniyaga nom yaratib oling"
-                          );
+                          return toast(t("tzUncreated"));
                         }
                       }}
                     >
@@ -365,7 +363,7 @@ const StructureComponent = () => {
                               }
                             }}
                           >
-                            Добавить новый пункт
+                            {t("addSection")}
                           </button>
                           <br />
                           <button
@@ -376,19 +374,15 @@ const StructureComponent = () => {
                               } else {
                                 handleClose();
                                 if (!structures?.id) {
-                                  return toast(
-                                    "Iltimos avval texnik vazifaga nom yaratib oling"
-                                  );
+                                  return toast(t("tzUncreated"));
                                 }
                                 if (!structures?.id) {
-                                  return toast(
-                                    "Avval asosiy punktni yaratib olishingiz kerak"
-                                  );
+                                  return toast(t("section.uncreated"));
                                 }
                               }
                             }}
                           >
-                            Добавить подпункт
+                            {t("addSubSection")}
                           </button>
                           <br />
                         </div>
@@ -411,9 +405,7 @@ const StructureComponent = () => {
                           if (structures?.id) {
                             handlePublishStcuture();
                           } else {
-                            return toast(
-                              "Iltimos avval struktura yaratib oling"
-                            );
+                            return toast(t("tzUncreated"));
                           }
                         }}
                       >
