@@ -195,7 +195,7 @@ const SpravochnikId = () => {
             onClick={() => navigate("/lkadminspravochnik")}
             className={s.shablon_cancel_btn}
           >
-            {t("btn.4")}
+            {t("btn.1")}
           </button>
         </div>
       </div>

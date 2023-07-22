@@ -203,7 +203,7 @@ const Spravochnik = () => {
           <div className={s.input_field}>
             <img className={s.S_icon} src={search} alt="Search" />
             <input
-              onChange={(e) => setSpraSearch(e.target.value.trim())}
+              onChange={(e) => setSpraSearch(e.target.value)}
               value={spraSearch}
               type="text"
               placeholder={t("spra5")}

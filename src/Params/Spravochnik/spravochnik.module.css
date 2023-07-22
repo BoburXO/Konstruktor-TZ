@@ -234,7 +234,7 @@
 
 
 .back button{
-  background: #fff;
+  background: transparent;
   color: gray;
   border: 2px solid gray;
 }

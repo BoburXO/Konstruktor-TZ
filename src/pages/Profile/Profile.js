@@ -1,4 +1,3 @@
-import { Footer } from "rsuite";
 import { useTranslation } from "react-i18next";
 import UserNav from "../../components/UserNav/UserNav";
 import s from "../../components/LKavtorMain/LKMain.module.css";
@@ -23,6 +22,7 @@ import { setTzIdForFilling } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTz, fetchAllTzOfUser } from "./profile_slice";
 import ProfilePagination from "../../Pagination/ProfilePagination";
+import Footer from '../../components/Footer/Footer';
 
 const style = {
   position: "absolute",

@@ -9,7 +9,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Context } from "../../Context/Context";
 import search from "../../assets/icons/search.svg";
-import LkAvtorPagination from "../../Pagination/LkAvtorPagination";
 import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
 import Select from "react-select";
 import Modal from "@mui/material/Modal";
@@ -27,6 +26,7 @@ import {
   setTzIdForFilling,
 } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
+import SuperTzPagination from "../../Pagination/SuperTzPagination";
 
 const style = {
   position: "absolute",
@@ -42,8 +42,14 @@ const style = {
 
 const LKMain = () => {
   const dispatch = useDispatch();
-  const [own, setOwn] = useState(undefined);
+
   const [isLoading, setIsLoading] = useState(true);
+
+  // filters
+  const [own, setOwn] = useState(false);
+  const [draft, setDraft] = useState(false);
+  const [type, setType] = useState("");
+  //filters
 
   const [isAuthor, setIsAuthor] = useState("");
 
@@ -56,24 +62,19 @@ const LKMain = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const {
-    getSuperTzSelect,
     superTzSearch,
     setSuperTzSearch,
     superTz,
     SuperTzGet,
     DuplicateTz,
     deleteTz,
-    AdminOwner,
-    AdminTzDraft,
-    getModeratorSelect,
-    getModeratorDraft,
     filterTzAdmin,
   } = useContext(Context);
 
   const { message } = useSelector((state) => state.lkavtor);
 
   useEffect(() => {
-    SuperTzGet().then(() => setIsLoading(false));
+    SuperTzGet({}).then(() => setIsLoading(false));
   }, [superTzSearch]);
 
   useEffect(() => {
@@ -106,7 +107,7 @@ const LKMain = () => {
   ];
 
   const handleChange = (value) => {
-    value === true ? filterTzAdmin() && setIsAuthor() : SuperTzGet();
+    value === true ? filterTzAdmin() && setIsAuthor() : SuperTzGet({});
   };
 
   return (
@@ -147,11 +148,10 @@ const LKMain = () => {
               <div>
                 <Select
                   placeholder={t("filter.4")}
-                  onChange={(value) =>
-                    localStorage.getItem("roleName") === "Admin"
-                      ? getSuperTzSelect(value.value)
-                      : getModeratorSelect(value.value)
-                  }
+                  onChange={(value) => {
+                    SuperTzGet({ type: value.value, owner: own, draft: draft });
+                    setType(value.value);
+                  }}
                   className={s.selecttt}
                   options={options}
                 />
@@ -161,11 +161,32 @@ const LKMain = () => {
                   <Select
                     placeholder={t("super.5")}
                     onChange={(value) => {
-                      AdminOwner(value.value);
+                      SuperTzGet({
+                        owner: value.value,
+                        draft: draft,
+                        type: type,
+                      });
                       setOwn(value.value);
                     }}
                     className={s.selecttt}
                     options={optionOwner}
+                  />
+                </div>
+              ) : null}
+              {localStorage.getItem("roleName") === "Moderator" ? (
+                <div>
+                  <Select
+                    placeholder={t("filter.1")}
+                    onChange={(value) => {
+                      SuperTzGet({
+                        owner: own,
+                        draft: value.value,
+                        type: type,
+                      });
+                      setDraft(value.value);
+                    }}
+                    className={s.selecttt}
+                    options={optionsDraft}
                   />
                 </div>
               ) : null}
@@ -174,7 +195,14 @@ const LKMain = () => {
                   <div>
                     <Select
                       placeholder={t("filter.1")}
-                      onChange={(value) => AdminTzDraft(own, value.value)}
+                      onChange={(value) => {
+                        SuperTzGet({
+                          owner: own,
+                          draft: value.value,
+                          type: type,
+                        });
+                        setDraft(value.value);
+                      }}
                       className={s.selecttt}
                       options={optionsDraft}
                     />
@@ -192,25 +220,19 @@ const LKMain = () => {
                   </div>
                 </>
               ) : null}
-              {localStorage.getItem("roleName") === "Moderator" ? (
-                <div>
-                  <Select
-                    placeholder={t("filter.1")}
-                    onChange={(value) => getModeratorDraft(value.value)}
-                    className={s.selecttt}
-                    options={optionsDraft}
-                  />
-                </div>
-              ) : null}
             </div>
           </div>
-          {superTz?.user_organization?.find((_, index) => index === 0)?.paginated_results?.results?.length ? (
+          {superTz?.user_organization?.find((_, index) => index === 0)
+            ?.paginated_results?.results?.length ? (
             <>
               <div className={s.org_name_div}>
                 <h4>{superTz?.name}</h4>
                 <h4>
                   {"№ "}
-                  {superTz?.user_organization?.find((_, index) => index === 0)?.paginated_results?.count}
+                  {
+                    superTz?.user_organization?.find((_, index) => index === 0)
+                      ?.paginated_results?.count
+                  }
                 </h4>
               </div>
               <TableContainer component={Paper} classes={{ root: s.table }}>
@@ -447,7 +469,7 @@ const LKMain = () => {
                     }
                   />
                 ) : (
-                  <LkAvtorPagination
+                  <SuperTzPagination
                     superTz={
                       superTz?.user_organization?.find(
                         (_, index) => index === 0

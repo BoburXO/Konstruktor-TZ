@@ -8,7 +8,10 @@ const SuperTzPagination = ({ superTz, paramsID }) => {
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e, page) => SuperTzGet(paramsID, page)}
+        onChange={(e, page) => {
+          SuperTzGet({ id: paramsID, page });
+          console.log(page);
+        }}
         count={superTz}
         color="primary"
       />

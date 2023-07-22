@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Context } from "../../Context/Context";
 import Loader from "../Loader/Loader";
 import s from "../SuperTzComp/superTz.module.css";
@@ -40,14 +40,15 @@ const style = {
 
 const SuperTzComp = () => {
   const [isAuthor, setIsAuthor] = useState("");
+  const [own, setOwn] = useState(false);
+  const [draft, setDraft] = useState(false);
+  const [type, setType] = useState("");
   //modal
   const [delId, setDelId] = useState("");
   const [openDel, setOpenDel] = useState(false);
   const handleOpenDel = () => setOpenDel(true);
   const handleCloseDel = () => setOpenDel(false);
   //modal
-
-  // const navigate = useNavigate();
   const { t } = useTranslation();
   const {
     superTz,
@@ -55,16 +56,14 @@ const SuperTzComp = () => {
     deleteTz,
     superTzSearch,
     setSuperTzSearch,
-    getSuperTzSelect,
     DuplicateTz,
-    getSuperTzDraft,
     SuperAuthor,
   } = useContext(Context);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
-    SuperTzGet(id).then(() => setIsLoading(false));
+    SuperTzGet({ id }).then(() => setIsLoading(false));
   }, [superTzSearch]);
 
   if (isLoading) return <Loader />;
@@ -76,7 +75,6 @@ const SuperTzComp = () => {
   ];
 
   const optionsDraft = [
-    { value: "", label: t("filter.1") },
     { value: false, label: t("filter.2") },
     { value: true, label: t("filter.3") },
   ];
@@ -94,7 +92,6 @@ const SuperTzComp = () => {
   const handleChange = (value, id, e) => {
     value === "All" ? SuperTzGet(id) : SuperAuthor(e, id);
   };
-
   return (
     <div>
       <section className={s.lkmain_sect}>
@@ -116,6 +113,7 @@ const SuperTzComp = () => {
                 <img className={s.S_icon} src={search} alt="Search" />
                 <input
                   onChange={(e) => setSuperTzSearch(e.target.value)}
+                  value={superTzSearch}
                   type="text"
                   placeholder={t("content-site.3")}
                 />
@@ -123,7 +121,15 @@ const SuperTzComp = () => {
               <div>
                 <Select
                   placeholder={t("filter.1")}
-                  onChange={(value) => getSuperTzSelect(value.value, id)}
+                  onChange={(value) => {
+                    SuperTzGet({
+                      type: value.value,
+                      id,
+                      own: own,
+                      draft: draft,
+                    });
+                    setType(value.value);
+                  }}
                   className={s.selecttt}
                   options={options}
                 />
@@ -133,7 +139,33 @@ const SuperTzComp = () => {
                 <div>
                   <Select
                     placeholder={t("filter.1")}
-                    onChange={(value) => getSuperTzDraft(value.value, id)}
+                    onChange={(value) => {
+                      SuperTzGet({
+                        owner: value.value,
+                        type: type,
+                        id,
+                        draft: draft,
+                      });
+                      setOwn(value.value);
+                    }}
+                    className={s.selecttt}
+                    options={optionOwner}
+                  />
+                </div>
+              ) : null}
+              {own ? (
+                <div>
+                  <Select
+                    placeholder={t("filter.2")}
+                    onChange={(value) => {
+                      setDraft(value.value);
+                      SuperTzGet({
+                        draft: value.value,
+                        id,
+                        type: type,
+                        owner: own,
+                      });
+                    }}
                     className={s.selecttt}
                     options={optionsDraft}
                   />
@@ -143,17 +175,7 @@ const SuperTzComp = () => {
                 <Select
                   placeholder={t("filter.1")}
                   onChange={(value) => {
-                    SuperTzGet(value.value);
-                  }}
-                  className={s.selecttt}
-                  options={optionOwner}
-                />
-              </div>
-              <div>
-                <Select
-                  placeholder={t("filter.1")}
-                  onChange={(value) => {
-                    handleChange(value.value, id);
+                    handleChange(value.value, { id });
                     setIsAuthor(value.value);
                   }}
                   className={s.selecttt}
