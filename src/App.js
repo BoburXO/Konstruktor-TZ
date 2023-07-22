@@ -20,7 +20,6 @@ import OneId from "./pages/oneid/RegOneId";
 import IndexSpra from "./Params/IndexSpravochnik/IndexSpra";
 import ContentOfSiteUser from "./Params/ContentOfSiteUser/ContentOfSiteUser";
 import Sphere from "./pages/Sphere/Sphere";
-import LKMainUpdate from "./Params/LKMainUpdate/LKMainUpdate";
 import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
 import Organizations from "./pages/Organizations/Organizations";
 import SuperTZ from "./pages/SuperTZ/SuperTZ";
@@ -40,7 +39,6 @@ function App() {
         <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
         <Route path="/index-spravochnik/:id" element={<IndexSpra />} />
         <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
-        <Route path="/lkavtor/:id" element={<LKMainUpdate />} />
         <Route path="/structure/edit/:id" element={<Structure />} />
         <Route path="/structure/:id" element={<Structure />} />
         <Route

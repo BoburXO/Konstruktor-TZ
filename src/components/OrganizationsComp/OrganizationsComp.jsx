@@ -19,12 +19,12 @@ import { Link, useNavigate } from "react-router-dom";
 const OrganizationsComp = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [own,setOwn] = useState("")
   const {
     SuperOrganizations,
     organization,
     orgSearch,
     setOrgSearch,
-    orgIsOwner,
   } = useContext(Context);
   const { t } = useTranslation();
 
@@ -45,13 +45,6 @@ const OrganizationsComp = () => {
         <div className={s.lkmain_sect_container}>
           <div className={s.lkmain_sect_labels}>
             <h1>{t("super.1")}</h1>
-            {/* <button
-              onClick={() => navigate("/createtz")}
-              className={s.lkmain_sect_create_btn}
-            >
-              <span style={{ fontSize: "25px" }}>+</span>
-              <span>{t("lkavtor1")}</span>
-            </button> */}
           </div>
           <br />
           <div className={s.lkmain_sect_labels}>
@@ -76,7 +69,8 @@ const OrganizationsComp = () => {
                 <Select
                   placeholder={t("filter.1")}
                   onChange={(value) => {
-                    orgIsOwner(value.value);
+                    SuperOrganizations(value.value);
+                    setOwn(value.value)
                   }}
                   className={s.selecttt}
                   options={optionOwner}
@@ -140,7 +134,7 @@ const OrganizationsComp = () => {
           )}
           <br />
           <div className={s.content_pagination}>
-            <OrgPagination organization={organization?.total_pages} />
+            <OrgPagination own={own} organization={organization?.total_pages} />
           </div>
         </div>
       </section>

@@ -104,7 +104,7 @@ const Footer = () => {
           <hr />
           <div className={s.footer_center_content}>
             <p>
-              2022 © tz.egov.uz <br /> {t("footer4")}
+              2022 © constructor.egov.uz <br /> {t("footer4")}
             </p>
           </div>
         </div>

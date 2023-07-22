@@ -65,35 +65,28 @@ const SpravochnikId = () => {
       <UserNav />
       <div className={s.spravochnikId_head}>
         <div className={s.container}>
-          <h2>{t("spra_id")}</h2>
-          <br />
-          <br />
-          <br />
+        <h2>{t("spra3")}:</h2>
           <div className={s.spravochnik_id_parent}>
-            <div
-              style={{
-                width: "55%",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <h3>{t("uz")}:</h3>
-              <h3>{t("ru")}:</h3>
-            </div>
             <form
               onSubmit={(e) => updateSlug(e, ParamsSlug?.slug)}
               className={s.spra_title_parent}
             >
               <div>
-                <h3>{ParamsSlug?.title_uz}</h3>
                 <div className={s.spravochnik_params}>
-                  <input type="text" placeholder={t("spra_id1")} />
+                  <input
+                    defaultValue={ParamsSlug?.title_uz}
+                    type="text"
+                    placeholder={t("spra_id1")}
+                  />
                 </div>
               </div>
               <div>
-                <h3>{ParamsSlug?.title_ru}</h3>
                 <div className={s.spravochnik_params}>
-                  <input type="text" placeholder={t("spra_id1")} />
+                  <input
+                    defaultValue={ParamsSlug?.title_ru}
+                    type="text"
+                    placeholder={t("spra_id1")}
+                  />
                   <button type="submit" className={s.createParams}>
                     <img src={createIcon} alt="" />
                   </button>
@@ -108,21 +101,35 @@ const SpravochnikId = () => {
                 return (
                   <form onSubmit={(e) => updateElements(e, el.id)} key={el.id}>
                     <div>
-                      <p>{el.content_uz}</p>
-                      <input type="text" placeholder={t("spra_id2")} />
+                      <input
+                      required
+                        defaultValue={el.content_uz}
+                        type="text"
+                        placeholder={t("spra_id2")}
+                      />
                     </div>
                     <div>
-                      {el.content_ru === null ? (
-                        <p style={{ color: "gray" }}>{t("spra10")}...</p>
-                      ) : (
-                        <p>{el.content_ru}</p>
-                      )}
+                    
                       <div className={s.inp_btn}>
-                        <input type="text" placeholder={t("spra_id2")} />
+                      {el.content_ru === null ? (
+                        <input
+                        required
+                        type="text"
+                        placeholder={t("spra10")}
+                      />
+                      ) : (
+                        <input
+                        defaultValue={el.content_ru}
+                        type="text"
+                        placeholder={t("spra_id2")}
+                      />
+                      )}
+                      
                         <button type="submit" className={s.createParams}>
                           <img src={createIcon} alt="" />
                         </button>
                         <button
+                        type="button"
                           onClick={() => removeElementById(el.id)}
                           className={s.deleteParams}
                         >
@@ -188,7 +195,7 @@ const SpravochnikId = () => {
             onClick={() => navigate("/lkadminspravochnik")}
             className={s.shablon_cancel_btn}
           >
-            {t("btn.1")}
+            {t("btn.4")}
           </button>
         </div>
       </div>

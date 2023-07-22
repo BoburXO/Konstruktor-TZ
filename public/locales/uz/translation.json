@@ -201,5 +201,8 @@
     "title": "Maydon sarlavhasi",
     "unfilled": "Iltimos, barcha kerakli joylarni to'ldiring!"
   },
-  "unSelectedClass": "Iltimos classificatorlardan birini tanlang"
+  "unSelectedClass": "Iltimos classificatorlardan birini tanlang",
+  "profile": {
+    "1": "Shaxsiy kabinet"
+  }
 }

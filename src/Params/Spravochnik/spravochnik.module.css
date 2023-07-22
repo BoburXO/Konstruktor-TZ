@@ -14,7 +14,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 50px;
-  padding: 40px 0;
 }
 
 .spra_element_parent form {
@@ -29,8 +28,7 @@
 .spra_element_parent {
   width: 100%;
   display: grid;
-  gap: 50px;
-  padding: 20px 0;
+  gap: 20px;
 }
 
 .spravochnik_params {
@@ -232,4 +230,11 @@
   margin: auto;
   display: flex;
   justify-content: flex-end;
+}
+
+
+.back button{
+  background: #fff;
+  color: gray;
+  border: 2px solid gray;
 }

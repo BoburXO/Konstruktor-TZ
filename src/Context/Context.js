@@ -220,12 +220,6 @@ const ContextProvider = ({ children }) => {
       })
       .then((res) => {
         const href = URL.createObjectURL(res.data);
-
-// =======
-//       })
-//       .then((res) => {
-//         const url = window.URL.createObjectURL(new Blob([res.data]));
-// >>>>>>> 7afd087ae7a96d9ddfc85ec3220ae58aedc05c13
         const link = ref.current;
 
         link.href = href;
@@ -367,7 +361,13 @@ const ContextProvider = ({ children }) => {
   //removeSlug
   const removeSlug = (slug) => {
     axios
-      .delete(`${API}/classificator/${slug}/delete/`)
+      .delete(`${API}/classificator/${slug}/delete/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then(() => {
         window.location.reload();
       })
@@ -494,10 +494,11 @@ const ContextProvider = ({ children }) => {
   //getTZhome
 
   //getContent-search,filter,sphere-filter
-  const getContentSearch = async (page = 1) => {
+  const getContentSearch = async (isPublish = "", page = 1, id = "") => {
+    console.table(id);
     await axios
       .get(
-        `${API}/standard/site-content-list/?search=${contentSearch}&page=${page}`,
+        `${API}/standard/site-content-list/?search=${contentSearch}&is_published=${isPublish}&page=${page}&sphere=${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -528,73 +529,18 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const getContentIsPublish = async (isPublish) => {
-    await axios
-      .get(`${API}/standard/site-content-list/?is_published=${isPublish}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
-      .then((res) => {
-        setContentSite(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => getContentIsPublish());
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
-
-  const getContentSphereFilter = async (id) => {
-    await axios
-      .get(`${API}/standard/site-content-list/?sphere=${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
-      .then((res) => {
-        setContentSite(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => getContentSphereFilter());
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
   //getContent
 
   //deleteContent
   const deleteContent = (slug) => {
     axios
-      .delete(`${API}/standard/${slug}/delete/`)
+      .delete(`${API}/standard/${slug}/delete/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then(() => {
         window.location.reload();
       })
@@ -1102,10 +1048,10 @@ const ContextProvider = ({ children }) => {
   const [sample, setSample] = useState({});
   const [punktSearch, setPunktSearch] = useState("");
 
-  const allSample = async (page = 1) => {
+  const allSample = async (id = "", page = 1) => {
     await axios
       .get(
-        `${API}/constructor/sample/create/list?description__icontains=${punktSearch}&page=${page}`,
+        `${API}/constructor/sample/create/list?description__icontains=${punktSearch}&section=${id}&page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1136,41 +1082,6 @@ const ContextProvider = ({ children }) => {
       });
   };
   //shablon-sample all
-
-  //getSample by section id
-
-  const getSampleBySection = (id) => {
-    axios
-      .get(`${API}/constructor/sample/create/list?section=${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
-      .then((res) => {
-        setSample(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => getSampleBySection());
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
-
-  //getSample by sectiion id
 
   const [selectPunkt, setSelectPunkt] = useState({});
   //selectPunkt- create sample
@@ -1290,11 +1201,11 @@ const ContextProvider = ({ children }) => {
   const updateSample = (e, id) => {
     e.preventDefault();
     axios
-      .patch(
+      .put(
         `${API}/constructor/sample/detail/${id}`,
         {
-          description_uz: e.target[0].value,
-          description_ru: e.target[1].value,
+          description_ru: e.target[0].value,
+          description_uz: e.target[1].value,
         },
         {
           headers: {
@@ -1330,10 +1241,10 @@ const ContextProvider = ({ children }) => {
   const [organization, setOrganization] = useState({});
   const [orgSearch, setOrgSearch] = useState("");
 
-  const SuperOrganizations = async (page = 1) => {
+  const SuperOrganizations = async (owner = "", page = 1) => {
     await axios
       .get(
-        `${API}/constructor/organization/list?name__icontains=${orgSearch}&page=${page}`,
+        `${API}/constructor/organization/list?name__icontains=${orgSearch}&is_owner=${owner}&page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1364,40 +1275,9 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-  const orgIsOwner = async (owner = "") => {
-    await axios
-      .get(`${API}/constructor/organization/list?is_owner=${owner}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
-      .then((res) => {
-        setOrganization(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => orgIsOwner());
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
-  //organizations
-
   //getDetail
   const [detailIdTz, setDetailIdTz] = useState({});
+
   const getDetailTzId = async (id) => {
     await axios
       .get(`${API}/constructor/detail/${id}`, {
@@ -1476,23 +1356,15 @@ const ContextProvider = ({ children }) => {
   //updateTz
 
   //deleteTz
-  const deleteTz = (id) => {
-    axios
-      .delete(
-        `${API}/constructor/delete`,
-        {
-          data: {
-            constructor_id: id,
-          },
+  const deleteTz = async (id) => {
+    await axios
+      .delete(`${API}/constructor/delete?constructor_id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
+      })
       .then(() => {
         window.location.reload();
       })
@@ -1516,56 +1388,17 @@ const ContextProvider = ({ children }) => {
   };
   //deleteTz
 
-  //history-structure
-  const [isDraftFalse, setIsDraftFalse] = useState({});
-  const [iseDraftSearch, setIsDraftSearch] = useState("");
-
-  const getIsDraftFalse = async (page = 1) => {
-    await axios
-      .get(
-        `${API}/constructor/create/list?is_draft=False&tz_name__icontains=${iseDraftSearch}&page=${page}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "ConstructorRoleAccessToken"
-            )}`,
-          },
-        }
-      )
-      .then((res) => {
-        setIsDraftFalse(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => getIsDraftFalse());
-        }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
-  //history-structure
-
   //superTZ
   const [superTz, setSuperTz] = useState({});
   const [superTzSearch, setSuperTzSearch] = useState("");
 
-  const SuperTzGet = async (id) => {
+  const SuperTzGet = async (id, page = 1, owner = false) => {
     await axios
       .get(
-        `${API}/constructor/organization/detail?organization_id=${id}
-        &tz_name=${superTzSearch}`,
+        `${API}/constructor/organization/detail?page=${page}&organization_id=${id}&tz_name=${superTzSearch}&is_owner=${owner}`,
+
         {
-          headers: { 
+          headers: {
             Authorization: `Bearer ${localStorage.getItem(
               "ConstructorRoleAccessToken"
             )}`,
@@ -1848,11 +1681,6 @@ const ContextProvider = ({ children }) => {
       )
       .then(() => {
         notify200();
-        // if (localStorage.getItem("roleName") === "SuperAdmin") {
-        //   navigate("/organizations");
-        // } else {
-        //   window.location.reload();
-        // }
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -1907,8 +1735,7 @@ const ContextProvider = ({ children }) => {
       });
   };
 
-
-  const filterTzAdmin = async (owner=true,page = 1) => {
+  const filterTzAdmin = async (owner = true, page = 1) => {
     await axios
       .get(`${API}/constructor/list/user?is_owner=${owner}&page=${page}`, {
         headers: {
@@ -1944,6 +1771,7 @@ const ContextProvider = ({ children }) => {
     <>
       <Context.Provider
         value={{
+          SuperTzGetPagination,
           filterTzAdmin,
           SuperAuthor,
           getModeratorDraft,
@@ -1953,27 +1781,19 @@ const ContextProvider = ({ children }) => {
           getSuperTzDraft,
           DuplicateTz,
           getSuperTzSelect,
-          SuperTzGetPagination,
           superTzSearch,
           setSuperTzSearch,
           superTz,
           SuperTzGet,
-          orgIsOwner,
           orgSearch,
           setOrgSearch,
           organization,
           SuperOrganizations,
           getDetailTzId,
           detailIdTz,
-          setIsDraftSearch,
-          iseDraftSearch,
-          isDraftFalse,
-          setIsDraftFalse,
-          getIsDraftFalse,
           ref,
           SpravochnikExcel,
           deleteTz,
-          getSampleBySection,
           updateSample,
           punktSearch,
           setPunktSearch,
@@ -2043,8 +1863,6 @@ const ContextProvider = ({ children }) => {
           sphere,
           getSphere,
           createSphere,
-          getContentIsPublish,
-          getContentSphereFilter,
           deleteSphere,
           editSphere,
           modalData,

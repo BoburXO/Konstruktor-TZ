@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const AddContentComp = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [sfera, setSfera] = useState(0);
+  const [sfera, setSfera] = useState(undefined);
   const notify = () => toast(t("toastEmpty"));
 
   //context
@@ -222,9 +222,15 @@ const AddContentComp = () => {
               >
                 {t("add-content.15")}
               </button>
-              <button type="submit" className={s.share}>
-                {t("add-content.16")}
-              </button>
+              {sfera !== undefined &&
+              docFileRu !== "" &&
+              docFileUz !== "" &&
+              textRu !== "" &&
+              textUz !== "" ? (
+                <button type="submit" className={s.share}>
+                  {t("add-content.16")}
+                </button>
+              ) : null}
             </div>
           </form>
         </div>
