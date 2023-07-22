@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import s from "../CreateTZ1-component/CreateTZ1.module.css";
 import { useTranslation } from "react-i18next";
 import CreateTZ1right from "../Layout/CreateTZ1right";
@@ -21,6 +21,7 @@ const CreateTZ = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { tzId } = useParams();
   const [arr, setArr] = useState([]);
 
   const notify = () =>

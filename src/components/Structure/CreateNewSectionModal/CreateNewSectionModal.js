@@ -122,10 +122,9 @@ export default function CreateNewSectionModal({
       >
         <div className={s.create_structure_modal}>
           <h1>{t("section.name")}</h1>
-          <p>{t("section.number")}</p>
+          <p style={{ marginBottom: 0 }}>{t("section.number")}</p>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ width: "100%" }}>
-              {t("ru")}:
               <input
                 type="text"
                 value={headerName}
