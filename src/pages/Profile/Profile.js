@@ -162,10 +162,8 @@ export default function Profile() {
                                   <button
                                     className={s.lkmain_sect_crud_create}
                                     onClick={() => {
-                                      dispatch(setTzIdForFilling(tz?.id));
-                                      if (!loading) {
-                                        navigate("/createTz");
-                                      }
+                                      // dispatch(setTzIdForFilling(tz?.id));
+                                      navigate(`/tz/edit/${tz.id}`);
                                     }}
                                   >
                                     <img src={createIcon} alt="Edit" />

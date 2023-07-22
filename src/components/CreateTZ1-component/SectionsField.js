@@ -1,20 +1,16 @@
-import { useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import Select from "react-select";
 import s from "./CreateTZ1.module.css";
 import DrawTableWithValues from "../DrawTableWithValues/DrawTableWithValues";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   fetchClassificator,
   setFieldsData,
 } from "../../redux/api/user/structure_slice";
-import { useMemo } from "react";
 
 export default function SectionsField({ field }) {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const ref = useRef([]);
   const [tableData, setTableData] = useState(field?.json_data?.data_uz);
 
   const [charField, setCharField] = useState(field?.field || "");

@@ -15,6 +15,7 @@ import {
 } from "../../redux/api/user/structure_slice";
 import CreateTZ1center from "../Layout/CreateTZ1center";
 import { clearMessage } from "../../pages/LKavtor/lkavtor_slice";
+import Loader from "../Loader/Loader";
 
 const CreateTZ = () => {
   const location = useLocation();
@@ -29,10 +30,9 @@ const CreateTZ = () => {
       style: { background: "white", color: "black" },
     });
 
-  const { structure, activeSection, data, userAction } = useSelector(
+  const { structure, activeSection, data, loading, userAction } = useSelector(
     (state) => state.userStructure
   );
-  const { id } = useSelector((state) => state.lkavtor);
   const copy = (id, e) => {
     const currentPunkt = templates?.find((punkt) => {
       setArr([...arr, punkt.desc]);
@@ -45,11 +45,13 @@ const CreateTZ = () => {
   };
 
   useEffect(() => {
-    if (!id) {
+    if (!tzId) {
       navigate("/lkavtor");
       return;
     }
-    if (location.pathname === "/createTz") {
+    if (location.pathname.substring(0, 11) === "/tz/create") {
+      dispatch(setUserAction("create"));
+    } else if (location.pathname.substring(0, 9) === "/tz/edit") {
       dispatch(setUserAction("edit"));
     } else {
       dispatch(setUserAction("review"));
@@ -58,7 +60,7 @@ const CreateTZ = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchStructureByIdForUser(id));
+    dispatch(fetchStructureByIdForUser(tzId));
   }, [data]);
 
   useEffect(() => {
@@ -69,15 +71,19 @@ const CreateTZ = () => {
 
   return (
     <>
-      <section className={s.create1_parent}>
-        <StructureLeftSidebar
-          sections={structure?.sections}
-          setCurrentSection={setActiveSection}
-          currentSection={activeSection}
-        />
-        <CreateTZ1center activeSection={activeSection} />
-        <CreateTZ1right copy={copy} />
-      </section>
+      {loading ? (
+        <Loader />
+      ) : (
+        <section className={s.create1_parent}>
+          <StructureLeftSidebar
+            sections={structure?.sections}
+            setCurrentSection={setActiveSection}
+            currentSection={activeSection}
+          />
+          <CreateTZ1center activeSection={activeSection} />
+          <CreateTZ1right copy={copy} />
+        </section>
+      )}
     </>
   );
 };
