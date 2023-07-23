@@ -128,9 +128,11 @@ const StructureComponent = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(clearStructure());
-    dispatch(clearSection());
-    dispatch(clearField());
+    return () => {
+      dispatch(clearStructure());
+      dispatch(clearSection());
+      dispatch(clearField());
+    };
   }, [location.pathname]);
 
   useEffect(() => {

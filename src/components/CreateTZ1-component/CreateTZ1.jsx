@@ -14,7 +14,10 @@ import {
   setUserAction,
 } from "../../redux/api/user/structure_slice";
 import CreateTZ1center from "../Layout/CreateTZ1center";
-import { clearMessage } from "../../pages/LKavtor/lkavtor_slice";
+import {
+  clearDuplicatedAndDoubledTz,
+  clearMessage,
+} from "../../pages/LKavtor/lkavtor_slice";
 import Loader from "../Loader/Loader";
 
 const CreateTZ = () => {
@@ -56,7 +59,7 @@ const CreateTZ = () => {
     } else {
       dispatch(setUserAction("review"));
     }
-    dispatch(clearMessage());
+    dispatch(clearDuplicatedAndDoubledTz());
   }, []);
 
   useEffect(() => {
