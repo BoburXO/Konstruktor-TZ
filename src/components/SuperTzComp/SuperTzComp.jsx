@@ -64,7 +64,12 @@ const SuperTzComp = () => {
 
   useEffect(() => {
     SuperTzGet({ id }).then(() => setIsLoading(false));
+    if (own === false) {
+      setDraft(false);
+    }
   }, [superTzSearch]);
+
+  console.log(own, draft);
 
   if (isLoading) return <Loader />;
 
@@ -90,7 +95,9 @@ const SuperTzComp = () => {
   ];
 
   const handleChange = (value, { owner, draft, type, id }) => {
-    value === "All" ? SuperTzGet({ owner: owner, draft: draft, type: type, id }) : SuperAuthor({ draft: draft, type: type, id });
+    value === "All"
+      ? SuperTzGet({ owner: owner, draft: draft, type: type, id })
+      : SuperAuthor({ owner: owner, draft: draft, type: type, id });
   };
   return (
     <div>
@@ -173,7 +180,7 @@ const SuperTzComp = () => {
               ) : null}
               <div>
                 <Select
-                  placeholder={t("filter.1")}
+                  placeholder={t("super.8")}
                   onChange={(value) => {
                     handleChange(value.value, {
                       id,

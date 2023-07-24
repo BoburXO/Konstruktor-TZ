@@ -1476,7 +1476,7 @@ const ContextProvider = ({ children }) => {
     page = 1,
     id = "",
     type = "",
-    owner = true,
+    owner = false,
     draft = false,
   }) => {
     await axios

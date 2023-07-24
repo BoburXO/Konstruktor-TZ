@@ -77,6 +77,9 @@ const LKMain = () => {
   useEffect(() => {
     SuperTzGet({}).then(() => setIsLoading(false));
     setUserId(superTz?.user_organization?.find((_, index) => index === 0)?.id);
+    if (own === false) {
+      setDraft(false);
+    }
   }, [superTzSearch]);
 
   useEffect(() => {
@@ -110,7 +113,8 @@ const LKMain = () => {
 
   const handleChange = (value, { owner, draft, type, id }) => {
     value === true
-      ? SuperAuthor( { draft: draft, type: type, id }) && setIsAuthor()
+      ? SuperAuthor({ owner: owner, draft: draft, type: type, id }) &&
+        setIsAuthor()
       : SuperTzGet({ owner: owner, draft: draft, type: type, id });
   };
 
