@@ -5,11 +5,10 @@ import { Context } from "../Context/Context";
 
 const ContentPagination = ({ contentSite, isPublish, spId }) => {
   const { getContentSearch } = useContext(Context);
-  console.log(spId);
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e,page) => getContentSearch(isPublish, page, spId)}
+        onChange={(e,page) => getContentSearch({isPublish, page, id:spId})}
         count={contentSite}
         color="primary"
       />

@@ -52,6 +52,7 @@ const LKMain = () => {
   //filters
 
   const [isAuthor, setIsAuthor] = useState("");
+  const [userId, setUserId] = useState("");
 
   //modal
   const [delId, setDelId] = useState("");
@@ -68,13 +69,14 @@ const LKMain = () => {
     SuperTzGet,
     DuplicateTz,
     deleteTz,
-    filterTzAdmin,
+    SuperAuthor,
   } = useContext(Context);
 
   const { message } = useSelector((state) => state.lkavtor);
 
   useEffect(() => {
     SuperTzGet({}).then(() => setIsLoading(false));
+    setUserId(superTz?.user_organization?.find((_, index) => index === 0)?.id);
   }, [superTzSearch]);
 
   useEffect(() => {
@@ -106,8 +108,10 @@ const LKMain = () => {
     { value: true, label: t("super.10") },
   ];
 
-  const handleChange = (value) => {
-    value === true ? filterTzAdmin() && setIsAuthor() : SuperTzGet({});
+  const handleChange = (value, { owner, draft, type, id }) => {
+    value === true
+      ? SuperAuthor( { draft: draft, type: type, id }) && setIsAuthor()
+      : SuperTzGet({ owner: owner, draft: draft, type: type, id });
   };
 
   return (
@@ -211,7 +215,12 @@ const LKMain = () => {
                     <Select
                       placeholder={t("filter.1")}
                       onChange={(value) => {
-                        handleChange(value.value);
+                        handleChange(value.value, {
+                          owner: own,
+                          draft: draft,
+                          type: type,
+                          id: userId,
+                        });
                         setIsAuthor(value.value);
                       }}
                       className={s.selecttt}
@@ -462,6 +471,10 @@ const LKMain = () => {
               <div className={s.content_pagination}>
                 {isAuthor ? (
                   <LkAvtorUserPagination
+                    paramsID={userId}
+                    type={type}
+                    own={own}
+                    draft={draft}
                     superTz={
                       superTz?.user_organization?.find(
                         (_, index) => index === 0
@@ -470,6 +483,9 @@ const LKMain = () => {
                   />
                 ) : (
                   <SuperTzPagination
+                    type={type}
+                    own={own}
+                    draft={draft}
                     superTz={
                       superTz?.user_organization?.find(
                         (_, index) => index === 0

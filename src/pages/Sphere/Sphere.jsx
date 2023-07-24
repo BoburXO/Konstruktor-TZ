@@ -48,7 +48,7 @@ const Sphere = () => {
       navigate("/");
     }
     getSphere().then(() => setIsLoading(false));
-    getContentSearch();
+    getContentSearch({});
   }, []);
   //modal
   const [open, setOpen] = React.useState(false);

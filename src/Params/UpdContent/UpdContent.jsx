@@ -47,7 +47,7 @@ const UpdContent = () => {
   const navigate = useNavigate();
   React.useEffect(() => {
     getSphere().then(() => setIsLoading(false));
-    getContentSearch().then(() => setIsLoading(false));
+    getContentSearch({}).then(() => setIsLoading(false));
     setHeaderRu(ParamsContent?.header_ru);
     setHeaderUz(ParamsContent?.header_uz);
     setDescriptionRu(ParamsContent?.description_ru);
@@ -228,12 +228,18 @@ const UpdContent = () => {
               >
                 {t("add-content.15")}
               </button>
-              <button
-                onClick={() => updateContentTrue(ParamsContent?.slug)}
-                className={s.share}
-              >
-                {t("add-content.16")}
-              </button>
+              {sfera !== undefined &&
+              docFileRu !== null &&
+              docFileUz !== null &&
+              textRu !== "" &&
+              textUz !== "" ? (
+                <button
+                  onClick={() => updateContentTrue(ParamsContent?.slug)}
+                  className={s.share}
+                >
+                  {t("add-content.16")}
+                </button>
+              ) : null}
             </div>
           </div>
         </div>

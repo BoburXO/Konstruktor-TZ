@@ -494,8 +494,7 @@ const ContextProvider = ({ children }) => {
   //getTZhome
 
   //getContent-search,filter,sphere-filter
-  const getContentSearch = async (isPublish = "", page = 1, id = "") => {
-    console.table(id);
+  const getContentSearch = async ({ isPublish = "", page = 1, id = "" }) => {
     await axios
       .get(
         `${API}/standard/site-content-list/?search=${contentSearch}&is_published=${isPublish}&page=${page}&sphere=${id}`,
@@ -1392,13 +1391,13 @@ const ContextProvider = ({ children }) => {
   const [superTz, setSuperTz] = useState({});
   const [superTzSearch, setSuperTzSearch] = useState("");
 
-  const SuperTzGet = async (
- { id,
-  page = 1,
-  owner = false,
-  type = "",
-  draft = false}
-  ) => {
+  const SuperTzGet = async ({
+    id = "",
+    page = 1,
+    owner = false,
+    type = "",
+    draft = false,
+  }) => {
     await axios
       .get(
         `${API}/constructor/organization/detail?page=${page}&organization_id=${id}&tz_name=${superTzSearch}&is_owner=${owner}&select_type=${type}&is_draft=${draft}`,
@@ -1433,7 +1432,6 @@ const ContextProvider = ({ children }) => {
       });
   };
   //superTZ
-
 
   //tz duplicate
   const DuplicateTz = (id) => {
@@ -1474,46 +1472,24 @@ const ContextProvider = ({ children }) => {
 
   //superAuthor
 
-  const SuperAuthor = async (page = 1, id) => {
+  const SuperAuthor = async ({
+    page = 1,
+    id = "",
+    type = "",
+    owner = true,
+    draft = false,
+  }) => {
     await axios
-      .get(`${API}/constructor/list/user?page=${page}&organization_id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
-      .then((res) => {
-        setSuperTz(res.data);
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          refreshToken().then(() => SuperAuthor());
+      .get(
+        `${API}/constructor/list/user?page=${page}&organization_id=${id}&select_type=${type}&is_owner=${owner}&is_draft=${draft}&tz_name=${superTzSearch}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
         }
-        if (err.response.status === 404) {
-          notify404();
-        }
-        if (err.response.status === 400) {
-          notify400();
-        }
-        if (err.response.status === 403) {
-          notify403();
-        }
-        if (err.response.status === 500) {
-          notify500();
-        }
-      });
-  };
-
-  const filterTzAdmin = async (owner = true, page = 1) => {
-    await axios
-      .get(`${API}/constructor/list/user?is_owner=${owner}&page=${page}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(
-            "ConstructorRoleAccessToken"
-          )}`,
-        },
-      })
+      )
       .then((res) => {
         setSuperTz(res.data);
       })
@@ -1541,7 +1517,6 @@ const ContextProvider = ({ children }) => {
     <>
       <Context.Provider
         value={{
-          filterTzAdmin,
           SuperAuthor,
           DuplicateTz,
           superTzSearch,

@@ -86,11 +86,11 @@ const SuperTzComp = () => {
 
   const optionOwner = [
     { value: true, label: t("super.2") },
-    { value: "", label: t("filter.1") },
+    { value: false, label: t("filter.1") },
   ];
 
-  const handleChange = (value, id, e) => {
-    value === "All" ? SuperTzGet(id) : SuperAuthor(e, id);
+  const handleChange = (value, { owner, draft, type, id }) => {
+    value === "All" ? SuperTzGet({ owner: owner, draft: draft, type: type, id }) : SuperAuthor({ draft: draft, type: type, id });
   };
   return (
     <div>
@@ -125,7 +125,7 @@ const SuperTzComp = () => {
                     SuperTzGet({
                       type: value.value,
                       id,
-                      own: own,
+                      owner: own,
                       draft: draft,
                     });
                     setType(value.value);
@@ -175,7 +175,12 @@ const SuperTzComp = () => {
                 <Select
                   placeholder={t("filter.1")}
                   onChange={(value) => {
-                    handleChange(value.value, { id });
+                    handleChange(value.value, {
+                      id,
+                      owner: own,
+                      draft: draft,
+                      type: type,
+                    });
                     setIsAuthor(value.value);
                   }}
                   className={s.selecttt}
@@ -358,6 +363,9 @@ const SuperTzComp = () => {
               <div className={s.content_pagination}>
                 {isAuthor !== "Author" ? (
                   <SuperTzPagination
+                    own={own}
+                    draft={draft}
+                    type={type}
                     paramsID={id}
                     superTz={
                       superTz?.user_organization?.find(
@@ -368,6 +376,9 @@ const SuperTzComp = () => {
                 ) : (
                   <LkAvtorUserPagination
                     paramsID={id}
+                    type={type}
+                    own={own}
+                    draft={draft}
                     superTz={
                       superTz?.user_organization?.find(
                         (_, index) => index === 0

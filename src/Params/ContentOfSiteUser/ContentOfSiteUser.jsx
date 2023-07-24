@@ -45,7 +45,7 @@ const ContentOfSiteUser = () => {
   const handleDownloadClose = () => setDownloadPdf(false);
 
   useEffect(() => {
-    getContentSearch().then(() => setIsLoading(false));
+    getContentSearch({}).then(() => setIsLoading(false));
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }

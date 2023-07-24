@@ -54,7 +54,7 @@ const style = {
 const ContentOfSite = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isPublish, setIsPublish] = useState("");
-  const [spId,setSpId] = useState("")
+  const [spId, setSpId] = useState("");
   const [pdfRu, setPdfRu] = useState("");
   const [pdfUz, setPdfUz] = useState("");
 
@@ -71,7 +71,7 @@ const ContentOfSite = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getContentSearch().then(() => setIsLoading(false));
+    getContentSearch({}).then(() => setIsLoading(false));
     getSphere().then(() => setIsLoading(false));
   }, [contentSearch]);
 
@@ -133,7 +133,7 @@ const ContentOfSite = () => {
                   placeholder={t("filter.4")}
                   onChange={(value) => {
                     setIsPublish(value.value);
-                    getContentSearch(value.value);
+                    getContentSearch({isPublish:value.value});
                   }}
                   className={s.selecttt}
                   options={options}
@@ -144,8 +144,8 @@ const ContentOfSite = () => {
               <Select
                 placeholder={t("add-content.4")}
                 onChange={(value) => {
-                  getContentSearch(value.value)
-                  setSpId(value.value)
+                  getContentSearch({ id: value.value, isPublish });
+                  setSpId(value.value);
                 }}
                 className={s.selecttt2}
                 options={[{ id: "", name: t("filter.1") }]
@@ -432,7 +432,11 @@ const ContentOfSite = () => {
           <br />
           <br />
           <div className={s.content_pagination}>
-            <ContentPagination spId={spId} isPublish={isPublish} contentSite={contentSite?.total_pages} />
+            <ContentPagination
+              spId={spId}
+              isPublish={isPublish}
+              contentSite={contentSite?.total_pages}
+            />
           </div>
         </div>
       </section>
