@@ -32,9 +32,10 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding-left: 20px;
   transition: 0.4s ease-in-out;
 }
+
+
 
 .reg_card a button:hover {
   background: #3d1276;
@@ -59,4 +60,10 @@
   border: 2px solid #631ac0;
   font-weight: 600;
   font-size: 16px;
+}
+
+.select_nav{
+  float: right;
+  width: 150px;
+  height: 40px;
 }

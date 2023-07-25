@@ -20,6 +20,27 @@ input:focus {
   border: 2px solid #2684ff !important;
 }
 
-.css-1to7aaw-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected{
+.css-1to7aaw-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
   background-color: #2684ff !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4e1697;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #631ac0;
 }

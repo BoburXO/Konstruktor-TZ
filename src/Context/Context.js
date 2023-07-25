@@ -99,6 +99,7 @@ const ContextProvider = ({ children }) => {
         setProfile(res.data);
         localStorage.setItem("roleUserName", res?.data?.user?.username);
         localStorage.setItem("roleName", res?.data?.user?.role?.name);
+        localStorage.setItem("organizationName",res?.data?.user?.organization);
         navigate("/main");
       })
       .catch((err) => {

@@ -71,6 +71,7 @@ const Template = () => {
                   <p>{t("ru")}:</p>
                   <br />
                   <textarea
+                    maxLength={430}
                     defaultValue={paramsFind?.description_ru}
                   ></textarea>
                 </span>
@@ -78,6 +79,7 @@ const Template = () => {
                   <p>{t("uz")}:</p>
                   <br />
                   <textarea
+                    maxLength={430}
                     defaultValue={paramsFind?.description_uz}
                   ></textarea>
                 </span>

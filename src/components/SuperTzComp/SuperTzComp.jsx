@@ -69,8 +69,6 @@ const SuperTzComp = () => {
     }
   }, [superTzSearch]);
 
-  console.log(own, draft);
-
   if (isLoading) return <Loader />;
 
   const options = [
@@ -99,6 +97,7 @@ const SuperTzComp = () => {
       ? SuperTzGet({ owner: owner, draft: draft, type: type, id })
       : SuperAuthor({ owner: owner, draft: draft, type: type, id });
   };
+
   return (
     <div>
       <section className={s.lkmain_sect}>
@@ -141,8 +140,7 @@ const SuperTzComp = () => {
                   options={options}
                 />
               </div>
-              {superTz?.user_organization?.find((_, index) => index === 0)
-                ?.username === localStorage.getItem("roleUserName") ? (
+              {superTz?.name === localStorage.getItem("organizationName") ? (
                 <div>
                   <Select
                     placeholder={t("filter.1")}
@@ -201,36 +199,32 @@ const SuperTzComp = () => {
             ?.paginated_results?.results?.length ? (
             <>
               <TableContainer component={Paper} classes={{ root: s.table }}>
-                {superTz?.user_organization?.map((user) => (
-                  <Table
-                    key={user.id}
-                    sx={{ minWidth: 650 }}
-                    aria-label="simple table"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="left">
-                          <p>ID</p>
-                        </TableCell>
-                        <TableCell align="left">
-                          <p>{t("lkavtor10")}</p>
-                        </TableCell>
-                        <TableCell align="left">
-                          {" "}
-                          <p>{t("lkavtor2")}</p>
-                        </TableCell>
-                        <TableCell align="left">
-                          {" "}
-                          <p>{t("lkavtor3")}</p>
-                        </TableCell>
-                        <TableCell align="right">
-                          {" "}
-                          <p>{t("lkavtor4")}</p>
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody classes={{ root: s.tbody_root }}>
-                      {user?.paginated_results?.results?.map((tz) => (
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="left">
+                        <p>ID</p>
+                      </TableCell>
+                      <TableCell align="left">
+                        <p>{t("lkavtor10")}</p>
+                      </TableCell>
+                      <TableCell align="left">
+                        {" "}
+                        <p>{t("lkavtor2")}</p>
+                      </TableCell>
+                      <TableCell align="left">
+                        {" "}
+                        <p>{t("lkavtor3")}</p>
+                      </TableCell>
+                      <TableCell align="right">
+                        {" "}
+                        <p>{t("lkavtor4")}</p>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody classes={{ root: s.tbody_root }}>
+                    {superTz?.user_organization?.map((user) =>
+                      user?.paginated_results?.results?.map((tz) => (
                         <TableRow
                           key={tz?.id}
                           sx={{
@@ -360,10 +354,10 @@ const SuperTzComp = () => {
                             )}
                           </TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                ))}
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
               </TableContainer>
               <br />
               <br />
