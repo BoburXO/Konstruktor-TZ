@@ -12,6 +12,7 @@ import {
   fetchStructureByIdForUser,
   setActiveSection,
   setUserAction,
+  setUserStatesToDefault,
 } from "../../redux/api/user/structure_slice";
 import CreateTZ1center from "../Layout/CreateTZ1center";
 import {
@@ -52,14 +53,17 @@ const CreateTZ = () => {
       navigate("/lkavtor");
       return;
     }
-    if (location.pathname.substring(0, 11) === "/tz/create") {
+    if (location.pathname.substring(0, 10) === "/tz/create") {
       dispatch(setUserAction("create"));
-    } else if (location.pathname.substring(0, 9) === "/tz/edit") {
+    } else if (location.pathname.substring(0, 8) === "/tz/edit") {
       dispatch(setUserAction("edit"));
     } else {
       dispatch(setUserAction("review"));
     }
     dispatch(clearDuplicatedAndDoubledTz());
+    return () => {
+      dispatch(setUserStatesToDefault());
+    };
   }, []);
 
   useEffect(() => {
@@ -71,6 +75,20 @@ const CreateTZ = () => {
       dispatch(setActiveSection(structure?.sections[0]));
     }
   }, [structure?.id]);
+
+  useEffect(() => {
+    const activeSectionIndex = structure?.sections?.findIndex(
+      (item) => item?.id === activeSection?.id
+    );
+    if (
+      activeSection?.id &&
+      data?.id &&
+      activeSectionIndex === structure?.sections?.length - 1 &&
+      data?.id === activeSection?.id
+    ) {
+      navigate("/lkavtor");
+    }
+  }, [activeSection, data]);
 
   return (
     <>
