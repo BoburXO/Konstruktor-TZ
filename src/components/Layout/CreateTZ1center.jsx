@@ -12,7 +12,6 @@ import {
 import { useMemo } from "react";
 
 export default function CreateTZ1center({ activeSection }) {
-  console.log(activeSection);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();

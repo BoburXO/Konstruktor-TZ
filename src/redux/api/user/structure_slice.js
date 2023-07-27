@@ -127,8 +127,13 @@ const userStructureSlice = createSlice({
     setUserAction: (state, { payload }) => {
       state.userAction = payload;
     },
-    setUserStatesToDefault: (state) => {
-      state = initialState;
+    clearStructureForUser: (state) => {
+      state.activeSection = {};
+      state.structure = {};
+      state.classificator = {};
+      state.fieldsData = [];
+      state.data = {};
+      state.templates = [];
     },
   },
   extraReducers: (builder) => {
@@ -170,5 +175,5 @@ export const {
   setFieldsData,
   clearFieldsData,
   setUserAction,
-  setUserStatesToDefault,
+  clearStructureForUser,
 } = userStructureSlice.actions;

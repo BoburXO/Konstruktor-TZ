@@ -8,6 +8,7 @@ import {
   fetchClassificator,
   setFieldsData,
 } from "../../redux/api/user/structure_slice";
+import { useMemo } from "react";
 
 export default function SectionsField({ field }) {
   const dispatch = useDispatch();
@@ -37,12 +38,12 @@ export default function SectionsField({ field }) {
     }
   }, [tableData]);
 
-  const classificatorElemOptions = field?.classificator?.elements?.map(
-    (item) => ({
+  const classificatorElemOptions = useMemo(() => {
+    return field?.classificator?.elements?.map((item) => ({
       value: item?.content,
       label: item?.content,
-    })
-  );
+    }));
+  }, [field?.classificator?.elements]);
 
   return (
     <>

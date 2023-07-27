@@ -9,10 +9,10 @@ import { templates } from "../../templates";
 import StructureLeftSidebar from "../StructureLeftSidebar/StructureLeftSidebar";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  clearStructureForUser,
   fetchStructureByIdForUser,
   setActiveSection,
   setUserAction,
-  setUserStatesToDefault,
 } from "../../redux/api/user/structure_slice";
 import CreateTZ1center from "../Layout/CreateTZ1center";
 import {
@@ -27,6 +27,7 @@ const CreateTZ = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { tzId } = useParams();
+  const roleName = localStorage.getItem("roleName");
   const [arr, setArr] = useState([]);
 
   const notify = () =>
@@ -62,13 +63,25 @@ const CreateTZ = () => {
     }
     dispatch(clearDuplicatedAndDoubledTz());
     return () => {
-      dispatch(setUserStatesToDefault());
+      dispatch(clearStructureForUser());
     };
   }, []);
 
   useEffect(() => {
-    dispatch(fetchStructureByIdForUser(tzId));
-  }, [data]);
+    const activeSectionIndex = structure?.sections?.findIndex(
+      (item) => item?.id === activeSection?.id
+    );
+    if (activeSectionIndex !== structure?.sections?.length - 1) {
+      dispatch(fetchStructureByIdForUser(tzId));
+    } else if (
+      activeSection?.id &&
+      data?.id &&
+      activeSectionIndex === structure?.sections?.length - 1 &&
+      data?.id === activeSection?.id
+    ) {
+      return navigate(roleName === "Author" ? "/profile" : "/lkavtor");
+    }
+  }, [activeSection, data]);
 
   useEffect(() => {
     if (structure?.id) {
@@ -76,19 +89,19 @@ const CreateTZ = () => {
     }
   }, [structure?.id]);
 
-  useEffect(() => {
-    const activeSectionIndex = structure?.sections?.findIndex(
-      (item) => item?.id === activeSection?.id
-    );
-    if (
-      activeSection?.id &&
-      data?.id &&
-      activeSectionIndex === structure?.sections?.length - 1 &&
-      data?.id === activeSection?.id
-    ) {
-      navigate("/lkavtor");
-    }
-  }, [activeSection, data]);
+  // useEffect(() => {
+  //   const activeSectionIndex = structure?.sections?.findIndex(
+  //     (item) => item?.id === activeSection?.id
+  //   );
+  //   if (
+  //     activeSection?.id &&
+  //     data?.id &&
+  //     activeSectionIndex === structure?.sections?.length - 1 &&
+  //     data?.id === activeSection?.id
+  //   ) {
+  //     navigate("/lkavtor");
+  //   }
+  // }, [activeSection, data]);
 
   return (
     <>
