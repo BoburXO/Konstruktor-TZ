@@ -195,8 +195,7 @@ const SuperTzComp = () => {
             </div>
           </div>
           <br />
-          {superTz?.user_organization?.find((_, index) => index === 0)
-            ?.paginated_results?.results?.length ? (
+          {/* {superTz?.user_organization?.length ? ( */}
             <>
               <TableContainer component={Paper} classes={{ root: s.table }}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -389,11 +388,11 @@ const SuperTzComp = () => {
                 )}
               </div>
             </>
-          ) : (
+          {/* ) : (
             <>
               <h1 className={s.notFound}>{t("toast404")}</h1>
             </>
-          )}
+          )} */}
         </div>
       </section>
     </div>

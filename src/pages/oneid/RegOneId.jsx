@@ -31,6 +31,8 @@ const OneId = () => {
               (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=https://constructor.egov.uz/&state=test&scope=myportal`)
             }
           >
+            {/* https://constructor.egov.uz
+                http://localhost:3000 */}
             <button>Войти через OneID</button>
           </a>
         </div>

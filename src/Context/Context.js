@@ -99,7 +99,7 @@ const ContextProvider = ({ children }) => {
         setProfile(res.data);
         localStorage.setItem("roleUserName", res?.data?.user?.username);
         localStorage.setItem("roleName", res?.data?.user?.role?.name);
-        localStorage.setItem("organizationName",res?.data?.user?.organization);
+        localStorage.setItem("organizationName", res?.data?.user?.organization);
         navigate("/main");
       })
       .catch((err) => {
@@ -254,7 +254,13 @@ const ContextProvider = ({ children }) => {
   //deleteElement
   const removeElementById = (id) => {
     axios
-      .delete(`${API}/classificator/element/${id}/`)
+      .delete(`${API}/classificator/element/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(
+            "ConstructorRoleAccessToken"
+          )}`,
+        },
+      })
       .then(() => {
         window.location.reload();
       })
@@ -282,14 +288,24 @@ const ContextProvider = ({ children }) => {
   const updateElements = async (e, id) => {
     e.preventDefault();
     await axios
-      .put(`${API}/classificator/element/${id}/`, {
-        content_uz: e.target[0].value
-          ? e.target[0].value
-          : e.target.children[0].children[0].innerHTML,
-        content_ru: e.target[1].value
-          ? e.target[1].value
-          : e.target.children[1].children[0].innerHTML,
-      })
+      .put(
+        `${API}/classificator/element/${id}/`,
+        {
+          content_uz: e.target[0].value
+            ? e.target[0].value
+            : e.target.children[0].children[0].innerHTML,
+          content_ru: e.target[1].value
+            ? e.target[1].value
+            : e.target.children[1].children[0].innerHTML,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
 
       .then(() => {
         window.location.reload();
@@ -395,9 +411,19 @@ const ContextProvider = ({ children }) => {
   //isActive
   const isActiveClassificator = (slug, status) => {
     axios
-      .patch(`${API}/classificator/${slug}/status/update/`, {
-        is_active: !status,
-      })
+      .patch(
+        `${API}/classificator/${slug}/status/update/`,
+        {
+          is_active: !status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "ConstructorRoleAccessToken"
+            )}`,
+          },
+        }
+      )
       .then(() => {
         getAllSpraSearch();
       })
