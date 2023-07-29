@@ -235,8 +235,8 @@ const LKMain = () => {
               ) : null}
             </div>
           </div>
-          {superTz?.user_organization?.find((_, index) => index === 0)
-            ?.paginated_results?.results?.length ? (
+          {/* {superTz?.user_organization?.find((_, index) => index === 0)
+            ?.paginated_results?.results?.length ? ( */}
             <>
               <div className={s.org_name_div}>
                 <h4>{superTz?.name}</h4>
@@ -495,11 +495,11 @@ const LKMain = () => {
                 )}
               </div>
             </>
-          ) : (
+          {/* ) : (
             <>
               <h1 className={s.notFound}>{t("toast404")}</h1>
             </>
-          )}
+          )} */}
         </div>
       </section>
     </>
