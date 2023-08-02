@@ -1,11 +1,25 @@
 import { Fragment, useMemo, useState } from "react";
 import s from "../Structure.module.css";
+import m from "../../LKavtorMain/LKMain.module.css";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import DrawTableWithValues from "../../DrawTableWithValues/DrawTableWithValues";
 import editBtn from "../../../assets/icons/pen.svg";
 import CreateNewFieldModal from "../CreateNewFieldModal/CreateNewFieldModal";
 import { deleteField } from "../CreateNewFieldModal/field_slice";
+import { Box, Modal } from "@mui/material";
+
+const style_delete_modal = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  border: "none",
+  borderRadius: 4,
+  boxShadow: 0,
+  p: 4,
+};
 
 export default function FieldPart({ field }) {
   const { t } = useTranslation();
@@ -16,6 +30,11 @@ export default function FieldPart({ field }) {
   const [showUpdateFieldModal, setShowUpdateFieldModal] = useState(false);
   const hanldeOpenUpdateFieldModal = () => setShowUpdateFieldModal(true);
   const hanldeCloseUpdateFieldModal = () => setShowUpdateFieldModal(false);
+
+  //deleteModal
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const handleOpenDeleteModal = () => setOpenDeleteModal(true);
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
   const activeClassificator = useMemo(() => {
     if (field?.select_type === 8) {
@@ -34,7 +53,7 @@ export default function FieldPart({ field }) {
       {field?.select_type === 6 ? (
         <div>
           <p className={s.structure_right_contents_input_label}>
-            {t("table")}
+            {t("table.name")}
             {structureAction !== "review" ? (
               <div>
                 <img
@@ -56,8 +75,51 @@ export default function FieldPart({ field }) {
                     marginLeft: "15px",
                     cursor: "pointer",
                   }}
-                  onClick={handleDeleteField}
+                  onClick={handleOpenDeleteModal}
                 ></i>
+                <Modal
+                  slotProps={{
+                    backdrop: {
+                      style: {
+                        opacity: "0.4",
+                        boxShadow: 24,
+                      },
+                    },
+                  }}
+                  open={openDeleteModal}
+                  onClose={handleCloseDeleteModal}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style_delete_modal}>
+                    <form
+                      style={{ textAlign: "center" }}
+                      className={m.createElementForm}
+                    >
+                      <h2>{t("sfera.3")}</h2>
+                      <br />
+                      <p>{t("sfera.6")}</p>
+                      <br />
+                      <div className={m.createElementFormBtns}>
+                        {" "}
+                        <button
+                          type="button"
+                          onClick={() => handleCloseDeleteModal()}
+                          className={m.shablon_save_btn}
+                        >
+                          {t("btn.5")}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleDeleteField}
+                          className={m.shablon_delete_btn}
+                        >
+                          {t("btn.6")}
+                        </button>
+                      </div>
+                    </form>
+                  </Box>
+                </Modal>
               </div>
             ) : null}
           </p>
@@ -79,7 +141,7 @@ export default function FieldPart({ field }) {
       ) : (
         <>
           <p className={s.structure_right_contents_input_label}>
-            {field?.select_type === 8 ? t("Classificator") : t("struc4")}
+            {field?.select_type === 8 ? t("classificator") : t("struc4")}
             {structureAction !== "review" ? (
               <div>
                 <img
@@ -95,8 +157,51 @@ export default function FieldPart({ field }) {
                     marginLeft: "15px",
                     cursor: "pointer",
                   }}
-                  onClick={handleDeleteField}
+                  onClick={handleOpenDeleteModal}
                 ></i>
+                <Modal
+                  slotProps={{
+                    backdrop: {
+                      style: {
+                        opacity: "0.4",
+                        boxShadow: 24,
+                      },
+                    },
+                  }}
+                  open={openDeleteModal}
+                  onClose={handleCloseDeleteModal}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style_delete_modal}>
+                    <form
+                      style={{ textAlign: "center" }}
+                      className={m.createElementForm}
+                    >
+                      <h2>{t("sfera.3")}</h2>
+                      <br />
+                      <p>{t("sfera.6")}</p>
+                      <br />
+                      <div className={m.createElementFormBtns}>
+                        {" "}
+                        <button
+                          type="button"
+                          onClick={() => handleCloseDeleteModal()}
+                          className={m.shablon_save_btn}
+                        >
+                          {t("btn.5")}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleDeleteField}
+                          className={m.shablon_delete_btn}
+                        >
+                          {t("btn.6")}
+                        </button>
+                      </div>
+                    </form>
+                  </Box>
+                </Modal>
               </div>
             ) : null}
           </p>

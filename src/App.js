@@ -24,6 +24,7 @@ import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
 import Organizations from "./pages/Organizations/Organizations";
 import SuperTZ from "./pages/SuperTZ/SuperTZ";
 import Profile from "./pages/Profile/Profile";
+import { ProtectedAuthorRoute } from "./components/ProtectedRoutes/ProtectedAuthorRoute";
 function App() {
   return (
     <>
@@ -31,7 +32,9 @@ function App() {
         <Route path="/" element={<RegOneId />} />
         <Route path="/main" element={<Home />} />
         <Route path="/lkavtor" element={<LKavtor />} />
-        <Route path="/createtz" element={<CreateTZ />} />
+        <Route path="/tz/create/:tzId" element={<CreateTZ />} />
+        <Route path="/tz/edit/:tzId" element={<CreateTZ />} />
+        <Route path="/tz/:tzId" element={<CreateTZ />} />
         <Route path="/createtz2" element={<CreateTZ2 />} />
         <Route path="/contentofsite" element={<Content />} />
         <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
@@ -62,9 +65,15 @@ function App() {
             <Route path="/updateContent/:id" element={<UpdContent />} />
             <Route path="/sphere" element={<Sphere />} />
           </>
-        ) : (
-          <Route path="/profile" element={<Profile />} />
-        )}
+        ) : null}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedAuthorRoute>
+              <Profile />
+            </ProtectedAuthorRoute>
+          }
+        />
       </Routes>
 
       <Toaster

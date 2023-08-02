@@ -16,7 +16,6 @@ export default function CreateTZ1center({ activeSection }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const { fieldsData, structure } = useSelector((state) => state.userStructure);
 
   const activeSectionIndex = useMemo(() => {
@@ -119,53 +118,62 @@ export default function CreateTZ1center({ activeSection }) {
         <img src={arrowleft} alt="←" />
         <p>{t("createtz1")}</p>
       </span>
-      <h1>{`${activeSection?.header_name}. ${activeSection?.name}`}</h1>
-      <br />
-
-      <div className={s.craete1_center_form_parent}>
-        <RenderSectionsWithChildren
-          sections={activeSection?.children}
-          action={"createTz"}
-        />
-        <div className={s.create1_form_route_btn}>
-          {activeSectionIndex !== 0 ? (
-            <button
-              onClick={() => {
-                const a = window.confirm(
-                  "Are you sure you want to go, all your savings are cleared"
-                );
-                if (a) {
-                  dispatch(clearFieldsData());
-                  navigateToPrev();
-                }
-              }}
-            >
-              {t("btn.1")}
-            </button>
-          ) : null}
-          {activeSectionIndex !== structure?.sections?.length - 1 ? (
-            <button
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                handleSubmitFieldsData();
-                dispatch(clearFieldsData());
-                navigateToNext();
-              }}
-            >
-              {t("btn.2")}
-            </button>
+      {activeSection?.id ? (
+        <>
+          <h1>{`${activeSection?.header_name}. ${activeSection?.name}`}</h1>
+          <br />
+          {activeSection?.children?.length ? (
+            <div className={s.craete1_center_form_parent}>
+              <RenderSectionsWithChildren
+                sections={activeSection?.children}
+                action={"createTz"}
+              />
+              <div className={s.create1_form_route_btn}>
+                {activeSectionIndex !== 0 ? (
+                  <button
+                    onClick={() => {
+                      const a = window.confirm(
+                        "Are you sure you want to go, all your savings are cleared"
+                      );
+                      if (a) {
+                        dispatch(clearFieldsData());
+                        navigateToPrev();
+                      }
+                    }}
+                  >
+                    {t("btn.1")}
+                  </button>
+                ) : null}
+                {activeSectionIndex !== structure?.sections?.length - 1 ? (
+                  <button
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      handleSubmitFieldsData();
+                      dispatch(clearFieldsData());
+                      navigateToNext();
+                    }}
+                  >
+                    {t("btn.2")}
+                  </button>
+                ) : (
+                  <button
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      handleSubmitFieldsData();
+                    }}
+                  >
+                    Save
+                  </button>
+                )}
+              </div>
+            </div>
           ) : (
-            <button
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                handleSubmitFieldsData();
-              }}
-            >
-              Save
-            </button>
+            <p>{t("notFound")}</p>
           )}
-        </div>
-      </div>
+        </>
+      ) : (
+        <p style={{ marginTop: "30px" }}>{t("notFound")}</p>
+      )}
     </div>
   );
 }

@@ -60,7 +60,6 @@ export const sendAllFieldsData = createAsyncThunk(
   }
 );
 
-
 export const fetchTemplates = createAsyncThunk(
   "templates/fetchAll",
   async (id) => {
@@ -125,9 +124,16 @@ const userStructureSlice = createSlice({
     clearFieldsData: (state) => {
       state.fieldsData = [];
     },
-
     setUserAction: (state, { payload }) => {
       state.userAction = payload;
+    },
+    clearStructureForUser: (state) => {
+      state.activeSection = {};
+      state.structure = {};
+      state.classificator = {};
+      state.fieldsData = [];
+      state.data = {};
+      state.templates = [];
     },
   },
   extraReducers: (builder) => {
@@ -152,7 +158,6 @@ const userStructureSlice = createSlice({
       .addCase(sendAllFieldsData.fulfilled, (state, { payload }) => {
         state.data = payload;
         state.loading = false;
-
       })
       .addCase(fetchTemplates.pending, (state) => {
         state.templatesLoading = true;
@@ -170,4 +175,5 @@ export const {
   setFieldsData,
   clearFieldsData,
   setUserAction,
+  clearStructureForUser,
 } = userStructureSlice.actions;

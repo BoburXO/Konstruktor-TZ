@@ -173,8 +173,33 @@
   },
 
   "notFound": "Hech narsa topilmadi",
-  "table": "Jadval",
+  "table": {
+    "name": "Jadval",
+    "cols": "Ustunlar",
+    "raws": "Qatorlar"
+  },
   "classificator": "Klassifikator",
+  "publish": "Nashr qilish",
+  "tzName": "Texnik topshiriqning nomi",
+  "tzUncreated": "Iltimos avval texnik topshiriqqa nom yaratib oling!",
+  "title": "Sarlavha",
+  "comment": "Izoh",
+  "type": "Turi",
+  "addSection": "Yangi punkt qo'shish",
+  "addSubSection": "Yangi podpunkt qo'shish",
+  "section": {
+    "name": "Punkt nomi",
+    "number": "Punkt tartib raqami",
+    "title": "Punkt sarlavhasi",
+    "uncreated": "Iltimos avval asosiy punktni yaratib oling!"
+  },
+  "field": {
+    "name": "Maydon nomi",
+    "type": "Maydon turi",
+    "title": "Maydon sarlavhasi",
+    "unfilled": "Iltimos, barcha kerakli joylarni to'ldiring!"
+  },
+  "unSelectedClass": "Iltimos classificatorlardan birini tanlang",
   "profile": {
     "1": "Shaxsiy kabinet"
   },

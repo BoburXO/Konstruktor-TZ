@@ -34,8 +34,8 @@ export default function CreateNewStructureModal({
   ];
 
   const handleSubmitNewStructure = () => {
-    if (!nameUz || !nameRu || !commentRu || !commentUz) {
-      return toast("Please fill out all empty spaces");
+    if (!nameUz || !nameRu) {
+      return toast(t("field.unfilled"));
     }
     dispatch(
       createNewStructure({
@@ -56,8 +56,8 @@ export default function CreateNewStructureModal({
   };
 
   const handleUpdateCurrentStructure = () => {
-    if (!nameUz || !nameRu || !commentRu || !commentUz) {
-      return toast("Please fill out all empty spaces");
+    if (!nameUz || !nameRu) {
+      return toast(t("field.unfilled"));
     }
     dispatch(
       updateStructure({
@@ -106,8 +106,8 @@ export default function CreateNewStructureModal({
         }}
       >
         <div className={s.create_structure_modal}>
-          <h1>Название технического задания</h1>
-          <p>Заголовок</p>
+          <h1>{t("tzName")}</h1>
+          <p>{t("title")}</p>
           <div className={s.flex_names}>
             <div>
               {t("ru")}:
@@ -128,7 +128,7 @@ export default function CreateNewStructureModal({
               />
             </div>
           </div>
-          <p>Комментарий</p>
+          <p>{t("comment")}</p>
           {t("ru")}:
           <input
             type="text"
@@ -145,7 +145,7 @@ export default function CreateNewStructureModal({
             onChange={(e) => setCommentUz(e.target.value)}
             className={s.structure_right_contents_input_punkt}
           />
-          <p>Тип</p>
+          <p>{t("type")}</p>
           <Select
             onChange={(e) => setType(e.value)}
             options={selectTypeOptions}

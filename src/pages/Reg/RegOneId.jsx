@@ -18,7 +18,11 @@ const RegOneId = () => {
         <a
           target="_blank"
           onClick={() =>
-            (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=https://constructor.egov.uz/oneid/one&state=test&scope=myportal`)
+            (window.location.href = `https://sso.egov.uz/sso/oauth/Authorization.do?response_type=one_code&client_id=single_reester&redirect_uri=${
+              process.env.NODE_ENV === "production"
+                ? "https://constructor.egov.uz"
+                : "http://localhost:3000"
+            }/oneid/one&state=test&scope=myportal`)
           }
         >
           {/* https://constructor.egov.uz
