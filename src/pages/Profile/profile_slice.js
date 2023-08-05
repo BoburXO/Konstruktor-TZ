@@ -15,8 +15,8 @@ export const fetchAllTzOfUser = createAsyncThunk(
     const { request } = useHttp();
     return await request({
       url: tz_name
-        ? `/constructor/list/user?page=${page}&tz_name=${tz_name}`
-        : `/constructor/list/user?page=${page}`,
+        ? `/constructor/list/user?&page=${page}&tz_name=${tz_name}`
+        : `/constructor/list/user?&page=${page}`,
       headers: {
         Authorization: `Bearer ${localStorage.getItem(
           "ConstructorRoleAccessToken"

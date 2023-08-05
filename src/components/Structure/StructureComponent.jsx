@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 //redux libraries
 import { useSelector, useDispatch } from "react-redux";
@@ -62,6 +62,7 @@ const StructureComponent = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   //default modal
   const [open, setOpen] = React.useState(false);
@@ -142,13 +143,13 @@ const StructureComponent = () => {
       }
     }
     //eslint-disable-next-line
-  }, [
-    currentStructure,
-    currentSection,
-    currentSubSection,
-    currentField,
-    publishedStructure,
-  ]);
+  }, [currentStructure, currentSection, currentSubSection, currentField]);
+
+  useEffect(() => {
+    if (publishedStructure?.id) {
+      navigate("/lkavtor");
+    }
+  }, [publishedStructure]);
 
   useEffect(() => {
     if (structureAction === "edit" || structureAction === "review") {
