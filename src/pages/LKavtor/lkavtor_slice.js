@@ -3,12 +3,14 @@ import { useHttp } from "../../hooks/useHttp";
 const initialState = {
   id: "",
   loading: false,
-  message: {},
+  isDoubleStrucLoading: false,
   duplicateLoading: false,
+  message: {},
   duplicatedTz: {},
+  doubledStructure: {},
 };
 
-export const doubleAndFillTz = createAsyncThunk(
+export const doubleStructure = createAsyncThunk(
   "tz/doubleForFill",
   async ({ id, data }) => {
     const { request } = useHttp();
@@ -42,6 +44,25 @@ export const duplicateTzForUser = createAsyncThunk(
   }
 );
 
+export const doubleStructureForModerator = createAsyncThunk(
+  "structure/doubleForModerator",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      method: "POST",
+      url: `/constructor/detail/${id}`,
+      data: {
+        is_double: true,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
 const lkavtorSlice = createSlice({
   name: "lkavtor",
   initialState,
@@ -56,10 +77,10 @@ const lkavtorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(doubleAndFillTz.pending, (state) => {
+      .addCase(doubleStructure.pending, (state) => {
         state.loading = true;
       })
-      .addCase(doubleAndFillTz.fulfilled, (state, { payload }) => {
+      .addCase(doubleStructure.fulfilled, (state, { payload }) => {
         state.message = payload;
         state.loading = false;
       })
@@ -69,6 +90,13 @@ const lkavtorSlice = createSlice({
       .addCase(duplicateTzForUser.fulfilled, (state, { payload }) => {
         state.duplicatedTz = payload;
         state.duplicateLoading = false;
+      })
+      .addCase(doubleStructureForModerator.pending, (state) => {
+        state.isDoubleStrucLoading = true;
+      })
+      .addCase(doubleStructureForModerator.fulfilled, (state, { payload }) => {
+        state.doubledStructure = payload;
+        state.isDoubleStrucLoading = false;
       });
   },
 });
