@@ -1,0 +1,293 @@
+.create1_parent {
+  width: 100%;
+  padding: 0 30px;
+  font-family: Rubik;
+  display: flex;
+  color: #222222;
+}
+
+.create2_left {
+  width: 362px;
+  height: 100%;
+
+  padding: 30px 0;
+  padding-right: 20px;
+  color: #222222;
+}
+
+.create2_dropdown button {
+  width: 270px;
+
+  background: transparent;
+  border: none;
+  margin: 10px;
+  text-align: start;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: Rubik;
+}
+
+.create2_dropdown p {
+  padding: 16px;
+  padding-left: 25px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #222222;
+}
+
+.create2_dropdown p:hover {
+  color: #631ac0;
+}
+
+.create2_left h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.craete1_center {
+  width: 50%;
+  background: rgba(47, 128, 237, 0.1);
+  padding: 40px;
+  font-family: Rubik;
+}
+
+.craete1_center_navigate {
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #0ba9cc;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.craete1_center h1 {
+  padding-top: 40px;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.craete1_center h3 {
+  font-weight: 600;
+  font-size: 21px;
+}
+
+.create1_form_route_btn {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.create1_form_route_btn button:last-child {
+  width: 140px;
+  height: 48px;
+
+  background: #631ac0;
+  border: 2px solid #631ac0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 8px;
+}
+.create1_form_route_btn button:last-child:focus {
+  background: #fff;
+  color: #631ac0;
+}
+
+.create1_form_route_btn button:first-child {
+  width: 140px;
+  height: 48px;
+
+  color: rgba(34, 34, 34, 0.6);
+  background: #fff;
+  border: 2px solid rgba(34, 34, 34, 0.4);
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.create1_form_route_btn button:first-child:active {
+  background: rgba(34, 34, 34, 0.6);
+  color: #fff;
+}
+
+.create1_form_card {
+  width: 100%;
+  height: max-content;
+
+  margin: 16px 0;
+  padding: 12px 20px 20px 20px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  color: #222222;
+}
+
+.create1_form_card textarea,
+.create1_form_card_from_templates textarea {
+  width: 100%;
+  height: 161px;
+
+  resize: vertical;
+  outline: none;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: Rubik;
+}
+
+.create1_form_card_from_templates {
+  width: 100%;
+  height: max-content;
+
+  margin: 16px 0;
+  padding: 12px 20px 20px 20px;
+  background: #ffffff;
+  border: 2px dashed #2f80ed;
+  border-radius: 12px;
+  color: #222222;
+}
+
+.create1_form_card > input {
+  width: 100%;
+  height: 48px;
+
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 400;
+  font-size: 16px;
+  font-family: Rubik;
+  outline: none;
+}
+
+.create1_form_card p,
+.create1_form_card_from_templates p {
+  padding: 12px 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.create1_form_card_twink {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.create1_form_card_twink input {
+  width: 100%;
+}
+
+.craete1_right {
+  width: 414px;
+
+  padding: 30px 0;
+  padding-left: 30px;
+  margin: 0 auto;
+  font-family: Rubik;
+}
+
+.craete1_right h2 {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.craete1_right p {
+  padding-top: 16px;
+  color: rgba(34, 34, 34, 0.8);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.09px;
+}
+
+.create1_punktlar {
+  width: 100%;
+  height: auto;
+
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(1, 1fr);
+  padding-top: 20px;
+}
+
+.create1_punktlar_card {
+  background: rgba(47, 128, 237, 0.1);
+  border-radius: 8px;
+  border: 2px dashed #2f80ed;
+  color: rgba(34, 34, 34, 0.6);
+  padding: 16px;
+}
+
+.center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.craete1_right_btn {
+  width: 196px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  color: #2f80ed;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.create1_punktlar_card p {
+  line-height: 21px;
+}
+
+.create1_punktlar_card h3 {
+  color: #222222;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.twink_copy {
+  height: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.twink_copy span {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.twink_copy span:active {
+  transform: scale(1.1);
+}
+
+.twink_copy span img {
+  width: 80%;
+}
