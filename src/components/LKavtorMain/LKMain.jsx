@@ -263,10 +263,14 @@ const LKMain = () => {
                   <div className={s.org_name_div}>
                     <h4>{superTz?.name}</h4>
                     {/* <h4>
+=======
+                    <h4>
+>>>>>>> 10737d5b5ddf0abfa6cef284a7e9aecb4aaf74e0
                       {"№ "}
                       {
                         superTz?.user_organization?.find(
                           (_, index) => index === 0
+<<<<<<< HEAD
                         )?.paginated_results?.length
                       }
                     </h4> */}

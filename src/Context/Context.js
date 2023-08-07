@@ -1336,6 +1336,7 @@ const ContextProvider = ({ children }) => {
   };
   //getDetail
 
+
   //deleteTz
   const deleteTz = async (id) => {
     await axios
