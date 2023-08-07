@@ -1,0 +1,174 @@
+.create2_parent {
+  width: 100%;
+  font-family: Rubik;
+  display: flex;
+  color: #222222;
+}
+
+.create2_left {
+  width: 100%;
+  max-width: 362px;
+  height: auto;
+
+  padding: 30px;
+  color: #222222;
+}
+
+.create2_dropdown button {
+  width: 270px;
+
+  background: transparent;
+  border: none;
+  margin: 10px;
+  text-align: start;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: Rubik;
+}
+
+.create2_dropdown p {
+  padding: 16px;
+  padding-left: 25px;
+  font-weight: 400;
+  font-size: 14px;
+  color: #222222;
+}
+
+.create2_dropdown p:hover {
+  color: #631ac0;
+}
+
+.create2_left h2 {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.create2_center {
+  width: 100%;
+  height: auto;
+  padding: 32px;
+  background: rgba(47, 128, 237, 0.1);
+}
+
+.create2_center_back_btn {
+  width: 300px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  color: #0ba9cc;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.create2_center_title {
+  padding-top: 32px;
+  padding-bottom: 16px;
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.create2_source {
+  width: 100%;
+  height: max-content;
+
+  padding: 16px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.create2_source p {
+  padding-bottom: 10px;
+  color: #222;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.create2_source textarea {
+  width: 100%;
+
+  resize: vertical;
+  padding: 10px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.18px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  color: rgba(34, 34, 34, 0.8);
+}
+
+.prev_save_btns {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
+  margin-top: 32px;
+}
+
+.prev_save_btns .create2_prev {
+  width: 140px;
+  height: 48px;
+
+  background: none;
+  border: 2px solid rgba(34, 34, 34, 0.4);
+  color: rgba(34, 34, 34, 0.4);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.prev_save_btns .create2_save {
+  width: 140px;
+  height: 48px;
+
+  background: #631ac0;
+  color: #fff;
+  border: 2px solid #631ac0;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.prev_save_btns .create2_save:active {
+  color: #631ac0;
+  background: #fff;
+}
+
+.prev_save_btns .create2_prev:active {
+  background: rgba(34, 34, 34, 0.4);
+  color: #fff;
+  border: none;
+}
+
+.create2_right {
+  width: 100%;
+  max-width: 414px;
+  height: auto;
+
+  padding: 30px;
+  color: #222222;
+  text-align: center;
+}
+
+.create2_right h2 {
+  font-weight: 500;
+  font-size: 18px;
+  text-align: start;
+}
+
+.create2_right h4 {
+  font-weight: 400;
+  font-size: 14px;
+  padding-top: 17px;
+  text-align: start;
+}
+
+.create2_right img {
+  margin-top: 72px;
+}
