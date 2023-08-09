@@ -57,6 +57,9 @@ const ContentOfSite = () => {
   const [spId, setSpId] = useState("");
   const [pdfRu, setPdfRu] = useState("");
   const [pdfUz, setPdfUz] = useState("");
+  const [orgId, setOrgId] = useState("");
+
+  console.log(orgId);
 
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -68,11 +71,16 @@ const ContentOfSite = () => {
     deleteContent,
     getSphere,
     sphere,
+    getOrganizations,
+    org,
   } = useContext(Context);
 
   useEffect(() => {
-    getContentSearch({ id: spId, isPublish }).then(() => setIsLoading(false));
+    getContentSearch({ id: spId, isPublish, orgId }).then(() =>
+      setIsLoading(false)
+    );
     getSphere().then(() => setIsLoading(false));
+    getOrganizations().then(() => setIsLoading(false));
   }, [contentSearch]);
 
   const options = [
@@ -127,13 +135,29 @@ const ContentOfSite = () => {
                 placeholder={t("content-site.3")}
               />
             </div>
+            <div>
+              <Select
+                placeholder={t("filter.1")}
+                onChange={(value) => {
+                  getContentSearch({ orgId: value.value, id: spId, isPublish });
+                  setOrgId(value.value);
+                }}
+                className={s.sample_select}
+                options={[{ id: "", name: t("filter.1") }]
+                  .concat(org)
+                  .map((el) => ({
+                    value: el?.id,
+                    label: el?.name,
+                  }))}
+              />
+            </div>
             {localStorage.getItem("roleName") !== "Author" ? (
               <div>
                 <Select
                   placeholder={t("filter.4")}
                   onChange={(value) => {
                     setIsPublish(value.value);
-                    getContentSearch({ isPublish: value.value });
+                    getContentSearch({ isPublish: value.value, orgId });
                   }}
                   className={s.selecttt}
                   options={options}
@@ -144,7 +168,7 @@ const ContentOfSite = () => {
               <Select
                 placeholder={t("add-content.4")}
                 onChange={(value) => {
-                  getContentSearch({ id: value.value, isPublish });
+                  getContentSearch({ id: value.value, isPublish, orgId });
                   setSpId(value.value);
                 }}
                 className={s.selecttt2}
@@ -434,6 +458,7 @@ const ContentOfSite = () => {
           <div className={s.content_pagination}>
             <ContentPagination
               spId={spId}
+              orgId={orgId}
               isPublish={isPublish}
               contentSite={contentSite?.total_pages}
             />

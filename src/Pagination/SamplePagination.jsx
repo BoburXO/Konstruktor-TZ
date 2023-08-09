@@ -8,7 +8,7 @@ const SamplePagination = ({ sample,sectId }) => {
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e,page) => allSample(sectId, page)}
+        onChange={(e,page) => allSample({id:sectId, page})}
         count={sample}
         color="primary"
       />

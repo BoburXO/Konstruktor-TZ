@@ -3,12 +3,12 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Context } from "../Context/Context";
 
-const SpravochnikPagination = ({ spravochnik }) => {
+const SpravochnikPagination = ({ spravochnik, orgId }) => {
   const { getAllSpraSearch } = useContext(Context);
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e, page) => getAllSpraSearch(page)}
+        onChange={(e, page) => getAllSpraSearch({ page, orgId })}
         count={spravochnik}
         color="primary"
       />

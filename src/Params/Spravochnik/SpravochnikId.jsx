@@ -56,7 +56,7 @@ const SpravochnikId = () => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
-    getAllSpraSearch().then(() => setIsLoading(false));
+    getAllSpraSearch({}).then(() => setIsLoading(false));
   }, [spraSearch]);
 
   if (isLoading) return <Loader />;

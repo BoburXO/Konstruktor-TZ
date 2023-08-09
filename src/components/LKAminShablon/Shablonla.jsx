@@ -58,7 +58,7 @@ const Shablonla = () => {
   };
 
   useEffect(() => {
-    allSample().then(() => setIsLoading(false));
+    allSample({ id: sectId }).then(() => setIsLoading(false));
     getSelectPunkt().then(() => setIsLoading(false));
   }, [punktSearch]);
 
@@ -72,7 +72,7 @@ const Shablonla = () => {
           <div className={s.templates_sect_label}>
             <h1>
               {t("shablon")} -{" "}
-              <span className={s.sample_count}>№{sample?.count}</span>
+              <span className={s.sample_count}>№ {sample?.count}</span>
             </h1>
             <button
               onClick={handleOpen}
@@ -170,7 +170,7 @@ const Shablonla = () => {
               <Select1
                 placeholder={t("struc5")}
                 onChange={(value) => {
-                  allSample(value.value);
+                  allSample({id:value.value});
                   setSectId(value.value);
                 }}
                 className={s.sample_select}

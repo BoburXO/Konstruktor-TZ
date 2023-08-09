@@ -26,6 +26,11 @@
   font-weight: 600;
 }
 
+.sample_select {
+  width: 220px;
+  height: 50px;
+}
+
 .content_of_site_label_btn {
   width: 173px;
   height: 40px;

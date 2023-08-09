@@ -43,7 +43,7 @@ const Template = () => {
     if (localStorage.getItem("roleName") === "Author") {
       navigate("/");
     }
-    allSample().then(() => setIsLoading(false));
+    allSample({}).then(() => setIsLoading(false));
   }, []);
 
   const [openDel, setOpenDel] = React.useState(false);

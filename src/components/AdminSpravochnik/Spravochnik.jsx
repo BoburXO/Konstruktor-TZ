@@ -24,6 +24,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Select from "react-select";
 
 const style = {
   position: "absolute",
@@ -52,6 +53,7 @@ const styleDel = {
 };
 
 const Spravochnik = () => {
+  const [orgId, setOrgId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   //modal
   const [open, setOpen] = React.useState(false);
@@ -68,6 +70,8 @@ const Spravochnik = () => {
   const todos = useSelector((note) => note.todoList);
   const { t } = useTranslation();
   const {
+    getOrganizations,
+    org,
     spravochnik,
     removeSlug,
     getAllSpraSearch,
@@ -84,7 +88,8 @@ const Spravochnik = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getAllSpraSearch().then(() => setIsLoading(false));
+    getOrganizations().then(() => setIsLoading(false));
+    getAllSpraSearch({ orgId }).then(() => setIsLoading(false));
   }, [spraSearch]);
 
   const onSubmit = (e) => {
@@ -96,6 +101,7 @@ const Spravochnik = () => {
     );
     setValue("");
   };
+
 
   const setRemove = (e, content_uz) => {
     e.preventDefault();
@@ -200,14 +206,33 @@ const Spravochnik = () => {
               </span>
             ) : null}
           </div>
-          <div className={s.input_field}>
-            <img className={s.S_icon} src={search} alt="Search" />
-            <input
-              onChange={(e) => setSpraSearch(e.target.value)}
-              value={spraSearch}
-              type="text"
-              placeholder={t("spra5")}
-            />
+          <div className={s.templates_sect_label1}>
+            <div className={s.input_field}>
+              <img className={s.S_icon} src={search} alt="Search" />
+              <input
+                onChange={(e) => setSpraSearch(e.target.value)}
+                value={spraSearch}
+                type="text"
+                placeholder={t("spra5")}
+              />
+            </div>
+            <div>
+              <Select
+                placeholder={t("filter.1")}
+                onChange={(value) => {
+                  getAllSpraSearch({ orgId: value.value });
+                  getOrganizations(value.value);
+                  setOrgId(value.value);
+                }}
+                className={s.sample_select}
+                options={[{ id: "", name: t("filter.1") }]
+                  .concat(org)
+                  .map((el) => ({
+                    value: el?.id,
+                    label: el?.name,
+                  }))}
+              />
+            </div>
           </div>
         </div>
         <br />
@@ -361,7 +386,7 @@ const Spravochnik = () => {
           <br />
           <br />
           <div className={s.spra_pagination}>
-            <SpravochnikPagination spravochnik={spravochnik?.total_pages} />
+            <SpravochnikPagination orgId={orgId} spravochnik={spravochnik?.total_pages} />
           </div>
         </div>
       </section>
