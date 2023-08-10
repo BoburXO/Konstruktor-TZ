@@ -102,7 +102,6 @@ const Spravochnik = () => {
     setValue("");
   };
 
-
   const setRemove = (e, content_uz) => {
     e.preventDefault();
     dispatch(deleteTodo(content_uz));
@@ -282,71 +281,99 @@ const Spravochnik = () => {
                       <TableCell>
                         {localStorage.getItem("roleName") !== "Author" ? (
                           <div className={s.lkmain_sect_crud}>
-                            <Link to={`/spravochnikId/${row?.id}`}>
-                              <button className={s.lkmain_sect_crud_create}>
-                                <img src={createIcon} alt="Copy" />
-                              </button>
-                            </Link>
+                            {localStorage.getItem("roleUserName") ===
+                            row?.created_by?.username ? (
+                              <>
+                                <Link to={`/spravochnikId/${row?.id}`}>
+                                  <button className={s.lkmain_sect_crud_create}>
+                                    <img src={createIcon} alt="Copy" />
+                                  </button>
+                                </Link>
 
-                            <button
-                              type="button"
-                              onClick={() =>
-                                SpravochnikExcel("uz", row?.id, row?.title)
-                              }
-                              className={s.lkmain_sect_crud_download}
-                            >
-                              <img src={download} alt="Download" />
-                              <a ref={ref}></a>
-                            </button>
-                            <button
-                              onClick={() => {
-                                handleOpenDel();
-                                setSpraSlug(row?.slug);
-                              }}
-                              className={s.lkmain_sect_crud_delete}
-                            >
-                              <img src={deleteIcon} alt="Delete" />
-                            </button>
-                            <Modal
-                              slotProps={{
-                                backdrop: {
-                                  style: { opacity: "0.5", boxShadow: 24 },
-                                },
-                              }}
-                              open={openDel}
-                              onClose={handleCloseDel}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={styleDel}>
-                                <form
-                                  style={{ textAlign: "center" }}
-                                  className={s.createElementForm}
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    SpravochnikExcel("uz", row?.id, row?.title)
+                                  }
+                                  className={s.lkmain_sect_crud_download}
                                 >
-                                  <h2>{t("sfera.3")}</h2>
-                                  <br />
-                                  <p>{t("sfera.6")}</p>
-                                  <br />
-                                  <div className={s.createElementFormBtns}>
-                                    {" "}
-                                    <button
-                                      type="button"
-                                      onClick={() => handleCloseDel()}
-                                      className={s.shablon_save_btn}
+                                  <img src={download} alt="Download" />
+                                  <a ref={ref}></a>
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    handleOpenDel();
+                                    setSpraSlug(row?.slug);
+                                  }}
+                                  className={s.lkmain_sect_crud_delete}
+                                >
+                                  <img src={deleteIcon} alt="Delete" />
+                                </button>
+                                <Modal
+                                  slotProps={{
+                                    backdrop: {
+                                      style: { opacity: "0.5", boxShadow: 24 },
+                                    },
+                                  }}
+                                  open={openDel}
+                                  onClose={handleCloseDel}
+                                  aria-labelledby="modal-modal-title"
+                                  aria-describedby="modal-modal-description"
+                                >
+                                  <Box sx={styleDel}>
+                                    <form
+                                      style={{ textAlign: "center" }}
+                                      className={s.createElementForm}
                                     >
-                                      {t("btn.5")}
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => removeSlug(spraSlug)}
-                                      className={s.shablon_delete_btn}
-                                    >
-                                      {t("btn.6")}
-                                    </button>
-                                  </div>
-                                </form>
-                              </Box>
-                            </Modal>
+                                      <h2>{t("sfera.3")}</h2>
+                                      <br />
+                                      <p>{t("sfera.6")}</p>
+                                      <br />
+                                      <div className={s.createElementFormBtns}>
+                                        {" "}
+                                        <button
+                                          type="button"
+                                          onClick={() => handleCloseDel()}
+                                          className={s.shablon_save_btn}
+                                        >
+                                          {t("btn.5")}
+                                        </button>
+                                        <button
+                                          type="button"
+                                          onClick={() => removeSlug(spraSlug)}
+                                          className={s.shablon_delete_btn}
+                                        >
+                                          {t("btn.6")}
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </Box>
+                                </Modal>
+                              </>
+                            ) : (
+                              <>
+                                <Link to={`/index-spravochnik/${row?.id}`}>
+                                  <button className={s.lkmain_sect_crud_create}>
+                                    <FaEye
+                                      style={{
+                                        color: "#2f80ed",
+                                        fontSize: "16px",
+                                      }}
+                                    />
+                                  </button>
+                                </Link>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    SpravochnikExcel("uz", row?.id, row?.title)
+                                  }
+                                  className={s.lkmain_sect_crud_download}
+                                >
+                                  <img src={download} alt="Download" />
+                                  <a ref={ref}></a>
+                                </button>
+                              </>
+                            )}
                           </div>
                         ) : (
                           <div className={s.lkmain_sect_crud}>
@@ -386,7 +413,10 @@ const Spravochnik = () => {
           <br />
           <br />
           <div className={s.spra_pagination}>
-            <SpravochnikPagination orgId={orgId} spravochnik={spravochnik?.total_pages} />
+            <SpravochnikPagination
+              orgId={orgId}
+              spravochnik={spravochnik?.total_pages}
+            />
           </div>
         </div>
       </section>

@@ -18,7 +18,7 @@ const IndexSpra = () => {
   });
 
   useEffect(() => {
-    getAllSpraSearch().then(() => setIsLoading(false));
+    getAllSpraSearch({}).then(() => setIsLoading(false));
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }

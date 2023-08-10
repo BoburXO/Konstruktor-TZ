@@ -59,8 +59,6 @@ const ContentOfSite = () => {
   const [pdfUz, setPdfUz] = useState("");
   const [orgId, setOrgId] = useState("");
 
-  console.log(orgId);
-
   const navigate = useNavigate();
   const { t } = useTranslation();
   const {
@@ -242,127 +240,212 @@ const ContentOfSite = () => {
                         {" "}
                         {localStorage.getItem("roleName") !== "Author" ? (
                           <div className={s.content_crud}>
-                            <Link to={`/updateContent/${el?.id}`}>
-                              <button className={s.content_crud_create}>
-                                <img src={createIcon} alt="Copy" />
-                              </button>
-                            </Link>
-                            <button
-                              onClick={() => {
-                                handleDownloadOpen();
-                                setPdfRu(el?.doc_file_ru);
-                                setPdfUz(el?.doc_file_uz);
-                              }}
-                              className={s.content_crud_download}
-                            >
-                              <img src={download} alt="Download" />
-                            </button>
-                            <Modal
-                              slotProps={{
-                                backdrop: {
-                                  style: { opacity: "0.3", boxShadow: 24 },
-                                },
-                              }}
-                              open={downloadPdf}
-                              onClose={handleDownloadClose}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={style_pdf}>
-                                {!pdfRu || !pdfUz ? (
-                                  <h2
-                                    style={{
-                                      textAlign: "center",
-                                      paddingTop: "25px",
-                                    }}
-                                  >
-                                    {t("toast404")}
-                                  </h2>
-                                ) : (
-                                  <div className={s.download_modal}>
-                                    <a
-                                      rel="noopener"
-                                      href={pdfRu}
-                                      download
-                                      target="_blank"
-                                      className={s.download_ru}
-                                    >
-                                      <p>{t("ru")}:</p>
-                                      <ImDownload
-                                        style={{
-                                          color: "#fff",
-                                          fontSize: "18px",
-                                        }}
-                                      />
-                                    </a>
-                                    <a
-                                      rel="noopener"
-                                      href={pdfUz}
-                                      download
-                                      target="_blank"
-                                      className={s.download_ru}
-                                    >
-                                      <p>{t("uz")}:</p>
-                                      <ImDownload
-                                        style={{
-                                          color: "#fff",
-                                          fontSize: "18px",
-                                        }}
-                                      />
-                                    </a>
-                                  </div>
-                                )}
-                              </Box>
-                            </Modal>
-                            <button
-                              onClick={() => {
-                                handleOpenDel();
-                                setDelId(el?.slug);
-                              }}
-                              className={s.content_crud_delete}
-                            >
-                              <img src={deleteIcon} alt="Delete" />
-                            </button>
-                            <Modal
-                              slotProps={{
-                                backdrop: {
-                                  style: { opacity: "0.3", boxShadow: 24 },
-                                },
-                              }}
-                              open={openDel}
-                              onClose={handleCloseDel}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={style}>
-                                <form
-                                  style={{ textAlign: "center" }}
-                                  className={s.createElementForm}
+                            {localStorage.getItem("roleUserName") ===
+                            el?.user?.username ? (
+                              <>
+                                <Link to={`/updateContent/${el?.id}`}>
+                                  <button className={s.content_crud_create}>
+                                    <img src={createIcon} alt="Copy" />
+                                  </button>
+                                </Link>
+                                <button
+                                  onClick={() => {
+                                    handleDownloadOpen();
+                                    setPdfRu(el?.doc_file_ru);
+                                    setPdfUz(el?.doc_file_uz);
+                                  }}
+                                  className={s.content_crud_download}
                                 >
-                                  <h2>{t("sfera.3")}</h2>
-                                  <br />
-                                  <p>{t("sfera.6")}</p>
-                                  <br />
-                                  <div className={s.createElementFormBtns}>
-                                    {" "}
-                                    <button
-                                      type="button"
-                                      onClick={() => handleCloseDel()}
-                                      className={s.shablon_save_btn}
+                                  <img src={download} alt="Download" />
+                                </button>
+                                <Modal
+                                  slotProps={{
+                                    backdrop: {
+                                      style: { opacity: "0.3", boxShadow: 24 },
+                                    },
+                                  }}
+                                  open={downloadPdf}
+                                  onClose={handleDownloadClose}
+                                  aria-labelledby="modal-modal-title"
+                                  aria-describedby="modal-modal-description"
+                                >
+                                  <Box sx={style_pdf}>
+                                    {!pdfRu || !pdfUz ? (
+                                      <h2
+                                        style={{
+                                          textAlign: "center",
+                                          paddingTop: "25px",
+                                        }}
+                                      >
+                                        {t("toast404")}
+                                      </h2>
+                                    ) : (
+                                      <div className={s.download_modal}>
+                                        <a
+                                          rel="noopener"
+                                          href={pdfRu}
+                                          download
+                                          target="_blank"
+                                          className={s.download_ru}
+                                        >
+                                          <p>{t("ru")}:</p>
+                                          <ImDownload
+                                            style={{
+                                              color: "#fff",
+                                              fontSize: "18px",
+                                            }}
+                                          />
+                                        </a>
+                                        <a
+                                          rel="noopener"
+                                          href={pdfUz}
+                                          download
+                                          target="_blank"
+                                          className={s.download_ru}
+                                        >
+                                          <p>{t("uz")}:</p>
+                                          <ImDownload
+                                            style={{
+                                              color: "#fff",
+                                              fontSize: "18px",
+                                            }}
+                                          />
+                                        </a>
+                                      </div>
+                                    )}
+                                  </Box>
+                                </Modal>
+                                <button
+                                  onClick={() => {
+                                    handleOpenDel();
+                                    setDelId(el?.slug);
+                                  }}
+                                  className={s.content_crud_delete}
+                                >
+                                  <img src={deleteIcon} alt="Delete" />
+                                </button>
+                                <Modal
+                                  slotProps={{
+                                    backdrop: {
+                                      style: { opacity: "0.3", boxShadow: 24 },
+                                    },
+                                  }}
+                                  open={openDel}
+                                  onClose={handleCloseDel}
+                                  aria-labelledby="modal-modal-title"
+                                  aria-describedby="modal-modal-description"
+                                >
+                                  <Box sx={style}>
+                                    <form
+                                      style={{ textAlign: "center" }}
+                                      className={s.createElementForm}
                                     >
-                                      {t("btn.5")}
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => deleteContent(delId)}
-                                      className={s.shablon_delete_btn}
-                                    >
-                                      {t("btn.6")}
-                                    </button>
-                                  </div>
-                                </form>
-                              </Box>
-                            </Modal>
+                                      <h2>{t("sfera.3")}</h2>
+                                      <br />
+                                      <p>{t("sfera.6")}</p>
+                                      <br />
+                                      <div className={s.createElementFormBtns}>
+                                        {" "}
+                                        <button
+                                          type="button"
+                                          onClick={() => handleCloseDel()}
+                                          className={s.shablon_save_btn}
+                                        >
+                                          {t("btn.5")}
+                                        </button>
+                                        <button
+                                          type="button"
+                                          onClick={() => deleteContent(delId)}
+                                          className={s.shablon_delete_btn}
+                                        >
+                                          {t("btn.6")}
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </Box>
+                                </Modal>
+                              </>
+                            ) : (
+                              <>
+                                <Link to={`/content-of-site-index/${el?.slug}`}>
+                                  <button className={s.content_crud_create}>
+                                    <FaEye
+                                      style={{
+                                        color: "#2f80ed",
+                                        fontSize: "16px",
+                                      }}
+                                    />
+                                  </button>
+                                </Link>
+                                <button
+                                  onClick={() => {
+                                    handleDownloadOpen();
+                                    setPdfRu(el?.doc_file_ru);
+                                    setPdfUz(el?.doc_file_uz);
+                                  }}
+                                  className={s.content_crud_download}
+                                >
+                                  <img src={download} alt="Download" />
+                                </button>
+                                <Modal
+                                  slotProps={{
+                                    backdrop: {
+                                      style: { opacity: "0.3", boxShadow: 24 },
+                                    },
+                                  }}
+                                  open={downloadPdf}
+                                  onClose={handleDownloadClose}
+                                  aria-labelledby="modal-modal-title"
+                                  aria-describedby="modal-modal-description"
+                                >
+                                  <Box sx={style_pdf}>
+                                    {!pdfRu || !pdfUz ? (
+                                      <h2
+                                        style={{
+                                          textAlign: "center",
+                                          paddingTop: "25px",
+                                        }}
+                                      >
+                                        {t("toast404")}
+                                      </h2>
+                                    ) : (
+                                      <div className={s.download_modal}>
+                                        <a
+                                          rel="noopener"
+                                          href={pdfRu}
+                                          download
+                                          target="_blank"
+                                          className={s.download_ru}
+                                        >
+                                          <p>{t("ru")}:</p>
+                                          <ImDownload
+                                            style={{
+                                              color: "#fff",
+                                              fontSize: "18px",
+                                            }}
+                                          />
+                                        </a>
+                                        <a
+                                          rel="noopener"
+                                          href={pdfUz}
+                                          download
+                                          target="_blank"
+                                          className={s.download_ru}
+                                        >
+                                          <p>{t("uz")}:</p>
+                                          <ImDownload
+                                            style={{
+                                              color: "#fff",
+                                              fontSize: "18px",
+                                            }}
+                                          />
+                                        </a>
+                                      </div>
+                                    )}
+                                  </Box>
+                                </Modal>
+                              </>
+                            )}
                           </div>
                         ) : (
                           <div className={s.content_crud}>
