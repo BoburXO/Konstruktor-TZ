@@ -88,7 +88,6 @@ const Spravochnik = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getOrganizations().then(() => setIsLoading(false));
     getAllSpraSearch({ orgId }).then(() => setIsLoading(false));
   }, [spraSearch]);
 
@@ -215,23 +214,25 @@ const Spravochnik = () => {
                 placeholder={t("spra5")}
               />
             </div>
-            <div>
-              <Select
-                placeholder={t("filter.1")}
-                onChange={(value) => {
-                  getAllSpraSearch({ orgId: value.value });
-                  getOrganizations(value.value);
-                  setOrgId(value.value);
-                }}
-                className={s.sample_select}
-                options={[{ id: "", name: t("filter.1") }]
-                  .concat(org)
-                  .map((el) => ({
-                    value: el?.id,
-                    label: el?.name,
-                  }))}
-              />
-            </div>
+            {localStorage.getItem("roleName") === "SuperAdmin" ? (
+              <div>
+                <Select
+                  placeholder={t("filter.1")}
+                  onChange={(value) => {
+                    getAllSpraSearch({ orgId: value.value });
+                    getOrganizations(value.value);
+                    setOrgId(value.value);
+                  }}
+                  className={s.sample_select}
+                  options={[{ id: "", name: t("filter.1") }]
+                    .concat(org)
+                    .map((el) => ({
+                      value: el?.id,
+                      label: el?.name,
+                    }))}
+                />
+              </div>
+            ) : null}
           </div>
         </div>
         <br />
