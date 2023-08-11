@@ -28,6 +28,7 @@ import {
 } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
 import SuperTzPagination from "../../Pagination/SuperTzPagination";
+import { FaEye } from "react-icons/fa";
 
 const style = {
   position: "absolute",
@@ -259,49 +260,44 @@ const LKMain = () => {
                     ) : null}
                   </div>
                 </div>
-                <>
-                  <div className={s.org_name_div}>
-                    <h4>{superTz?.name}</h4>
-                    {/* <h4>
-=======
-                    <h4>
->>>>>>> 10737d5b5ddf0abfa6cef284a7e9aecb4aaf74e0
-                      {"№ "}
-                      {
-                        superTz?.user_organization?.find(
-                          (_, index) => index === 0
-<<<<<<< HEAD
-                        )?.paginated_results?.length
-                      }
-                    </h4> */}
-                  </div>
-                  <TableContainer component={Paper} classes={{ root: s.table }}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell align="left">
-                            <p>№</p>
-                          </TableCell>
-                          <TableCell align="left">
-                            <p>{t("lkavtor10")}</p>
-                          </TableCell>
-                          <TableCell align="left">
-                            {" "}
-                            <p>{t("lkavtor2")}</p>
-                          </TableCell>
-                          <TableCell align="left">
-                            {" "}
-                            <p>{t("lkavtor3")}</p>
-                          </TableCell>
-                          <TableCell align="right">
-                            {" "}
-                            <p>{t("lkavtor4")}</p>
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody classes={{ root: s.tbody_root }}>
-                        {superTz?.user_organization?.map((user) =>
-                          user?.paginated_results?.results?.map((tz) => (
+                {superTz?.results?.length ? (
+                  <>
+                    <div className={s.org_name_div}>
+                      <h4>{localStorage.getItem("organizationName")}</h4>
+                      <h4>
+                        {"№ "}
+                        {superTz?.count}
+                      </h4>
+                    </div>
+                    <TableContainer
+                      component={Paper}
+                      classes={{ root: s.table }}
+                    >
+                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell align="left">
+                              <p>№</p>
+                            </TableCell>
+                            <TableCell align="left">
+                              <p>{t("lkavtor10")}</p>
+                            </TableCell>
+                            <TableCell align="left">
+                              {" "}
+                              <p>{t("lkavtor2")}</p>
+                            </TableCell>
+                            <TableCell align="left">
+                              {" "}
+                              <p>{t("lkavtor3")}</p>
+                            </TableCell>
+                            <TableCell align="right">
+                              {" "}
+                              <p>{t("lkavtor4")}</p>
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody classes={{ root: s.tbody_root }}>
+                          {superTz?.results?.map((tz, i) => (
                             <TableRow
                               key={tz?.id}
                               sx={{
@@ -311,10 +307,10 @@ const LKMain = () => {
                               }}
                             >
                               <TableCell align="left">
-                                <p>#{tz?.row_number}</p>
+                                <p>#{i + 1}</p>
                               </TableCell>
                               <TableCell align="left">
-                                <p>{user?.username}</p>
+                                <p>{tz?.user?.username}</p>
                               </TableCell>
                               <TableCell
                                 component="th"
@@ -327,11 +323,11 @@ const LKMain = () => {
                                 {" "}
                                 <span className={s.lkmain_sect_dates}>
                                   <img src={date} alt="" />
-                                  <p>{tz?.created_at.slice(0, 10)}</p>
+                                  {/* <p>{tz?.created_at.slice(0, 10)}</p> */}
                                 </span>{" "}
                               </TableCell>
                               <TableCell align="right">
-                                {user?.username ===
+                                {tz?.user?.username ===
                                 localStorage.getItem("roleUserName") ? (
                                   <div className={s.lkmain_sect_crud}>
                                     {!isAuthor ? (
@@ -361,7 +357,6 @@ const LKMain = () => {
                                         ) : null}
                                         <button
                                           onClick={() => {
-                                            // DuplicateTz(tz?.id);/
                                             dispatch(
                                               duplicateTzForUser(tz?.id)
                                             );
@@ -516,64 +511,57 @@ const LKMain = () => {
                                       <img src={copyIcon} alt="Copy" />
                                     </button>
                                     <button
-                                      className={s.lkmain_sect_crud_copy}
-                                      style={{ borderColor: "#0ba9cc" }}
+                                      className={s.content_crud_create}
                                       onClick={() =>
                                         navigate(`/structure/${tz?.id}`)
                                       }
                                     >
-                                      <i
-                                        className="fa-regular fa-eye"
+                                      <FaEye
                                         style={{
-                                          color: "#0ba9cc",
-                                          fontSize: 20,
+                                          color: "#2f80ed",
+                                          fontSize: "16px",
                                         }}
-                                      ></i>
+                                      />
                                     </button>
                                   </div>
                                 )}
                               </TableCell>
                             </TableRow>
-                          ))
-                        )}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  <br />
-                  <br />
-                  <div className={s.content_pagination}>
-                    {isAuthor ? (
-                      <LkAvtorUserPagination
-                        paramsID={userId}
-                        type={type}
-                        own={own}
-                        draft={draft}
-                        superTz={
-                          superTz?.user_organization?.find(
-                            (_, index) => index === 0
-                          )?.paginated_results?.total_pages
-                        }
-                      />
-                    ) : (
-                      <SuperTzPagination
-                        type={type}
-                        own={own}
-                        draft={draft}
-                        superTz={
-                          superTz?.user_organization?.find(
-                            (_, index) => index === 0
-                          )?.paginated_results?.total_pages
-                        }
-                      />
-                    )}
-                  </div>
-                </>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                    <br />
+                    <br />
+                    <div className={s.content_pagination}>
+                      {isAuthor ? (
+                        <LkAvtorUserPagination
+                          paramsID={userId}
+                          type={type}
+                          own={own}
+                          draft={draft}
+                          superTz={superTz?.total_pages}
+                        />
+                      ) : (
+                        <SuperTzPagination
+                          type={type}
+                          own={own}
+                          draft={draft}
+                          superTz={superTz?.total_pages}
+                        />
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h1 className={s.notFound}>{t("toast404")}</h1>
+                  </>
+                )}
               </div>
             </section>
           )}
         </>
       )}
-      ;
     </>
   );
 };
