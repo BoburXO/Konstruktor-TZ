@@ -138,25 +138,25 @@ const SuperTzComp = () => {
                 />
               </div>
 
-              {/* {superTz?.results?.organization ===
-              localStorage.getItem("organizationName") ? ( */}
-              <div>
-                <Select
-                  placeholder={t("filter.1")}
-                  onChange={(value) => {
-                    setOwn(value.value);
-                    SuperTzGet({
-                      owner: value.value,
-                      type: type,
-                      id,
-                      draft: value.value === false ? false : draft,
-                    });
-                  }}
-                  className={s.selecttt}
-                  options={optionOwner}
-                />
-              </div>
-              {/* ) : null} */}
+              {superTz?.results[0]?.user?.organization ===
+              localStorage.getItem("organizationName") ? (
+                <div>
+                  <Select
+                    placeholder={t("filter.1")}
+                    onChange={(value) => {
+                      setOwn(value.value);
+                      SuperTzGet({
+                        owner: value.value,
+                        type: type,
+                        id,
+                        draft: value.value === false ? false : draft,
+                      });
+                    }}
+                    className={s.selecttt}
+                    options={optionOwner}
+                  />
+                </div>
+              ) : null}
               {own ? (
                 <div>
                   <Select
@@ -195,188 +195,188 @@ const SuperTzComp = () => {
           </div>
           <br />
           {superTz?.results?.length ? (
-          <>
-            <TableContainer component={Paper} classes={{ root: s.table }}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">
-                      <p>№</p>
-                    </TableCell>
-                    <TableCell align="left">
-                      <p>{t("lkavtor10")}</p>
-                    </TableCell>
-                    <TableCell align="left">
-                      {" "}
-                      <p>{t("lkavtor2")}</p>
-                    </TableCell>
-                    <TableCell align="left">
-                      {" "}
-                      <p>{t("lkavtor3")}</p>
-                    </TableCell>
-                    <TableCell align="right">
-                      {" "}
-                      <p>{t("lkavtor4")}</p>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody classes={{ root: s.tbody_root }}>
-                  {superTz?.results?.map((tz, i) => (
-                    <TableRow
-                      key={tz?.id}
-                      sx={{
-                        "&:last-child td, &:last-child th": {
-                          border: 0,
-                        },
-                      }}
-                    >
+            <>
+              <TableContainer component={Paper} classes={{ root: s.table }}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
                       <TableCell align="left">
-                        <p>#{i + 1}</p>
+                        <p>№</p>
+                      </TableCell>
+                      <TableCell align="left">
+                        <p>{t("lkavtor10")}</p>
                       </TableCell>
                       <TableCell align="left">
                         {" "}
-                        <p>{tz?.user?.username}</p>
-                      </TableCell>
-                      <TableCell component="th" scope="row" align="left">
-                        <p>{tz?.tz_name}</p>
+                        <p>{t("lkavtor2")}</p>
                       </TableCell>
                       <TableCell align="left">
                         {" "}
-                        <span className={s.lkmain_sect_dates}>
-                          <img src={date} alt="" />
-                          {/* <p>{tz?.created_at.slice(0, 10)}</p> */}
-                        </span>{" "}
+                        <p>{t("lkavtor3")}</p>
                       </TableCell>
                       <TableCell align="right">
-                        {tz?.user?.username ===
-                        localStorage.getItem("roleUserName") ? (
-                          <div className={s.lkmain_sect_crud}>
-                            <button
-                              onClick={() => DuplicateTz(tz?.id)}
-                              className={s.lkmain_sect_crud_copy}
-                            >
-                              <img src={copyIcon} alt="Copy" />
-                            </button>
-                            <Link to={`/structure/edit/${tz?.id}`}>
-                              <button className={s.lkmain_sect_crud_create}>
-                                <img src={createIcon} alt="Copy" />
-                              </button>
-                            </Link>
-                            <button className={s.lkmain_sect_crud_skacat}>
-                              <a
-                                rel="noopener"
-                                href={tz?.pdf_file}
-                                download
-                                target="_blank"
-                              >
-                                <img src={skacatIcon} alt="Download" />
-                              </a>
-                            </button>
-                            <button
-                              onClick={() => {
-                                handleOpenDel();
-                                setDelId(tz?.id);
-                              }}
-                              className={s.lkmain_sect_crud_delete}
-                            >
-                              <img src={deleteIcon} alt="Delete" />
-                            </button>
-                            <Modal
-                              slotProps={{
-                                backdrop: {
-                                  style: {
-                                    opacity: "0.4",
-                                    boxShadow: 24,
-                                  },
-                                },
-                              }}
-                              open={openDel}
-                              onClose={handleCloseDel}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={style}>
-                                <form
-                                  style={{ textAlign: "center" }}
-                                  className={s.createElementForm}
-                                >
-                                  <h2>{t("sfera.3")}</h2>
-                                  <br />
-                                  <p>{t("sfera.6")}</p>
-                                  <br />
-                                  <div className={s.createElementFormBtns}>
-                                    {" "}
-                                    <button
-                                      type="button"
-                                      onClick={() => handleCloseDel()}
-                                      className={s.shablon_save_btn}
-                                    >
-                                      {t("btn.5")}
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        deleteTz(delId).then(() =>
-                                          setIsLoading(false)
-                                        )
-                                      }
-                                      className={s.shablon_delete_btn}
-                                    >
-                                      {t("btn.6")}
-                                    </button>
-                                  </div>
-                                </form>
-                              </Box>
-                            </Modal>
-                          </div>
-                        ) : (
-                          <div className={s.lkmain_sect_crud}>
-                            <button
-                              onClick={() => DuplicateTz(tz?.id)}
-                              className={s.lkmain_sect_crud_copy}
-                            >
-                              <img src={copyIcon} alt="Copy" />
-                            </button>
-                            <Link to={`/structure/${tz?.id}`}>
-                              <button className={s.content_crud_create}>
-                                <FaEye
-                                  style={{
-                                    color: "#2f80ed",
-                                    fontSize: "16px",
-                                  }}
-                                />
-                              </button>
-                            </Link>
-                          </div>
-                        )}
+                        {" "}
+                        <p>{t("lkavtor4")}</p>
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <br />
-            <br />
-            <div className={s.content_pagination}>
-              {isAuthor !== "Author" ? (
-                <SuperTzPagination
-                  own={own}
-                  draft={draft}
-                  type={type}
-                  paramsID={id}
-                  superTz={superTz?.total_pages}
-                />
-              ) : (
-                <LkAvtorUserPagination
-                  paramsID={id}
-                  type={type}
-                  own={own}
-                  draft={draft}
-                  superTz={superTz?.total_pages}
-                />
-              )}
-            </div>
-          </>
+                  </TableHead>
+                  <TableBody classes={{ root: s.tbody_root }}>
+                    {superTz?.results?.map((tz, i) => (
+                      <TableRow
+                        key={tz?.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": {
+                            border: 0,
+                          },
+                        }}
+                      >
+                        <TableCell align="left">
+                          <p>#{i + 1}</p>
+                        </TableCell>
+                        <TableCell align="left">
+                          {" "}
+                          <p>{tz?.user?.username}</p>
+                        </TableCell>
+                        <TableCell component="th" scope="row" align="left">
+                          <p>{tz?.tz_name}</p>
+                        </TableCell>
+                        <TableCell align="left">
+                          {" "}
+                          <span className={s.lkmain_sect_dates}>
+                            <img src={date} alt="" />
+                            {/* <p>{tz?.created_at.slice(0, 10)}</p> */}
+                          </span>{" "}
+                        </TableCell>
+                        <TableCell align="right">
+                          {tz?.user?.username ===
+                          localStorage.getItem("roleUserName") ? (
+                            <div className={s.lkmain_sect_crud}>
+                              <button
+                                onClick={() => DuplicateTz(tz?.id)}
+                                className={s.lkmain_sect_crud_copy}
+                              >
+                                <img src={copyIcon} alt="Copy" />
+                              </button>
+                              <Link to={`/structure/edit/${tz?.id}`}>
+                                <button className={s.lkmain_sect_crud_create}>
+                                  <img src={createIcon} alt="Copy" />
+                                </button>
+                              </Link>
+                              <button className={s.lkmain_sect_crud_skacat}>
+                                <a
+                                  rel="noopener"
+                                  href={tz?.pdf_file}
+                                  download
+                                  target="_blank"
+                                >
+                                  <img src={skacatIcon} alt="Download" />
+                                </a>
+                              </button>
+                              <button
+                                onClick={() => {
+                                  handleOpenDel();
+                                  setDelId(tz?.id);
+                                }}
+                                className={s.lkmain_sect_crud_delete}
+                              >
+                                <img src={deleteIcon} alt="Delete" />
+                              </button>
+                              <Modal
+                                slotProps={{
+                                  backdrop: {
+                                    style: {
+                                      opacity: "0.4",
+                                      boxShadow: 24,
+                                    },
+                                  },
+                                }}
+                                open={openDel}
+                                onClose={handleCloseDel}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                              >
+                                <Box sx={style}>
+                                  <form
+                                    style={{ textAlign: "center" }}
+                                    className={s.createElementForm}
+                                  >
+                                    <h2>{t("sfera.3")}</h2>
+                                    <br />
+                                    <p>{t("sfera.6")}</p>
+                                    <br />
+                                    <div className={s.createElementFormBtns}>
+                                      {" "}
+                                      <button
+                                        type="button"
+                                        onClick={() => handleCloseDel()}
+                                        className={s.shablon_save_btn}
+                                      >
+                                        {t("btn.5")}
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          deleteTz(delId).then(() =>
+                                            setIsLoading(false)
+                                          )
+                                        }
+                                        className={s.shablon_delete_btn}
+                                      >
+                                        {t("btn.6")}
+                                      </button>
+                                    </div>
+                                  </form>
+                                </Box>
+                              </Modal>
+                            </div>
+                          ) : (
+                            <div className={s.lkmain_sect_crud}>
+                              <button
+                                onClick={() => DuplicateTz(tz?.id)}
+                                className={s.lkmain_sect_crud_copy}
+                              >
+                                <img src={copyIcon} alt="Copy" />
+                              </button>
+                              <Link to={`/structure/${tz?.id}`}>
+                                <button className={s.content_crud_create}>
+                                  <FaEye
+                                    style={{
+                                      color: "#2f80ed",
+                                      fontSize: "16px",
+                                    }}
+                                  />
+                                </button>
+                              </Link>
+                            </div>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <br />
+              <br />
+              <div className={s.content_pagination}>
+                {isAuthor !== "Author" ? (
+                  <SuperTzPagination
+                    own={own}
+                    draft={draft}
+                    type={type}
+                    paramsID={id}
+                    superTz={superTz?.total_pages}
+                  />
+                ) : (
+                  <LkAvtorUserPagination
+                    paramsID={id}
+                    type={type}
+                    own={own}
+                    draft={draft}
+                    superTz={superTz?.total_pages}
+                  />
+                )}
+              </div>
+            </>
           ) : (
             <>
               <h1 className={s.notFound}>{t("toast404")}</h1>
