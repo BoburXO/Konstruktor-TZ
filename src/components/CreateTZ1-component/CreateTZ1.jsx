@@ -62,32 +62,39 @@ const CreateTZ = () => {
       dispatch(setUserAction("review"));
     }
     dispatch(clearDuplicatedAndDoubledTz());
+    dispatch(fetchStructureByIdForUser(tzId))
+    console.log(1);
     return () => {
       dispatch(clearStructureForUser());
     };
   }, []);
 
   useEffect(() => {
-    const activeSectionIndex = structure?.sections?.findIndex(
-      (item) => item?.id === activeSection?.id
-    );
-    if (activeSectionIndex !== structure?.sections?.length - 1) {
-      dispatch(fetchStructureByIdForUser(tzId));
-    } else if (
-      activeSection?.id &&
-      data?.id &&
-      activeSectionIndex === structure?.sections?.length - 1 &&
-      data?.id === activeSection?.id
-    ) {
-      return navigate(roleName === "Author" ? "/profile" : "/lkavtor");
+    if (structure?.id) {
+      dispatch(setActiveSection(structure?.sections[0]));
+      console.log(2)
+    }
+  }, [structure?.id]);
+
+  useEffect(() => {
+
+    if (activeSection?.id) {
+      const activeSectionIndex = structure?.sections?.findIndex(
+        (item) => item?.id === activeSection?.id
+      );
+      if (activeSectionIndex !== structure?.sections?.length - 1) {
+        dispatch(fetchStructureByIdForUser(tzId));
+        console.log(3)
+      } else if (
+        data?.id && activeSectionIndex === structure?.sections?.length - 1 &&
+        data?.id === activeSection?.id
+      ) {
+        return navigate(roleName === "Author" ? "/profile" : "/lkavtor");
+      }
     }
   }, [activeSection, data]);
 
-  useEffect(() => {
-    if (structure?.id) {
-      dispatch(setActiveSection(structure?.sections[0]));
-    }
-  }, [structure?.id]);
+
 
   // useEffect(() => {
   //   const activeSectionIndex = structure?.sections?.findIndex(

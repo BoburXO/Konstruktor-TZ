@@ -3,7 +3,7 @@ import { useHttp } from "../../hooks/useHttp";
 import { useReducer } from "react";
 
 const initialState = {
-  tz: [],
+  tzList: [],
   loading: false,
   deleteLoading: false,
   deletedTz: {},
@@ -44,7 +44,7 @@ const profileSlice = createSlice({
   initialState,
   reducers: {
     clearTz: (state) => {
-      state.tz = [];
+      state.tzList = [];
     },
   },
   extraReducers: (builder) => {
@@ -53,7 +53,7 @@ const profileSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchAllTzOfUser.fulfilled, (state, { payload }) => {
-        state.tz = payload;
+        state.tzList = payload;
         state.loading = false;
       })
       .addCase(deleteTz.pending, (state) => {

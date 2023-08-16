@@ -19,11 +19,11 @@ export default function SectionsField({ field }) {
   const [otherField, setOtherField] = useState(field?.field || "");
   const [classificatorElement, setClassificatorElement] = useState("");
 
-  useEffect(() => {
-    if (field?.select_type === 8) {
-      dispatch(fetchClassificator());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (field?.select_type === 8) {
+  //     dispatch(fetchClassificator());
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (field?.select_type === 6) {

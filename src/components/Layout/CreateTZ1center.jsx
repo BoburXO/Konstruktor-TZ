@@ -9,14 +9,14 @@ import {
   sendAllFieldsData,
   setActiveSection,
 } from "../../redux/api/user/structure_slice";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 export default function CreateTZ1center({ activeSection }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { fieldsData, structure } = useSelector((state) => state.userStructure);
+  const { fieldsData, structure, data } = useSelector((state) => state.userStructure);
 
   const activeSectionIndex = useMemo(() => {
     return structure?.sections?.findIndex(

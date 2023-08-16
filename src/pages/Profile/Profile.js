@@ -22,6 +22,7 @@ import { setTzIdForFilling } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTz, fetchAllTzOfUser } from "./profile_slice";
 import ProfilePagination from "../../Pagination/ProfilePagination";
+import { setRowNumberForTz } from "../../helpers/helpers";
 import Footer from '../../components/Footer/Footer';
 
 const style = {
@@ -48,7 +49,7 @@ export default function Profile() {
   //searchPanel
   const [searchText, setSearchText] = useState("");
 
-  const { tz, loading, deletedTz } = useSelector((state) => state.profile);
+  const { tzList, loading, deletedTz } = useSelector((state) => state.profile);
 
   useEffect(() => {
     dispatch(fetchAllTzOfUser({ tz_name: searchText }));
@@ -56,7 +57,7 @@ export default function Profile() {
 
   return (
     <>
-      {loading && !tz?.id ? (
+      {loading && !tzList?.count ? (
         <Loader />
       ) : (
         <>
@@ -85,169 +86,164 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
-              {tz?.user_organization?.find((_, index) => index === 0)
-                ?.paginated_results?.results?.length ? (
+              {tzList?.count > 0 ? (
                 <>
                   <div className={s.org_name_div}>
-                    <h4>{tz?.name}</h4>
+                    <h4>{tzList?.name}</h4>
                     <h4>
                       {"№ "}
-                      {tz?.user_organization[0]?.paginated_results?.count}
+                      {tzList?.count}
                     </h4>
                   </div>
                   <TableContainer component={Paper} classes={{ root: s.table }}>
-                    {tz?.user_organization?.map((user) => (
-                      <Table
-                        key={user.id}
-                        sx={{ minWidth: 650 }}
-                        aria-label="simple table"
-                      >
-                        <TableHead>
-                          <TableRow>
+                    <Table
+                      sx={{ minWidth: 650 }}
+                      aria-label="simple table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">
+                            <p>ID</p>
+                          </TableCell>
+                          <TableCell align="left">
+                            <p>{t("lkavtor10")}</p>
+                          </TableCell>
+                          <TableCell align="left">
+                            {" "}
+                            <p>{t("lkavtor2")}</p>
+                          </TableCell>
+                          <TableCell align="left">
+                            {" "}
+                            <p>{t("lkavtor3")}</p>
+                          </TableCell>
+                          <TableCell align="right">
+                            {" "}
+                            <p>{t("lkavtor4")}</p>
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody classes={{ root: s.tbody_root }}>
+                        {tzList?.results?.map((tz, index) => (
+                          <TableRow
+                            key={tz?.id}
+                            sx={{
+                              "&:last-child td, &:last-child th": {
+                                border: 0,
+                              },
+                            }}
+                          >
                             <TableCell align="left">
-                              <p>ID</p>
+                              <p>#{setRowNumberForTz(tzList?.current_page, 8 , index)}</p>
                             </TableCell>
                             <TableCell align="left">
-                              <p>{t("lkavtor10")}</p>
+                              <p>{tz?.user?.username}</p>
+                            </TableCell>
+                            <TableCell
+                              component="th"
+                              scope="row"
+                              align="left"
+                            >
+                              <p>{tz?.tz_name}</p>
                             </TableCell>
                             <TableCell align="left">
                               {" "}
-                              <p>{t("lkavtor2")}</p>
-                            </TableCell>
-                            <TableCell align="left">
-                              {" "}
-                              <p>{t("lkavtor3")}</p>
+                              <span className={s.lkmain_sect_dates}>
+                                <img src={date} alt="" />
+                                <p>{tz?.created_at?.slice(0, 10)}</p>
+                              </span>{" "}
                             </TableCell>
                             <TableCell align="right">
-                              {" "}
-                              <p>{t("lkavtor4")}</p>
-                            </TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody classes={{ root: s.tbody_root }}>
-                          {user?.paginated_results?.results?.map((tz) => (
-                            <TableRow
-                              key={tz?.id}
-                              sx={{
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }}
-                            >
-                              <TableCell align="left">
-                                <p>#{tz?.row_number}</p>
-                              </TableCell>
-                              <TableCell align="left">
-                                <p>{user?.username}</p>
-                              </TableCell>
-                              <TableCell
-                                component="th"
-                                scope="row"
-                                align="left"
-                              >
-                                <p>{tz?.tz_name}</p>
-                              </TableCell>
-                              <TableCell align="left">
-                                {" "}
-                                <span className={s.lkmain_sect_dates}>
-                                  <img src={date} alt="" />
-                                  <p>{tz?.created_at?.slice(0, 10)}</p>
-                                </span>{" "}
-                              </TableCell>
-                              <TableCell align="right">
-                                <div className={s.lkmain_sect_crud}>
-                                  {/* <button className={s.lkmain_sect_crud_copy}>
+                              <div className={s.lkmain_sect_crud}>
+                                {/* <button className={s.lkmain_sect_crud_copy}>
                                 <img src={copyIcon} alt="Copy" />
                               </button> */}
-                                  <button
-                                    className={s.lkmain_sect_crud_create}
-                                    onClick={() => {
-                                      // dispatch(setTzIdForFilling(tz?.id));
-                                      navigate(`/tz/edit/${tz.id}`);
-                                    }}
+                                <button
+                                  className={s.lkmain_sect_crud_create}
+                                  onClick={() => {
+                                    // dispatch(setTzIdForFilling(tz?.id));
+                                    navigate(`/tz/edit/${tz?.id}`);
+                                  }}
+                                >
+                                  <img src={createIcon} alt="Edit" />
+                                </button>
+                                <button className={s.lkmain_sect_crud_skacat}>
+                                  <a
+                                    rel="noopener"
+                                    href={tz?.pdf_file}
+                                    download
+                                    target="_blank"
                                   >
-                                    <img src={createIcon} alt="Edit" />
-                                  </button>
-                                  <button className={s.lkmain_sect_crud_skacat}>
-                                    <a
-                                      rel="noopener"
-                                      href={tz?.pdf_file}
-                                      download
-                                      target="_blank"
-                                    >
-                                      <img src={skacatIcon} alt="Download" />
-                                    </a>
-                                  </button>
-                                  <button
-                                    onClick={() => {
-                                      handleOpenDel();
-                                    }}
-                                    className={s.lkmain_sect_crud_delete}
-                                  >
-                                    <img src={deleteIcon} alt="Delete" />
-                                  </button>
-                                  <Modal
-                                    slotProps={{
-                                      backdrop: {
-                                        style: {
-                                          opacity: "0.4",
-                                          boxShadow: 24,
-                                        },
+                                    <img src={skacatIcon} alt="Download" />
+                                  </a>
+                                </button>
+                                <button
+                                  onClick={() => {
+                                    handleOpenDel();
+                                  }}
+                                  className={s.lkmain_sect_crud_delete}
+                                >
+                                  <img src={deleteIcon} alt="Delete" />
+                                </button>
+                                <Modal
+                                  slotProps={{
+                                    backdrop: {
+                                      style: {
+                                        opacity: "0.4",
+                                        boxShadow: 24,
                                       },
-                                    }}
-                                    open={openDel}
-                                    onClose={handleCloseDel}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                  >
-                                    <Box sx={style}>
-                                      <form
-                                        style={{ textAlign: "center" }}
-                                        className={s.createElementForm}
+                                    },
+                                  }}
+                                  open={openDel}
+                                  onClose={handleCloseDel}
+                                  aria-labelledby="modal-modal-title"
+                                  aria-describedby="modal-modal-description"
+                                >
+                                  <Box sx={style}>
+                                    <form
+                                      style={{ textAlign: "center" }}
+                                      className={s.createElementForm}
+                                    >
+                                      <h2>{t("sfera.3")}</h2>
+                                      <br />
+                                      <p>{t("sfera.6")}</p>
+                                      <br />
+                                      <div
+                                        className={s.createElementFormBtns}
                                       >
-                                        <h2>{t("sfera.3")}</h2>
-                                        <br />
-                                        <p>{t("sfera.6")}</p>
-                                        <br />
-                                        <div
-                                          className={s.createElementFormBtns}
+                                        {" "}
+                                        <button
+                                          type="button"
+                                          onClick={() => handleCloseDel()}
+                                          className={s.shablon_save_btn}
                                         >
-                                          {" "}
-                                          <button
-                                            type="button"
-                                            onClick={() => handleCloseDel()}
-                                            className={s.shablon_save_btn}
-                                          >
-                                            {t("btn.5")}
-                                          </button>
-                                          <button
-                                            type="button"
-                                            className={s.shablon_delete_btn}
-                                            onClick={() => {
-                                              dispatch(deleteTz(tz?.id));
-                                            }}
-                                          >
-                                            {t("btn.6")}
-                                          </button>
-                                        </div>
-                                      </form>
-                                    </Box>
-                                  </Modal>
-                                </div>
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    ))}
+                                          {t("btn.5")}
+                                        </button>
+                                        <button
+                                          type="button"
+                                          className={s.shablon_delete_btn}
+                                          onClick={() => {
+                                            dispatch(deleteTz(tz?.id));
+                                          }}
+                                        >
+                                          {t("btn.6")}
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </Box>
+                                </Modal>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </TableContainer>
                   <br />
                   <br />
                   <div className={s.content_pagination}>
                     <ProfilePagination
                       superTz={
-                        tz?.user_organization?.find((_, index) => index === 0)
-                          ?.paginated_results?.total_pages
+                        tzList?.total_pages
                       }
                       tz_name={searchText}
                     />
