@@ -6,7 +6,7 @@ import field from "../components/Structure/CreateNewFieldModal/field_slice";
 import lkavtor from "../pages/LKavtor/lkavtor_slice";
 import userStructure from "./api/user/structure_slice";
 import profile from "../pages/Profile/profile_slice";
-
+import pdf from "./api/user/pdf_slice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +17,7 @@ export const store = configureStore({
     userStructure,
     lkavtor,
     profile,
+    pdf,
   },
   devTools: process.env.NODE_ENV !== "production",
 });
