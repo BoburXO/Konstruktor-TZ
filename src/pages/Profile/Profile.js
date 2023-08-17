@@ -103,7 +103,7 @@ export default function Profile() {
                       <TableHead>
                         <TableRow>
                           <TableCell align="left">
-                            <p>ID</p>
+                            <p>№</p>
                           </TableCell>
                           <TableCell align="left">
                             <p>{t("lkavtor10")}</p>
