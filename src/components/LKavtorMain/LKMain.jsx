@@ -29,6 +29,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import SuperTzPagination from "../../Pagination/SuperTzPagination";
 import { FaEye } from "react-icons/fa";
+import { setRowNumberForTz } from "../../helpers/helpers";
 
 const style = {
   position: "absolute",
@@ -129,6 +130,8 @@ const LKMain = () => {
         setIsAuthor()
       : SuperTzGet({ owner: owner, draft: draft, type: type, id });
   };
+
+  console.log(superTz)
 
   return (
     <>
@@ -307,7 +310,7 @@ const LKMain = () => {
                               }}
                             >
                               <TableCell align="left">
-                                <p>#{i + 1}</p>
+                                <p>#{setRowNumberForTz(superTz?.current_page, 8, i)}</p>
                               </TableCell>
                               <TableCell align="left">
                                 <p>{tz?.user?.username}</p>

@@ -70,3 +70,8 @@ export const renderSectionsWithChildren = (sections) => {
     );
   });
 };
+
+export const setRowNumberForTz = (page, countPerPage = 8, index) => {
+  const rowNumber = (page - 1) * +countPerPage + index + 1
+  return rowNumber;
+}
