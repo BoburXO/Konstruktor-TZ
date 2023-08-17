@@ -131,8 +131,6 @@ const LKMain = () => {
       : SuperTzGet({ owner: owner, draft: draft, type: type, id });
   };
 
-  console.log(superTz)
-
   return (
     <>
       {loading ? (
