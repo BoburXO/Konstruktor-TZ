@@ -30,6 +30,8 @@ import { useSelector, useDispatch } from "react-redux";
 import SuperTzPagination from "../../Pagination/SuperTzPagination";
 import { FaEye } from "react-icons/fa";
 import { setRowNumberForTz } from "../../helpers/helpers";
+import { clearPdfStates, uploadPdf } from "../../redux/api/user/pdf_slice";
+import { API } from "../../api/Api";
 
 const style = {
   position: "absolute",
@@ -84,6 +86,8 @@ const LKMain = () => {
     isDoubleStrucLoading,
   } = useSelector((state) => state.lkavtor);
 
+  const { pdfLoading, pdf } = useSelector((state) => state.pdf);
+
   useEffect(() => {
     SuperTzGet({ draft, owner: own, type }).then(() => setIsLoading(false));
     setUserId(superTz?.user_organization?.find((_, index) => index === 0)?.id);
@@ -100,6 +104,13 @@ const LKMain = () => {
       return navigate(`/tz/create/${duplicatedTz?.id}`);
     }
   }, [duplicatedTz]);
+
+  useEffect(() => {
+    if (pdf.pdf_file) {
+      window.open(pdf?.pdf_file, "_blank", "rel=noopener noreferrer");
+      dispatch(clearPdfStates());
+    }
+  }, [pdf]);
 
   if (isLoading) return <Loader />;
 
@@ -308,7 +319,14 @@ const LKMain = () => {
                               }}
                             >
                               <TableCell align="left">
-                                <p>#{setRowNumberForTz(superTz?.current_page, 8, i)}</p>
+                                <p>
+                                  #
+                                  {setRowNumberForTz(
+                                    superTz?.current_page,
+                                    8,
+                                    i
+                                  )}
+                                </p>
                               </TableCell>
                               <TableCell align="left">
                                 <p>{tz?.user?.username}</p>
@@ -396,17 +414,20 @@ const LKMain = () => {
                                               s.lkmain_sect_crud_skacat
                                             }
                                           >
-                                            <a
+                                            {/* <a
                                               rel="noopener"
-                                              href={tz?.pdf_file}
-                                              download
+                                              // href={tz?.pdf_file}
+                                              // download
                                               target="_blank"
-                                            >
-                                              <img
-                                                src={skacatIcon}
-                                                alt="Download"
-                                              />
-                                            </a>
+                                            > */}
+                                            <img
+                                              src={skacatIcon}
+                                              alt="Download"
+                                              onClick={() => {
+                                                dispatch(uploadPdf(tz?.id));
+                                              }}
+                                            />
+                                            {/* </a> */}
                                           </button>
                                           <button
                                             onClick={() => {
