@@ -144,7 +144,7 @@ const LKMain = () => {
 
   return (
     <>
-      {loading ? (
+      {loading || pdfLoading ? (
         <Loader />
       ) : (
         <>

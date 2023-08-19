@@ -28,6 +28,7 @@ const pdfSlice = createSlice({
   reducers: {
     clearPdfStates: (state) => {
       state.pdf = {};
+      state.pdfLoading = false;
     },
   },
   extraReducers: (builder) => {
