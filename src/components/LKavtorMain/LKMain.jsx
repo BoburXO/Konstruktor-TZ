@@ -351,10 +351,11 @@ const LKMain = () => {
                                   <div className={s.lkmain_sect_crud}>
                                     {!isAuthor ? (
                                       <>
-                                        {localStorage.getItem("roleName") ===
+                                        {(localStorage.getItem("roleName") ===
                                           "Admin" ||
-                                        localStorage.getItem("roleName") ===
-                                          "SuperAdmin" ? (
+                                          localStorage.getItem("roleName") ===
+                                            "SuperAdmin") &&
+                                        !draft ? (
                                           <button
                                             className={s.lkmain_sect_crud_copy}
                                             style={{
