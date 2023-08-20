@@ -50,7 +50,7 @@ export const updateStructure = createAsyncThunk(
   async ({ id, data }) => {
     const { request } = useHttp();
     return await request({
-      method: "PUT",
+      method: "PATCH",
       url: `/constructor/detail/${id}`,
       data,
       headers: {
