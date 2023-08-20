@@ -532,19 +532,31 @@ const LKMain = () => {
                                     >
                                       <img src={copyIcon} alt="Copy" />
                                     </button>
-                                    <button
-                                      className={s.content_crud_create}
-                                      onClick={() =>
-                                        navigate(`/structure/${tz?.id}`)
+                                    <Link
+                                      to={
+                                        isAuthor
+                                          ? `/tz/${tz?.id}`
+                                          : `/structure/${tz?.id}`
                                       }
                                     >
-                                      <FaEye
-                                        style={{
-                                          color: "#2f80ed",
-                                          fontSize: "16px",
-                                        }}
-                                      />
-                                    </button>
+                                      <button
+                                        className={s.content_crud_create}
+                                        // onClick={() =>
+                                        //   navigate(
+                                        //     isAuthor
+                                        //       ? `/tz/${tz?.id}`
+                                        //       : `/structure/${tz?.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <FaEye
+                                          style={{
+                                            color: "#2f80ed",
+                                            fontSize: "16px",
+                                          }}
+                                        />
+                                      </button>
+                                    </Link>
                                   </div>
                                 )}
                               </TableCell>
