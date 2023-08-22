@@ -91,7 +91,7 @@ export default function Profile() {
                   <div className={s.org_name_div}>
                     <h4>{tzList?.name}</h4>
                     <h4>
-                      {"№ "}
+                      {`${t("count")}:  `}
                       {tzList?.count}
                     </h4>
                   </div>

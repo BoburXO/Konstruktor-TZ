@@ -23,7 +23,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import {
   doubleStructure,
-  duplicateTzForUser,
+  duplicateTz,
   setTzIdForFilling,
 } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
@@ -277,7 +277,7 @@ const LKMain = () => {
                     <div className={s.org_name_div}>
                       <h4>{localStorage.getItem("organizationName")}</h4>
                       <h4>
-                        {"№ "}
+                        {`${t("count")}:  `}
                         {superTz?.count}
                       </h4>
                     </div>
@@ -377,9 +377,7 @@ const LKMain = () => {
                                         ) : null}
                                         <button
                                           onClick={() => {
-                                            dispatch(
-                                              duplicateTzForUser(tz?.id)
-                                            );
+                                            dispatch(duplicateTz(tz?.id));
                                           }}
                                           className={s.lkmain_sect_crud_copy}
                                         >
@@ -527,7 +525,7 @@ const LKMain = () => {
                                     <button
                                       onClick={() => {
                                         // DuplicateTz(tz?.id);
-                                        dispatch(duplicateTzForUser(tz?.id));
+                                        dispatch(duplicateTz(tz?.id));
                                       }}
                                       className={s.lkmain_sect_crud_copy}
                                     >
