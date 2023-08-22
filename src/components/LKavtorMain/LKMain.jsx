@@ -375,16 +375,16 @@ const LKMain = () => {
                                             Fill
                                           </button>
                                         ) : null}
-                                        <button
-                                          onClick={() => {
-                                            dispatch(duplicateTz(tz?.id));
-                                          }}
-                                          className={s.lkmain_sect_crud_copy}
-                                        >
-                                          <img src={copyIcon} alt="Copy" />
-                                        </button>
                                       </>
                                     ) : null}
+                                    <button
+                                      onClick={() => {
+                                        dispatch(duplicateTz(tz?.id));
+                                      }}
+                                      className={s.lkmain_sect_crud_copy}
+                                    >
+                                      <img src={copyIcon} alt="Copy" />
+                                    </button>
                                     {
                                       localStorage.getItem("roleName") !==
                                       "Author" ? (
@@ -408,26 +408,28 @@ const LKMain = () => {
                                               />
                                             </button>
                                           </Link>
-                                          <button
-                                            className={
-                                              s.lkmain_sect_crud_skacat
-                                            }
-                                          >
-                                            {/* <a
+                                          {isAuthor ? (
+                                            <button
+                                              className={
+                                                s.lkmain_sect_crud_skacat
+                                              }
+                                            >
+                                              {/* <a
                                               rel="noopener"
                                               // href={tz?.pdf_file}
                                               // download
                                               target="_blank"
                                             > */}
-                                            <img
-                                              src={skacatIcon}
-                                              alt="Download"
-                                              onClick={() => {
-                                                dispatch(uploadPdf(tz?.id));
-                                              }}
-                                            />
-                                            {/* </a> */}
-                                          </button>
+                                              <img
+                                                src={skacatIcon}
+                                                alt="Download"
+                                                onClick={() => {
+                                                  dispatch(uploadPdf(tz?.id));
+                                                }}
+                                              />
+                                              {/* </a> */}
+                                            </button>
+                                          ) : null}
                                           <button
                                             onClick={() => {
                                               handleOpenDel();
