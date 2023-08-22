@@ -68,7 +68,7 @@ export default function CreateNewStructureModal({
           comment_uz: commentUz,
           comment_ru: commentRu,
           select_type: type,
-          is_draft: false,
+          // is_draft: false,
         },
       })
     );

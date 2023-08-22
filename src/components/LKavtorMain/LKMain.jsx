@@ -23,7 +23,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import {
   doubleStructure,
-  duplicateTzForUser,
+  duplicateTz,
   setTzIdForFilling,
 } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
@@ -277,7 +277,7 @@ const LKMain = () => {
                     <div className={s.org_name_div}>
                       <h4>{localStorage.getItem("organizationName")}</h4>
                       <h4>
-                        {"№ "}
+                        {`${t("count")}:  `}
                         {superTz?.count}
                       </h4>
                     </div>
@@ -351,10 +351,11 @@ const LKMain = () => {
                                   <div className={s.lkmain_sect_crud}>
                                     {!isAuthor ? (
                                       <>
-                                        {localStorage.getItem("roleName") ===
+                                        {(localStorage.getItem("roleName") ===
                                           "Admin" ||
-                                        localStorage.getItem("roleName") ===
-                                          "SuperAdmin" ? (
+                                          localStorage.getItem("roleName") ===
+                                            "SuperAdmin") &&
+                                        !draft ? (
                                           <button
                                             className={s.lkmain_sect_crud_copy}
                                             style={{
@@ -374,18 +375,16 @@ const LKMain = () => {
                                             Fill
                                           </button>
                                         ) : null}
-                                        <button
-                                          onClick={() => {
-                                            dispatch(
-                                              duplicateTzForUser(tz?.id)
-                                            );
-                                          }}
-                                          className={s.lkmain_sect_crud_copy}
-                                        >
-                                          <img src={copyIcon} alt="Copy" />
-                                        </button>
                                       </>
                                     ) : null}
+                                    <button
+                                      onClick={() => {
+                                        dispatch(duplicateTz(tz?.id));
+                                      }}
+                                      className={s.lkmain_sect_crud_copy}
+                                    >
+                                      <img src={copyIcon} alt="Copy" />
+                                    </button>
                                     {
                                       localStorage.getItem("roleName") !==
                                       "Author" ? (
@@ -409,26 +408,28 @@ const LKMain = () => {
                                               />
                                             </button>
                                           </Link>
-                                          <button
-                                            className={
-                                              s.lkmain_sect_crud_skacat
-                                            }
-                                          >
-                                            {/* <a
+                                          {isAuthor ? (
+                                            <button
+                                              className={
+                                                s.lkmain_sect_crud_skacat
+                                              }
+                                            >
+                                              {/* <a
                                               rel="noopener"
                                               // href={tz?.pdf_file}
                                               // download
                                               target="_blank"
                                             > */}
-                                            <img
-                                              src={skacatIcon}
-                                              alt="Download"
-                                              onClick={() => {
-                                                dispatch(uploadPdf(tz?.id));
-                                              }}
-                                            />
-                                            {/* </a> */}
-                                          </button>
+                                              <img
+                                                src={skacatIcon}
+                                                alt="Download"
+                                                onClick={() => {
+                                                  dispatch(uploadPdf(tz?.id));
+                                                }}
+                                              />
+                                              {/* </a> */}
+                                            </button>
+                                          ) : null}
                                           <button
                                             onClick={() => {
                                               handleOpenDel();
@@ -526,25 +527,37 @@ const LKMain = () => {
                                     <button
                                       onClick={() => {
                                         // DuplicateTz(tz?.id);
-                                        dispatch(duplicateTzForUser(tz?.id));
+                                        dispatch(duplicateTz(tz?.id));
                                       }}
                                       className={s.lkmain_sect_crud_copy}
                                     >
                                       <img src={copyIcon} alt="Copy" />
                                     </button>
-                                    <button
-                                      className={s.content_crud_create}
-                                      onClick={() =>
-                                        navigate(`/structure/${tz?.id}`)
+                                    <Link
+                                      to={
+                                        isAuthor
+                                          ? `/tz/${tz?.id}`
+                                          : `/structure/${tz?.id}`
                                       }
                                     >
-                                      <FaEye
-                                        style={{
-                                          color: "#2f80ed",
-                                          fontSize: "16px",
-                                        }}
-                                      />
-                                    </button>
+                                      <button
+                                        className={s.content_crud_create}
+                                        // onClick={() =>
+                                        //   navigate(
+                                        //     isAuthor
+                                        //       ? `/tz/${tz?.id}`
+                                        //       : `/structure/${tz?.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <FaEye
+                                          style={{
+                                            color: "#2f80ed",
+                                            fontSize: "16px",
+                                          }}
+                                        />
+                                      </button>
+                                    </Link>
                                   </div>
                                 )}
                               </TableCell>

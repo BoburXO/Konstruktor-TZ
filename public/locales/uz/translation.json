@@ -203,11 +203,9 @@
   "profile": {
     "1": "Shaxsiy kabinet"
   },
-  "reg":{
-    "1":"Tizimga kirish",
-    "2":"BILAN KIRISH"
+  "reg": {
+    "1": "Tizimga kirish",
+    "2": "BILAN KIRISH"
   },
-  "user":{
-    "1":"Jami"
-  }
+  "count": "Hammasi"
 }

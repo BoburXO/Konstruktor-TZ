@@ -30,7 +30,7 @@ export const deleteTz = createAsyncThunk("tz/delete", async (id) => {
   const { request } = useHttp();
   return await request({
     method: "DELETE",
-    url: `/constructor/detail/user/${id}`,
+    url: `/constructor/delete$constructor_id=${id}`,
     headers: {
       Authorization: `Bearer ${localStorage.getItem(
         "ConstructorRoleAccessToken"

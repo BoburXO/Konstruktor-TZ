@@ -27,22 +27,19 @@ export const doubleStructure = createAsyncThunk(
   }
 );
 
-export const duplicateTzForUser = createAsyncThunk(
-  "tz/duplicate",
-  async (id) => {
-    const { request } = useHttp();
-    return await request({
-      method: "POST",
-      url: `/constructor/duplicate/constructor?constructor_id=${id}`,
-      data: {},
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem(
-          "ConstructorRoleAccessToken"
-        )}`,
-      },
-    });
-  }
-);
+export const duplicateTz = createAsyncThunk("tz/duplicate", async (id) => {
+  const { request } = useHttp();
+  return await request({
+    method: "POST",
+    url: `/constructor/duplicate/constructor?constructor_id=${id}`,
+    data: {},
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(
+        "ConstructorRoleAccessToken"
+      )}`,
+    },
+  });
+});
 
 export const doubleStructureForModerator = createAsyncThunk(
   "structure/doubleForModerator",
@@ -84,10 +81,10 @@ const lkavtorSlice = createSlice({
         state.message = payload;
         state.loading = false;
       })
-      .addCase(duplicateTzForUser.pending, (state) => {
+      .addCase(duplicateTz.pending, (state) => {
         state.duplicateLoading = true;
       })
-      .addCase(duplicateTzForUser.fulfilled, (state, { payload }) => {
+      .addCase(duplicateTz.fulfilled, (state, { payload }) => {
         state.duplicatedTz = payload;
         state.duplicateLoading = false;
       })

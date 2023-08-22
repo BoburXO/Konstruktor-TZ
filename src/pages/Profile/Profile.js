@@ -23,7 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteTz, fetchAllTzOfUser } from "./profile_slice";
 import ProfilePagination from "../../Pagination/ProfilePagination";
 import { setRowNumberForTz } from "../../helpers/helpers";
-import Footer from '../../components/Footer/Footer';
+import Footer from "../../components/Footer/Footer";
 
 const style = {
   position: "absolute",
@@ -57,7 +57,7 @@ export default function Profile() {
 
   return (
     <>
-      {loading && !tzList?.count ? (
+      {loading && !tzList?.links ? (
         <Loader />
       ) : (
         <>
@@ -90,14 +90,12 @@ export default function Profile() {
                 <>
                   <div className={s.org_name_div}>
                     <h4>
-                      {t("user.1")}: {tzList?.count}
+                      {`${t("count")}:  `}
+                      {tzList?.count}
                     </h4>
                   </div>
                   <TableContainer component={Paper} classes={{ root: s.table }}>
-                    <Table
-                      sx={{ minWidth: 650 }}
-                      aria-label="simple table"
-                    >
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
                         <TableRow>
                           <TableCell align="left">
@@ -131,16 +129,19 @@ export default function Profile() {
                             }}
                           >
                             <TableCell align="left">
-                              <p>#{setRowNumberForTz(tzList?.current_page, 8 , index)}</p>
+                              <p>
+                                #
+                                {setRowNumberForTz(
+                                  tzList?.current_page,
+                                  8,
+                                  index
+                                )}
+                              </p>
                             </TableCell>
                             <TableCell align="left">
                               <p>{tz?.user?.username}</p>
                             </TableCell>
-                            <TableCell
-                              component="th"
-                              scope="row"
-                              align="left"
-                            >
+                            <TableCell component="th" scope="row" align="left">
                               <p>{tz?.tz_name}</p>
                             </TableCell>
                             <TableCell align="left">
@@ -205,9 +206,7 @@ export default function Profile() {
                                       <br />
                                       <p>{t("sfera.6")}</p>
                                       <br />
-                                      <div
-                                        className={s.createElementFormBtns}
-                                      >
+                                      <div className={s.createElementFormBtns}>
                                         {" "}
                                         <button
                                           type="button"
@@ -240,9 +239,7 @@ export default function Profile() {
                   <br />
                   <div className={s.content_pagination}>
                     <ProfilePagination
-                      superTz={
-                        tzList?.total_pages
-                      }
+                      superTz={tzList?.total_pages}
                       tz_name={searchText}
                     />
                   </div>
