@@ -89,10 +89,8 @@ export default function Profile() {
               {tzList?.count > 0 ? (
                 <>
                   <div className={s.org_name_div}>
-                    <h4>{tzList?.name}</h4>
                     <h4>
-                      {"№ "}
-                      {tzList?.count}
+                      {t("user.1")}: {tzList?.count}
                     </h4>
                   </div>
                   <TableContainer component={Paper} classes={{ root: s.table }}>
