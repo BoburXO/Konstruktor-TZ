@@ -28,6 +28,21 @@ export const fetchStructureByIdForUser = createAsyncThunk(
   }
 );
 
+export const fetchStructureForViewingTzByIdForUser = createAsyncThunk(
+  "structure/fetchForViewingTzModel",
+  async (id) => {
+    const { request } = useHttp();
+    return await request({
+      url: `/constructor/detail/${id}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem(
+          "ConstructorRoleAccessToken"
+        )}`,
+      },
+    });
+  }
+);
+
 export const fetchClassificator = createAsyncThunk(
   "classificatorForUser/fetchAll",
   async () => {
@@ -165,7 +180,17 @@ const userStructureSlice = createSlice({
       .addCase(fetchTemplates.fulfilled, (state, { payload }) => {
         state.templates = payload;
         state.templatesLoading = false;
-      });
+      })
+      .addCase(fetchStructureForViewingTzByIdForUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(
+        fetchStructureForViewingTzByIdForUser.fulfilled,
+        (state, { payload }) => {
+          state.structure = payload;
+          state.loading = false;
+        }
+      );
   },
 });
 

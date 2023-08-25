@@ -32,9 +32,10 @@ function App() {
         <Route path="/" element={<RegOneId />} />
         <Route path="/main" element={<Home />} />
         <Route path="/lkavtor" element={<LKavtor />} />
-        <Route path="/tz/create/:tzId" element={<CreateTZ />} />
-        <Route path="/tz/edit/:tzId" element={<CreateTZ />} />
-        <Route path="/tz/:tzId" element={<CreateTZ />} />
+        <Route path="/tz/create/:tzId" element={<CreateTZ action="create" />} />
+        <Route path="/tz/edit/:tzId" element={<CreateTZ action="edit" />} />
+        <Route path="/tz/view/:tzId" element={<CreateTZ action="view" />} />
+        <Route path="/tz/review/:tzId" element={<CreateTZ action="review" />} />
         <Route path="/createtz2" element={<CreateTZ2 />} />
         <Route path="/contentofsite" element={<Content />} />
         <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />

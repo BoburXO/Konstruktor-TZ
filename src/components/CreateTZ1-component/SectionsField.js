@@ -3,12 +3,13 @@ import Select from "react-select";
 import s from "./CreateTZ1.module.css";
 import DrawTableWithValues from "../DrawTableWithValues/DrawTableWithValues";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchClassificator,
   setFieldsData,
 } from "../../redux/api/user/structure_slice";
 import { useMemo } from "react";
+import useSelection from "antd/es/table/hooks/useSelection";
 
 export default function SectionsField({ field }) {
   const dispatch = useDispatch();
@@ -18,6 +19,12 @@ export default function SectionsField({ field }) {
   const [stringField, setStringField] = useState(field?.field || "");
   const [otherField, setOtherField] = useState(field?.field || "");
   const [classificatorElement, setClassificatorElement] = useState("");
+
+  const { userAction } = useSelector((state) => state.userStructure);
+
+  const fieldDisabled = useMemo(() => {
+    return userAction === "view" || userAction === "review";
+  }, [userAction]);
 
   // useEffect(() => {
   //   if (field?.select_type === 8) {
@@ -69,6 +76,7 @@ export default function SectionsField({ field }) {
                 })
               );
             }}
+            disabled={fieldDisabled}
           />
         </div>
       ) : field?.select_type === 2 ? (
@@ -92,6 +100,7 @@ export default function SectionsField({ field }) {
                 })
               );
             }}
+            disabled={fieldDisabled}
           ></textarea>
         </div>
       ) : field?.select_type === 6 ? (
@@ -101,6 +110,7 @@ export default function SectionsField({ field }) {
             tableData={tableData}
             setTableData={setTableData}
             userRole={"author"}
+            allFieldsDisabled={fieldDisabled}
           />
         </div>
       ) : field?.select_type === 7 ? (
@@ -122,7 +132,8 @@ export default function SectionsField({ field }) {
                 })
               );
             }}
-            defaultValue={classificatorElemOptions.find(
+            isSearchable={!fieldDisabled}
+            defaultValue={classificatorElemOptions?.find(
               (item) => item.value === field?.field
             )}
           />
@@ -148,6 +159,7 @@ export default function SectionsField({ field }) {
                 })
               );
             }}
+            disabled={fieldDisabled}
           />
         </div>
       )}
