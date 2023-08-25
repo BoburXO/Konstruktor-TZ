@@ -463,7 +463,7 @@ const ContentOfSite = () => {
                             <Modal
                               slotProps={{
                                 backdrop: {
-                                  style: { opacity: "0.7", boxShadow: 24 },
+                                  style: { opacity: "0.3", boxShadow: 24 },
                                 },
                               }}
                               open={downloadPdf}

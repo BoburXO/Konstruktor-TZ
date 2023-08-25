@@ -66,7 +66,6 @@ export default function Profile() {
               {tzList?.count > 0 ? (
                 <>
                   <div className={s.org_name_div}>
-                    <h4>{tzList?.name}</h4>
                     <h4>
                       {`${t("count")}:  `}
                       {tzList?.count}

@@ -230,7 +230,11 @@ const AddContentComp = () => {
                 <button type="submit" className={s.share}>
                   {t("add-content.16")}
                 </button>
-              ) : null}
+              ) : (
+                <button disabled className={s.shareDis}>
+                {t("add-content.16")}
+              </button>
+              )}
             </div>
           </form>
         </div>

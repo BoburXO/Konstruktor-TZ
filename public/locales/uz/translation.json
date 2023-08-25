@@ -95,7 +95,7 @@
     "1": "Sayt tarkibi",
     "2": "Kontent qo'shish",
     "3": "Qidirish",
-    "4": "Sarlavha",
+    "4": "SARLAVHA",
     "5": "SFERA",
     "6": "TAVSIF",
     "7": "SANA",
@@ -164,10 +164,10 @@
   "super": {
     "1": "Tashkilotlar",
     "2": "Men",
-    "3": "Tashkilot",
-    "4": "Natijalar",
-    "5": "Foydalanuvchilar",
-    "6": "Ko'rish",
+    "3": "TASHKILOT",
+    "4": "NATIJALAR",
+    "5": "FOYDALANUVCHILAR",
+    "6": "KO'RISH",
     "7": "Tuzilmalar",
     "8": "Texnik topshiriqlar"
   },
