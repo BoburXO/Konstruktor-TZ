@@ -2,14 +2,7 @@ import { useTranslation } from "react-i18next";
 import UserNav from "../../components/UserNav/UserNav";
 import s from "../../components/LKavtorMain/LKMain.module.css";
 import React, { useEffect, useState } from "react";
-import date from "../../assets/icons/dateIcon.svg";
-import createIcon from "../../assets/icons/createIcon.svg";
-import skacatIcon from "../../assets/icons/skacatIcon.svg";
-import deleteIcon from "../../assets/icons/deleteIcon.svg";
-import { useNavigate } from "react-router-dom";
 import search from "../../assets/icons/search.svg";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 import Loader from "../../components/Loader/Loader";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -18,38 +11,22 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { setTzIdForFilling } from "../../pages/LKavtor/lkavtor_slice";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteTz, fetchAllTzOfUser } from "./profile_slice";
+import { fetchAllTzOfUser } from "./profile_slice";
 import ProfilePagination from "../../Pagination/ProfilePagination";
-import { setRowNumberForTz } from "../../helpers/helpers";
 import Footer from "../../components/Footer/Footer";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
-  border: "none",
-  borderRadius: 4,
-  boxShadow: 0,
-  p: 4,
-};
+import ProfileListItem from "./ProfileListItem";
 
 export default function Profile() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  //modal
-  const [openDel, setOpenDel] = useState(false);
-  const handleOpenDel = () => setOpenDel(true);
-  const handleCloseDel = () => setOpenDel(false);
 
   //searchPanel
   const [searchText, setSearchText] = useState("");
 
-  const { tzList, loading, deletedTz } = useSelector((state) => state.profile);
+  const { tzList, loading, deletedTz, deleteLoading } = useSelector(
+    (state) => state.profile
+  );
 
   useEffect(() => {
     dispatch(fetchAllTzOfUser({ tz_name: searchText }));
@@ -57,7 +34,7 @@ export default function Profile() {
 
   return (
     <>
-      {loading && !tzList?.links ? (
+      {loading || deleteLoading ? (
         <Loader />
       ) : (
         <>
@@ -121,117 +98,7 @@ export default function Profile() {
                       </TableHead>
                       <TableBody classes={{ root: s.tbody_root }}>
                         {tzList?.results?.map((tz, index) => (
-                          <TableRow
-                            key={tz?.id}
-                            sx={{
-                              "&:last-child td, &:last-child th": {
-                                border: 0,
-                              },
-                            }}
-                          >
-                            <TableCell align="left">
-                              <p>
-                                #
-                                {setRowNumberForTz(
-                                  tzList?.current_page,
-                                  8,
-                                  index
-                                )}
-                              </p>
-                            </TableCell>
-                            <TableCell align="left">
-                              <p>{tz?.user?.username}</p>
-                            </TableCell>
-                            <TableCell component="th" scope="row" align="left">
-                              <p>{tz?.tz_name}</p>
-                            </TableCell>
-                            <TableCell align="left">
-                              {" "}
-                              <span className={s.lkmain_sect_dates}>
-                                <img src={date} alt="" />
-                                <p>{tz?.created_at?.slice(0, 10)}</p>
-                              </span>{" "}
-                            </TableCell>
-                            <TableCell align="right">
-                              <div className={s.lkmain_sect_crud}>
-                                {/* <button className={s.lkmain_sect_crud_copy}>
-                                <img src={copyIcon} alt="Copy" />
-                              </button> */}
-                                <button
-                                  className={s.lkmain_sect_crud_create}
-                                  onClick={() => {
-                                    // dispatch(setTzIdForFilling(tz?.id));
-                                    navigate(`/tz/edit/${tz?.id}`);
-                                  }}
-                                >
-                                  <img src={createIcon} alt="Edit" />
-                                </button>
-                                <button className={s.lkmain_sect_crud_skacat}>
-                                  <a
-                                    rel="noopener"
-                                    href={tz?.pdf_file}
-                                    download
-                                    target="_blank"
-                                  >
-                                    <img src={skacatIcon} alt="Download" />
-                                  </a>
-                                </button>
-                                <button
-                                  onClick={() => {
-                                    handleOpenDel();
-                                  }}
-                                  className={s.lkmain_sect_crud_delete}
-                                >
-                                  <img src={deleteIcon} alt="Delete" />
-                                </button>
-                                <Modal
-                                  slotProps={{
-                                    backdrop: {
-                                      style: {
-                                        opacity: "0.4",
-                                        boxShadow: 24,
-                                      },
-                                    },
-                                  }}
-                                  open={openDel}
-                                  onClose={handleCloseDel}
-                                  aria-labelledby="modal-modal-title"
-                                  aria-describedby="modal-modal-description"
-                                >
-                                  <Box sx={style}>
-                                    <form
-                                      style={{ textAlign: "center" }}
-                                      className={s.createElementForm}
-                                    >
-                                      <h2>{t("sfera.3")}</h2>
-                                      <br />
-                                      <p>{t("sfera.6")}</p>
-                                      <br />
-                                      <div className={s.createElementFormBtns}>
-                                        {" "}
-                                        <button
-                                          type="button"
-                                          onClick={() => handleCloseDel()}
-                                          className={s.shablon_save_btn}
-                                        >
-                                          {t("btn.5")}
-                                        </button>
-                                        <button
-                                          type="button"
-                                          className={s.shablon_delete_btn}
-                                          onClick={() => {
-                                            dispatch(deleteTz(tz?.id));
-                                          }}
-                                        >
-                                          {t("btn.6")}
-                                        </button>
-                                      </div>
-                                    </form>
-                                  </Box>
-                                </Modal>
-                              </div>
-                            </TableCell>
-                          </TableRow>
+                          <ProfileListItem key={tz?.id} tz={tz} index={index} />
                         ))}
                       </TableBody>
                     </Table>

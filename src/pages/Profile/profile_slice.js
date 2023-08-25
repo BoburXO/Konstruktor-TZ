@@ -30,7 +30,7 @@ export const deleteTz = createAsyncThunk("tz/delete", async (id) => {
   const { request } = useHttp();
   return await request({
     method: "DELETE",
-    url: `/constructor/delete$constructor_id=${id}`,
+    url: `/constructor/delete?constructor_id=${id}`,
     headers: {
       Authorization: `Bearer ${localStorage.getItem(
         "ConstructorRoleAccessToken"
@@ -59,8 +59,10 @@ const profileSlice = createSlice({
       .addCase(deleteTz.pending, (state) => {
         state.deleteLoading = true;
       })
-      .addCase(deleteTz.fulfilled, (state, { payload }) => {
-        state.deletedTz = payload;
+      .addCase(deleteTz.fulfilled, (state, { payload, meta }) => {
+        if (payload === "") {
+          state.deletedTz = meta.arg;
+        }
         state.deleteLoading = false;
       });
   },
