@@ -16,6 +16,7 @@ import { fetchAllTzOfUser } from "./profile_slice";
 import ProfilePagination from "../../Pagination/ProfilePagination";
 import Footer from "../../components/Footer/Footer";
 import ProfileListItem from "./ProfileListItem";
+import { clearPdfStates } from "../../redux/api/user/pdf_slice";
 
 export default function Profile() {
   const { t } = useTranslation();
@@ -28,13 +29,29 @@ export default function Profile() {
     (state) => state.profile
   );
 
+  const { duplicatedTz, duplicateLoading } = useSelector(
+    (state) => state.lkavtor
+  );
+
+  const { pdf, pdfLoading } = useSelector((state) => state.pdf);
+
   useEffect(() => {
     dispatch(fetchAllTzOfUser({ tz_name: searchText }));
-  }, [deletedTz, searchText]);
+
+    //eslint-disable-next-line
+  }, [deletedTz, searchText, duplicatedTz]);
+
+  useEffect(() => {
+    if (pdf.pdf_file) {
+      window.open(pdf?.pdf_file, "_blank", "rel=noopener noreferrer");
+      dispatch(clearPdfStates());
+    }
+    //eslint-disable-next-line
+  }, [pdf]);
 
   return (
     <>
-      {loading || deleteLoading ? (
+      {loading || deleteLoading || duplicateLoading || pdfLoading ? (
         <Loader />
       ) : (
         <>
