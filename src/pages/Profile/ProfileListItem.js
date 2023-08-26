@@ -13,6 +13,8 @@ import TableRow from "@mui/material/TableRow";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTz } from "./profile_slice";
 import { setRowNumberForTz } from "../../helpers/helpers";
+import copyIcon from "../../assets/icons/copyIcon.svg";
+import { duplicateTz } from "../LKavtor/lkavtor_slice";
 
 const style = {
   position: "absolute",
@@ -65,9 +67,14 @@ export default function ProfileListItem({ tz, index }) {
       </TableCell>
       <TableCell align="right">
         <div className={s.lkmain_sect_crud}>
-          {/* <button className={s.lkmain_sect_crud_copy}>
-                                <img src={copyIcon} alt="Copy" />
-                              </button> */}
+          <button
+            onClick={() => {
+              dispatch(duplicateTz(tz?.id));
+            }}
+            className={s.lkmain_sect_crud_copy}
+          >
+            <img src={copyIcon} alt="Copy" />
+          </button>
           <button
             className={s.lkmain_sect_crud_create}
             onClick={() => {

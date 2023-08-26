@@ -28,13 +28,19 @@ export default function Profile() {
     (state) => state.profile
   );
 
+  const { duplicatedTz, duplicateLoading } = useSelector(
+    (state) => state.lkavtor
+  );
+
   useEffect(() => {
     dispatch(fetchAllTzOfUser({ tz_name: searchText }));
-  }, [deletedTz, searchText]);
+
+    //eslint-disable-next-line
+  }, [deletedTz, searchText, duplicatedTz]);
 
   return (
     <>
-      {loading || deleteLoading ? (
+      {loading || deleteLoading || duplicateLoading ? (
         <Loader />
       ) : (
         <>
