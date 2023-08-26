@@ -125,7 +125,7 @@ export default function CreateTZ1center({ activeSection }) {
 
   useEffect(() => {
     if (duplicatedTz?.id) {
-      navigate(`/tz/create/${tzId}`);
+      navigate(`/tz/create/${duplicatedTz?.id}`);
     }
     // dispatch(clearDuplicatedAndDoubledTz());
   }, [duplicatedTz]);

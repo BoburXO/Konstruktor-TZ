@@ -22,6 +22,7 @@ import Loader from "../Loader/Loader";
 const CreateTZ = ({ action }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { tzId } = useParams();
   const roleName = localStorage.getItem("roleName");
@@ -55,16 +56,19 @@ const CreateTZ = ({ action }) => {
   };
 
   useEffect(() => {
+    return () => {
+      dispatch(clearStructureForUser());
+    };
+  }, []);
+
+  useEffect(() => {
     if (!tzId) {
       navigate("/lkavtor");
       return;
     }
     dispatch(clearDuplicatedAndDoubledTz());
     fetchTzForForViewingOrForAnotherActions();
-    return () => {
-      dispatch(clearStructureForUser());
-    };
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     dispatch(setUserAction(action));
