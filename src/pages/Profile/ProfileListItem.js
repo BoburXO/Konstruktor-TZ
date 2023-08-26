@@ -15,6 +15,7 @@ import { deleteTz } from "./profile_slice";
 import { setRowNumberForTz } from "../../helpers/helpers";
 import copyIcon from "../../assets/icons/copyIcon.svg";
 import { duplicateTz } from "../LKavtor/lkavtor_slice";
+import { uploadPdf } from "../../redux/api/user/pdf_slice";
 
 const style = {
   position: "absolute",
@@ -83,10 +84,11 @@ export default function ProfileListItem({ tz, index }) {
           >
             <img src={createIcon} alt="Edit" />
           </button>
-          <button className={s.lkmain_sect_crud_skacat}>
-            <a rel="noopener" href={tz?.pdf_file} download target="_blank">
-              <img src={skacatIcon} alt="Download" />
-            </a>
+          <button
+            className={s.lkmain_sect_crud_skacat}
+            onClick={() => dispatch(uploadPdf(tz?.id))}
+          >
+            <img src={skacatIcon} alt="Download" />
           </button>
           <button className={s.lkmain_sect_crud_delete}>
             <img
