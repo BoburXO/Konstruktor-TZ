@@ -72,19 +72,13 @@ const LKMain = () => {
     setSuperTzSearch,
     superTz,
     SuperTzGet,
-    DuplicateTz,
     deleteTz,
     SuperAuthor,
   } = useContext(Context);
 
-  const {
-    message,
-    loading,
-    duplicatedTz,
-    duplicateLoading,
-    doubledStructure,
-    isDoubleStrucLoading,
-  } = useSelector((state) => state.lkavtor);
+  const { message, loading, duplicatedTz, duplicateLoading } = useSelector(
+    (state) => state.lkavtor
+  );
 
   const { pdfLoading, pdf } = useSelector((state) => state.pdf);
 
@@ -340,10 +334,10 @@ const LKMain = () => {
                               </TableCell>
                               <TableCell align="left">
                                 {" "}
-                                <span className={s.lkmain_sect_dates}>
+                                <p className={s.lkmain_sect_dates}>
                                   <img src={date} alt="" />
-                                  {/* <p>{tz?.created_at.slice(0, 10)}</p> */}
-                                </span>{" "}
+                                  <p>{tz?.created_at.slice(0, 10)}</p>
+                                </p>{" "}
                               </TableCell>
                               <TableCell align="right">
                                 {tz?.user?.username ===
