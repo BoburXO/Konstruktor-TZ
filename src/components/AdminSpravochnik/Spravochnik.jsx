@@ -89,6 +89,7 @@ const Spravochnik = () => {
 
   useEffect(() => {
     getAllSpraSearch({ orgId }).then(() => setIsLoading(false));
+    getOrganizations().then(() => setIsLoading(false));
   }, [spraSearch]);
 
   const onSubmit = (e) => {
@@ -220,7 +221,6 @@ const Spravochnik = () => {
                   placeholder={t("filter.1")}
                   onChange={(value) => {
                     getAllSpraSearch({ orgId: value.value });
-                    getOrganizations(value.value);
                     setOrgId(value.value);
                   }}
                   className={s.sample_select}
