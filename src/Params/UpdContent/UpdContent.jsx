@@ -229,8 +229,8 @@ const UpdContent = () => {
                 {t("add-content.15")}
               </button>
               {sfera !== undefined &&
-              docFileRu !== null &&
-              docFileUz !== null &&
+              docFileRu !== "" &&
+              docFileUz !== "" &&
               textRu !== "" &&
               textUz !== "" ? (
                 <button
@@ -239,7 +239,11 @@ const UpdContent = () => {
                 >
                   {t("add-content.16")}
                 </button>
-              ) : null}
+              ) : (
+                <button disabled className={s.shareDis}>
+                  {t("add-content.16")}
+                </button>
+              )}
             </div>
           </div>
         </div>

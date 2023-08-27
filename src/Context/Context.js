@@ -1275,10 +1275,10 @@ const ContextProvider = ({ children }) => {
   const [organization, setOrganization] = useState({});
   const [orgSearch, setOrgSearch] = useState("");
 
-  const SuperOrganizations = async (owner = "", page = 1) => {
+  const SuperOrganizations = async (owner = false, page = 1) => {
     await axios
       .get(
-        `${API}/constructor/organization/list?name__icontains=${orgSearch}&is_owner=${owner}&page=${page}`,
+        `${API}/constructor/organization/list?name=${orgSearch}&is_owner=${owner}&page=${page}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(

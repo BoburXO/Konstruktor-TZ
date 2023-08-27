@@ -122,7 +122,7 @@ const LKMain = () => {
 
   const optionOwner = [
     { value: true, label: t("super.2") },
-    { value: false, label: t("super.5") },
+    { value: false, label: t("super.9") },
   ];
 
   const optionsDraft = [
@@ -202,7 +202,7 @@ const LKMain = () => {
                     {localStorage.getItem("roleName") === "Admin" ? (
                       <div>
                         <Select
-                          placeholder={t("super.5")}
+                          placeholder={t("super.9")}
                           onChange={(value) => {
                             SuperTzGet({
                               owner: value.value,
@@ -342,7 +342,7 @@ const LKMain = () => {
                                 {" "}
                                 <span className={s.lkmain_sect_dates}>
                                   <img src={date} alt="" />
-                                  {/* <p>{tz?.created_at.slice(0, 10)}</p> */}
+                                  <p>{tz?.created_at.slice(0, 10)}</p>
                                 </span>{" "}
                               </TableCell>
                               <TableCell align="right">

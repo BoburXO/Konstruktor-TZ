@@ -25,6 +25,7 @@ import SuperTzPagination from "../../Pagination/SuperTzPagination";
 import Select from "react-select";
 import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
 import { FaEye } from "react-icons/fa";
+import { setRowNumberForTz } from "../../helpers/helpers";
 
 const style = {
   position: "absolute",
@@ -51,6 +52,8 @@ const SuperTzComp = () => {
   //modal
   const { t } = useTranslation();
   const {
+    organization,
+    SuperOrganizations,
     superTz,
     SuperTzGet,
     deleteTz,
@@ -62,7 +65,12 @@ const SuperTzComp = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
 
+  const orgParams = organization?.results?.find((el) => {
+    return el?.id === id;
+  });
+
   useEffect(() => {
+    SuperOrganizations().then(() => setIsLoading(false));
     SuperTzGet({ id, draft, owner: own, type }).then(() => setIsLoading(false));
   }, [superTzSearch]);
 
@@ -100,7 +108,7 @@ const SuperTzComp = () => {
       <section className={s.lkmain_sect}>
         <div className={s.lkmain_sect_container}>
           <div className={s.lkmain_sect_labels}>
-            <h1>{superTz?.name}</h1>
+            <h1>{orgParams?.name}</h1>
           </div>
           <div className={s.lkmain_sect_labels}>
             <div
@@ -137,9 +145,7 @@ const SuperTzComp = () => {
                   options={options}
                 />
               </div>
-
-              {superTz?.results[0]?.user?.organization ===
-              localStorage.getItem("organizationName") ? (
+              {orgParams?.name === localStorage.getItem("organizationName") ? (
                 <div>
                   <Select
                     placeholder={t("filter.1")}
@@ -177,7 +183,7 @@ const SuperTzComp = () => {
               ) : null}
               <div>
                 <Select
-                  placeholder={t("super.8")}
+                  placeholder={t("super.7")}
                   onChange={(value) => {
                     handleChange(value.value, {
                       id,
@@ -231,7 +237,9 @@ const SuperTzComp = () => {
                         }}
                       >
                         <TableCell align="left">
-                          <p>#{i + 1}</p>
+                          <p>
+                            # {setRowNumberForTz(superTz?.current_page, 8, i)}
+                          </p>
                         </TableCell>
                         <TableCell align="left">
                           {" "}
@@ -244,7 +252,7 @@ const SuperTzComp = () => {
                           {" "}
                           <span className={s.lkmain_sect_dates}>
                             <img src={date} alt="" />
-                            {/* <p>{tz?.created_at.slice(0, 10)}</p> */}
+                            <p>{tz?.created_at.slice(0, 10)}</p>
                           </span>{" "}
                         </TableCell>
                         <TableCell align="right">
