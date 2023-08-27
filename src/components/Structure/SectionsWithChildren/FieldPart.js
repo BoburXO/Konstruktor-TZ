@@ -27,8 +27,6 @@ export default function FieldPart({ field }) {
   const { classificators } = useSelector((state) => state.field);
   const { structureAction } = useSelector((state) => state.structure);
 
-  console.log(field);
-
   const [showUpdateFieldModal, setShowUpdateFieldModal] = useState(false);
   const hanldeOpenUpdateFieldModal = () => setShowUpdateFieldModal(true);
   const hanldeCloseUpdateFieldModal = () => setShowUpdateFieldModal(false);

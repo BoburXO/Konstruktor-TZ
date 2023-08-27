@@ -18,6 +18,5 @@ export default function RenderSectionsWithChildren({ sections, action }) {
     ));
   };
 
-
   return renderSectionsWithChildren(sections, action);
 }

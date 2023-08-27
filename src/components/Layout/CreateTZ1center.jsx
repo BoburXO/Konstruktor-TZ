@@ -1,6 +1,6 @@
 import s from "../CreateTZ1-component/CreateTZ1.module.css";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import arrowleft from "../../assets/icons/arrowLeft.svg";
 import RenderSectionsWithChildren from "../RenderSectionsWithChildren/RenderSectionsWithChildren";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +10,24 @@ import {
   setActiveSection,
 } from "../../redux/api/user/structure_slice";
 import { useEffect, useMemo } from "react";
+import {
+  clearDuplicatedAndDoubledTz,
+  duplicateTz,
+} from "../../pages/LKavtor/lkavtor_slice";
 
 export default function CreateTZ1center({ activeSection }) {
   const { t } = useTranslation();
+  const { tzId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { fieldsData, structure, data } = useSelector((state) => state.userStructure);
+  const { fieldsData, structure, userAction } = useSelector(
+    (state) => state.userStructure
+  );
+
+  const { duplicatedTz, duplicateLoading } = useSelector(
+    (state) => state.lkavtor
+  );
 
   const activeSectionIndex = useMemo(() => {
     return structure?.sections?.findIndex(
@@ -112,6 +123,13 @@ export default function CreateTZ1center({ activeSection }) {
     dispatch(setActiveSection(nextSection));
   };
 
+  useEffect(() => {
+    if (duplicatedTz?.id) {
+      navigate(`/tz/create/${duplicatedTz?.id}`);
+    }
+    // dispatch(clearDuplicatedAndDoubledTz());
+  }, [duplicatedTz]);
+
   return (
     <div className={s.craete1_center}>
       <span onClick={() => navigate(-1)} className={s.craete1_center_navigate}>
@@ -132,12 +150,16 @@ export default function CreateTZ1center({ activeSection }) {
                 {activeSectionIndex !== 0 ? (
                   <button
                     onClick={() => {
-                      const a = window.confirm(
-                        "Are you sure you want to go, all your savings are cleared"
-                      );
-                      if (a) {
-                        dispatch(clearFieldsData());
-                        navigateToPrev();
+                      if (userAction !== "view" || userAction !== "review") {
+                        const a = window.confirm(
+                          "Are you sure you want to go, all your savings are cleared"
+                        );
+                        if (a) {
+                          dispatch(clearFieldsData());
+                          navigateToPrev();
+                        }
+                      } else {
+                        return navigateToPrev();
                       }
                     }}
                   >
@@ -148,12 +170,23 @@ export default function CreateTZ1center({ activeSection }) {
                   <button
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      handleSubmitFieldsData();
-                      dispatch(clearFieldsData());
+                      if (userAction !== "view" || userAction !== "review") {
+                        handleSubmitFieldsData();
+                        dispatch(clearFieldsData());
+                      }
                       navigateToNext();
                     }}
                   >
                     {t("btn.2")}
+                  </button>
+                ) : userAction === "view" || userAction === "review" ? (
+                  <button
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      dispatch(duplicateTz(tzId));
+                    }}
+                  >
+                    Fill
                   </button>
                 ) : (
                   <button

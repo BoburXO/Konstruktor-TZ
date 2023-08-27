@@ -11,20 +11,18 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   clearStructureForUser,
   fetchStructureByIdForUser,
+  fetchStructureForViewingTzByIdForUser,
   setActiveSection,
   setUserAction,
 } from "../../redux/api/user/structure_slice";
 import CreateTZ1center from "../Layout/CreateTZ1center";
-import {
-  clearDuplicatedAndDoubledTz,
-  clearMessage,
-} from "../../pages/LKavtor/lkavtor_slice";
+import { clearDuplicatedAndDoubledTz } from "../../pages/LKavtor/lkavtor_slice";
 import Loader from "../Loader/Loader";
 
-const CreateTZ = () => {
-  const location = useLocation();
+const CreateTZ = ({ action }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { tzId } = useParams();
   const roleName = localStorage.getItem("roleName");
@@ -35,7 +33,7 @@ const CreateTZ = () => {
       style: { background: "white", color: "black" },
     });
 
-  const { structure, activeSection, data, loading, userAction } = useSelector(
+  const { structure, activeSection, data, loading } = useSelector(
     (state) => state.userStructure
   );
   const copy = (id, e) => {
@@ -49,66 +47,55 @@ const CreateTZ = () => {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/2048px-Eo_circle_green_checkmark.svg.png";
   };
 
-  useEffect(() => {
-    if (!tzId) {
-      navigate("/lkavtor");
-      return;
-    }
-    if (location.pathname.substring(0, 10) === "/tz/create") {
-      dispatch(setUserAction("create"));
-    } else if (location.pathname.substring(0, 8) === "/tz/edit") {
-      dispatch(setUserAction("edit"));
+  const fetchTzForForViewingOrForAnotherActions = () => {
+    if (action === "view") {
+      dispatch(fetchStructureForViewingTzByIdForUser(tzId));
     } else {
-      dispatch(setUserAction("review"));
+      dispatch(fetchStructureByIdForUser(tzId));
     }
-    dispatch(clearDuplicatedAndDoubledTz());
-    dispatch(fetchStructureByIdForUser(tzId))
-    console.log(1);
+  };
+
+  useEffect(() => {
     return () => {
       dispatch(clearStructureForUser());
     };
   }, []);
 
   useEffect(() => {
+    if (!tzId) {
+      navigate("/lkavtor");
+      return;
+    }
+    dispatch(clearDuplicatedAndDoubledTz());
+    fetchTzForForViewingOrForAnotherActions();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    dispatch(setUserAction(action));
+  }, [action]);
+
+  useEffect(() => {
     if (structure?.id) {
       dispatch(setActiveSection(structure?.sections[0]));
-      console.log(2)
     }
   }, [structure?.id]);
 
   useEffect(() => {
-
     if (activeSection?.id) {
       const activeSectionIndex = structure?.sections?.findIndex(
         (item) => item?.id === activeSection?.id
       );
       if (activeSectionIndex !== structure?.sections?.length - 1) {
-        dispatch(fetchStructureByIdForUser(tzId));
-        console.log(3)
+        fetchTzForForViewingOrForAnotherActions();
       } else if (
-        data?.id && activeSectionIndex === structure?.sections?.length - 1 &&
+        data?.id &&
+        activeSectionIndex === structure?.sections?.length - 1 &&
         data?.id === activeSection?.id
       ) {
         return navigate(roleName === "Author" ? "/profile" : "/lkavtor");
       }
     }
   }, [activeSection, data]);
-
-
-
-  // useEffect(() => {
-  //   const activeSectionIndex = structure?.sections?.findIndex(
-  //     (item) => item?.id === activeSection?.id
-  //   );
-  //   if (
-  //     activeSection?.id &&
-  //     data?.id &&
-  //     activeSectionIndex === structure?.sections?.length - 1 &&
-  //     data?.id === activeSection?.id
-  //   ) {
-  //     navigate("/lkavtor");
-  //   }
-  // }, [activeSection, data]);
 
   return (
     <>
