@@ -9,11 +9,8 @@ import {
   sendAllFieldsData,
   setActiveSection,
 } from "../../redux/api/user/structure_slice";
-import { useEffect, useMemo } from "react";
-import {
-  clearDuplicatedAndDoubledTz,
-  duplicateTz,
-} from "../../pages/LKavtor/lkavtor_slice";
+import { useMemo } from "react";
+import { duplicateTz } from "../../pages/LKavtor/lkavtor_slice";
 
 export default function CreateTZ1center({ activeSection }) {
   const { t } = useTranslation();
@@ -23,10 +20,6 @@ export default function CreateTZ1center({ activeSection }) {
 
   const { fieldsData, structure, userAction } = useSelector(
     (state) => state.userStructure
-  );
-
-  const { duplicatedTz, duplicateLoading } = useSelector(
-    (state) => state.lkavtor
   );
 
   const activeSectionIndex = useMemo(() => {
@@ -122,12 +115,6 @@ export default function CreateTZ1center({ activeSection }) {
     const nextSection = structure.sections[activeSectionIndex + 1];
     dispatch(setActiveSection(nextSection));
   };
-
-  useEffect(() => {
-    if (duplicatedTz?.id) {
-      navigate(`/tz/create/${duplicatedTz?.id}`);
-    }
-  }, [duplicatedTz]);
 
   return (
     <div className={s.craete1_center}>

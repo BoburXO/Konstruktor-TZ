@@ -33,7 +33,7 @@ const CreateTZ = ({ action }) => {
       style: { background: "white", color: "black" },
     });
 
-  const { structure, activeSection, data, loading } = useSelector(
+  const { structure, activeSection, data, loading, userAction } = useSelector(
     (state) => state.userStructure
   );
 
@@ -65,7 +65,7 @@ const CreateTZ = ({ action }) => {
   }, []);
 
   useEffect(() => {
-    if (duplicatedTz?.id) {
+    if (duplicatedTz?.id && userAction === "view") {
       navigate(`/tz/create/${duplicatedTz?.id}`);
     }
   }, [duplicatedTz]);

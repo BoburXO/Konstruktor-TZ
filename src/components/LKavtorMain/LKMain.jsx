@@ -76,6 +76,8 @@ const LKMain = () => {
     SuperAuthor,
   } = useContext(Context);
 
+  const { userAction } = useSelector((state) => state.userStructure);
+
   const { message, loading, duplicatedTz, duplicateLoading } = useSelector(
     (state) => state.lkavtor
   );
@@ -95,7 +97,7 @@ const LKMain = () => {
 
   useEffect(() => {
     if (localStorage.getItem("roleName") === "Author" && duplicatedTz?.id) {
-      return navigate(`/tz/create/${duplicatedTz?.id}`);
+      navigate(`/tz/create/${duplicatedTz?.id}`);
     }
   }, [duplicatedTz]);
 
