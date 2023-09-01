@@ -127,7 +127,6 @@ export default function CreateTZ1center({ activeSection }) {
     if (duplicatedTz?.id) {
       navigate(`/tz/create/${duplicatedTz?.id}`);
     }
-    // dispatch(clearDuplicatedAndDoubledTz());
   }, [duplicatedTz]);
 
   return (
@@ -186,7 +185,7 @@ export default function CreateTZ1center({ activeSection }) {
                       dispatch(duplicateTz(tzId));
                     }}
                   >
-                    Fill
+                    {t("tz.fill")}
                   </button>
                 ) : (
                   <button
@@ -195,7 +194,7 @@ export default function CreateTZ1center({ activeSection }) {
                       handleSubmitFieldsData();
                     }}
                   >
-                    Save
+                    {t("tz.save")}
                   </button>
                 )}
               </div>

@@ -36,6 +36,9 @@ const CreateTZ = ({ action }) => {
   const { structure, activeSection, data, loading } = useSelector(
     (state) => state.userStructure
   );
+
+  const { duplicatedTz } = useSelector((state) => state.lkavtor);
+
   const copy = (id, e) => {
     const currentPunkt = templates?.find((punkt) => {
       setArr([...arr, punkt.desc]);
@@ -62,12 +65,18 @@ const CreateTZ = ({ action }) => {
   }, []);
 
   useEffect(() => {
+    if (duplicatedTz?.id) {
+      navigate(`/tz/create/${duplicatedTz?.id}`);
+    }
+  }, [duplicatedTz]);
+
+  useEffect(() => {
     if (!tzId) {
       navigate("/lkavtor");
       return;
     }
-    dispatch(clearDuplicatedAndDoubledTz());
     fetchTzForForViewingOrForAnotherActions();
+    dispatch(clearDuplicatedAndDoubledTz());
   }, [location.pathname]);
 
   useEffect(() => {

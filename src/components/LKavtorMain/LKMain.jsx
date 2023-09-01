@@ -336,7 +336,7 @@ const LKMain = () => {
                                 {" "}
                                 <p className={s.lkmain_sect_dates}>
                                   <img src={date} alt="" />
-                                  <p>{tz?.created_at.slice(0, 10)}</p>
+                                  <span>{tz?.created_at.slice(0, 10)}</span>
                                 </p>{" "}
                               </TableCell>
                               <TableCell align="right">
