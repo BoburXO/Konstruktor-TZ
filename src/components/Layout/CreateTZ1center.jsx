@@ -6,6 +6,7 @@ import RenderSectionsWithChildren from "../RenderSectionsWithChildren/RenderSect
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearFieldsData,
+  publishTz,
   sendAllFieldsData,
   setActiveSection,
 } from "../../redux/api/user/structure_slice";
@@ -135,6 +136,7 @@ export default function CreateTZ1center({ activeSection }) {
               <div className={s.create1_form_route_btn}>
                 {activeSectionIndex !== 0 ? (
                   <button
+                    className={s.create1_form_route_btn_sides}
                     onClick={() => {
                       if (userAction !== "view" || userAction !== "review") {
                         const a = window.confirm(
@@ -155,6 +157,7 @@ export default function CreateTZ1center({ activeSection }) {
                 {activeSectionIndex !== structure?.sections?.length - 1 ? (
                   <button
                     style={{ cursor: "pointer" }}
+                    className={s.create1_form_route_btn_sides}
                     onClick={() => {
                       if (userAction !== "view" || userAction !== "review") {
                         handleSubmitFieldsData();
@@ -168,6 +171,7 @@ export default function CreateTZ1center({ activeSection }) {
                 ) : userAction === "view" || userAction === "review" ? (
                   <button
                     style={{ cursor: "pointer" }}
+                    className={s.create1_form_route_btn_save}
                     onClick={() => {
                       dispatch(duplicateTz(tzId));
                     }}
@@ -175,14 +179,29 @@ export default function CreateTZ1center({ activeSection }) {
                     {t("tz.fill")}
                   </button>
                 ) : (
-                  <button
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      handleSubmitFieldsData();
-                    }}
-                  >
-                    {t("tz.save")}
-                  </button>
+                  <>
+                    <button
+                      style={{ cursor: "pointer" }}
+                      className={s.create1_form_route_btn_save}
+                      onClick={() => {
+                        handleSubmitFieldsData();
+                      }}
+                    >
+                      {t("tz.save")}
+                    </button>
+                    {structure?.is_draft ? (
+                      <button
+                        style={{ cursor: "pointer" }}
+                        className={s.create1_form_route_btn_save_and_publish}
+                        onClick={() => {
+                          handleSubmitFieldsData();
+                          dispatch(publishTz(tzId));
+                        }}
+                      >
+                        {t("tz.save_and_publish")}
+                      </button>
+                    ) : null}
+                  </>
                 )}
               </div>
             </div>

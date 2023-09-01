@@ -80,6 +80,51 @@
   gap: 16px;
 }
 
+.create1_form_route_btn_sides {
+  width: 140px;
+  height: 48px;
+  color: rgba(34, 34, 34, 0.6);
+  background: #fff;
+  border: 2px solid rgba(34, 34, 34, 0.4);
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.create1_form_route_btn_sides:active {
+  background: rgba(34, 34, 34, 0.6);
+  color: #fff;
+}
+
+.create1_form_route_btn_save {
+  width: 140px;
+  height: 48px;
+  background: #631ac0;
+  border: 2px solid #631ac0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.create1_form_route_btn_save_and_publish {
+  width: 140px;
+  height: 48px;
+  background: #631ac0;
+  border: 2px solid #631ac0;
+  padding: 0 5px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.create1_form_route_btn_save:hover,
+.create1_form_route_btn_save_and_publish:hover {
+  background: #fff;
+  color: #631ac0;
+}
+/* 
 .create1_form_route_btn button:last-child {
   width: 140px;
   height: 48px;
@@ -91,6 +136,7 @@
   font-size: 16px;
   border-radius: 8px;
 }
+
 .create1_form_route_btn button:last-child:focus {
   background: #fff;
   color: #631ac0;
@@ -111,7 +157,7 @@
 .create1_form_route_btn button:first-child:active {
   background: rgba(34, 34, 34, 0.6);
   color: #fff;
-}
+} */
 
 .create1_form_card {
   width: 100%;

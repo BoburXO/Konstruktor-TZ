@@ -170,7 +170,7 @@
     "6": "KO'RISH",
     "7": "Tuzilmalar",
     "8": "Texnik topshiriqlar",
-    "9":"Foydalanuvchilar"
+    "9": "Foydalanuvchilar"
   },
 
   "notFound": "Hech narsa topilmadi",
@@ -211,6 +211,7 @@
   "count": "Hammasi",
   "tz": {
     "fill": "To'ldirish",
-    "save": "Saqlash"
+    "save": "Saqlash",
+    "save_and_publish": "Saqlash va nashr qilish"
   }
 }

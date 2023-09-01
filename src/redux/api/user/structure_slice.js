@@ -3,14 +3,16 @@ import { useHttp } from "../../../hooks/useHttp";
 
 const initialState = {
   loading: false,
+  publishLoading: false,
+  templatesLoading: false,
   structure: {},
   activeSection: {},
   classificator: {},
   fieldsData: [],
   data: {},
   userAction: "edit",
-  templatesLoading: false,
   templates: [],
+  publishedTz: {},
 };
 
 export const fetchStructureByIdForUser = createAsyncThunk(
@@ -90,6 +92,22 @@ export const fetchTemplates = createAsyncThunk(
   }
 );
 
+export const publishTz = createAsyncThunk("tz/publish", async (id) => {
+  const { request } = useHttp();
+  return await request({
+    method: "PATCH",
+    url: `/constructor/detail/user/${id}`,
+    data: {
+      is_draft: false,
+    },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem(
+        "ConstructorRoleAccessToken"
+      )}`,
+    },
+  });
+});
+
 const userStructureSlice = createSlice({
   name: "userStructure",
   initialState,
@@ -150,6 +168,9 @@ const userStructureSlice = createSlice({
       state.data = {};
       state.templates = [];
     },
+    clearPublishedTz: (state) => {
+      state.publishedTz = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -190,7 +211,14 @@ const userStructureSlice = createSlice({
           state.structure = payload;
           state.loading = false;
         }
-      );
+      )
+      .addCase(publishTz.pending, (state) => {
+        state.publishLoading = true;
+      })
+      .addCase(publishTz.fulfilled, (state, { payload }) => {
+        state.publishedTz = payload;
+        state.publishLoading = false;
+      });
   },
 });
 
@@ -201,4 +229,5 @@ export const {
   clearFieldsData,
   setUserAction,
   clearStructureForUser,
+  clearPublishedTz,
 } = userStructureSlice.actions;

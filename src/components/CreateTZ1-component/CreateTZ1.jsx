@@ -9,6 +9,7 @@ import { templates } from "../../templates";
 import StructureLeftSidebar from "../StructureLeftSidebar/StructureLeftSidebar";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  clearPublishedTz,
   clearStructureForUser,
   fetchStructureByIdForUser,
   fetchStructureForViewingTzByIdForUser,
@@ -33,9 +34,8 @@ const CreateTZ = ({ action }) => {
       style: { background: "white", color: "black" },
     });
 
-  const { structure, activeSection, data, loading, userAction } = useSelector(
-    (state) => state.userStructure
-  );
+  const { structure, activeSection, data, loading, userAction, publishedTz } =
+    useSelector((state) => state.userStructure);
 
   const { duplicatedTz } = useSelector((state) => state.lkavtor);
 
@@ -105,6 +105,13 @@ const CreateTZ = ({ action }) => {
       }
     }
   }, [activeSection, data]);
+
+  useEffect(() => {
+    if (publishedTz?.id) {
+      dispatch(clearPublishedTz());
+      navigate(roleName === "Author" ? "/profile" : "/lkavtor");
+    }
+  }, [publishedTz?.id]);
 
   return (
     <>
