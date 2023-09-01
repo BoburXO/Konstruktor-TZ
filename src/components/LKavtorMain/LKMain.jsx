@@ -76,7 +76,6 @@ const LKMain = () => {
     SuperAuthor,
   } = useContext(Context);
 
-  const { userAction } = useSelector((state) => state.userStructure);
 
   const { message, loading, duplicatedTz, duplicateLoading } = useSelector(
     (state) => state.lkavtor
