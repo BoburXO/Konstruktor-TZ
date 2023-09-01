@@ -106,11 +106,11 @@
 
 @media all and (max-width: 1162px) {
   .userNav_lists {
-    height: 70px;
+    height: 60px;
   }
   .admin_routes,
   .author_routes {
-    height: 60px;
+    height: 40px;
   }
   .admin_routes li,
   .author_routes li {

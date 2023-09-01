@@ -78,6 +78,7 @@ const ContentOfSite = () => {
       setIsLoading(false)
     );
     getSphere().then(() => setIsLoading(false));
+    getOrganizations().then(() => setIsLoading(false));
   }, [contentSearch]);
 
   const options = [
@@ -132,24 +133,28 @@ const ContentOfSite = () => {
                 placeholder={t("content-site.3")}
               />
             </div>
-           {localStorage.getItem("roleName") === "SuperAdmin" ? (
-             <div>
-             <Select
-               placeholder={t("filter.1")}
-               onChange={(value) => {
-                 getContentSearch({ orgId: value.value, id: spId, isPublish });
-                 setOrgId(value.value);
-               }}
-               className={s.sample_select}
-               options={[{ id: "", name: t("filter.1") }]
-                 .concat(org)
-                 .map((el) => ({
-                   value: el?.id,
-                   label: el?.name,
-                 }))}
-             />
-           </div>
-           ):null}
+            {localStorage.getItem("roleName") === "SuperAdmin" ? (
+              <div>
+                <Select
+                  placeholder={t("filter.1")}
+                  onChange={(value) => {
+                    getContentSearch({
+                      orgId: value.value,
+                      id: spId,
+                      isPublish,
+                    });
+                    setOrgId(value.value);
+                  }}
+                  className={s.sample_select}
+                  options={[{ id: "", name: t("filter.1") }]
+                    .concat(org)
+                    .map((el) => ({
+                      value: el?.id,
+                      label: el?.name,
+                    }))}
+                />
+              </div>
+            ) : null}
             {localStorage.getItem("roleName") !== "Author" ? (
               <div>
                 <Select

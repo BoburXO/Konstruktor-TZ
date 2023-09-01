@@ -30,7 +30,7 @@ const OrganizationsComp = () => {
 
   const optionOwner = [
     { value: true, label: t("super.2") },
-    { value: "", label: t("filter.1") },
+    { value: false, label: t("filter.1") },
   ];
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const OrganizationsComp = () => {
                         {org?.name}
                       </TableCell>
                       <TableCell align="center">
-                        {org?.count_of_result}
+                        {org?.total_result}
                       </TableCell>
                       <TableCell align="center">{org?.count_of_user}</TableCell>
                       <TableCell align="right">

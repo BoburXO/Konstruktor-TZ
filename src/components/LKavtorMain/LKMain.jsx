@@ -116,7 +116,7 @@ const LKMain = () => {
 
   const optionOwner = [
     { value: true, label: t("super.2") },
-    { value: false, label: t("super.5") },
+    { value: false, label: t("super.9") },
   ];
 
   const optionsDraft = [
@@ -196,7 +196,7 @@ const LKMain = () => {
                     {localStorage.getItem("roleName") === "Admin" ? (
                       <div>
                         <Select
-                          placeholder={t("super.5")}
+                          placeholder={t("super.9")}
                           onChange={(value) => {
                             SuperTzGet({
                               owner: value.value,
