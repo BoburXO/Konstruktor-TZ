@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "../UserNav/UserNav.module.css";
 
-import logofff from "../../assets/imgs/logofff.svg";
+import logofff from "../../assets/imgs/Logo.svg";
 import { Link, NavLink } from "react-router-dom";
 import ava from "../../assets/icons/ava.png";
 import { useTranslation } from "react-i18next";
@@ -60,6 +60,9 @@ const UserNav = () => {
             <li className={s.logofff_list}>
               <Link to="/main">
                 <img src={logofff} alt="logofff" />
+                <span id={s.extra_logo_txt} className={s.logo_txt}>
+                  {t("siteName")}
+                </span>
               </Link>
             </li>
             <li className={s.userNav_right_lists}>
@@ -186,10 +189,13 @@ const UserNav = () => {
                 <div className={s.mobile_nav}>
                   <div className={s.mobile_container}>
                     <div className={s.mobile_lists}>
-                      <span className={s.logofff_list_side}>
-                        <NavLink to="/main">
-                          <img src={logofff} alt="Logo" />
-                        </NavLink>
+                      <span className={s.logofff_list}>
+                        <Link to="/main">
+                          <img src={logofff} alt="logofff" />
+                          <span className={s.logo_txt}>
+                          {t("siteName")}
+                          </span>
+                        </Link>
                       </span>
                       <span className={s.select_side_bar}>
                         <Select
@@ -371,10 +377,13 @@ const UserNav = () => {
                 <div className={s.mobile_nav}>
                   <div className={s.mobile_container}>
                     <div className={s.mobile_lists}>
-                      <span className={s.logofff_list_side}>
-                        <NavLink to="/main">
-                          <img src={logofff} alt="Logo" />
-                        </NavLink>
+                      <span className={s.logofff_list}>
+                        <Link to="/main">
+                          <img src={logofff} alt="logofff" />
+                          <span className={s.logo_txt}>
+                          {t("siteName")}
+                          </span>
+                        </Link>
                       </span>
                       <span className={s.select_side_bar}>
                         <Select
