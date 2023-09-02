@@ -1,6 +1,6 @@
 {
   "language": "O'zbek",
-  "siteName":"Texnik topshiriqlarni shakllantirish tizimi",
+  "siteName": "Texnik topshiriqlarni shakllantirish tizimi",
   "nav1": "Kontaktlar",
   "nav2": "Shaxsiy kabinet",
   "usernav": "TK tuzilishi",
@@ -214,5 +214,8 @@
     "fill": "To'ldirish",
     "save": "Saqlash",
     "save_and_publish": "Saqlash va nashr qilish"
+  },
+  "email": {
+    "error": "Iltimos to'g'ri formatdagi email kiriting!"
   }
 }

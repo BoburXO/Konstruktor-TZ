@@ -72,6 +72,21 @@ export const renderSectionsWithChildren = (sections) => {
 };
 
 export const setRowNumberForTz = (page, countPerPage = 8, index) => {
-  const rowNumber = (page - 1) * +countPerPage + index + 1
+  const rowNumber = (page - 1) * +countPerPage + index + 1;
   return rowNumber;
-}
+};
+
+export const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+export const validateEmailWhenSubmitted = (email, ref) => {
+  const isCorrect = validateEmail(email);
+  if (!isCorrect) {
+    return ref.current.focus();
+  }
+};
