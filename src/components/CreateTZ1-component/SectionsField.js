@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Select from "react-select";
 import s from "./CreateTZ1.module.css";
 import DrawTableWithValues from "../DrawTableWithValues/DrawTableWithValues";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchClassificator,
-  setFieldsData,
-} from "../../redux/api/user/structure_slice";
+import { setFieldsData } from "../../redux/api/user/structure_slice";
 import { useMemo } from "react";
-import useSelection from "antd/es/table/hooks/useSelection";
+import { validateEmail } from "../../helpers/helpers";
+import { toast } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export default function SectionsField({ field }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const emailRef = useRef();
+
   const [tableData, setTableData] = useState(field?.json_data?.data_uz);
 
   const [charField, setCharField] = useState(field?.field || "");
@@ -62,6 +64,7 @@ export default function SectionsField({ field }) {
             placeholder={`Введите ${field?.field_name}`}
             value={charField}
             tabIndex={0}
+            maxLength={255}
             onChange={(e) => {
               setCharField(e.target.value);
             }}
@@ -145,19 +148,46 @@ export default function SectionsField({ field }) {
             required
             placeholder={`Введите ${field?.field_name}`}
             value={otherField}
+            ref={field?.select_type === 4 ? emailRef : null}
+            type={
+              field?.select_type === 3
+                ? "number"
+                : field?.select_type === 4
+                ? "email"
+                : field?.select_type === 5
+                ? "date"
+                : "input"
+            }
             onChange={(e) => {
               setOtherField(e.target.value);
             }}
             onBlur={() => {
-              dispatch(
-                setFieldsData({
-                  section_id: field?.section,
-                  select_type: field.select_type,
-                  field_id: field?.id,
-                  field_uz: otherField,
-                  field_ru: otherField,
-                })
-              );
+              if (field?.select_type === 4) {
+                if (validateEmail(otherField)) {
+                  dispatch(
+                    setFieldsData({
+                      section_id: field?.section,
+                      select_type: field.select_type,
+                      field_id: field?.id,
+                      field_uz: otherField,
+                      field_ru: otherField,
+                    })
+                  );
+                } else {
+                  toast.error(t("email.error"));
+                  return emailRef.current.focus();
+                }
+              } else {
+                dispatch(
+                  setFieldsData({
+                    section_id: field?.section,
+                    select_type: field.select_type,
+                    field_id: field?.id,
+                    field_uz: otherField,
+                    field_ru: otherField,
+                  })
+                );
+              }
             }}
             disabled={fieldDisabled}
           />
