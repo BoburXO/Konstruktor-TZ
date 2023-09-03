@@ -107,7 +107,7 @@
   margin-bottom: 22px;
 }
 
-input[type="file"] {
+.AddContent_left_file input[type="file"] {
   display: none;
 }
 

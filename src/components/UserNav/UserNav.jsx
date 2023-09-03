@@ -325,22 +325,6 @@ const UserNav = () => {
               <li>
                 <NavLink
                   style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  to="/lkadminspravochnik"
-                >
-                  {t("usernav1")}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
-                  to="/contentofsite"
-                >
-                  {t("usernav3")}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  style={({ isActive }) => (isActive ? activeStyle : undefined)}
                   to="/lkavtor"
                 >
                   {t("lkavtor1")}
@@ -415,7 +399,7 @@ const UserNav = () => {
                           isSearchable={false}
                         />
                       </span>
-                      <span>
+                      {/* <span>
                         <NavLink
                           style={({ isActive }) =>
                             isActive ? activeStyle : undefined
@@ -424,8 +408,8 @@ const UserNav = () => {
                         >
                           {t("usernav1")}
                         </NavLink>
-                      </span>
-                      <span>
+                      </span> */}
+                      {/* <span>
                         <NavLink
                           style={({ isActive }) =>
                             isActive ? activeStyle : undefined
@@ -434,7 +418,7 @@ const UserNav = () => {
                         >
                           {t("usernav3")}
                         </NavLink>
-                      </span>
+                      </span> */}
                       <span>
                         <NavLink
                           style={({ isActive }) =>
