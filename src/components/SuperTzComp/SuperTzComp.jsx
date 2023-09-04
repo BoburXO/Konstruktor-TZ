@@ -26,6 +26,8 @@ import Select from "react-select";
 import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
 import { FaEye } from "react-icons/fa";
 import { setRowNumberForTz } from "../../helpers/helpers";
+import { useDispatch } from "react-redux";
+import { doubleStructure } from "../../pages/LKavtor/lkavtor_slice";
 
 const style = {
   position: "absolute",
@@ -51,6 +53,7 @@ const SuperTzComp = () => {
   const handleCloseDel = () => setOpenDel(false);
   //modal
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const {
     organization,
     SuperOrganizations,
@@ -259,6 +262,29 @@ const SuperTzComp = () => {
                           {tz?.user?.username ===
                           localStorage.getItem("roleUserName") ? (
                             <div className={s.lkmain_sect_crud}>
+                              {(localStorage.getItem("roleName") === "Admin" ||
+                                localStorage.getItem("roleName") ===
+                                  "SuperAdmin") &&
+                              !draft ? (
+                                <button
+                                  className={s.lkmain_sect_crud_copy}
+                                  style={{
+                                    borderColor: "green",
+                                    color: "green",
+                                    fontWeight: "500",
+                                  }}
+                                  onClick={() => {
+                                    dispatch(
+                                      doubleStructure({
+                                        id: tz?.id,
+                                        data: { is_double: true },
+                                      })
+                                    );
+                                  }}
+                                >
+                                  Fill
+                                </button>
+                              ) : null}
                               <button
                                 onClick={() => DuplicateTz(tz?.id)}
                                 className={s.lkmain_sect_crud_copy}
