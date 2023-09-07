@@ -14,11 +14,9 @@ import Structure from "./pages/StructureTZ/Structure";
 import SpravochnikId from "./Params/Spravochnik/SpravochnikId";
 import Templates from "./Params/Templates/Template";
 import UpdContent from "./Params/UpdContent/UpdContent";
-import UserTemplate from "./Params/Templates/UserTemplate";
 import RegOneId from "./pages/Reg/RegOneId";
 import OneId from "./pages/oneid/RegOneId";
 import IndexSpra from "./Params/IndexSpravochnik/IndexSpra";
-import ContentOfSiteUser from "./Params/ContentOfSiteUser/ContentOfSiteUser";
 import Sphere from "./pages/Sphere/Sphere";
 import LKAvtorUser from "./pages/LKAvtorUser/LKAvtorUser";
 import Organizations from "./pages/Organizations/Organizations";
@@ -37,21 +35,19 @@ function App() {
         <Route path="/tz/view/:tzId" element={<CreateTZ action="view" />} />
         <Route path="/tz/review/:tzId" element={<CreateTZ action="review" />} />
         <Route path="/createtz2" element={<CreateTZ2 />} />
-        <Route path="/contentofsite" element={<Content />} />
-        <Route path="/lkadminspravochnik" element={<LKAdminSpravochnik />} />
-        <Route path="/index-spravochnik/:id" element={<IndexSpra />} />
-        <Route path="/user-samplePunkt/:id" element={<UserTemplate />} />
         <Route path="/structure/edit/:id" element={<Structure />} />
         <Route path="/structure/:id" element={<Structure />} />
-        <Route
-          path="/content-of-site-index/:slug"
-          element={<ContentOfSiteUser />}
-        />
         <Route path="/oneid/:one" element={<OneId />} />
         <Route path="*" element={<PageNotFound />} />
 
         {localStorage.getItem("roleName") !== "Author" ? (
           <>
+            <Route
+              path="/lkadminspravochnik"
+              element={<LKAdminSpravochnik />}
+            />
+            <Route path="/index-spravochnik/:id" element={<IndexSpra />} />
+            <Route path="/contentofsite" element={<Content />} />
             <Route path="/organizations" element={<Organizations />} />
             <Route path="/organizations/:id" element={<SuperTZ />} />
             <Route path="/lkadminshablon" element={<LKAdminstrator />} />

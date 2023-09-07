@@ -119,6 +119,10 @@
   font-family: Rubik;
 }
 
+.AddContent_left_file input[type="file"] {
+  display: none;
+}
+
 .AddContent_left_file label {
   cursor: pointer;
 }

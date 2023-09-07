@@ -173,11 +173,9 @@
 .org_name_div {
   width: 100%;
   height: 50px;
-  display: flex;
-  justify-content: center;
   font-size: 22px;
-  padding-bottom: 40px;
-  gap: 50px;
+  /* padding-bottom: 40px; */
+  text-align: center;
 }
 
 .notFound {
@@ -263,7 +261,7 @@
 
 .twink {
   width: 100%;
-  height: 80px;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;

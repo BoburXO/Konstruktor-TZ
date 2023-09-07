@@ -275,6 +275,7 @@ const LKMain = () => {
                         {superTz?.count}
                       </h4>
                     </div>
+                    <br />
                     <TableContainer
                       component={Paper}
                       classes={{ root: s.table }}
