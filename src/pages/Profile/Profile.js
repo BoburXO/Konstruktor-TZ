@@ -29,6 +29,10 @@ export default function Profile() {
     (state) => state.profile
   );
 
+  useEffect(() => {
+    console.log(searchText);
+  }, [searchText]);
+
   const { duplicatedTz, duplicateLoading } = useSelector(
     (state) => state.lkavtor
   );
@@ -51,7 +55,10 @@ export default function Profile() {
 
   return (
     <>
-      {loading || deleteLoading || duplicateLoading || pdfLoading ? (
+      {(loading && !tzList?.links) ||
+      deleteLoading ||
+      duplicateLoading ||
+      pdfLoading ? (
         <Loader />
       ) : (
         <>
@@ -76,6 +83,7 @@ export default function Profile() {
                       type="text"
                       placeholder={t("content-site.3")}
                       onChange={(e) => setSearchText(e.target.value)}
+                      value={searchText}
                     />
                   </div>
                 </div>
