@@ -17,6 +17,7 @@ import ProfilePagination from "../../Pagination/ProfilePagination";
 import Footer from "../../components/Footer/Footer";
 import ProfileListItem from "./ProfileListItem";
 import { clearPdfStates } from "../../redux/api/user/pdf_slice";
+import Select from "react-select";
 
 export default function Profile() {
   const { t } = useTranslation();
@@ -24,14 +25,17 @@ export default function Profile() {
 
   //searchPanel
   const [searchText, setSearchText] = useState("");
+  const [isDraft, setIsDraft] = useState("both");
+
+  const draftOptions = [
+    { value: "both", label: t("filter.1") },
+    { value: false, label: t("filter.2") },
+    { value: true, label: t("filter.3") },
+  ];
 
   const { tzList, loading, deletedTz, deleteLoading } = useSelector(
     (state) => state.profile
   );
-
-  useEffect(() => {
-    console.log(searchText);
-  }, [searchText]);
 
   const { duplicatedTz, duplicateLoading } = useSelector(
     (state) => state.lkavtor
@@ -40,10 +44,10 @@ export default function Profile() {
   const { pdf, pdfLoading } = useSelector((state) => state.pdf);
 
   useEffect(() => {
-    dispatch(fetchAllTzOfUser({ tz_name: searchText }));
+    dispatch(fetchAllTzOfUser({ tz_name: searchText, is_draft: isDraft }));
 
     //eslint-disable-next-line
-  }, [deletedTz, searchText, duplicatedTz]);
+  }, [deletedTz, searchText, duplicatedTz, isDraft]);
 
   useEffect(() => {
     if (pdf.pdf_file) {
@@ -84,6 +88,17 @@ export default function Profile() {
                       placeholder={t("content-site.3")}
                       onChange={(e) => setSearchText(e.target.value)}
                       value={searchText}
+                    />
+                  </div>
+                  <div>
+                    <Select
+                      placeholder={t("filter.4")}
+                      onChange={(e) => {
+                        setIsDraft(e.value);
+                      }}
+                      className={s.selecttt}
+                      options={draftOptions}
+                      defaultValue={draftOptions[0]}
                     />
                   </div>
                 </div>
