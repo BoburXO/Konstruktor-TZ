@@ -92,10 +92,6 @@
   margin-bottom: 22px;
 }
 
-input[type="file"] {
-  display: none;
-}
-
 .AddContent_left_file label {
   cursor: pointer;
 }

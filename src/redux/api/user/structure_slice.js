@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useHttp } from "../../../hooks/useHttp";
+import { objectToFormData } from "../../../helpers/helpers";
 
 const initialState = {
   loading: false,
@@ -63,9 +64,8 @@ export const sendAllFieldsData = createAsyncThunk(
   "fieldsData/sendAll",
   async ({ id, data }) => {
     const { request } = useHttp();
-    console.log(data);
     return await request({
-      method: "PUT",
+      method: "PATCH",
       url: `/constructor/section/field/${id}`,
       data,
       headers: {

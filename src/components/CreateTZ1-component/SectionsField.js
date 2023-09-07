@@ -10,7 +10,7 @@ import { validateEmail } from "../../helpers/helpers";
 import { toast } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
-export default function SectionsField({ field }) {
+export default function SectionsField({ field, setImageFile }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const emailRef = useRef();
@@ -45,6 +45,8 @@ export default function SectionsField({ field }) {
         })
       );
     }
+
+    //eslint-disable-next-line
   }, [tableData]);
 
   const classificatorElemOptions = useMemo(() => {
@@ -117,7 +119,25 @@ export default function SectionsField({ field }) {
           />
         </div>
       ) : field?.select_type === 7 ? (
-        "Image"
+        <div className={s.create1_form_card}>
+          <label htmlFor="imageFile">Select a file:</label>
+          <input
+            type="file"
+            id="imageFile"
+            name="image"
+            onChange={(e) => {
+              setImageFile(e.target.files[0]);
+              dispatch(
+                setFieldsData({
+                  section_id: field?.section,
+                  select_type: 7,
+                  field_id: field?.id,
+                  image: {},
+                })
+              );
+            }}
+          />
+        </div>
       ) : field?.select_type === 8 ? (
         <div className={s.create1_form_card}>
           <p>{field?.classificator?.title || "Jadval Nomi"}</p>

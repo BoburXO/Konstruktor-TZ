@@ -119,10 +119,6 @@
   font-family: Rubik;
 }
 
-input[type="file"] {
-  display: none;
-}
-
 .AddContent_left_file label {
   cursor: pointer;
 }
@@ -237,7 +233,6 @@ input[type="file"] {
   background-repeat: no-repeat;
   background-position: center;
 }
-
 
 .shareDis {
   width: 100%;

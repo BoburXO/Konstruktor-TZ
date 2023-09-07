@@ -90,3 +90,27 @@ export const validateEmailWhenSubmitted = (email, ref) => {
     return ref.current.focus();
   }
 };
+
+export const objectToFormData = (
+  obj,
+  formData = new FormData(),
+  parentKey = ""
+) => {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      const formKey = parentKey ? `${parentKey}[${key}]` : key;
+
+      if (typeof value === "object" && !Array.isArray(value)) {
+        objectToFormData(value, formData, formKey);
+      } else if (Array.isArray(value)) {
+        for (let i = 0; i < value.length; i++) {
+          objectToFormData({ [i]: value[i] }, formData, `${formKey}[${i}]`);
+        }
+      } else {
+        formData.append(formKey, value);
+      }
+    }
+  }
+  return formData;
+};

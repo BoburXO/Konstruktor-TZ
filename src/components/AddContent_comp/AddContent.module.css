@@ -107,10 +107,6 @@
   margin-bottom: 22px;
 }
 
-input[type="file"] {
-  display: none;
-}
-
 .AddContent_left_file label {
   cursor: pointer;
 }
@@ -208,7 +204,7 @@ input[type="file"] {
   border-radius: 8px;
 }
 
-.shareDis{
+.shareDis {
   width: 100%;
   height: 48px;
 
@@ -294,7 +290,7 @@ table {
   border-radius: 6px;
 }
 
-table  input {
+table input {
   width: 100%;
   height: 40px;
   border: none;
