@@ -138,7 +138,7 @@ export default function CreateTZ1center({ activeSection }) {
                   <button
                     className={s.create1_form_route_btn_sides}
                     onClick={() => {
-                      if (userAction !== "view" || userAction !== "review") {
+                      if (userAction !== "view" || userAction !== "preview") {
                         const a = window.confirm(
                           "Are you sure you want to go, all your savings are cleared"
                         );
@@ -159,7 +159,7 @@ export default function CreateTZ1center({ activeSection }) {
                     style={{ cursor: "pointer" }}
                     className={s.create1_form_route_btn_sides}
                     onClick={() => {
-                      if (userAction !== "view" || userAction !== "review") {
+                      if (userAction !== "view" || userAction !== "preview") {
                         handleSubmitFieldsData();
                         dispatch(clearFieldsData());
                       }
@@ -168,7 +168,7 @@ export default function CreateTZ1center({ activeSection }) {
                   >
                     {t("btn.2")}
                   </button>
-                ) : userAction === "view" || userAction === "review" ? (
+                ) : userAction === "preview" ? (
                   <button
                     style={{ cursor: "pointer" }}
                     className={s.create1_form_route_btn_save}
@@ -178,7 +178,7 @@ export default function CreateTZ1center({ activeSection }) {
                   >
                     {t("tz.fill")}
                   </button>
-                ) : (
+                ) : userAction !== "view" ? (
                   <>
                     <button
                       style={{ cursor: "pointer" }}
@@ -202,7 +202,7 @@ export default function CreateTZ1center({ activeSection }) {
                       </button>
                     ) : null}
                   </>
-                )}
+                ) : null}
               </div>
             </div>
           ) : (

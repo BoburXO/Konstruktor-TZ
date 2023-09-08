@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useHttp } from "../../../hooks/useHttp";
-import { objectToFormData } from "../../../helpers/helpers";
 
 const initialState = {
   loading: false,

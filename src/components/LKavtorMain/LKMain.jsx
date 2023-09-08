@@ -405,12 +405,6 @@ const LKMain = () => {
                                               s.lkmain_sect_crud_skacat
                                             }
                                           >
-                                            {/* <a
-                                              rel="noopener"
-                                              // href={tz?.pdf_file}
-                                              // download
-                                              target="_blank"
-                                            > */}
                                             <img
                                               src={skacatIcon}
                                               alt="Download"
@@ -489,7 +483,7 @@ const LKMain = () => {
                                     ) : null}
                                     {localStorage.getItem("roleName") ===
                                     "Author" ? (
-                                      <Link to={`/tz/view/${tz?.id}`}>
+                                      <Link to={`/tz/preview/${tz?.id}`}>
                                         <button
                                           className={s.content_crud_create}
                                         >
@@ -520,7 +514,7 @@ const LKMain = () => {
                                         to={
                                           isAuthor
                                             ? `/tz/view/${tz?.id}`
-                                            : `/structure/${tz?.id}`
+                                            : `/tz/preview/${tz?.id}`
                                         }
                                       >
                                         <button
@@ -535,7 +529,7 @@ const LKMain = () => {
                                         </button>
                                       </Link>
                                     ) : (
-                                      <Link to={`/tz/view/${tz?.id}`}>
+                                      <Link to={`/tz/preview/${tz?.id}`}>
                                         <button
                                           className={s.content_crud_create}
                                         >

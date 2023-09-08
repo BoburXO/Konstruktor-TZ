@@ -51,7 +51,7 @@ const CreateTZ = ({ action }) => {
   };
 
   const fetchTzForForViewingOrForAnotherActions = () => {
-    if (action === "view") {
+    if (action === "preview") {
       dispatch(fetchStructureForViewingTzByIdForUser(tzId));
     } else {
       dispatch(fetchStructureByIdForUser(tzId));
@@ -65,7 +65,7 @@ const CreateTZ = ({ action }) => {
   }, []);
 
   useEffect(() => {
-    if (duplicatedTz?.id && userAction === "view") {
+    if (duplicatedTz?.id && userAction === "preview") {
       navigate(`/tz/create/${duplicatedTz?.id}`);
     }
   }, [duplicatedTz]);

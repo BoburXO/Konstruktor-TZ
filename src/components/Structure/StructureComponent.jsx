@@ -413,7 +413,7 @@ const StructureComponent = () => {
                               })
                             );
                           } else {
-                            return toast(t("tzUncreated"));
+                            return toast.error(t("tzUncreated"));
                           }
                         }}
                       >
@@ -433,7 +433,7 @@ const StructureComponent = () => {
                               })
                             );
                           } else {
-                            return toast(t("tzUncreated"));
+                            return toast.error(t("tzUncreated"));
                           }
                         }}
                       >

@@ -33,7 +33,10 @@ function App() {
         <Route path="/tz/create/:tzId" element={<CreateTZ action="create" />} />
         <Route path="/tz/edit/:tzId" element={<CreateTZ action="edit" />} />
         <Route path="/tz/view/:tzId" element={<CreateTZ action="view" />} />
-        <Route path="/tz/review/:tzId" element={<CreateTZ action="review" />} />
+        <Route
+          path="/tz/preview/:tzId"
+          element={<CreateTZ action="preview" />}
+        />
         <Route path="/createtz2" element={<CreateTZ2 />} />
         <Route path="/structure/edit/:id" element={<Structure />} />
         <Route path="/structure/:id" element={<Structure />} />
