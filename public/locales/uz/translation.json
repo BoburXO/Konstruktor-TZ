@@ -182,6 +182,7 @@
   },
   "classificator": "Klassifikator",
   "publish": "Nashr qilish",
+  "unpublish": "Qoralamaga qaytarish",
   "tzName": "Texnik topshiriqning nomi",
   "tzUncreated": "Iltimos avval texnik topshiriqqa nom yaratib oling!",
   "title": "Sarlavha",

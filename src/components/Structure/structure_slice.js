@@ -9,7 +9,7 @@ const initialState = {
   structures: {},
   currentStructure: {},
   structureAction: "create",
-  publishedStructure: {},
+  publicOrPrivateStructure: {},
   templates: [],
 };
 
@@ -82,16 +82,14 @@ export const fetchTemplates = createAsyncThunk(
   }
 );
 
-export const publishStructure = createAsyncThunk(
+export const makePublicOrPrivateStructure = createAsyncThunk(
   "structure/publish",
-  async (id) => {
+  async ({ id, data }) => {
     const { request } = useHttp();
     return await request({
       method: "PATCH",
       url: `/constructor/detail/${id}`,
-      data: {
-        is_draft: false,
-      },
+      data,
       headers: {
         Authorization: `Bearer ${localStorage.getItem(
           "ConstructorRoleAccessToken"
@@ -111,7 +109,7 @@ const structureSlice = createSlice({
     clearStructure: (state) => {
       state.currentStructure = {};
       state.structures = {};
-      state.publishedStructure = {};
+      state.publicOrPrivateStructure = {};
     },
     setStructureAction: (state, { payload }) => {
       state.structureAction = payload;
@@ -153,11 +151,11 @@ const structureSlice = createSlice({
         state.templates = payload;
         state.templatesLoading = false;
       })
-      .addCase(publishStructure.pending, (state) => {
+      .addCase(makePublicOrPrivateStructure.pending, (state) => {
         state.isPublishingLoading = true;
       })
-      .addCase(publishStructure.fulfilled, (state, { payload }) => {
-        state.publishedStructure = payload;
+      .addCase(makePublicOrPrivateStructure.fulfilled, (state, { payload }) => {
+        state.publicOrPrivateStructure = payload;
         state.isPublishingLoading = false;
       });
   },

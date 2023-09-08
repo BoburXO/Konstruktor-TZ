@@ -12,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAllTzOfUser } from "./profile_slice";
+import { clearTz, fetchAllTzOfUser } from "./profile_slice";
 import ProfilePagination from "../../Pagination/ProfilePagination";
 import Footer from "../../components/Footer/Footer";
 import ProfileListItem from "./ProfileListItem";
@@ -56,6 +56,12 @@ export default function Profile() {
     }
     //eslint-disable-next-line
   }, [pdf]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearTz());
+    };
+  }, []);
 
   return (
     <>

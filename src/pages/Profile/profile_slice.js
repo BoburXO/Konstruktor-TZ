@@ -3,7 +3,7 @@ import { useHttp } from "../../hooks/useHttp";
 import { useReducer } from "react";
 
 const initialState = {
-  tzList: [],
+  tzList: {},
   loading: false,
   deleteLoading: false,
   deletedTz: {},
@@ -13,7 +13,7 @@ export const fetchAllTzOfUser = createAsyncThunk(
   "userTz/fetchAll",
   async ({ page = 1, tz_name, is_draft = "both" }) => {
     const { request } = useHttp();
-    let url = `/constructor/list/user?&page=${page}`;
+    let url = `/constructor/list/user?page=${page}`;
     if (tz_name) {
       url += `&tz_name=${tz_name}`;
     }
@@ -50,7 +50,7 @@ const profileSlice = createSlice({
   initialState,
   reducers: {
     clearTz: (state) => {
-      state.tzList = [];
+      state.tzList = {};
     },
   },
   extraReducers: (builder) => {

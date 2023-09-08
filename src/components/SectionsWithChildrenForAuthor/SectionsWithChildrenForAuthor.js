@@ -1,6 +1,6 @@
 import { fetchTemplates } from "../../redux/api/user/structure_slice";
 import SectionsField from "../CreateTZ1-component/SectionsField";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 export default function SectionsWithChildrenForAuthor({ item }) {
   const dispatch = useDispatch();
 

@@ -16,7 +16,7 @@ import Box from "@mui/material/Box";
 import {
   clearStructure,
   fetchStructureById,
-  publishStructure,
+  makePublicOrPrivateStructure,
   setStructureAction,
 } from "./structure_slice";
 import CreateNewStructureModal from "./CreateNewStructureModal/CreateNewStructureModal";
@@ -89,7 +89,7 @@ const StructureComponent = () => {
     currentStructure,
     structures,
     structureAction,
-    publishedStructure,
+    publicOrPrivateStructure,
     isCreatingStructuresLoading,
     isFetchingStructuresLoading,
     isPublishingLoading,
@@ -146,10 +146,10 @@ const StructureComponent = () => {
   }, [currentStructure, currentSection, currentSubSection, currentField]);
 
   useEffect(() => {
-    if (publishedStructure?.id) {
+    if (publicOrPrivateStructure?.id) {
       navigate("/lkavtor");
     }
-  }, [publishedStructure]);
+  }, [publicOrPrivateStructure]);
 
   useEffect(() => {
     if (structureAction === "edit" || structureAction === "review") {
@@ -161,7 +161,7 @@ const StructureComponent = () => {
     currentField,
     currentSection,
     currentSubSection,
-    publishedStructure,
+    publicOrPrivateStructure,
   ]);
 
   useEffect(() => {
@@ -180,8 +180,8 @@ const StructureComponent = () => {
     dispatch(deleteSection(currentSection?.id));
   };
 
-  const handlePublishStcuture = () => {
-    dispatch(publishStructure(structures?.id));
+  const handlePublishOrUnpublishStcuture = () => {
+    dispatch(makePublicOrPrivateStructure(structures?.id));
   };
 
   return (
@@ -400,13 +400,38 @@ const StructureComponent = () => {
                       </Box>
                     </Modal>
                   </div>
-                  {structures?.is_draft ? (
+                  {structures?.is_draft === false ? (
                     <div className={s.btn_wrapper_end}>
                       <button
                         className={s.structure_publish_btn}
                         onClick={() => {
                           if (structures?.id) {
-                            handlePublishStcuture();
+                            dispatch(
+                              makePublicOrPrivateStructure({
+                                id: structures?.id,
+                                data: { is_draft: true },
+                              })
+                            );
+                          } else {
+                            return toast(t("tzUncreated"));
+                          }
+                        }}
+                      >
+                        {t("unpublish")}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className={s.btn_wrapper_end}>
+                      <button
+                        className={s.structure_publish_btn}
+                        onClick={() => {
+                          if (structures?.id) {
+                            dispatch(
+                              makePublicOrPrivateStructure({
+                                id: structures?.id,
+                                data: { is_draft: false },
+                              })
+                            );
                           } else {
                             return toast(t("tzUncreated"));
                           }
@@ -415,7 +440,7 @@ const StructureComponent = () => {
                         {t("publish")}
                       </button>
                     </div>
-                  ) : null}
+                  )}
                 </>
               ) : null}
             </div>
