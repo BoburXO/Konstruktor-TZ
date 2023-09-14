@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { API } from "../api/Api";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
@@ -11,6 +11,8 @@ import { useRef } from "react";
 const Context = createContext();
 
 const ContextProvider = ({ children }) => {
+  const [params, setParams] = useSearchParams();
+
   //redux
   const todos = useSelector((note) => note.todoList);
   //redux
@@ -19,7 +21,6 @@ const ContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [roles, setRoles] = useState({});
   const [profile, setProfile] = useState({});
-  const [spraSearch, setSpraSearch] = useState("");
   const [contentSearch, setContentSearch] = useState("");
   const [contentSite, setContentSite] = useState({});
   const [tzDB, setTzDB] = useState({});
@@ -174,10 +175,14 @@ const ContextProvider = ({ children }) => {
   // LogOut
 
   //all Spravochnik searchbar
-  const getAllSpraSearch = async ({ page = 1, orgId = "" }) => {
+  const getAllSpraSearch = async () => {
     await axios
       .get(
-        `${API}/classificator/all/?search=${spraSearch}&page=${page}&org=${orgId}`,
+        `${API}/classificator/all/?search=${
+          params.get("search") ? params.get("search") : ""
+        }&page=${params.get("page") ? params.get("page") : 1}&org=${
+          params.get("orgId") ? params.get("orgId") : ""
+        }`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1583,8 +1588,6 @@ const ContextProvider = ({ children }) => {
           updateSlug,
           removeSlug,
           getAllSpraSearch,
-          setSpraSearch,
-          spraSearch,
           isActiveClassificator,
           createElement,
           contUz,

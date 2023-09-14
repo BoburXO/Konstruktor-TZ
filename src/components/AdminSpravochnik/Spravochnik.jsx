@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import accept from "../../assets/imgs/accept.png";
 import { useTranslation } from "react-i18next";
 import { Switch } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Context } from "../../Context/Context";
 import SpravochnikPagination from "../../Pagination/SpravochnikPagination";
 import { FaEye } from "react-icons/fa";
@@ -53,8 +53,8 @@ const styleDel = {
 };
 
 const Spravochnik = () => {
-  const [orgId, setOrgId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [params, setParams] = useSearchParams();
   //modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -75,8 +75,6 @@ const Spravochnik = () => {
     spravochnik,
     removeSlug,
     getAllSpraSearch,
-    setSpraSearch,
-    spraSearch,
     isActiveClassificator,
     createClassificator,
     setNameClassUz,
@@ -88,9 +86,11 @@ const Spravochnik = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getAllSpraSearch({ orgId }).then(() => setIsLoading(false));
+    getAllSpraSearch({
+      orgId: params.get("orgId") ? params.get("orgId") : "",
+    }).then(() => setIsLoading(false));
     getOrganizations().then(() => setIsLoading(false));
-  }, [spraSearch]);
+  }, [params]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -209,8 +209,14 @@ const Spravochnik = () => {
             <div className={s.input_field}>
               <img className={s.S_icon} src={search} alt="Search" />
               <input
-                onChange={(e) => setSpraSearch(e.target.value)}
-                value={spraSearch}
+                defaultValue={params.get("search") ? params.get("search") : ""}
+                onChange={(e) =>
+                  setParams({
+                    search: e.target.value,
+                    orgId: params.get("orgId") ? params.get("orgId") : "",
+                    page: params.get("page") ? params.get("page") : 1,
+                  })
+                }
                 type="text"
                 placeholder={t("spra5")}
               />
@@ -218,10 +224,13 @@ const Spravochnik = () => {
             {localStorage.getItem("roleName") === "SuperAdmin" ? (
               <div>
                 <Select
-                  placeholder={t("filter.1")}
                   onChange={(value) => {
-                    getAllSpraSearch({ orgId: value.value });
-                    setOrgId(value.value);
+                    setParams({
+                      ...params,
+                      orgId: value.value,
+                      search: params.get("search") ? params.get("search") : "",
+                      page: params.get("page") ? params.get("page") : 1,
+                    });
                   }}
                   className={s.sample_select}
                   options={[{ id: "", name: t("filter.1") }]
@@ -230,6 +239,22 @@ const Spravochnik = () => {
                       value: el?.id,
                       label: el?.name,
                     }))}
+                  placeholder={
+                    [{ id: "", name: t("filter.1") }]
+                      .concat(org)
+                      .find((el) => el.id === params.get("orgId"))?.name
+                      ? [{ id: "", name: t("filter.1") }]
+                          .concat(org)
+                          .find((el) => el.id === params.get("orgId"))?.name
+                      : t("filter.1")
+                  }
+                  styles={{
+                    placeholder: (base) => ({
+                      ...base,
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }),
+                  }}
                 />
               </div>
             ) : null}
@@ -414,10 +439,7 @@ const Spravochnik = () => {
           <br />
           <br />
           <div className={s.spra_pagination}>
-            <SpravochnikPagination
-              orgId={orgId}
-              spravochnik={spravochnik?.total_pages}
-            />
+            <SpravochnikPagination spravochnik={spravochnik?.total_pages} />
           </div>
         </div>
       </section>
