@@ -10,9 +10,9 @@ const LKavtor = () => {
     if (!localStorage.getItem("ConstructorRoleAccessToken")) {
       navigate("/");
     }
-    if (localStorage.getItem("roleName") === "SuperAdmin") {
-      navigate(-1);
-    }
+    // if (localStorage.getItem("roleName") === "SuperAdmin") {
+    //   navigate(-1);
+    // }
   }, []);
   return (
     <>

@@ -1,11 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import {
+  useParams,
+  useLocation,
+  Navigate,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { Context } from "../../Context/Context";
 import Loader from "../Loader/Loader";
 import s from "../SuperTzComp/superTz.module.css";
-import search from "../../assets/icons/search.svg";
+import search_icon from "../../assets/icons/search.svg";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -28,6 +34,8 @@ import { FaEye } from "react-icons/fa";
 import { setRowNumberForTz } from "../../helpers/helpers";
 import { useDispatch } from "react-redux";
 import { doubleStructure } from "../../pages/LKavtor/lkavtor_slice";
+import { useQuery } from "../../hooks/useQuery";
+import { useMemo } from "react";
 
 const style = {
   position: "absolute",
@@ -41,11 +49,39 @@ const style = {
   p: 4,
 };
 
+const passQueryParamsToUrl = (query, setQuery, paramName, paramValue) => {
+  const param = query.get(paramName);
+  if (param) {
+    // query.delete(paramName);
+    setQuery((params) => {
+      params.set(paramName, paramValue);
+      return params;
+    });
+  } else {
+    setQuery((params) => {
+      params.set(paramName, paramValue);
+      return params;
+    });
+  }
+};
+
 const SuperTzComp = () => {
-  const [isAuthor, setIsAuthor] = useState("");
-  const [own, setOwn] = useState(false);
-  const [draft, setDraft] = useState(false);
-  const [type, setType] = useState("");
+  const { pathname, search } = useLocation();
+  const query = useQuery(search);
+  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  //url
+  //filters
+  const [isAuthor, setIsAuthor] = useState(query.get("scope") || "structure");
+  const [own, setOwn] = useState(query.get("own") || false);
+  const [draft, setDraft] = useState(query.get("draft") || false);
+  const [type, setType] = useState(query.get("type") || "");
+  const [superTzSearch, setSuperTzSearch] = useState(
+    query.get("tz_name") || ""
+  );
+  const [page, setPage] = useState(1);
   //modal
   const [delId, setDelId] = useState("");
   const [openDel, setOpenDel] = useState(false);
@@ -60,8 +96,6 @@ const SuperTzComp = () => {
     superTz,
     SuperTzGet,
     deleteTz,
-    superTzSearch,
-    setSuperTzSearch,
     DuplicateTz,
     SuperAuthor,
   } = useContext(Context);
@@ -73,9 +107,68 @@ const SuperTzComp = () => {
   });
 
   useEffect(() => {
+    setPage(1);
+  }, [isAuthor]);
+
+  useEffect(() => {
     SuperOrganizations().then(() => setIsLoading(false));
-    SuperTzGet({ id, draft, owner: own, type }).then(() => setIsLoading(false));
-  }, [superTzSearch]);
+    if (isAuthor === "structure") {
+      SuperTzGet({
+        id,
+        draft,
+        owner: own,
+        type,
+        tz_name: superTzSearch,
+        page,
+      }).then(() => setIsLoading(false));
+    } else {
+      SuperAuthor({
+        id,
+        draft,
+        owner: own,
+        type,
+        tz_name: superTzSearch,
+        page,
+      }).then(() => setIsLoading(false));
+    }
+    if (isAuthor) {
+      passQueryParamsToUrl(searchParams, setSearchParams, "scope", isAuthor);
+    }
+    if (page) {
+      passQueryParamsToUrl(searchParams, setSearchParams, "page", page);
+    }
+    if (own) {
+      passQueryParamsToUrl(searchParams, setSearchParams, "own", own);
+      passQueryParamsToUrl(searchParams, setSearchParams, "draft", draft);
+    } else {
+      setSearchParams((prev) => {
+        prev.delete("own");
+        prev.delete("draft");
+        return prev;
+      });
+    }
+    if (type) {
+      passQueryParamsToUrl(searchParams, setSearchParams, "type", type);
+    } else {
+      setSearchParams((prev) => {
+        prev.delete("type");
+        return prev;
+      });
+    }
+    if (superTzSearch) {
+      passQueryParamsToUrl(
+        searchParams,
+        setSearchParams,
+        "tz_name",
+        superTzSearch
+      );
+    } else {
+      setSearchParams((prev) => {
+        prev.delete("tz_name");
+        return prev;
+      });
+    }
+  }, [superTzSearch, own, isAuthor, draft, type, page]);
 
   if (isLoading) return <Loader />;
 
@@ -91,8 +184,8 @@ const SuperTzComp = () => {
   ];
 
   const optionsAuthor = [
-    { value: "All", label: t("super.7") },
-    { value: "Author", label: t("super.8") },
+    { value: "structure", label: t("super.7") },
+    { value: "tz", label: t("super.8") },
   ];
 
   const optionOwner = [
@@ -101,7 +194,7 @@ const SuperTzComp = () => {
   ];
 
   const handleChange = (value, { owner, draft, type, id }) => {
-    value === "All"
+    value === "structure"
       ? SuperTzGet({ owner: owner, draft: draft, type: type, id })
       : SuperAuthor({ owner: owner, draft: draft, type: type, id });
   };
@@ -124,7 +217,7 @@ const SuperTzComp = () => {
               }}
             >
               <div className={s.input_field}>
-                <img className={s.S_icon} src={search} alt="Search" />
+                <img className={s.S_icon} src={search_icon} alt="Search" />
                 <input
                   onChange={(e) => setSuperTzSearch(e.target.value)}
                   value={superTzSearch}
@@ -136,12 +229,12 @@ const SuperTzComp = () => {
                 <Select
                   placeholder={t("filter.1")}
                   onChange={(value) => {
-                    SuperTzGet({
-                      type: value.value,
-                      id,
-                      owner: own,
-                      draft: draft,
-                    });
+                    // SuperTzGet({
+                    //   type: value.value,
+                    //   id,
+                    //   owner: own,
+                    //   draft: draft,
+                    // });
                     setType(value.value);
                   }}
                   className={s.selecttt}
@@ -154,12 +247,12 @@ const SuperTzComp = () => {
                     placeholder={t("filter.1")}
                     onChange={(value) => {
                       setOwn(value.value);
-                      SuperTzGet({
-                        owner: value.value,
-                        type: type,
-                        id,
-                        draft: value.value === false ? false : draft,
-                      });
+                      // SuperTzGet({
+                      //   owner: value.value,
+                      //   type: type,
+                      //   id,
+                      //   draft: value.value === false ? false : draft,
+                      // });
                     }}
                     className={s.selecttt}
                     options={optionOwner}
@@ -172,12 +265,12 @@ const SuperTzComp = () => {
                     placeholder={t("filter.2")}
                     onChange={(value) => {
                       setDraft(value.value);
-                      SuperTzGet({
-                        draft: value.value,
-                        id,
-                        type: type,
-                        owner: own,
-                      });
+                      // SuperTzGet({
+                      //   draft: value.value,
+                      //   id,
+                      //   type: type,
+                      //   owner: own,
+                      // });
                     }}
                     className={s.selecttt}
                     options={optionsDraft}
@@ -188,12 +281,12 @@ const SuperTzComp = () => {
                 <Select
                   placeholder={t("super.7")}
                   onChange={(value) => {
-                    handleChange(value.value, {
-                      id,
-                      owner: own,
-                      draft: draft,
-                      type: type,
-                    });
+                    // handleChange(value.value, {
+                    //   id,
+                    //   owner: own,
+                    //   draft: draft,
+                    //   type: type,
+                    // });
                     setIsAuthor(value.value);
                   }}
                   className={s.selecttt}
@@ -262,50 +355,61 @@ const SuperTzComp = () => {
                           {tz?.user?.username ===
                           localStorage.getItem("roleUserName") ? (
                             <div className={s.lkmain_sect_crud}>
-                              {(localStorage.getItem("roleName") === "Admin" ||
-                                localStorage.getItem("roleName") ===
-                                  "SuperAdmin") &&
-                              !draft ? (
-                                <button
-                                  className={s.lkmain_sect_crud_copy}
-                                  style={{
-                                    borderColor: "green",
-                                    color: "green",
-                                    fontWeight: "500",
-                                  }}
-                                  onClick={() => {
-                                    dispatch(
-                                      doubleStructure({
-                                        id: tz?.id,
-                                        data: { is_double: true },
-                                      })
-                                    );
-                                  }}
-                                >
-                                  Fill
-                                </button>
+                              {isAuthor === "structure" ? (
+                                <>
+                                  {!draft ? (
+                                    <button
+                                      className={s.lkmain_sect_crud_copy}
+                                      style={{
+                                        borderColor: "green",
+                                        color: "green",
+                                        fontWeight: "500",
+                                      }}
+                                      onClick={() => {
+                                        dispatch(
+                                          doubleStructure({
+                                            id: tz?.id,
+                                            data: { is_double: true },
+                                          })
+                                        );
+                                      }}
+                                    >
+                                      Fill
+                                    </button>
+                                  ) : null}
+                                </>
                               ) : null}
                               <button
-                                onClick={() => DuplicateTz(tz?.id)}
+                                onClick={() => {
+                                  DuplicateTz(tz?.id);
+                                }}
                                 className={s.lkmain_sect_crud_copy}
                               >
                                 <img src={copyIcon} alt="Copy" />
                               </button>
-                              <Link to={`/structure/edit/${tz?.id}`}>
+                              <Link
+                                to={
+                                  !isAuthor
+                                    ? `/structure/edit/${tz?.id}`
+                                    : `/tz/edit/${tz?.id}`
+                                }
+                              >
                                 <button className={s.lkmain_sect_crud_create}>
-                                  <img src={createIcon} alt="Copy" />
+                                  <img src={createIcon} alt="Edit" />
                                 </button>
                               </Link>
-                              <button className={s.lkmain_sect_crud_skacat}>
-                                <a
-                                  rel="noopener"
-                                  href={tz?.pdf_file}
-                                  download
-                                  target="_blank"
-                                >
-                                  <img src={skacatIcon} alt="Download" />
-                                </a>
-                              </button>
+                              {isAuthor === "tz" ? (
+                                <button className={s.lkmain_sect_crud_skacat}>
+                                  <img
+                                    src={skacatIcon}
+                                    alt="Download"
+                                    onClick={() => {
+                                      DuplicateTz(tz?.id);
+                                    }}
+                                  />
+                                  {/* </a> */}
+                                </button>
+                              ) : null}
                               <button
                                 onClick={() => {
                                   handleOpenDel();
@@ -331,7 +435,9 @@ const SuperTzComp = () => {
                               >
                                 <Box sx={style}>
                                   <form
-                                    style={{ textAlign: "center" }}
+                                    style={{
+                                      textAlign: "center",
+                                    }}
                                     className={s.createElementForm}
                                   >
                                     <h2>{t("sfera.3")}</h2>
@@ -349,11 +455,7 @@ const SuperTzComp = () => {
                                       </button>
                                       <button
                                         type="button"
-                                        onClick={() =>
-                                          deleteTz(delId).then(() =>
-                                            setIsLoading(false)
-                                          )
-                                        }
+                                        onClick={() => deleteTz(delId)}
                                         className={s.shablon_delete_btn}
                                       >
                                         {t("btn.6")}
@@ -366,12 +468,20 @@ const SuperTzComp = () => {
                           ) : (
                             <div className={s.lkmain_sect_crud}>
                               <button
-                                onClick={() => DuplicateTz(tz?.id)}
+                                onClick={() => {
+                                  DuplicateTz(tz?.id);
+                                }}
                                 className={s.lkmain_sect_crud_copy}
                               >
                                 <img src={copyIcon} alt="Copy" />
                               </button>
-                              <Link to={`/structure/${tz?.id}`}>
+                              <Link
+                                to={
+                                  isAuthor === "tz"
+                                    ? `/tz/view/${tz?.id}`
+                                    : `/tz/preview/${tz?.id}`
+                                }
+                              >
                                 <button className={s.content_crud_create}>
                                   <FaEye
                                     style={{
@@ -399,6 +509,8 @@ const SuperTzComp = () => {
                     type={type}
                     paramsID={id}
                     superTz={superTz?.total_pages}
+                    page={page}
+                    setPage={setPage}
                   />
                 ) : (
                   <LkAvtorUserPagination
@@ -407,6 +519,8 @@ const SuperTzComp = () => {
                     own={own}
                     draft={draft}
                     superTz={superTz?.total_pages}
+                    page={page}
+                    setPage={setPage}
                   />
                 )}
               </div>

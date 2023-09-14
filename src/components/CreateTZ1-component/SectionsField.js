@@ -25,7 +25,7 @@ export default function SectionsField({ field, setImageFile }) {
   const { userAction } = useSelector((state) => state.userStructure);
 
   const fieldDisabled = useMemo(() => {
-    return userAction === "view" || userAction === "review";
+    return userAction === "preview" || userAction === "view";
   }, [userAction]);
 
   // useEffect(() => {

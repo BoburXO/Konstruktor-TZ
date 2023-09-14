@@ -1392,10 +1392,11 @@ const ContextProvider = ({ children }) => {
     owner = false,
     type = "",
     draft = false,
+    tz_name,
   }) => {
     await axios
       .get(
-        `${API}/constructor/organization/detail?page=${page}&organization_id=${id}&tz_name=${superTzSearch}&is_owner=${owner}&select_type=${type}&is_draft=${draft}`,
+        `${API}/constructor/organization/detail?page=${page}&organization_id=${id}&tz_name=${tz_name}&is_owner=${owner}&select_type=${type}&is_draft=${draft}`,
 
         {
           headers: {
@@ -1473,10 +1474,11 @@ const ContextProvider = ({ children }) => {
     type = "",
     owner = false,
     draft = false,
+    tz_name,
   }) => {
     await axios
       .get(
-        `${API}/constructor/list/user?page=${page}&organization_id=${id}&select_type=${type}&is_owner=${owner}&is_draft=${draft}&tz_name=${superTzSearch}`,
+        `${API}/constructor/list/user?page=${page}&organization_id=${id}&select_type=${type}&is_owner=${owner}&is_draft=${draft}&tz_name=${tz_name}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
