@@ -111,6 +111,10 @@ const SuperTzComp = () => {
   }, [isAuthor]);
 
   useEffect(() => {
+    setDraft(false);
+  }, [own]);
+
+  useEffect(() => {
     SuperOrganizations().then(() => setIsLoading(false));
     if (isAuthor === "structure") {
       SuperTzGet({
@@ -229,16 +233,13 @@ const SuperTzComp = () => {
                 <Select
                   placeholder={t("filter.1")}
                   onChange={(value) => {
-                    // SuperTzGet({
-                    //   type: value.value,
-                    //   id,
-                    //   owner: own,
-                    //   draft: draft,
-                    // });
                     setType(value.value);
                   }}
                   className={s.selecttt}
                   options={options}
+                  defaultValue={options.find(
+                    (item) => item.value.toString() === type.toString()
+                  )}
                 />
               </div>
               {orgParams?.name === localStorage.getItem("organizationName") ? (
@@ -247,33 +248,27 @@ const SuperTzComp = () => {
                     placeholder={t("filter.1")}
                     onChange={(value) => {
                       setOwn(value.value);
-                      // SuperTzGet({
-                      //   owner: value.value,
-                      //   type: type,
-                      //   id,
-                      //   draft: value.value === false ? false : draft,
-                      // });
                     }}
                     className={s.selecttt}
                     options={optionOwner}
+                    defaultValue={optionOwner.find((item) => {
+                      return item.value.toString() === own.toString();
+                    })}
                   />
                 </div>
               ) : null}
-              {own ? (
+              {JSON.parse(own) ? (
                 <div>
                   <Select
                     placeholder={t("filter.2")}
                     onChange={(value) => {
                       setDraft(value.value);
-                      // SuperTzGet({
-                      //   draft: value.value,
-                      //   id,
-                      //   type: type,
-                      //   owner: own,
-                      // });
                     }}
                     className={s.selecttt}
                     options={optionsDraft}
+                    defaultValue={optionsDraft.find((item) => {
+                      return item.value.toString() === draft.toString();
+                    })}
                   />
                 </div>
               ) : null}
@@ -291,6 +286,9 @@ const SuperTzComp = () => {
                   }}
                   className={s.selecttt}
                   options={optionsAuthor}
+                  defaultValue={optionsAuthor.find(
+                    (item) => item.value === isAuthor
+                  )}
                 />
               </div>
             </div>
