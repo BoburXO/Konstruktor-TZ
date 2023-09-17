@@ -9,17 +9,21 @@ const SuperTzPagination = ({
   own,
   draft,
   type,
+  page,
   setPage,
 }) => {
   const { SuperTzGet } = useContext(Context);
   return (
     <Stack spacing={2}>
       <Pagination
-        onChange={(e, page) =>
+        onChange={
+          (e, page) => {
+            setPage(page);
+          }
           // SuperTzGet({ id: paramsID, page, owner: own, type, draft })
-          setPage(page)
         }
         count={superTz}
+        page={+page}
         color="primary"
       />
     </Stack>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -69,6 +69,12 @@ const SuperTzComp = () => {
   const { pathname, search } = useLocation();
   const query = useQuery(search);
   const navigate = useNavigate();
+  const pageRef = useRef();
+  const isAuthorRef = useRef();
+  const tzSearchRef = useRef();
+  const typeRef = useRef();
+  const draftRef = useRef();
+  const ownRef = useRef();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -81,7 +87,11 @@ const SuperTzComp = () => {
   const [superTzSearch, setSuperTzSearch] = useState(
     query.get("tz_name") || ""
   );
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(+query.get("page") || 1);
+
+  //refCurrents
+  const [isAuthorCurrent, setIsAuthorCurrent] = useState(isAuthorRef.current);
+
   //modal
   const [delId, setDelId] = useState("");
   const [openDel, setOpenDel] = useState(false);
@@ -106,12 +116,7 @@ const SuperTzComp = () => {
     return el?.id === id;
   });
 
-  useEffect(() => {
-    setPage(1);
-  }, [isAuthor]);
-
-  useEffect(() => {
-    SuperOrganizations().then(() => setIsLoading(false));
+  const fetchAllTzAndStructure = () => {
     if (isAuthor === "structure") {
       SuperTzGet({
         id,
@@ -130,6 +135,53 @@ const SuperTzComp = () => {
         tz_name: superTzSearch,
         page,
       }).then(() => setIsLoading(false));
+    }
+  };
+
+  const doFunctionWhenComponentOnlyUpdateInUseEffect = (ref, state, func) => {
+    if (ref.current !== undefined && ref.current !== state) {
+      func();
+    }
+
+    ref.current = state;
+  };
+
+  useEffect(() => {
+    SuperOrganizations().then(() => setIsLoading(false));
+    fetchAllTzAndStructure();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthorRef.current !== undefined && isAuthorRef.current !== isAuthor) {
+      setPage(1);
+      if (page === 1) {
+        fetchAllTzAndStructure();
+      }
+    } else if (typeRef.current !== undefined && typeRef.current !== type) {
+      setPage(1);
+      if (page === 1) {
+        fetchAllTzAndStructure();
+      }
+    } else if (ownRef.current !== undefined && ownRef.current !== own) {
+      setPage(1);
+      if (page === 1) {
+        fetchAllTzAndStructure();
+      }
+    } else if (draftRef.current !== undefined && draftRef.current !== draft) {
+      setPage(1);
+      if (page === 1) {
+        fetchAllTzAndStructure();
+      }
+    } else if (
+      tzSearchRef.current !== undefined &&
+      tzSearchRef.current !== superTzSearch
+    ) {
+      setPage(1);
+      if (page === 1) {
+        fetchAllTzAndStructure();
+      }
+    } else {
+      fetchAllTzAndStructure();
     }
     if (isAuthor) {
       passQueryParamsToUrl(searchParams, setSearchParams, "scope", isAuthor);
@@ -168,7 +220,12 @@ const SuperTzComp = () => {
         return prev;
       });
     }
-  }, [superTzSearch, own, isAuthor, draft, type, page]);
+    isAuthorRef.current = isAuthor;
+    typeRef.current = type;
+    ownRef.current = own;
+    draftRef.current = draft;
+    tzSearchRef.current = superTzSearch;
+  }, [page, isAuthor, type, own, draft, superTzSearch]);
 
   if (isLoading) return <Loader />;
 
@@ -229,16 +286,13 @@ const SuperTzComp = () => {
                 <Select
                   placeholder={t("filter.1")}
                   onChange={(value) => {
-                    // SuperTzGet({
-                    //   type: value.value,
-                    //   id,
-                    //   owner: own,
-                    //   draft: draft,
-                    // });
                     setType(value.value);
                   }}
                   className={s.selecttt}
                   options={options}
+                  defaultValue={options.find(
+                    (item) => item.value.toString() === type.toString()
+                  )}
                 />
               </div>
               {orgParams?.name === localStorage.getItem("organizationName") ? (
@@ -247,33 +301,27 @@ const SuperTzComp = () => {
                     placeholder={t("filter.1")}
                     onChange={(value) => {
                       setOwn(value.value);
-                      // SuperTzGet({
-                      //   owner: value.value,
-                      //   type: type,
-                      //   id,
-                      //   draft: value.value === false ? false : draft,
-                      // });
                     }}
                     className={s.selecttt}
                     options={optionOwner}
+                    defaultValue={optionOwner.find((item) => {
+                      return item.value.toString() === own.toString();
+                    })}
                   />
                 </div>
               ) : null}
-              {own ? (
+              {JSON.parse(own) ? (
                 <div>
                   <Select
                     placeholder={t("filter.2")}
                     onChange={(value) => {
                       setDraft(value.value);
-                      // SuperTzGet({
-                      //   draft: value.value,
-                      //   id,
-                      //   type: type,
-                      //   owner: own,
-                      // });
                     }}
                     className={s.selecttt}
                     options={optionsDraft}
+                    defaultValue={optionsDraft.find((item) => {
+                      return item.value.toString() === draft.toString();
+                    })}
                   />
                 </div>
               ) : null}
@@ -291,6 +339,9 @@ const SuperTzComp = () => {
                   }}
                   className={s.selecttt}
                   options={optionsAuthor}
+                  defaultValue={optionsAuthor.find(
+                    (item) => item.value === isAuthor
+                  )}
                 />
               </div>
             </div>
@@ -502,7 +553,7 @@ const SuperTzComp = () => {
               <br />
               <br />
               <div className={s.content_pagination}>
-                {isAuthor !== "Author" ? (
+                {isAuthor === "structure" ? (
                   <SuperTzPagination
                     own={own}
                     draft={draft}
