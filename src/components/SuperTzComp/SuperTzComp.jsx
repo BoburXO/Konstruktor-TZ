@@ -32,10 +32,11 @@ import Select from "react-select";
 import LkAvtorUserPagination from "../../Pagination/LkAvtorUserPagination";
 import { FaEye } from "react-icons/fa";
 import { setRowNumberForTz } from "../../helpers/helpers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { doubleStructure } from "../../pages/LKavtor/lkavtor_slice";
 import { useQuery } from "../../hooks/useQuery";
 import { useMemo } from "react";
+import { uploadPdf } from "../../redux/api/user/pdf_slice";
 
 const style = {
   position: "absolute",
@@ -78,11 +79,13 @@ const SuperTzComp = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { message, loading } = useSelector((state) => state.lkavtor);
+
   //url
   //filters
   const [isAuthor, setIsAuthor] = useState(query.get("scope") || "structure");
-  const [own, setOwn] = useState(query.get("own") || false);
-  const [draft, setDraft] = useState(query.get("draft") || false);
+  const [own, setOwn] = useState(JSON.parse(query.get("own")) || false);
+  const [draft, setDraft] = useState(JSON.parse(query.get("draft")) || false);
   const [type, setType] = useState(query.get("type") || "");
   const [superTzSearch, setSuperTzSearch] = useState(
     query.get("tz_name") || ""
@@ -138,14 +141,6 @@ const SuperTzComp = () => {
     }
   };
 
-  const doFunctionWhenComponentOnlyUpdateInUseEffect = (ref, state, func) => {
-    if (ref.current !== undefined && ref.current !== state) {
-      func();
-    }
-
-    ref.current = state;
-  };
-
   useEffect(() => {
     SuperOrganizations().then(() => setIsLoading(false));
     fetchAllTzAndStructure();
@@ -153,32 +148,37 @@ const SuperTzComp = () => {
 
   useEffect(() => {
     if (isAuthorRef.current !== undefined && isAuthorRef.current !== isAuthor) {
-      setPage(1);
       if (page === 1) {
         fetchAllTzAndStructure();
+      } else {
+        setPage(1);
       }
     } else if (typeRef.current !== undefined && typeRef.current !== type) {
-      setPage(1);
       if (page === 1) {
         fetchAllTzAndStructure();
+      } else {
+        setPage(1);
       }
     } else if (ownRef.current !== undefined && ownRef.current !== own) {
-      setPage(1);
       if (page === 1) {
         fetchAllTzAndStructure();
+      } else {
+        setPage(1);
       }
     } else if (draftRef.current !== undefined && draftRef.current !== draft) {
-      setPage(1);
       if (page === 1) {
         fetchAllTzAndStructure();
+      } else {
+        setPage(1);
       }
     } else if (
       tzSearchRef.current !== undefined &&
       tzSearchRef.current !== superTzSearch
     ) {
-      setPage(1);
       if (page === 1) {
         fetchAllTzAndStructure();
+      } else {
+        setPage(1);
       }
     } else {
       fetchAllTzAndStructure();
@@ -227,6 +227,12 @@ const SuperTzComp = () => {
     tzSearchRef.current = superTzSearch;
   }, [page, isAuthor, type, own, draft, superTzSearch]);
 
+  useEffect(() => {
+    if (message?.id) {
+      return navigate(`/tz/create/${message.id}`);
+    }
+  }, [message]);
+
   if (isLoading) return <Loader />;
 
   const options = [
@@ -257,333 +263,346 @@ const SuperTzComp = () => {
   };
 
   return (
-    <div>
-      <section className={s.lkmain_sect}>
-        <div className={s.lkmain_sect_container}>
-          <div className={s.lkmain_sect_labels}>
-            <h1>{orgParams?.name}</h1>
-          </div>
-          <div className={s.lkmain_sect_labels}>
-            <div
-              style={{
-                width: "35%",
-                display: "flex",
-                height: "60px",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <div className={s.input_field}>
-                <img className={s.S_icon} src={search_icon} alt="Search" />
-                <input
-                  onChange={(e) => setSuperTzSearch(e.target.value)}
-                  value={superTzSearch}
-                  type="text"
-                  placeholder={t("content-site.3")}
-                />
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <section className={s.lkmain_sect}>
+            <div className={s.lkmain_sect_container}>
+              <div className={s.lkmain_sect_labels}>
+                <h1>{orgParams?.name}</h1>
               </div>
-              <div>
-                <Select
-                  placeholder={t("filter.1")}
-                  onChange={(value) => {
-                    setType(value.value);
+              <div className={s.lkmain_sect_labels}>
+                <div
+                  style={{
+                    width: "35%",
+                    display: "flex",
+                    height: "60px",
+                    alignItems: "center",
+                    gap: "10px",
                   }}
-                  className={s.selecttt}
-                  options={options}
-                  defaultValue={options.find(
-                    (item) => item.value.toString() === type.toString()
-                  )}
-                />
-              </div>
-              {orgParams?.name === localStorage.getItem("organizationName") ? (
-                <div>
-                  <Select
-                    placeholder={t("filter.1")}
-                    onChange={(value) => {
-                      setOwn(value.value);
-                    }}
-                    className={s.selecttt}
-                    options={optionOwner}
-                    defaultValue={optionOwner.find((item) => {
-                      return item.value.toString() === own.toString();
-                    })}
-                  />
-                </div>
-              ) : null}
-              {JSON.parse(own) ? (
-                <div>
-                  <Select
-                    placeholder={t("filter.2")}
-                    onChange={(value) => {
-                      setDraft(value.value);
-                    }}
-                    className={s.selecttt}
-                    options={optionsDraft}
-                    defaultValue={optionsDraft.find((item) => {
-                      return item.value.toString() === draft.toString();
-                    })}
-                  />
-                </div>
-              ) : null}
-              <div>
-                <Select
-                  placeholder={t("super.7")}
-                  onChange={(value) => {
-                    // handleChange(value.value, {
-                    //   id,
-                    //   owner: own,
-                    //   draft: draft,
-                    //   type: type,
-                    // });
-                    setIsAuthor(value.value);
-                  }}
-                  className={s.selecttt}
-                  options={optionsAuthor}
-                  defaultValue={optionsAuthor.find(
-                    (item) => item.value === isAuthor
-                  )}
-                />
-              </div>
-            </div>
-          </div>
-          <br />
-          {superTz?.results?.length ? (
-            <>
-              <TableContainer component={Paper} classes={{ root: s.table }}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="left">
-                        <p>№</p>
-                      </TableCell>
-                      <TableCell align="left">
-                        <p>{t("lkavtor10")}</p>
-                      </TableCell>
-                      <TableCell align="left">
-                        {" "}
-                        <p>{t("lkavtor2")}</p>
-                      </TableCell>
-                      <TableCell align="left">
-                        {" "}
-                        <p>{t("lkavtor3")}</p>
-                      </TableCell>
-                      <TableCell align="right">
-                        {" "}
-                        <p>{t("lkavtor4")}</p>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody classes={{ root: s.tbody_root }}>
-                    {superTz?.results?.map((tz, i) => (
-                      <TableRow
-                        key={tz?.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": {
-                            border: 0,
-                          },
+                >
+                  <div className={s.input_field}>
+                    <img className={s.S_icon} src={search_icon} alt="Search" />
+                    <input
+                      onChange={(e) => setSuperTzSearch(e.target.value)}
+                      value={superTzSearch}
+                      type="text"
+                      placeholder={t("content-site.3")}
+                    />
+                  </div>
+                  <div>
+                    <Select
+                      placeholder={t("filter.1")}
+                      onChange={(value) => {
+                        setType(value.value);
+                      }}
+                      className={s.selecttt}
+                      options={options}
+                      defaultValue={options.find(
+                        (item) => item.value.toString() === type.toString()
+                      )}
+                    />
+                  </div>
+                  {orgParams?.name ===
+                  localStorage.getItem("organizationName") ? (
+                    <div>
+                      <Select
+                        placeholder={t("filter.1")}
+                        onChange={(value) => {
+                          setOwn(value.value);
                         }}
-                      >
-                        <TableCell align="left">
-                          <p>
-                            # {setRowNumberForTz(superTz?.current_page, 8, i)}
-                          </p>
-                        </TableCell>
-                        <TableCell align="left">
-                          {" "}
-                          <p>{tz?.user?.username}</p>
-                        </TableCell>
-                        <TableCell component="th" scope="row" align="left">
-                          <p>{tz?.tz_name}</p>
-                        </TableCell>
-                        <TableCell align="left">
-                          {" "}
-                          <span className={s.lkmain_sect_dates}>
-                            <img src={date} alt="" />
-                            <p>{tz?.created_at.slice(0, 10)}</p>
-                          </span>{" "}
-                        </TableCell>
-                        <TableCell align="right">
-                          {tz?.user?.username ===
-                          localStorage.getItem("roleUserName") ? (
-                            <div className={s.lkmain_sect_crud}>
-                              {isAuthor === "structure" ? (
-                                <>
-                                  {!draft ? (
-                                    <button
-                                      className={s.lkmain_sect_crud_copy}
-                                      style={{
-                                        borderColor: "green",
-                                        color: "green",
-                                        fontWeight: "500",
-                                      }}
-                                      onClick={() => {
-                                        dispatch(
-                                          doubleStructure({
-                                            id: tz?.id,
-                                            data: { is_double: true },
-                                          })
-                                        );
-                                      }}
-                                    >
-                                      Fill
-                                    </button>
+                        className={s.selecttt}
+                        options={optionOwner}
+                        defaultValue={optionOwner.find((item) => {
+                          return item.value.toString() === own.toString();
+                        })}
+                      />
+                    </div>
+                  ) : null}
+                  {own ? (
+                    <div>
+                      <Select
+                        placeholder={t("filter.2")}
+                        onChange={(value) => {
+                          setDraft(value.value);
+                        }}
+                        className={s.selecttt}
+                        options={optionsDraft}
+                        defaultValue={optionsDraft.find((item) => {
+                          return item.value.toString() === draft.toString();
+                        })}
+                      />
+                    </div>
+                  ) : null}
+                  <div>
+                    <Select
+                      placeholder={t("super.7")}
+                      onChange={(value) => {
+                        // handleChange(value.value, {
+                        //   id,
+                        //   owner: own,
+                        //   draft: draft,
+                        //   type: type,
+                        // });
+                        setIsAuthor(value.value);
+                      }}
+                      className={s.selecttt}
+                      options={optionsAuthor}
+                      defaultValue={optionsAuthor.find(
+                        (item) => item.value === isAuthor
+                      )}
+                    />
+                  </div>
+                </div>
+              </div>
+              <br />
+              {superTz?.results?.length ? (
+                <>
+                  <TableContainer component={Paper} classes={{ root: s.table }}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">
+                            <p>№</p>
+                          </TableCell>
+                          <TableCell align="left">
+                            <p>{t("lkavtor10")}</p>
+                          </TableCell>
+                          <TableCell align="left">
+                            {" "}
+                            <p>{t("lkavtor2")}</p>
+                          </TableCell>
+                          <TableCell align="left">
+                            {" "}
+                            <p>{t("lkavtor3")}</p>
+                          </TableCell>
+                          <TableCell align="right">
+                            {" "}
+                            <p>{t("lkavtor4")}</p>
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody classes={{ root: s.tbody_root }}>
+                        {superTz?.results?.map((tz, i) => (
+                          <TableRow
+                            key={tz?.id}
+                            sx={{
+                              "&:last-child td, &:last-child th": {
+                                border: 0,
+                              },
+                            }}
+                          >
+                            <TableCell align="left">
+                              <p>
+                                #{" "}
+                                {setRowNumberForTz(superTz?.current_page, 8, i)}
+                              </p>
+                            </TableCell>
+                            <TableCell align="left">
+                              {" "}
+                              <p>{tz?.user?.username}</p>
+                            </TableCell>
+                            <TableCell component="th" scope="row" align="left">
+                              <p>{tz?.tz_name}</p>
+                            </TableCell>
+                            <TableCell align="left">
+                              {" "}
+                              <span className={s.lkmain_sect_dates}>
+                                <img src={date} alt="" />
+                                <p>{tz?.created_at.slice(0, 10)}</p>
+                              </span>{" "}
+                            </TableCell>
+                            <TableCell align="right">
+                              {tz?.user?.username ===
+                              localStorage.getItem("roleUserName") ? (
+                                <div className={s.lkmain_sect_crud}>
+                                  {isAuthor === "structure" ? (
+                                    <>
+                                      {!draft ? (
+                                        <button
+                                          className={s.lkmain_sect_crud_copy}
+                                          style={{
+                                            borderColor: "green",
+                                            color: "green",
+                                            fontWeight: "500",
+                                          }}
+                                          onClick={() => {
+                                            dispatch(
+                                              doubleStructure({
+                                                id: tz?.id,
+                                                data: { is_double: true },
+                                              })
+                                            );
+                                          }}
+                                        >
+                                          Fill
+                                        </button>
+                                      ) : null}
+                                    </>
                                   ) : null}
-                                </>
-                              ) : null}
-                              <button
-                                onClick={() => {
-                                  DuplicateTz(tz?.id);
-                                }}
-                                className={s.lkmain_sect_crud_copy}
-                              >
-                                <img src={copyIcon} alt="Copy" />
-                              </button>
-                              <Link
-                                to={
-                                  !isAuthor
-                                    ? `/structure/edit/${tz?.id}`
-                                    : `/tz/edit/${tz?.id}`
-                                }
-                              >
-                                <button className={s.lkmain_sect_crud_create}>
-                                  <img src={createIcon} alt="Edit" />
-                                </button>
-                              </Link>
-                              {isAuthor === "tz" ? (
-                                <button className={s.lkmain_sect_crud_skacat}>
-                                  <img
-                                    src={skacatIcon}
-                                    alt="Download"
+                                  <button
                                     onClick={() => {
                                       DuplicateTz(tz?.id);
                                     }}
-                                  />
-                                  {/* </a> */}
-                                </button>
-                              ) : null}
-                              <button
-                                onClick={() => {
-                                  handleOpenDel();
-                                  setDelId(tz?.id);
-                                }}
-                                className={s.lkmain_sect_crud_delete}
-                              >
-                                <img src={deleteIcon} alt="Delete" />
-                              </button>
-                              <Modal
-                                slotProps={{
-                                  backdrop: {
-                                    style: {
-                                      opacity: "0.4",
-                                      boxShadow: 24,
-                                    },
-                                  },
-                                }}
-                                open={openDel}
-                                onClose={handleCloseDel}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description"
-                              >
-                                <Box sx={style}>
-                                  <form
-                                    style={{
-                                      textAlign: "center",
-                                    }}
-                                    className={s.createElementForm}
+                                    className={s.lkmain_sect_crud_copy}
                                   >
-                                    <h2>{t("sfera.3")}</h2>
-                                    <br />
-                                    <p>{t("sfera.6")}</p>
-                                    <br />
-                                    <div className={s.createElementFormBtns}>
-                                      {" "}
-                                      <button
-                                        type="button"
-                                        onClick={() => handleCloseDel()}
-                                        className={s.shablon_save_btn}
-                                      >
-                                        {t("btn.5")}
-                                      </button>
-                                      <button
-                                        type="button"
-                                        onClick={() => deleteTz(delId)}
-                                        className={s.shablon_delete_btn}
-                                      >
-                                        {t("btn.6")}
-                                      </button>
-                                    </div>
-                                  </form>
-                                </Box>
-                              </Modal>
-                            </div>
-                          ) : (
-                            <div className={s.lkmain_sect_crud}>
-                              <button
-                                onClick={() => {
-                                  DuplicateTz(tz?.id);
-                                }}
-                                className={s.lkmain_sect_crud_copy}
-                              >
-                                <img src={copyIcon} alt="Copy" />
-                              </button>
-                              <Link
-                                to={
-                                  isAuthor === "tz"
-                                    ? `/tz/view/${tz?.id}`
-                                    : `/tz/preview/${tz?.id}`
-                                }
-                              >
-                                <button className={s.content_crud_create}>
-                                  <FaEye
-                                    style={{
-                                      color: "#2f80ed",
-                                      fontSize: "16px",
+                                    <img src={copyIcon} alt="Copy" />
+                                  </button>
+                                  <Link
+                                    to={
+                                      isAuthor === "structure"
+                                        ? `/structure/edit/${tz?.id}`
+                                        : `/tz/edit/${tz?.id}`
+                                    }
+                                  >
+                                    <button
+                                      className={s.lkmain_sect_crud_create}
+                                    >
+                                      <img src={createIcon} alt="Edit" />
+                                    </button>
+                                  </Link>
+                                  {isAuthor === "tz" ? (
+                                    <button
+                                      className={s.lkmain_sect_crud_skacat}
+                                    >
+                                      <img
+                                        src={skacatIcon}
+                                        alt="Download"
+                                        onClick={() => {
+                                          dispatch(uploadPdf(tz?.id));
+                                        }}
+                                      />
+                                    </button>
+                                  ) : null}
+                                  <button
+                                    onClick={() => {
+                                      handleOpenDel();
+                                      setDelId(tz?.id);
                                     }}
-                                  />
-                                </button>
-                              </Link>
-                            </div>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <br />
-              <br />
-              <div className={s.content_pagination}>
-                {isAuthor === "structure" ? (
-                  <SuperTzPagination
-                    own={own}
-                    draft={draft}
-                    type={type}
-                    paramsID={id}
-                    superTz={superTz?.total_pages}
-                    page={page}
-                    setPage={setPage}
-                  />
-                ) : (
-                  <LkAvtorUserPagination
-                    paramsID={id}
-                    type={type}
-                    own={own}
-                    draft={draft}
-                    superTz={superTz?.total_pages}
-                    page={page}
-                    setPage={setPage}
-                  />
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              <h1 className={s.notFound}>{t("toast404")}</h1>
-            </>
-          )}
+                                    className={s.lkmain_sect_crud_delete}
+                                  >
+                                    <img src={deleteIcon} alt="Delete" />
+                                  </button>
+                                  <Modal
+                                    slotProps={{
+                                      backdrop: {
+                                        style: {
+                                          opacity: "0.4",
+                                          boxShadow: 24,
+                                        },
+                                      },
+                                    }}
+                                    open={openDel}
+                                    onClose={handleCloseDel}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                  >
+                                    <Box sx={style}>
+                                      <form
+                                        style={{
+                                          textAlign: "center",
+                                        }}
+                                        className={s.createElementForm}
+                                      >
+                                        <h2>{t("sfera.3")}</h2>
+                                        <br />
+                                        <p>{t("sfera.6")}</p>
+                                        <br />
+                                        <div
+                                          className={s.createElementFormBtns}
+                                        >
+                                          {" "}
+                                          <button
+                                            type="button"
+                                            onClick={() => handleCloseDel()}
+                                            className={s.shablon_save_btn}
+                                          >
+                                            {t("btn.5")}
+                                          </button>
+                                          <button
+                                            type="button"
+                                            onClick={() => deleteTz(delId)}
+                                            className={s.shablon_delete_btn}
+                                          >
+                                            {t("btn.6")}
+                                          </button>
+                                        </div>
+                                      </form>
+                                    </Box>
+                                  </Modal>
+                                </div>
+                              ) : (
+                                <div className={s.lkmain_sect_crud}>
+                                  <button
+                                    onClick={() => {
+                                      DuplicateTz(tz?.id);
+                                    }}
+                                    className={s.lkmain_sect_crud_copy}
+                                  >
+                                    <img src={copyIcon} alt="Copy" />
+                                  </button>
+                                  <Link
+                                    to={
+                                      isAuthor === "tz"
+                                        ? `/tz/view/${tz?.id}`
+                                        : `/tz/preview/${tz?.id}`
+                                    }
+                                  >
+                                    <button className={s.content_crud_create}>
+                                      <FaEye
+                                        style={{
+                                          color: "#2f80ed",
+                                          fontSize: "16px",
+                                        }}
+                                      />
+                                    </button>
+                                  </Link>
+                                </div>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <br />
+                  <br />
+                  <div className={s.content_pagination}>
+                    {isAuthor === "structure" ? (
+                      <SuperTzPagination
+                        own={own}
+                        draft={draft}
+                        type={type}
+                        paramsID={id}
+                        superTz={superTz?.total_pages}
+                        page={page}
+                        setPage={setPage}
+                      />
+                    ) : (
+                      <LkAvtorUserPagination
+                        paramsID={id}
+                        type={type}
+                        own={own}
+                        draft={draft}
+                        superTz={superTz?.total_pages}
+                        page={page}
+                        setPage={setPage}
+                      />
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h1 className={s.notFound}>{t("toast404")}</h1>
+                </>
+              )}
+            </div>
+          </section>
         </div>
-      </section>
-    </div>
+      )}
+    </>
   );
 };
 

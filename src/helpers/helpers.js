@@ -114,3 +114,15 @@ export const objectToFormData = (
   }
   return formData;
 };
+
+export const doFunctionWhenComponentOnlyUpdateInUseEffect = (
+  ref,
+  state,
+  func
+) => {
+  if (ref.current !== undefined && ref.current !== state) {
+    func();
+  }
+
+  ref.current = state;
+};
