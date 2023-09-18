@@ -147,7 +147,7 @@ const StructureComponent = () => {
 
   useEffect(() => {
     if (publicOrPrivateStructure?.id) {
-      navigate("/lkavtor");
+      navigate(-1);
     }
   }, [publicOrPrivateStructure]);
 

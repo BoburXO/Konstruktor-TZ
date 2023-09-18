@@ -72,7 +72,7 @@ const CreateTZ = ({ action }) => {
 
   useEffect(() => {
     if (!tzId) {
-      navigate("/lkavtor");
+      navigate(-1);
       return;
     }
     fetchTzForForViewingOrForAnotherActions();
@@ -101,7 +101,7 @@ const CreateTZ = ({ action }) => {
         activeSectionIndex === structure?.sections?.length - 1 &&
         data?.id === activeSection?.id
       ) {
-        return navigate(roleName === "Author" ? "/profile" : "/lkavtor");
+        return navigate(roleName === "Author" ? "/profile" : -1);
       }
     }
   }, [activeSection, data]);
@@ -109,7 +109,7 @@ const CreateTZ = ({ action }) => {
   useEffect(() => {
     if (publishedTz?.id) {
       dispatch(clearPublishedTz());
-      navigate(roleName === "Author" ? "/profile" : "/lkavtor");
+      navigate(roleName === "Author" ? "/profile" : -1);
     }
   }, [publishedTz?.id]);
 

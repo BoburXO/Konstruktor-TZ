@@ -83,7 +83,9 @@ const LKMain = () => {
   const { pdfLoading, pdf } = useSelector((state) => state.pdf);
 
   useEffect(() => {
-    SuperTzGet({ draft, owner: own, type }).then(() => setIsLoading(false));
+    SuperTzGet({ draft, owner: own, type, tz_name: superTzSearch }).then(() =>
+      setIsLoading(false)
+    );
     setUserId(superTz?.user_organization?.find((_, index) => index === 0)?.id);
   }, [superTzSearch]);
 
@@ -133,7 +135,13 @@ const LKMain = () => {
     value === true
       ? SuperAuthor({ owner: owner, draft: draft, type: type, id }) &&
         setIsAuthor()
-      : SuperTzGet({ owner: owner, draft: draft, type: type, id });
+      : SuperTzGet({
+          owner: owner,
+          draft: draft,
+          type: type,
+          id,
+          tz_name: superTzSearch,
+        });
   };
 
   return (
@@ -186,6 +194,7 @@ const LKMain = () => {
                             type: value.value,
                             owner: own,
                             draft: draft,
+                            tz_name: superTzSearch,
                           });
                           setType(value.value);
                         }}
@@ -202,6 +211,7 @@ const LKMain = () => {
                               owner: value.value,
                               draft: value.value === false ? false : draft,
                               type: type,
+                              tz_name: superTzSearch,
                             });
                             setOwn(value.value);
                           }}
@@ -219,6 +229,7 @@ const LKMain = () => {
                               owner: own,
                               draft: value.value,
                               type: type,
+                              tz_name: superTzSearch,
                             });
                             setDraft(value.value);
                           }}
@@ -237,6 +248,7 @@ const LKMain = () => {
                                 owner: own,
                                 draft: value.value,
                                 type: type,
+                                tz_name: superTzSearch,
                               });
                               setDraft(value.value);
                             }}
