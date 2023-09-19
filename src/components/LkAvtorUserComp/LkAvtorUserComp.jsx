@@ -86,7 +86,7 @@ const LkAvtorUserComp = () => {
               <div className={s.input_field}>
                 <img className={s.S_icon} src={search} alt="Search" />
                 <input
-                  onChange={(e) => setTzSearchUser(e.target.value)}
+                  onChange={(e) => setTzSearchUser(e.target.value.trim())}
                   type="text"
                   placeholder={t("content-site.3")}
                 />

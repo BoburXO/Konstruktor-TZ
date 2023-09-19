@@ -21,7 +21,6 @@ const ContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [roles, setRoles] = useState({});
   const [profile, setProfile] = useState({});
-  const [contentSearch, setContentSearch] = useState("");
   const [contentSite, setContentSite] = useState({});
   const [tzDB, setTzDB] = useState({});
   const [contUz, setContUz] = useState("");
@@ -529,15 +528,16 @@ const ContextProvider = ({ children }) => {
   //getTZhome
 
   //getContent-search,filter,sphere-filter
-  const getContentSearch = async ({
-    isPublish = "",
-    page = 1,
-    id = "",
-    orgId = "",
-  }) => {
+  const getContentSearch = async () => {
     await axios
       .get(
-        `${API}/standard/site-content-list/?search=${contentSearch}&is_published=${isPublish}&page=${page}&sphere=${id}&org=${orgId}`,
+        `${API}/standard/site-content-list/?search=${
+          params.get("sf") ? params.get("sf") : ""
+        }&is_published=${
+          params.get("isPublish") ? params.get("isPublish") : ""
+        }&page=${params.get("page") ? params.get("page") : 1}&sphere=${
+          params.get("id") ? params.get("id") : ""
+        }&org=${params.get("orgId") ? params.get("orgId") : ""}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1085,12 +1085,15 @@ const ContextProvider = ({ children }) => {
 
   //shablon-sample all
   const [sample, setSample] = useState({});
-  const [punktSearch, setPunktSearch] = useState("");
 
-  const allSample = async ({ id = "", page = 1 }) => {
+  const allSample = async () => {
     await axios
       .get(
-        `${API}/constructor/sample/create/list?description__icontains=${punktSearch}&section=${id}&page=${page}`,
+        `${API}/constructor/sample/create/list?description__icontains=${
+          params.get("search") ? params.get("search") : ""
+        }&section=${params.get("sectId") ? params.get("sectId") : ""}&page=${
+          params.get("page") ? params.get("page") : 1
+        }`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1280,10 +1283,14 @@ const ContextProvider = ({ children }) => {
   const [organization, setOrganization] = useState({});
   const [orgSearch, setOrgSearch] = useState("");
 
-  const SuperOrganizations = async (owner = false, page = 1) => {
+  const SuperOrganizations = async () => {
     await axios
       .get(
-        `${API}/constructor/organization/list?name=${orgSearch}&is_owner=${owner}&page=${page}`,
+        `${API}/constructor/organization/list?name=${
+          params.get("searchorg") ? params.get("searchorg") : ""
+        }&is_owner=${params.get("own") ? params.get("own") : false}&page=${
+          params.get("page") ? params.get("page") : 1
+        }`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(
@@ -1566,8 +1573,6 @@ const ContextProvider = ({ children }) => {
           SpravochnikExcel,
           deleteTz,
           updateSample,
-          punktSearch,
-          setPunktSearch,
           sampleDelete,
           createSample,
           sampleSect,
@@ -1600,8 +1605,6 @@ const ContextProvider = ({ children }) => {
           tzDB,
           getContentSearch,
           contentSite,
-          contentSearch,
-          setContentSearch,
           deleteContent,
           createContentOfSite,
           headerUz,

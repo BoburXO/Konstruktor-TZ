@@ -212,7 +212,7 @@ const Spravochnik = () => {
                 defaultValue={params.get("search") ? params.get("search") : ""}
                 onChange={(e) =>
                   setParams({
-                    search: e.target.value,
+                    search: e.target.value.trim(),
                     orgId: params.get("orgId") ? params.get("orgId") : "",
                     page: params.get("page") ? params.get("page") : 1,
                   })

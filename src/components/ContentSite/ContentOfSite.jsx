@@ -5,7 +5,7 @@ import date from "../../assets/icons/dateIcon.svg";
 import createIcon from "../../assets/icons/createIcon.svg";
 import deleteIcon from "../../assets/icons/deleteIcon.svg";
 import download from "../../assets/icons/skacatIcon.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
 import { Context } from "../../Context/Context";
@@ -53,19 +53,15 @@ const style = {
 //modal styles
 const ContentOfSite = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isPublish, setIsPublish] = useState("");
-  const [spId, setSpId] = useState("");
   const [pdfRu, setPdfRu] = useState("");
   const [pdfUz, setPdfUz] = useState("");
-  const [orgId, setOrgId] = useState("");
 
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [params, setParams] = useSearchParams();
   const {
     getContentSearch,
     contentSite,
-    contentSearch,
-    setContentSearch,
     deleteContent,
     getSphere,
     sphere,
@@ -74,12 +70,14 @@ const ContentOfSite = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    getContentSearch({ id: spId, isPublish, orgId }).then(() =>
-      setIsLoading(false)
-    );
+    getContentSearch({
+      id: params.get("id") ? params.get("id") : "",
+      isPublish: params.get("isPublish") ? params.get("isPublish") : "",
+      orgId: params.get("orgId") ? params.get("orgId") : "",
+    }).then(() => setIsLoading(false));
     getSphere().then(() => setIsLoading(false));
     getOrganizations().then(() => setIsLoading(false));
-  }, [contentSearch]);
+  }, [params]);
 
   const options = [
     { value: "", label: t("filter.1") },
@@ -128,7 +126,18 @@ const ContentOfSite = () => {
             <div className={s.input_field}>
               <img className={s.S_icon} src={search} alt="Search" />
               <input
-                onChange={(e) => setContentSearch(e.target.value)}
+                defaultValue={params.get("sf") ? params.get("sf") : ""}
+                onChange={(e) =>
+                  setParams({
+                    sf: e.target.value.trim(),
+                    id: params.get("id") ? params.get("id") : "",
+                    orgId: params.get("orgId") ? params.get("orgId") : "",
+                    isPublish: params.get("isPublish")
+                      ? params.get("isPublish")
+                      : "",
+                    page: params.get("page") ? params.get("page") : 1,
+                  })
+                }
                 type="text"
                 placeholder={t("content-site.3")}
               />
@@ -136,14 +145,33 @@ const ContentOfSite = () => {
             {localStorage.getItem("roleName") === "SuperAdmin" ? (
               <div>
                 <Select
-                  placeholder={t("filter.1")}
+                  styles={{
+                    placeholder: (base) => ({
+                      ...base,
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }),
+                  }}
+                  placeholder={
+                    [{ id: "", name: t("filter.1") }]
+                      .concat(org)
+                      .find((el) => el?.id === params.get("orgId"))?.name
+                      ? [{ id: "", name: t("filter.1") }]
+                          .concat(org)
+                          .find((el) => el?.id === params.get("orgId"))?.name
+                      : t("filter.1")
+                  }
                   onChange={(value) => {
-                    getContentSearch({
+                    setParams({
+                      ...params,
                       orgId: value.value,
-                      id: spId,
-                      isPublish,
+                      sf: params.get("sf") ? params.get("sf") : "",
+                      id: params.get("id") ? params.get("id") : "",
+                      isPublish: params.get("isPublish")
+                        ? params.get("isPublish")
+                        : "",
+                      page: params.get("page") ? params.get("page") : 1,
                     });
-                    setOrgId(value.value);
                   }}
                   className={s.sample_select}
                   options={[{ id: "", name: t("filter.1") }]
@@ -158,10 +186,25 @@ const ContentOfSite = () => {
             {localStorage.getItem("roleName") !== "Author" ? (
               <div>
                 <Select
-                  placeholder={t("filter.4")}
+                  styles={{
+                    placeholder: (base) => ({
+                      ...base,
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }),
+                  }}
+                  placeholder={
+                    params.get("isPublish")
+                      ? params.get("isPublish")
+                      : t("filter.4")
+                  }
                   onChange={(value) => {
-                    setIsPublish(value.value);
-                    getContentSearch({ isPublish: value.value, orgId });
+                    setParams({
+                      isPublish: value.value,
+                      sf: params.get("sf") ? params.get("sf") : "",
+                      orgId: params.get("orgId") ? params.get("orgId") : "",
+                      page: params.get("page") ? params.get("page") : 1,
+                    });
                   }}
                   className={s.selecttt}
                   options={options}
@@ -170,10 +213,33 @@ const ContentOfSite = () => {
             ) : null}
             <div>
               <Select
-                placeholder={t("add-content.4")}
+                styles={{
+                  placeholder: (base) => ({
+                    ...base,
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }),
+                }}
+                placeholder={
+                  [{ id: "", name: t("add-content.4") }]
+                    .concat(sphere)
+                    .find((el) => el?.id === params.get("id"))?.name
+                    ? [{ id: "", name: t("add-content.4") }]
+                        .concat(org)
+                        .find((el) => el?.id === params.get("id"))?.name
+                    : t("add-content.4")
+                }
                 onChange={(value) => {
-                  getContentSearch({ id: value.value, isPublish, orgId });
-                  setSpId(value.value);
+                  setParams({
+                    ...params,
+                    id: value.value,
+                    sf: params.get("sf") ? params.get("sf") : "",
+                    isPublish: params.get("isPublish")
+                      ? params.get("isPublish")
+                      : "",
+                    orgId: params.get("orgId") ? params.get("orgId") : "",
+                    page: params.get("page") ? params.get("page") : 1,
+                  });
                 }}
                 className={s.selecttt2}
                 options={[{ id: "", name: t("filter.1") }]
@@ -545,12 +611,7 @@ const ContentOfSite = () => {
           <br />
           <br />
           <div className={s.content_pagination}>
-            <ContentPagination
-              spId={spId}
-              orgId={orgId}
-              isPublish={isPublish}
-              contentSite={contentSite?.total_pages}
-            />
+            <ContentPagination contentSite={contentSite?.total_pages} />
           </div>
         </div>
       </section>

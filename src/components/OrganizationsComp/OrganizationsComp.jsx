@@ -14,18 +14,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { FaEye } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const OrganizationsComp = () => {
-  const navigate = useNavigate();
+  const [params, setParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
-  const [own,setOwn] = useState("")
-  const {
-    SuperOrganizations,
-    organization,
-    orgSearch,
-    setOrgSearch,
-  } = useContext(Context);
+  const { SuperOrganizations, organization } = useContext(Context);
   const { t } = useTranslation();
 
   const optionOwner = [
@@ -34,8 +28,10 @@ const OrganizationsComp = () => {
   ];
 
   useEffect(() => {
-    SuperOrganizations().then(() => setIsLoading(false));
-  }, [orgSearch]);
+    SuperOrganizations({
+      own: params.get("own") ? params.get("own") : "",
+    }).then(() => setIsLoading(false));
+  }, [params]);
 
   if (isLoading) return <Loader />;
 
@@ -60,17 +56,32 @@ const OrganizationsComp = () => {
               <div className={s.input_field}>
                 <img className={s.S_icon} src={search} alt="Search" />
                 <input
-                  onChange={(e) => setOrgSearch(e.target.value)}
+                  defaultValue={
+                    params.get("searchorg") ? params.get("searchorg") : ""
+                  }
+                  onChange={(e) =>
+                    setParams({
+                      searchorg: e.target.value.trim(),
+                      own: params.get("own") ? params.get("own") : "",
+                      page: params.get("page") ? params.get("page") : 1,
+                    })
+                  }
                   type="text"
                   placeholder={t("content-site.3")}
                 />
               </div>
               <div>
                 <Select
-                  placeholder={t("filter.1")}
+                  placeholder={params.get("own") ? t("super.2") : t("filter.1")}
                   onChange={(value) => {
-                    SuperOrganizations(value.value);
-                    setOwn(value.value)
+                    setParams({
+                      ...params,
+                      own: value.value,
+                      searchorg: params.get("searchorg")
+                        ? params.get("searchorg")
+                        : "",
+                      page: params.get("page") ? params.get("page") : 1,
+                    });
                   }}
                   className={s.selecttt}
                   options={optionOwner}
@@ -106,9 +117,7 @@ const OrganizationsComp = () => {
                       <TableCell component="th" scope="row">
                         {org?.name}
                       </TableCell>
-                      <TableCell align="center">
-                        {org?.total_result}
-                      </TableCell>
+                      <TableCell align="center">{org?.total_result}</TableCell>
                       <TableCell align="center">{org?.count_of_user}</TableCell>
                       <TableCell align="right">
                         <Link to={`/organizations/${org?.id}`}>
@@ -134,7 +143,7 @@ const OrganizationsComp = () => {
           )}
           <br />
           <div className={s.content_pagination}>
-            <OrgPagination own={own} organization={organization?.total_pages} />
+            <OrgPagination organization={organization?.total_pages} />
           </div>
         </div>
       </section>

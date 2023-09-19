@@ -286,7 +286,7 @@ const SuperTzComp = () => {
                   <div className={s.input_field}>
                     <img className={s.S_icon} src={search_icon} alt="Search" />
                     <input
-                      onChange={(e) => setSuperTzSearch(e.target.value)}
+                      onChange={(e) => setSuperTzSearch(e.target.value.trim())}
                       value={superTzSearch}
                       type="text"
                       placeholder={t("content-site.3")}
